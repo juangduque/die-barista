@@ -1,0 +1,694 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "rating_qqiPFt": {
+          "type": "rating",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h3"
+          }
+        },
+        "buy_box_tag_4MLRXJ": {
+          "type": "shopify://apps/buy-box/blocks/tag/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "pm": "normal",
+            "ax": "d",
+            "ap": 25,
+            "txt": "{{ product.metafields.custom.price_per_unit.value }}",
+            "tc": "#ffffff",
+            "bg": "#008000",
+            "bc": "#008000",
+            "is": 13,
+            "br": 4,
+            "mt": 0,
+            "mb": 5
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "badge_sale_percentage": true
+          }
+        },
+        "buy_box_selling_points_aHKtxi": {
+          "type": "shopify://apps/buy-box/blocks/selling-points/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "settings": {
+            "sellingPoint_1_text": "<strong>Vielfalt genießen:</strong> verschiedene handgeröstete Kaffees in einem Set",
+            "sellingPoint_2_text": "<strong>Ideal zum Entdecken:</strong> teste unterschiedliche Aromen & finde deinen Favoriten",
+            "sellingPoint_3_text": "<strong>Preisvorteil:</strong> günstiger als der Einzelkauf der Sorten",
+            "sellingPoint_4_text": "<strong>Perfektes Geschenk:</strong> für Kaffeeliebhaber & Barista-Fans",
+            "sellingPoint_5_text": "",
+            "icon": "checkmark",
+            "icon_color": "#037e05",
+            "text_color": "#212121",
+            "icon_size": 16,
+            "text_size": 12,
+            "alignment": "start",
+            "row_spacing": 8,
+            "margin_top": 2,
+            "margin_bottom": 20,
+            "max-width": "44rem"
+          }
+        },
+        "custom_liquid_Qkxncz": {
+          "type": "custom_liquid",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "{% if product.metafields.custom.kurzbeschreibung != blank %}\n  <div class=\"product-short-description\">\n    {{ product.metafields.custom.kurzbeschreibung | metafield_tag }}\n  </div>\n{% endif %}\n\n\n<style>\n.product-short-description ul {\n  list-style: none;\n  padding-left: 0;\n  margin-left: 0;\n}\n\n.product-short-description li {\n  position: relative;\n  padding-left: 20px; /* Platz für Icon */\n}\n\n.product-short-description li::before {\n  content: \"✔\"; /* dein gewünschtes Symbol */\n  position: absolute;\n  left: 0;\n  color: #1f1f1f; /* Farbe des Icons */\n  font-size: 14px;\n}\n</style>"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "show_size_guide": true,
+            "size_guide_header": "Your Size Guide Title Here",
+            "size_guide_decription": "Finding your perfect fit is simple! Use our detailed size guide to choose the right size and make sure your new purchase fits just right.",
+            "size_guide_text": "Size Guide",
+            "page": ""
+          }
+        },
+        "buy_box_inventory_status_xKtYHr": {
+          "type": "shopify://apps/buy-box/blocks/inventory-status/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "settings": {
+            "inventory_status": "automatically_tracked",
+            "low_stock_threshold": 10,
+            "show_zero_as_out": false,
+            "text_available": "<strong>Auf Lager - </strong>in 2-3 Tagen bei dir",
+            "text_low_stock": "<strong>Niedriger Bestand  - </strong>in 2-3 Tagen bei dir",
+            "text_unavailable": "<strong>Ausverkauft</strong>",
+            "alignment": "left",
+            "dot_style": "dot_with_animated_ring",
+            "dot_color_available": "#00bf4d",
+            "text_color_available": "#00bf4d",
+            "dot_color_low_stock": "#ffa500",
+            "text_color_low_stock": "#ffa500",
+            "dot_color_unavailable": "#b40c1c",
+            "text_color_unavailable": "#b40c1c",
+            "font_size": 14,
+            "dot_size": 8,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "max-width": "44rem"
+          }
+        },
+        "kaching_subscriptions_app_block_HNqELz": {
+          "type": "shopify://apps/kaching-subscriptions/blocks/app-block/1fa39fd7-f6a3-4bbc-9383-7d91d27b44f5",
+          "settings": {
+            "product": "{{product}}"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_quantity": true,
+            "show_gift_card_recipient": false
+          }
+        },
+        "buy_box_payment_icons_6tWdDi": {
+          "type": "shopify://apps/buy-box/blocks/payment-icons/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "settings": {
+            "exc": "",
+            "icon_size": 20,
+            "alignment": "space-between",
+            "min_gap": 8,
+            "padding_sides": 0,
+            "margin_top": -15,
+            "margin_bottom": 0,
+            "max-width": "100%"
+          }
+        },
+        "inventory_status": {
+          "type": "inventory_status",
+          "disabled": true,
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "disabled": true,
+          "settings": {
+            "show_share_facebook": true,
+            "show_share_twitter": true,
+            "show_share_pinterest": true,
+            "show_share_copy": true
+          }
+        },
+        "shipping": {
+          "type": "shipping",
+          "disabled": true,
+          "settings": {
+            "icon": "alert_2",
+            "button_label": "Read more",
+            "heading": "Shipping Info",
+            "popup_heading": "How Our Shipping Works",
+            "popup_text": "<p>We offer fast, trackable shipping on all orders. Most items ship within 1–2 business days, with delivery options tailored to your needs.</p>"
+          }
+        },
+        "pickup_availability": {
+          "type": "pickup_availability",
+          "settings": {}
+        },
+        "payment_methods": {
+          "type": "payment_methods",
+          "disabled": true,
+          "settings": {}
+        },
+        "custom_liquid_EXaTD7": {
+          "type": "custom_liquid",
+          "name": "coffee-scale",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<div class=\"coffee-scale\">\n  {% assign roast = product.metafields.coffee_attributes.roasting_level.value | default: 7 %}\n  {% assign acidity = product.metafields.coffee_attributes.acid_level.value | default: 3 %}\n  {% assign strength = product.metafields.coffee_attributes.strength_level.value | default: 8 %}\n\n\n  <div class=\"scale-row\">\n    <span class=\"label\">Röstgrad</span>\n    <div class=\"scale-container\">\n      <div class=\"scale-bar\">\n        <div class=\"scale-fill\" style=\"width: {{ roast }}0%; background-color: #1f1f1f; display: block;\"></div>\n      </div>\n    </div>\n  </div>\n  <div class=\"scale-row\">\n    <span class=\"label\">Säure</span>\n    <div class=\"scale-container\">\n      <div class=\"scale-bar\">\n        <div class=\"scale-fill\" style=\"width: {{ acidity }}0%; background-color: #1f1f1f; display: block;\"></div>\n      </div>\n    </div>\n  </div>\n  <div class=\"scale-row\">\n    <span class=\"label\">Stärke</span>\n    <div class=\"scale-container\">\n      <div class=\"scale-bar\">\n        <div class=\"scale-fill\" style=\"width: {{ strength }}0%; background-color: #1f1f1f; display: block;\"></div>\n      </div>\n    </div>\n  </div>\n\n  <style>\n    .coffee-scale {\n      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n      margin: 20px auto;\n      background-color: #f9f9f9;\n      padding: 10px;\n      border-radius: 5px;\n    }\n    .description {\n      text-align: center;\n      margin-bottom: 20px;\n    }\n    .description h2 {\n      font-size: 16px;\n      color: #333;\n      margin-bottom: 5px;\n    }\n    .description p {\n      font-size: 14px;\n      color: #555;\n      margin: 0;\n    }\n    .scale-row {\n      display: flex;\n      align-items: center;\n      margin: 10px 0;\n      gap: 20px;\n    }\n    .label {\n      flex: 0 0 100px;\n      font-size: 14px;\n      color: #333;\n      font-weight: 500;\n    }\n    .scale-container {\n      flex: 1;\n    }\n    .scale-bar {\n      height: 6px;\n      background: #e0e0e0;\n      border-radius: 3px;\n      position: relative;\n      overflow: visible;\n    }\n    .scale-fill {\n      position: absolute;\n      left: 0;\n      top: 0;\n      height: 100%;\n      min-width: 0;\n      border-radius: 3px;\n      z-index: 1;\n    }\n  </style>\n</div>"
+          }
+        },
+        "advantage1": {
+          "type": "advantage",
+          "settings": {
+            "heading": "Information",
+            "text": "{{ product.metafields.custom.kurzbeschreibung | metafield_tag }}",
+            "about_tab_icon": "none",
+            "about_tab_text": "",
+            "about_tab_icon_second": "none",
+            "about_tab_text_second": ""
+          }
+        },
+        "advantage2": {
+          "type": "advantage",
+          "settings": {
+            "heading": "Inhalt",
+            "text": "<p>{{ product.metafields.custom.set_inhalt | metafield_tag }}</p>",
+            "about_tab_icon": "none",
+            "about_tab_text": "",
+            "about_tab_icon_second": "none",
+            "about_tab_text_second": ""
+          }
+        },
+        "advantage3": {
+          "type": "advantage",
+          "settings": {
+            "heading": "Versand & Lieferung",
+            "text": "<p>Wir liefern ausschließlich innerhalb Deutschlands.<br/>Die Versandkosten betragen <strong>4,90 € pro Bestellung</strong>.<br/>Ab 50€ Bestellwert ist der Versand <strong>kostenlos</strong>.<br/><br/>Die Lieferzeit liegt in der Regel bei <strong>3–5 Werktagen </strong>nach Zahlungseingang (keine Zustellung an Sonn- & Feiertagen).<br/><br/>Da wir großen Wert darauf legen, dir immer <strong>frisch geröstete Ware </strong>zu senden, kann es bei hohem Bestellaufkommen in seltenen Fällen zu <strong>kurzen Verzögerungen </strong>kommen – vielen Dank für dein Verständnis!</p>",
+            "about_tab_icon": "none",
+            "about_tab_text": "",
+            "about_tab_icon_second": "none",
+            "about_tab_text_second": ""
+          }
+        },
+        "buy_box_discount_timer_3BzfYT": {
+          "type": "shopify://apps/buy-box/blocks/discount-timer/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "t": "Offer ending in: <strong>%CT%</strong>",
+            "st": "00:00",
+            "ct": "00:00",
+            "sd": "",
+            "ed": "",
+            "tc": "#bc2323",
+            "cc": "#bc2323",
+            "s": 15,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "buy_box_badges_PQNt6U": {
+          "type": "shopify://apps/buy-box/blocks/badges/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "badge1_text": "<strong>Bestseller</strong>",
+            "badge2_text": "",
+            "badge3_text": "",
+            "badge1_color": "#ffffff",
+            "badge1_background_color": "#000000",
+            "badge1_border_color": "#000000",
+            "badge2_color": "#ffffff",
+            "badge2_background_color": "#000000",
+            "badge2_border_color": "#000000",
+            "badge3_color": "#ffffff",
+            "badge3_background_color": "#000000",
+            "badge3_border_color": "#000000",
+            "font_size": 14,
+            "border_width": 1,
+            "border_radius": 40,
+            "padding-y": 6,
+            "padding-x": 8,
+            "gap": 6,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "buy_box_buy_box_wrapper_EgXB7L": {
+          "type": "shopify://apps/buy-box/blocks/buy-box-wrapper/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "use_in_mobile": false,
+            "box_shadow": "small",
+            "ht": "",
+            "hb": "#f0f0f0",
+            "htc": "#000000",
+            "background_color": "#ffffff",
+            "border_color": "#dadce0",
+            "header_font_size": 13,
+            "border_radius": 5,
+            "border_width": 1,
+            "padding_top": 20,
+            "padding_bottom": 20,
+            "padding_sides": 20,
+            "margin_sides_mobile": 0,
+            "margin_left": 0,
+            "max-width": "44rem"
+          }
+        },
+        "buy_box_trust_badges_4JGmmy": {
+          "type": "shopify://apps/buy-box/blocks/trust-badges/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "i1": "delivery",
+            "t1": "<p>Free delivery</p>",
+            "i2": "return",
+            "t2": "<p>30 days returns</p>",
+            "i3": "guarantee",
+            "t3": "<p>2 years guarantee</p>",
+            "ic": "#000000",
+            "e": "#000000",
+            "d": 20,
+            "f": 12,
+            "a": 0,
+            "b": 0,
+            "c": "44rem"
+          }
+        },
+        "buy_box_banner_dWRCq7": {
+          "type": "shopify://apps/buy-box/blocks/banner/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "sb": true,
+            "i": "none",
+            "t": "🎉   <strong>This shirt is a keeper</strong>",
+            "d": "Did you know our shirts are rarely returned? The fit is just right – see for yourself!",
+            "tt": "#000000",
+            "tc": "#000000",
+            "ci": "#000000",
+            "bc": "#f0f0f0",
+            "brc": "",
+            "is": 20,
+            "ts": 12,
+            "ds": 11,
+            "br": 20,
+            "mt": 0,
+            "mb": 0,
+            "mw": "44rem"
+          }
+        },
+        "buy_box_copy_discount_JJpQaj": {
+          "type": "shopify://apps/buy-box/blocks/copy-discount/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "m": "Save up to 70% off!",
+            "n": "BLACKFRIDAY",
+            "o": "Copied!",
+            "d": "#ffffff",
+            "e": "#000000",
+            "f": "#ffffff",
+            "h": "#000000",
+            "g": "#ffffff",
+            "i": "#ffffff",
+            "j": 12,
+            "k": 0,
+            "l": 0,
+            "a": 0,
+            "b": 0,
+            "c": "44rem"
+          }
+        },
+        "buy_box_inventory_bar_cNMFx3": {
+          "type": "shopify://apps/buy-box/blocks/inventory-bar/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "a": false,
+            "m": 5,
+            "mi": 100,
+            "s2": false,
+            "s": true,
+            "hz": true,
+            "l": 25,
+            "c": 10,
+            "z": "<strong>%IC%</strong> in stock - delivery in <strong>1-2</strong> days",
+            "y": "<strong>%IC%</strong> left in stock - Only a few left!",
+            "x": "<strong>%IC%</strong> left in stock - Nearly sold out!",
+            "d": "#00bf4d",
+            "i": "#00bf4d",
+            "e": "#ffa500",
+            "n": "#ffa500",
+            "j": "#b40c1c",
+            "o": "#b40c1c",
+            "r": "rgba(0,0,0,0)",
+            "k": "#e6e6e6",
+            "f": 14,
+            "h": 8,
+            "u": 5,
+            "g": "center",
+            "t": 0,
+            "b": 0,
+            "w": "44rem"
+          }
+        },
+        "buy_box_testimonials_BTixm8": {
+          "type": "shopify://apps/buy-box/blocks/testimonials/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "style": "classic",
+            "use_stock_images": false,
+            "a1": "Lisa Brown",
+            "c1": "<p>This product is amazing!</p>",
+            "a2": "Marc Johnson",
+            "c2": "<p>Amazing quality and fast shipping!</p>",
+            "a3": "Luis Garcia",
+            "c3": "<p>The product quality is outstanding.</p>",
+            "bgc": "#fafafa",
+            "bc": "#dadce0",
+            "sc": "#00b67a",
+            "tc": "#202124",
+            "is": 64,
+            "ns": 15,
+            "ss": 15,
+            "ts": 12,
+            "br": 4,
+            "ibr": 8,
+            "mt": 0,
+            "mb": 0,
+            "mw": "44rem"
+          }
+        },
+        "buy_box_social_proof_f3cViC": {
+          "type": "shopify://apps/buy-box/blocks/social-proof/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "image_1": "stock_image_1",
+            "name_1": "<strong>Lisa</strong>",
+            "image_2": "stock_image_2",
+            "name_2": "<strong>Marc</strong>",
+            "image_3": "none",
+            "name_3": "",
+            "text": "and <strong>1000+</strong> others love our products!",
+            "show_verified": true,
+            "name_color": "#000000",
+            "text_color": "#000000",
+            "background_color": "#dadada",
+            "icon_size": 20,
+            "text_size": 12,
+            "border_radius": 5,
+            "border_radius_mobile": 0,
+            "alignment": "left",
+            "mobile_breakpoint": 750,
+            "margin_sides_mobile": 0,
+            "margin_sides": 0,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "buy_box_star_rating_p7dPz9": {
+          "type": "shopify://apps/buy-box/blocks/star-rating/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "rating": 4.7,
+            "text": "200+ Ratings",
+            "link": "",
+            "star_color": "#00b67a",
+            "star_background_color": "#eaeaea",
+            "text_color": "#000000",
+            "star_size": 16,
+            "font_size": 14,
+            "margin_top": 0,
+            "margin_bottom": 0,
+            "max-width": "44rem"
+          }
+        },
+        "buy_box_divider_bQHVHA": {
+          "type": "shopify://apps/buy-box/blocks/divider/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "text": "Only a few left!",
+            "divider_color": "#aaaaaa",
+            "text_color": "#000000",
+            "font_size": 16,
+            "divider_size": 2,
+            "top_margin": 0,
+            "bottom_margin": 0,
+            "max-width": "44rem"
+          }
+        },
+        "buy_box_selling_points_ihxc6L": {
+          "type": "shopify://apps/buy-box/blocks/selling-points/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "sellingPoint_1_text": "Unique products, unforgettable experiences.",
+            "sellingPoint_2_text": "Exceptional quality, unparalleled service.",
+            "sellingPoint_3_text": "Join our community of satisfied customers today.",
+            "sellingPoint_4_text": "",
+            "sellingPoint_5_text": "",
+            "icon": "checkmark",
+            "icon_color": "#037e05",
+            "text_color": "#212121",
+            "icon_size": 16,
+            "text_size": 12,
+            "alignment": "start",
+            "row_spacing": 8,
+            "margin_top": -13,
+            "margin_bottom": 5,
+            "max-width": "44rem"
+          }
+        },
+        "buy_box_connected_product_picker_3KVMq3": {
+          "type": "shopify://apps/buy-box/blocks/connected-product-picker/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "disabled": true,
+          "settings": {
+            "title": "Variant",
+            "product_list": [],
+            "text_color": "#000000",
+            "border_color": "#eaeaea",
+            "border_color_active": "#000000",
+            "product_title_color": "#ffffff",
+            "product_title_background_color": "#333333",
+            "font_size": 14,
+            "product_title_font_size": 12,
+            "image_width": 50,
+            "border_radius": 4,
+            "gap": 8,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "complementary": {
+          "type": "complementary",
+          "settings": {
+            "heading_complementary": "You might also like",
+            "product_list_limit": 3,
+            "image_ratio": "portrait",
+            "card_image_fit": "cover",
+            "show_vendor": true
+          }
+        },
+        "buy_box_benefits_list_QDc8ww": {
+          "type": "shopify://apps/buy-box/blocks/benefits-list/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "settings": {
+            "j": true,
+            "i1": "pp",
+            "t1": "<p>30 Tage später zahlen</p>",
+            "i2": "customers",
+            "t2": "<p>Über 5000 glückliche Barista</p>",
+            "i3": "klarna",
+            "t3": "<p>Kauf auf Rechnung</p>",
+            "i4": "delivery",
+            "t4": "<p>Kostenloser Versand ab 50€</p>",
+            "ic": "#000000",
+            "e": "#000000",
+            "g": "rgba(0,0,0,0)",
+            "i": "rgba(0,0,0,0)",
+            "d": 20,
+            "f": 12,
+            "h": 5,
+            "a": -40,
+            "b": 0,
+            "c": "44rem"
+          }
+        }
+      },
+      "block_order": [
+        "rating_qqiPFt",
+        "title",
+        "buy_box_tag_4MLRXJ",
+        "price",
+        "buy_box_selling_points_aHKtxi",
+        "custom_liquid_Qkxncz",
+        "variant_picker",
+        "buy_box_inventory_status_xKtYHr",
+        "kaching_subscriptions_app_block_HNqELz",
+        "buy_buttons",
+        "buy_box_payment_icons_6tWdDi",
+        "inventory_status",
+        "share",
+        "shipping",
+        "pickup_availability",
+        "payment_methods",
+        "custom_liquid_EXaTD7",
+        "advantage1",
+        "advantage2",
+        "advantage3",
+        "buy_box_discount_timer_3BzfYT",
+        "buy_box_badges_PQNt6U",
+        "buy_box_buy_box_wrapper_EgXB7L",
+        "buy_box_trust_badges_4JGmmy",
+        "buy_box_banner_dWRCq7",
+        "buy_box_copy_discount_JJpQaj",
+        "buy_box_inventory_bar_cNMFx3",
+        "buy_box_testimonials_BTixm8",
+        "buy_box_social_proof_f3cViC",
+        "buy_box_star_rating_p7dPz9",
+        "buy_box_divider_bQHVHA",
+        "buy_box_selling_points_ihxc6L",
+        "buy_box_connected_product_picker_3KVMq3",
+        "complementary",
+        "buy_box_benefits_list_QDc8ww"
+      ],
+      "custom_css": [
+        ".product-form__submit {background-color: black; color: white;}",
+        "@media (min-width: 750px) {#shopify-block-AM2VvUHQ4WW96TWxnK__buy_box_benefits_list_QDc8ww {display: none; }}"
+      ],
+      "settings": {
+        "media_display": "slider",
+        "sticky_slider": true,
+        "desktop_alignment": "left",
+        "image_fit": "contain",
+        "enable_autoheight": true,
+        "heading_size_description": "h2",
+        "padding_top": "no-indent",
+        "padding_bottom": "no-indent"
+      }
+    },
+    "apps_eKJQFw": {
+      "type": "apps",
+      "blocks": {
+        "buy_box_benefits_aC4CYP": {
+          "type": "shopify://apps/buy-box/blocks/benefits/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+          "settings": {
+            "benefit_1_icon": "pp",
+            "benefit_1_text": "<p>30 Tage später zahlen</p>",
+            "benefit_2_icon": "customers",
+            "benefit_2_text": "<p>Über 5000 glückliche Barista</p>",
+            "benefit_3_icon": "klarna",
+            "benefit_3_text": "<p>Kauf auf Rechnung</p>",
+            "benefit_4_icon": "delivery",
+            "benefit_4_text": "<p>Kostenloser Versand ab 50€</p>",
+            "icon_color": "#000000",
+            "text_color": "#000000",
+            "background_color": "rgba(0,0,0,0)",
+            "border_color": "rgba(0,0,0,0)",
+            "icon_size": 20,
+            "text_size": 12,
+            "border_radius": 5,
+            "layout_direction": "row",
+            "alignment": "center",
+            "benefit_padding_y": 8,
+            "benefit_padding_x": 12,
+            "margin_top": 0,
+            "max-width": "44rem"
+          }
+        }
+      },
+      "block_order": [
+        "buy_box_benefits_aC4CYP"
+      ],
+      "custom_css": [
+        ".benefit_boxes {max-width: 100%; flex-direction: row; align-content: space-between;}",
+        ".benefit_boxes__container {width: 50%px; justify-content: center;}",
+        ".benefit_boxes_row {width: 50%; align-content: center;}",
+        "@media (max-width: 750px) {.shopify-block {display: none; }}"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "rich_text_qacgpN": {
+      "type": "rich-text",
+      "blocks": {
+        "text_g379jr": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.description }}"
+          }
+        }
+      },
+      "block_order": [
+        "text_g379jr"
+      ],
+      "custom_css": [
+        ".rich-text {text-align: left;}"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "background-2",
+        "full_width": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent",
+        "padding_top": "s",
+        "padding_bottom": "s"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "Ähnliche Kaffeesorten",
+        "heading_size": "h3",
+        "products_limit": 6,
+        "product_limit": 4,
+        "columns_mobile": "1",
+        "image_ratio": "square",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "margin_top": "xs",
+        "margin_bottom": "s"
+      }
+    },
+    "all-brands": {
+      "type": "all-brands",
+      "disabled": true,
+      "settings": {
+        "per_row": 8,
+        "heading": "Brands",
+        "heading_size": "h3",
+        "border_top": true,
+        "border_bottom": false,
+        "padding_top": "s",
+        "padding_bottom": "s",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "apps_eKJQFw",
+    "rich_text_qacgpN",
+    "product-recommendations",
+    "all-brands"
+  ]
+}

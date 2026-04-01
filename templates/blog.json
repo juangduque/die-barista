@@ -1,0 +1,64 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "navigation_blogs_REfWkd": {
+      "type": "navigation_blogs",
+      "name": "Category Navigation (Scroll Mobile)",
+      "settings": {
+        "heading": "",
+        "menu": "barista-club",
+        "show_sub_link": false,
+        "sub_link_label": ""
+      }
+    },
+    "featured_blog_6idJfg": {
+      "type": "featured-blog",
+      "disabled": true,
+      "name": "t:sections.featured-blog.presets.name",
+      "settings": {
+        "heading": "Neueste Beiträge",
+        "heading_size": "h4",
+        "post_layout": "3",
+        "blog": "kaffeespezialitaten",
+        "post_limit": 3,
+        "post_limit_mobile": 3,
+        "show_image": true,
+        "show_tags": true,
+        "show_date": true,
+        "show_author": true,
+        "show_excerpt": false,
+        "overlay_opacity": 0.3,
+        "show_view_all": true,
+        "show_view_all_mobile": true,
+        "button_label": "alle anzeigen",
+        "padding_top": "no-indent",
+        "padding_bottom": "s"
+      }
+    },
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "show_image": true,
+        "show_tags": true,
+        "show_date": true,
+        "show_author": true,
+        "show_excerpt": false,
+        "padding_top": "xs",
+        "padding_bottom": "l"
+      }
+    }
+  },
+  "order": [
+    "navigation_blogs_REfWkd",
+    "featured_blog_6idJfg",
+    "main"
+  ]
+}

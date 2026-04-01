@@ -1,0 +1,334 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "layout": "column",
+        "color_scheme": "dark",
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "opacity_overlay": 0,
+        "margin_top": "xs",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "cards_grid_mUcWJp": {
+      "type": "cards-grid",
+      "blocks": {
+        "column_Ab8zHm": {
+          "type": "column",
+          "settings": {
+            "column_start": 1,
+            "column_end": 2,
+            "row_start": "1",
+            "row_end": "2",
+            "min_height": "large",
+            "image": "shopify://shop_images/kawaii_6.png",
+            "image_size": "contain",
+            "effect_opacity": 0,
+            "text_align": "left",
+            "text_color_scheme": "light",
+            "full_width": true,
+            "subheading": "",
+            "heading": "",
+            "heading_size": "h3",
+            "heading_width": 30,
+            "card_link": ""
+          }
+        },
+        "column_WcxCkN": {
+          "type": "column",
+          "settings": {
+            "column_start": 2,
+            "column_end": 3,
+            "row_start": "1",
+            "row_end": "2",
+            "min_height": "large",
+            "image": "shopify://shop_images/kawaii_5.png",
+            "image_size": "contain",
+            "effect_opacity": 0,
+            "text_align": "left",
+            "text_color_scheme": "light",
+            "full_width": true,
+            "subheading": "",
+            "heading": "",
+            "heading_size": "h3",
+            "heading_width": 30,
+            "card_link": ""
+          }
+        },
+        "column_8PKHRn": {
+          "type": "column",
+          "settings": {
+            "column_start": 3,
+            "column_end": 4,
+            "row_start": "1",
+            "row_end": "2",
+            "min_height": "large",
+            "image": "shopify://shop_images/kawaii_7.png",
+            "image_size": "contain",
+            "effect_opacity": 0,
+            "text_align": "left",
+            "text_color_scheme": "light",
+            "full_width": true,
+            "subheading": "",
+            "heading": "",
+            "heading_size": "h3",
+            "heading_width": 30,
+            "card_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_Ab8zHm",
+        "column_WcxCkN",
+        "column_8PKHRn"
+      ],
+      "name": "t:sections.cards-grid.name",
+      "settings": {
+        "columns": 3,
+        "gap": 5,
+        "heading": "So einfach geht's:",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 12,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "enable_filtering": false,
+        "enable_sorting": false,
+        "image_filter_ratio": "1/1",
+        "image_filter_fit": "cover",
+        "image_filter_columns": 3,
+        "columns_mobile": "2",
+        "padding_top": "no-indent",
+        "padding_bottom": "s"
+      }
+    },
+    "image-banner": {
+      "type": "image-banner",
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "color_scheme": "",
+        "subheading": "Feature your content",
+        "heading": "Banner title",
+        "heading_size": "h3",
+        "text_information": "This is where you can tell a quick story, highlight a collection, or introduce an event, making your visuals more impactful.",
+        "text_align": "left",
+        "button_label": "Shop now",
+        "button_style": "primary",
+        "button_link": "",
+        "button_label_2": "Zweiter Button",
+        "button_link_2": "",
+        "image_ratio": "adapt",
+        "opacity_overlay": 0.2,
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "multicolumn_8FacPG": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_qjg6Jq": {
+          "type": "column",
+          "settings": {
+            "icon": "check_mark_5",
+            "heading": "Dauerhaft 10% sparen - auf alle Kaffesorten",
+            "text": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "column_7GFRXK": {
+          "type": "column",
+          "settings": {
+            "icon": "check_mark_5",
+            "heading": "Flexible anpassen, kündigen oder pausieren",
+            "text": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
+        "column_ffMtJr": {
+          "type": "column",
+          "settings": {
+            "icon": "check_mark_5",
+            "heading": "Nie wieder ohne Kaffee - garantierte Lieferungen",
+            "text": "",
+            "button_label": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_qjg6Jq",
+        "column_7GFRXK",
+        "column_ffMtJr"
+      ],
+      "custom_css": [
+        ".multicolumn-list__wrapper .multicolumn-card {align-items: center; gap: 2rem;}",
+        ".multicolumn-list__wrapper .multicolumn-card__image-wrapper {align-self: center;}",
+        "@media screen and (max-width: 749px) {.multicolumn-card__heading {text-align: left; } .multicolumn-list__wrapper .multicolumn-card {flex-direction: row; }}"
+      ],
+      "name": "t:sections.multicolumn.name",
+      "settings": {
+        "multicolumn_to_show": 3,
+        "full_width": false,
+        "image_width": "medium",
+        "object_fit": "contain",
+        "info_heading_size": "h4",
+        "swipe_on_mobile": false,
+        "border_top": false,
+        "border_bottom": false,
+        "padding_top": "s",
+        "padding_bottom": "s",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "collapsible_content_mx6yJF": {
+      "type": "collapsible-content",
+      "blocks": {
+        "accordion_jyktYG": {
+          "type": "accordion",
+          "settings": {
+            "default_open": true,
+            "question": "Kann ich das Kaffeeabo testen?",
+            "answer": "<p>Ja, du kannst unser Abo jederzeit starten und auch wieder beenden. Es gibt keine Mindestlaufzeit.</p>"
+          }
+        },
+        "accordion_KyRXwC": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Wie funktioniert das Kaffeeabo bei Die Barista?",
+            "answer": "<p>Du wählst deinen Lieblingskaffee, stellst dein Lieferintervall ein und erhältst automatisch deine Lieferung – immer frisch geröstet und mit 10 % Rabatt.</p>"
+          }
+        },
+        "accordion_Rn8Lnb": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Gibt es eine Mindestlaufzeit für das Abo?",
+            "answer": "<p>Nein, du kannst jederzeit pausieren, verschieben oder kündigen.</p>"
+          }
+        },
+        "accordion_9rqKqB": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Wie funktioniert der 10 % Abo-Rabatt?",
+            "answer": "<p>Sobald du ein Produkt im Abo bestellst, wird der Rabatt automatisch auf den Produktpreis angewendet.</p>"
+          }
+        },
+        "accordion_EWwdtN": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Fallen Versandkosten im Abo an?",
+            "answer": "<p>Ja, es gelten unsere regulären Versandkosten. Ab einem Bestellwert von 50€ liefern wir <strong>versandkostenfrei</strong>.</p>"
+          }
+        },
+        "accordion_n9RUTR": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Welches Lieferintervall kann ich wählen?",
+            "answer": "<p>Du kannst zwischen verschiedenen Intervallen wählen, z. B. alle 2, 4, 6, oder 8 Wochen.</p>"
+          }
+        },
+        "accordion_MpGDgU": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Welche Produkte kann ich im Abo bestellen?",
+            "answer": "<p>Alle unsere Kaffees sowie ausgewähltes Zubehör wie Papierfilter können im Abo bestellt werden.</p>"
+          }
+        },
+        "accordion_EthNUL": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Kann ich mehrere Abos mit unterschiedlichen Intervallen haben?",
+            "answer": "<p>Ja, du kannst für verschiedene Produkte unterschiedliche Abos anlegen.</p>"
+          }
+        },
+        "accordion_KWeRHQ": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Wie lange kann ich mein Abo pausieren?",
+            "answer": "<p>Du kannst so lange pausieren, wie du möchtest.</p>"
+          }
+        },
+        "accordion_jCFLzX": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Kann ich mein Abo jederzeit kündigen?",
+            "answer": "<p>Ja, die Kündigung ist jederzeit über dein Kundenkonto möglich.</p>"
+          }
+        },
+        "accordion_3mQAgT": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Was passiert, wenn ein Kaffee im Abo vorübergehend nicht verfügbar ist?",
+            "answer": "<p>Wir informieren dich per E-Mail und schlagen dir Alternativen vor.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_jyktYG",
+        "accordion_KyRXwC",
+        "accordion_Rn8Lnb",
+        "accordion_9rqKqB",
+        "accordion_EWwdtN",
+        "accordion_n9RUTR",
+        "accordion_MpGDgU",
+        "accordion_EthNUL",
+        "accordion_KWeRHQ",
+        "accordion_jCFLzX",
+        "accordion_3mQAgT"
+      ],
+      "name": "t:sections.collapsible-content.name",
+      "settings": {
+        "content_position": "center",
+        "heading": "Fragen zum Kaffeeabo",
+        "heading_size": "h3",
+        "text": "",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "cards_grid_mUcWJp",
+    "product-grid",
+    "image-banner",
+    "multicolumn_8FacPG",
+    "collapsible_content_mx6yJF"
+  ]
+}

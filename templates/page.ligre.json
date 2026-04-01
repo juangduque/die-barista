@@ -1,0 +1,268 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "custom_css": [
+        ".container {margin-top: 2.5rem;}"
+      ],
+      "settings": {
+        "rte_image_style": "custom"
+      }
+    },
+    "image_banner_M4Jy7Q": {
+      "type": "image-banner",
+      "custom_css": [
+        ".banner,.banner__media {padding: 0px; margin: 0px;}"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h3",
+        "text_information": "",
+        "text_align": "left",
+        "button_label": "",
+        "button_style": "primary",
+        "button_link": "",
+        "button_label_2": "",
+        "button_link_2": "",
+        "image": "shopify://shop_images/1.jpg",
+        "image_ratio": "adapt",
+        "opacity_overlay": 0.2,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "rich_text_Y9rqYC": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_4UdXPQ": {
+          "type": "heading",
+          "settings": {
+            "heading": "<h2>Wenn Technik zur Kunst wird.</h2>",
+            "heading_size": "medium"
+          }
+        },
+        "text_UccCcC": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Die LIGRE youn – eine völlig neu gedachte Siebträgermaschine, die Performance und Design auf allerhöchstem Niveau verbindet und technische Perfektion zur Kunst werden lässt.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_4UdXPQ",
+        "text_UccCcC"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "background-2",
+        "full_width": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent",
+        "padding_top": "s",
+        "padding_bottom": "s"
+      }
+    },
+    "image_banner_BBNRgk": {
+      "type": "image-banner",
+      "custom_css": [
+        ".banner,.banner__media {padding: 0px; margin: 0px;}"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h3",
+        "text_information": "",
+        "text_align": "left",
+        "button_label": "",
+        "button_style": "primary",
+        "button_link": "",
+        "button_label_2": "",
+        "button_link_2": "",
+        "image": "shopify://shop_images/Pic_231220_Ligre267626_press-2.jpg",
+        "image_ratio": "adapt",
+        "opacity_overlay": 0.2,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "image_with_text_D3KbtN": {
+      "type": "image-with-text",
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "height": "21/9",
+        "mobile_height": "1/1",
+        "image": "shopify://shop_images/Pic_230730_Ligre_0217_press.jpg",
+        "display_reverse": "right",
+        "color_scheme": "",
+        "padding_on_off": true,
+        "title": "Emotionen, die verbinden.",
+        "info_heading_size": "h2",
+        "title_link": "https://ligre.com/?ref=1140",
+        "text": "<p>Der Moment, wenn man in einer italienischen Caffè-Bar einen Espresso oder Cappuccino trinkt und einfach alles daran perfekt ist; dieser Moment, wenn die ganze Kultur des Kaffees darin spürbar wird - genau diesen Moment wollen wir bei LIGRE erschaffen. All unsere Ex- pertise und technischen Innovationen haben das Ziel, dem Geübten und dem Nicht-Geübten dieses Erlebnis zuhause zu ermöglichen.</p>",
+        "text_position": "center",
+        "button_label": "Jetzt den Unterschied erleben",
+        "button_link": "https://ligre.com/?ref=1140",
+        "button_second_label": "",
+        "button_second_link": "",
+        "margin_top": "xs",
+        "margin_bottom": "xs"
+      }
+    },
+    "image_banner_tMMB8X": {
+      "type": "image-banner",
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "full_width": true,
+        "color_scheme": "background-3",
+        "subheading": "",
+        "heading": "Aus Liebe zum italienischen Caffè.",
+        "heading_size": "h2",
+        "text_information": "Die LIGRE youn bringt Barista Hochkultur in Dein Zuhause. Drei exakt vordefinierte Brüh-Profile bieten jeweils die gewünschte Stärke und Charakteristika, passend zum individuellen Geschmack: vom milden mellow morning, über vibrant vigor bis zum starken brilliant bold.",
+        "text_align": "left",
+        "button_label": "Gib deiner Liebe ein Zuhause",
+        "button_style": "primary",
+        "button_link": "https://ligre.com/?ref=1140",
+        "button_label_2": "",
+        "button_link_2": "",
+        "image": "shopify://shop_images/Pic_231220_Ligre268312_press.jpg",
+        "image_ratio": "adapt",
+        "opacity_overlay": 0.2,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "rich_text_hd7EEQ": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_xe6Rr7": {
+          "type": "heading",
+          "settings": {
+            "heading": "<h1>Nachhaltig in die Zukunft.</h1>",
+            "heading_size": "medium"
+          }
+        },
+        "text_prVtwR": {
+          "type": "text",
+          "settings": {
+            "text": "<p>LIGRE tut einiges dafür, nicht nur heute schon eine herausragende Marke zu sein, sondern auch<br/>an die Zukunft zu denken. Die youn ist mit einem Jahresstromverbrauch von weniger als 50%</p><p>im Vergleich zu durchschnittlichen Siebträger- maschinen sehr energiesparend. Sie verfügt über eine Zeitschaltuhr, einen einstellbaren Eco-Mode und verschwendet keine Energie durch Abwärme.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_xe6Rr7",
+        "text_prVtwR"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "background-2",
+        "full_width": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent",
+        "padding_top": "s",
+        "padding_bottom": "s"
+      }
+    },
+    "rich_text_GnkeWe": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_ppWhGR": {
+          "type": "heading",
+          "settings": {
+            "heading": "<h2>PREISE UND SPEZIFIKATIONEN.</h2>",
+            "heading_size": "medium"
+          }
+        },
+        "text_gtYexW": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Feinster klassischer Espresso und Milchschaumqualität in 10 Texturen. Auch ohne Barista-Kenntnisse.<br/><br/></h4><ul><li>Perfekt durchgeheizt nach 3‘ 50‘‘ dank rapid conducted heat system</li><li>Einfache Bedienung im easy mode oder nerd mode</li><li>Extrem leise mit exklusivem Sound Design</li><li>Konstante Temperatur dank innovativer PID+ Steuerung</li><li>Präzise Drucksteuerung für perfekte Extraktion</li><li>Äußerst energiesparsam: 1 kWh für 220 Espressi | bis zu 57 % geringerer Jahresenergieverbrauch</li><li>Autosteam-Dampflanze LIGRE foamer für exzellenten Milchschaum</li><li>Touchscreen zur Anpassung von Temperatur, Brühdruck, Brühpause u.a.</li><li>3 individuelle Brühprofile</li><li>3 halbautomatisierte Reinigungsprogramme</li><li>4 Patentanmeldungen</li><li>Massive, eloxierte Oberflächen</li><li>Robuste Konstruktion, langlebige Materialien und präzise Verarbeitung</li><li>Mit Liebe zum Detail hergestellt in Österreich<br/><br/></li></ul><h1>SILVER BEIGE</h1><h2>3.980,00 €</h2><p>inkl. 19% MwSt.</p><h4></h4><h1>BLACK MAT</h1><h2>4.480,00 €</h2><p>inkl. 19% MwSt.</p>"
+          }
+        },
+        "button_tfVKNY": {
+          "type": "button",
+          "settings": {
+            "button_label": "JETZT KAUFEN",
+            "button_link": "https://ligre.com/?ref=1140",
+            "button_style": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "heading_ppWhGR",
+        "text_gtYexW",
+        "button_tfVKNY"
+      ],
+      "custom_css": [
+        ".rich-text__blocks {text-align: left;}"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "background-3",
+        "full_width": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent",
+        "padding_top": "s",
+        "padding_bottom": "s"
+      }
+    },
+    "rich_text_nFkWJW": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_rDBTia": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Eine Partnerschaft mit Zukunft.</p>",
+            "heading_size": "medium"
+          }
+        },
+        "text_FJ7L9i": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Wir können mit Stolz verkünden, dass wir ab sofort exklusiver Partner von LIGRE sind, einer von ganz wenigen in Deutschland! Denn, wir sind so sehr überzeugt von der Youn, dass wir sogar den Vertrieb in unserem Gebiet übernehmen, deshalb, wenn du auf den Link klickst, verdienen wir auch ein bisschen was mit, aber du hast eine Maschine bei dir stehen, die dich LANGE glücklich machen wird.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_rDBTia",
+        "text_FJ7L9i"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "background-2",
+        "full_width": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent",
+        "padding_top": "s",
+        "padding_bottom": "s"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_banner_M4Jy7Q",
+    "rich_text_Y9rqYC",
+    "image_banner_BBNRgk",
+    "image_with_text_D3KbtN",
+    "image_banner_tMMB8X",
+    "rich_text_hd7EEQ",
+    "rich_text_GnkeWe",
+    "rich_text_nFkWJW"
+  ]
+}

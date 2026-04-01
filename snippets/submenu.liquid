@@ -1,0 +1,55 @@
+<ul
+	class="header__submenu list-menu list-menu--disclosure caption-large motion-reduce {% if header__bottom %} color-background-1 {% else %} color-{{ section.settings.color_scheme }} {% endif %}"
+	role="list"
+>
+	{%- for childlink in link.links -%}
+		{% assign childlink_title = childlink.title | escape | downcase %}
+
+		<li data-hover-opacity="2">
+			{%- if childlink.links == blank -%}
+				<a
+					href="{{ childlink.url }}"
+					class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if childlink.current %} header__menu-item--active{% endif %} {% if childlink_title == "sale" %}item-sale{% endif %}"
+					{% if childlink.current %}
+						aria-current="page"
+					{% endif %}
+				>
+					<span>
+						{{ childlink.title | escape }}
+					</span>
+				</a>
+			{%- else -%}
+				<a href="{{ childlink.url }}" class="header__menu-item link link--text list-menu__item focus-inset caption-large {% if childlink_title == "sale" %}item-sale{% endif %}">
+					<span>
+						{{ childlink.title | escape }}
+					</span>
+				</a>
+				<ul
+					class="header__submenu list-menu--disclosure list-menu motion-reduce {% if header__bottom %} color-background-1 {% else %} color-{{ section.settings.color_scheme }} {% endif %}"
+					tabindex="0"
+				>
+					{%- for grandchildlink in childlink.links -%}
+						{% assign grandchildlink_title = grandchildlink.title
+							| escape
+							| downcase
+						%}
+
+						<li data-hover-opacity="333">
+							<a
+								href="{{ grandchildlink.url }}"
+								class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if grandchildlink.current %} header__menu-item--active{% endif %} {% if grandchildlink_title == "sale" %}item-sale{% endif %}"
+								{% if grandchildlink.current %}
+									aria-current="page"
+								{% endif %}
+							>
+								<span>
+									{{ grandchildlink.title | escape }}
+								</span>
+							</a>
+						</li>
+					{%- endfor -%}
+				</ul>
+			{%- endif -%}
+		</li>
+	{%- endfor -%}
+</ul>

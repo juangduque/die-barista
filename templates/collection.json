@@ -1,0 +1,91 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "1760889696efc95157": {
+      "type": "apps",
+      "blocks": {
+        "essential_countdown_timer_app_block_nwUrtB": {
+          "type": "shopify://apps/essential-countdown-timer/blocks/app-block/722378e8-5a70-4eae-aa89-9e44e8e9f6de",
+          "settings": {
+            "id": "cmgxw7kf20046zkk4ytmjswqw"
+          }
+        }
+      },
+      "block_order": [
+        "essential_countdown_timer_app_block_nwUrtB"
+      ],
+      "disabled": true,
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "layout": "column",
+        "color_scheme": "dark",
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "opacity_overlay": 0,
+        "margin_top": "xs",
+        "margin_bottom": "xs"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 12,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "enable_filtering": false,
+        "enable_sorting": false,
+        "image_filter_ratio": "1/1",
+        "image_filter_fit": "cover",
+        "image_filter_columns": 3,
+        "columns_mobile": "2",
+        "padding_top": "no-indent",
+        "padding_bottom": "s"
+      }
+    },
+    "image-banner": {
+      "type": "image-banner",
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "color_scheme": "",
+        "subheading": "Feature your content",
+        "heading": "Banner title",
+        "heading_size": "h3",
+        "text_information": "This is where you can tell a quick story, highlight a collection, or introduce an event, making your visuals more impactful.",
+        "text_align": "left",
+        "button_label": "Shop now",
+        "button_style": "primary",
+        "button_link": "",
+        "button_label_2": "Zweiter Button",
+        "button_link_2": "",
+        "image_ratio": "adapt",
+        "opacity_overlay": 0.2,
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    }
+  },
+  "order": [
+    "1760889696efc95157",
+    "banner",
+    "product-grid",
+    "image-banner"
+  ]
+}

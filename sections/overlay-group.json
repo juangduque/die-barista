@@ -1,0 +1,92 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "custom.overlay",
+  "name": "t:sections.overlay-group.name",
+  "sections": {
+    "a89f4060-a536-4244-ba83-81ffc524c3e8": {
+      "type": "popup",
+      "blocks": {
+        "sections--20335413657883__a89f4060-a536-4244-ba83-81ffc524c3e8-popup_heading-1": {
+          "type": "popup_heading",
+          "settings": {
+            "heading": "Get Inspired—Join Our Newsletter!"
+          }
+        },
+        "sections--20335413657883__a89f4060-a536-4244-ba83-81ffc524c3e8-popup_description-1": {
+          "type": "popup_description",
+          "settings": {
+            "description": "Use this space to highlight a special promotion, newsletter sign-up incentive, or time-limited deal to capture attention."
+          }
+        },
+        "sections--20335413657883__a89f4060-a536-4244-ba83-81ffc524c3e8-subscribe_form-1": {
+          "type": "subscribe_form",
+          "settings": {
+            "button_label": "Subscribe",
+            "button_style": "primary",
+            "description": "<p>This is optional text that will appear with the subscribe form.</p>"
+          }
+        },
+        "sections--20335413657883__a89f4060-a536-4244-ba83-81ffc524c3e8-social_links-1": {
+          "type": "social_links",
+          "settings": {
+            "show_twitter": false,
+            "show_facebook": false,
+            "show_pinterest": false,
+            "show_instagram": false,
+            "show_tiktok": false,
+            "show_tumblr": false,
+            "show_snapchat": false,
+            "show_youtube": false,
+            "show_vimeo": false
+          }
+        }
+      },
+      "block_order": [
+        "sections--20335413657883__a89f4060-a536-4244-ba83-81ffc524c3e8-popup_heading-1",
+        "sections--20335413657883__a89f4060-a536-4244-ba83-81ffc524c3e8-popup_description-1",
+        "sections--20335413657883__a89f4060-a536-4244-ba83-81ffc524c3e8-subscribe_form-1",
+        "sections--20335413657883__a89f4060-a536-4244-ba83-81ffc524c3e8-social_links-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "show_image": true,
+        "image_layout": "left",
+        "image_fit": "cover",
+        "limit-display": 0,
+        "limit-cache": 30,
+        "position": "center",
+        "popup-id": "",
+        "trigger-open": "delay",
+        "trigger-open-delay": 60,
+        "open-scroll-type": "%",
+        "open-scroll-position": 50,
+        "manual-selector": "",
+        "trigger-close": "none",
+        "trigger-close-delay": 30,
+        "close-scroll-type": "%",
+        "close-scroll-position": 50,
+        "width": 900,
+        "color_scheme": "",
+        "open-animation": "SlideFade",
+        "exit-animation": "SlideFade",
+        "show-overlay": true,
+        "mobile": false,
+        "scrolling": false,
+        "overlay-close": true,
+        "esc-close": true,
+        "f4-close": true
+      }
+    }
+  },
+  "order": [
+    "a89f4060-a536-4244-ba83-81ffc524c3e8"
+  ]
+}

@@ -1,0 +1,137 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "rte_image_style": "custom"
+      }
+    },
+    "all_brands_Tdgigf": {
+      "type": "all-brands",
+      "disabled": true,
+      "name": "t:sections.all_brands.name",
+      "settings": {
+        "per_row": 8,
+        "heading": "Brand's title",
+        "heading_size": "h3",
+        "border_top": true,
+        "border_bottom": false,
+        "padding_top": "s",
+        "padding_bottom": "s",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "custom_liquid_PNETiT": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "custom_css": [
+        ".blog-list-alphabetical {display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;}",
+        ".alphabet-letter {font-weight: bold; margin-top: 20px; border-bottom: 1px solid #ccc;}",
+        ".blog-item {margin: 5px 0;}"
+      ],
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "{% assign sorted_articles = blogs['news'].articles | sort: 'title' %}\n{% assign current_letter = '' %}\n\n<div class=\"blog-list-alphabetical\">\n  {% for article in sorted_articles %}\n    {% assign first_letter = article.title | slice: 0, 1 | upcase %}\n\n    {% if first_letter != current_letter %}\n      {% assign current_letter = first_letter %}\n      <h3 class=\"alphabet-letter\">{{ current_letter }}</h3>\n    {% endif %}\n\n    <div class=\"blog-item\">\n      <a href=\"{{ article.url }}\">{{ article.title }}</a>\n    </div>\n  {% endfor %}\n</div>"
+      }
+    },
+    "cards_grid_798xUG": {
+      "type": "cards-grid",
+      "blocks": {
+        "column_4rtm3i": {
+          "type": "column",
+          "settings": {
+            "column_start": 1,
+            "column_end": 2,
+            "row_start": "1",
+            "row_end": "2",
+            "min_height": "medium",
+            "image": "shopify://shop_images/ARW06983.jpg",
+            "image_size": "cover",
+            "effect_opacity": 0.2,
+            "text_align": "bottom-left",
+            "text_color_scheme": "light",
+            "full_width": false,
+            "subheading": "Die Barista Rösterei",
+            "heading": "Im Herzen von Hameln",
+            "heading_size": "h3",
+            "heading_width": 50,
+            "card_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_4rtm3i"
+      ],
+      "settings": {
+        "columns": 1,
+        "gap": 24,
+        "heading": "",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "margin_top": "xs",
+        "margin_bottom": "xs"
+      }
+    },
+    "about_QWciHA": {
+      "type": "about",
+      "name": "t:sections.about.presets.name",
+      "settings": {
+        "full_width": false,
+        "subheading": "",
+        "heading": "Eine kleine Geschichte",
+        "heading_size": "h1",
+        "text": "<p><br/>Stell dir vor du wachst morgens auf, voller Vorfreude und Motivation für den Tag und dann BAM! Schlechter Kaffee fließt in deinen Magen und du weißt, der Tag kann nur schlecht enden. <strong>Schlechter Kaffee ist wie ein Montagmorgen ohne Ausschlafen oder ein Wochenende voller Arbeiten.</strong> Damit dir genau das nicht passiert, versuchen wir von Die Barista dich so gut es geht von schlechten Kaffee zu befreien und dich mit grandiosen und hochwertigen Bohnen mal so richtig zu verwöhnen. <br/></p><h4><br/>Warum das ganze? Warum ist es uns so wichtig, dass genau du einen himmlischen Kaffee genießen kannst?<br/></h4><p>Bei uns fließt der Kaffee nicht nur durch den Magen in den Kopf, sondern auch durch die Adern ins Herz. <strong>Hinter all dem steckt Cemil Teke, der CEO & Founder von Die Barista.</strong> Der König der Bohnen und der ungeschlagene Meister des Röstens. Man könnte schon glatt behaupten, dass seine Bohnen allein von seinen Blicken gut schmecken. Die Liebe zu Kaffee ist so groß, dass er seit 2016 mit seinem Kaffee verheiratet ist. <br/><br/>Schon seitdem er ein kleines Kind war, quasi beim First look, überkam ihm die Liebe zum Kaffee. In dem Restaurant seiner Eltern erlebte er das erste mal den himmlischen Geruch von Kaffee und spürte Glücksgefühle, die er noch nie zuvor erlebt hatte. Beim Anblick der strahlenden Gesichter der Gäste im Restaurant, wusste er, <strong>Kaffee muss geiles Zeug sein.</strong> Der Duft von Kaffee machte ihn zum glücklichsten Kind in Hessisch Oldendorf. Aber keine Sorge: <strong>jetzt seid auch ihr an der Reihe.</strong></p>",
+        "image": "shopify://shop_images/ARW07170.jpg",
+        "image_2": "shopify://shop_images/ARW06903.jpg",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "image_with_text_699zHq": {
+      "type": "image-with-text",
+      "custom_css": [
+        "@media screen and (min-width: 990px) {.image-with-text__container {display: flex; flex-direction: column; max-width: 100rem; width: 50% !important; } .image-with-text__image {width: 50%; position: relative; } .image-with-text__description {max-width: 80rem; }}"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "height": "21/9",
+        "mobile_height": "1/1",
+        "image": "shopify://shop_images/die_barista_hameln_kaffee_bar_cafe_catering_interview_cemil_teke_moritz_muschik_17.jpg",
+        "display_reverse": "right",
+        "color_scheme": "background-1",
+        "padding_on_off": false,
+        "title": "Die Liebe zum Kaffee",
+        "info_heading_size": "h2",
+        "title_link": "",
+        "text": "<p>Keine Frage, auf Qualität legen wir natürlich auch sehr viel Wert, wer will schon einen schlecht gerösteten Kaffee trinken.</p><h2>Allein durch unsere Liebe kann der Kaffee ja auch nur perfekt werden.</h2><p>Man könnte sagen, die Auswahl unserer Bohnen läuft wie ein Dating-Format im Fernsehen ab: ,,Woher kommen die Bohnen?‘‘ ,,unter welchen Bedingungen leben die Farmer und Angestellten vor Ort?‘‘ ,,wie hochwertig sind die Bohnen?‘‘, sind unsere Go-To Fragen und Vorraussetzungen um unser perfekt Match zu finden. Aber was unsers ist, ist auch euers.</p><p>Damit ihr auch genug Auswahl habt, bieten wir euch natürlich auch genügend Kandidaten an. Verschiedene, sich wechselnde Espresso und Filterkaffee Röstungen und experimentelle Blends. Keine Sorge: du musst dich einfach ein bisschen ausprobieren, dann findest du dein perfect Match (vielleicht ja mit unseren Probierpaketen👀).</p><p>Durch unser klassisches Trömmelröstverfahren verpassen wir dem Kaffee einen Glow-up, damit er dich nach deinem sorgfältigen Auswahlverfahren in ganz andere Dimensionen befördert.<br/></p><h3>Schlechter Kaffee ist Körperverlertzung!</h3><h5>- Cemil</h5>",
+        "text_position": "top",
+        "button_label": "",
+        "button_link": "",
+        "button_second_label": "",
+        "button_second_link": "",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "all_brands_Tdgigf",
+    "custom_liquid_PNETiT",
+    "cards_grid_798xUG",
+    "about_QWciHA",
+    "image_with_text_699zHq"
+  ]
+}

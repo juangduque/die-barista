@@ -1,0 +1,197 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "rte_image_style": "custom"
+      }
+    },
+    "cards-grid": {
+      "type": "cards-grid",
+      "blocks": {
+        "block-1": {
+          "type": "column",
+          "settings": {
+            "column_start": 1,
+            "column_end": 2,
+            "row_start": "1",
+            "row_end": "2",
+            "min_height": "medium",
+            "image": "shopify://shop_images/ARW06983.jpg",
+            "image_size": "cover",
+            "effect_opacity": 0.2,
+            "text_align": "bottom-left",
+            "text_color_scheme": "light",
+            "full_width": false,
+            "subheading": "die Barista Rösterei",
+            "heading": "Roasted in Hameln",
+            "heading_size": "h3",
+            "heading_width": 50,
+            "card_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "block-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "columns": 1,
+        "gap": 24,
+        "heading": "",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "margin_top": "xs",
+        "margin_bottom": "s"
+      }
+    },
+    "about": {
+      "type": "about",
+      "disabled": true,
+      "settings": {
+        "full_width": false,
+        "subheading": "Here can be a short introduction to your content",
+        "heading": "Introduce your brand here",
+        "heading_size": "h3",
+        "text": "<p>Here can be a brief introduction to your brand, highlighting what makes it special and unique. Use this space to create a strong first impression and communicate the essence of your brand.</p>",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "block-1": {
+          "type": "column",
+          "settings": {
+            "icon": "return",
+            "heading": "Feature Title Here",
+            "text": "Showcase craftsmanship, product benefits, or an exclusive offer.",
+            "button_label": "Learn more",
+            "button_link": ""
+          }
+        },
+        "block-2": {
+          "type": "column",
+          "settings": {
+            "icon": "earth",
+            "heading": "Feature Title Here",
+            "text": "Showcase craftsmanship, product benefits, or an exclusive offer.",
+            "button_label": "Learn more",
+            "button_link": ""
+          }
+        },
+        "block-3": {
+          "type": "column",
+          "settings": {
+            "icon": "check_mark_4",
+            "heading": "Feature Title Here",
+            "text": "Showcase craftsmanship, product benefits, or an exclusive offer.",
+            "button_label": "Learn more",
+            "button_link": ""
+          }
+        },
+        "block-4": {
+          "type": "column",
+          "settings": {
+            "icon": "lock",
+            "heading": "Feature Title Here",
+            "text": "Showcase craftsmanship, product benefits, or an exclusive offer.",
+            "button_label": "Learn more",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "block-1",
+        "block-2",
+        "block-3",
+        "block-4"
+      ],
+      "disabled": true,
+      "settings": {
+        "multicolumn_to_show": 4,
+        "full_width": false,
+        "image_width": "medium",
+        "object_fit": "contain",
+        "info_heading_size": "h4",
+        "swipe_on_mobile": true,
+        "border_top": true,
+        "border_bottom": true,
+        "padding_top": "s",
+        "padding_bottom": "s",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "form": {
+      "type": "contact-form",
+      "blocks": {
+        "image-with-text": {
+          "type": "image-with-text",
+          "settings": {
+            "color_scheme": "background-4",
+            "heading": "<p>Ich freue mich auf deine Nachricht</p>",
+            "heading_size": "h2",
+            "image": "shopify://shop_images/ARW06928.jpg",
+            "effect_opacity": 0.2,
+            "name": "Cemil",
+            "author_position": "Kaffeeliebhaber & CEO of Barista",
+            "image_author": "shopify://shop_images/diebarista_kaffeeaushameln_cemil.png"
+          }
+        }
+      },
+      "block_order": [
+        "image-with-text"
+      ],
+      "custom_css": [
+        "@media screen and (min-width: 990px) {.contact-form .image-with-text__left {width: 50%; min-height: 56rem; padding: 4rem; } .contact-form {gap: 10rem; } .contact-form__text {max-width: 100rem; }}",
+        "@media screen and (min-width: 1300px) {.contact-form__container {gap: 5rem; }}"
+      ],
+      "settings": {
+        "position": "right",
+        "full_width": false,
+        "heading": "Kontakt",
+        "heading_size": "h3",
+        "description": "<p>Du hast Fragen zu unseren Produkten oder brauchst Tipps für dein perfektes Brühergebnis zuhause? </p><p>Du hast ein Büro oder eine Praxis und möchtest deinen Mitarbeitern und deinen Kunden etwas Gutes tun? <br/><br/>Lass dich von uns beliefern und serviere deinen Gästen einen köstlichen Kaffee. Komm hierzu einfach kurz auf uns zu und wir melden uns mit allen Details bei dir zurück.  </p><p></p>",
+        "additional_text": "<p>Schreib uns jederzeit. Wir sind immer da, um uns um dein Anliegen zu kümmern.</p>",
+        "margin_top": "xs",
+        "margin_bottom": "m"
+      }
+    },
+    "contact_form_6eRbW9": {
+      "type": "contact-form",
+      "disabled": true,
+      "name": "t:sections.contact-form.presets.name",
+      "settings": {
+        "position": "right",
+        "full_width": true,
+        "heading": "Contact Us",
+        "heading_size": "h3",
+        "description": "<p>Use the form below to send us a message—our team will respond as quickly as possible.</p>",
+        "additional_text": "<p>Reach out anytime. We’re here to help with your questions or feedback.</p>",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "cards-grid",
+    "about",
+    "multicolumn",
+    "form",
+    "contact_form_6eRbW9"
+  ]
+}

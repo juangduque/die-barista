@@ -1,0 +1,10 @@
+<div class="cart-shipping" data-min-spend="{{ settings.min_spend | times: 100.0 }}" data-total="{{ cart.total_price }}"
+  data-message = " {{ settings.message_shipping }}">
+  <span class="cart-shipping__progress">
+    <span class="cart-shipping__progress-current"></span>
+  </span>
+  <p class="cart-shipping__message cart-shipping__message_default h4 active"></p>
+  <p class="cart-shipping__message cart-shipping__message_success h4">
+    {{ settings.message_shipping_free }}
+  </p>
+</div>

@@ -1,0 +1,161 @@
+{% comment %}
+  Section: Blog/Category Navigation
+  - Desktop: inline buttons/grid
+  - Mobile: horizontal scroll
+{% endcomment %}
+
+<section class="catnav">
+  <div class="catnav__inner page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="catnav__title">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% assign menu_handle = section.settings.menu %}
+    {% if menu_handle != blank and linklists[menu_handle] != blank %}
+      <nav class="catnav__track" aria-label="Kategorien Navigation">
+        {% for link in linklists[menu_handle].links %}
+          <a class="catnav__item" href="{{ link.url }}">
+            <span class="catnav__item-title">{{ link.title }}</span>
+
+            {% if section.settings.show_sub_link %}
+              <span class="catnav__item-sub">
+                {{ section.settings.sub_link_label }}
+                <span class="catnav__arrow" aria-hidden="true">›</span>
+              </span>
+            {% endif %}
+          </a>
+        {% endfor %}
+      </nav>
+    {% else %}
+      <div class="catnav__empty">
+        Bitte wähle in den Section-Settings ein Menü aus.
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .catnav { width: 100%; }
+  .catnav__inner { padding-top: 12px; padding-bottom: 30px; }
+
+  .catnav__title {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  /* Track */
+  .catnav__track {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  flex-wrap: wrap; /* erlaubt Umbruch wenn zu viele Items */
+}
+
+.catnav__item {
+  width: fit-content;
+}
+
+
+  /* Button look */
+  .catnav__item {
+    display: inline-flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    padding: 10px 12px;
+    border-radius: 12px;
+    transition: background 0.15s ease;
+  }
+  .catnav__item:hover { background: rgba(0,0,0,0.04); }
+
+  .catnav__item-title {
+    font-size: 28px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .catnav__item-sub {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.8;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .catnav__arrow { font-size: 18px; line-height: 1; }
+
+  .catnav__empty {
+    padding: 12px;
+    border: 1px dashed rgba(0,0,0,0.25);
+    border-radius: 12px;
+    opacity: 0.8;
+  }
+
+  /* Mobile: horizontal scroll */
+  @media (max-width: 749px) {
+  .catnav__track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    overflow-x: auto;
+    gap: 14px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .catnav__track::-webkit-scrollbar { display: none; }
+
+  .catnav__item {
+    scroll-snap-align: start;
+    border-radius: 14px;
+    white-space: nowrap;
+  }
+
+  .catnav__item-title {
+    font-size: 22px;
+  }
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "Category Navigation",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Überschrift (optional)",
+      "default": "test"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menü auswählen"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sub_link",
+      "label": "„Beiträge ansehen“ anzeigen",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sub_link_label",
+      "label": "Text unter dem Titel",
+      "default": "Beiträge ansehen"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Navigation (Scroll Mobile)"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,302 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "layout": "column",
+        "color_scheme": "dark",
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "opacity_overlay": 0,
+        "margin_top": "xs",
+        "margin_bottom": "xs"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "disabled": true,
+      "settings": {
+        "products_per_page": 12,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_sku": false,
+        "show_desc": false,
+        "enable_filtering": false,
+        "enable_sorting": false,
+        "image_filter_ratio": "1/1",
+        "image_filter_fit": "cover",
+        "image_filter_columns": 3,
+        "columns_mobile": "2",
+        "padding_top": "no-indent",
+        "padding_bottom": "s"
+      }
+    },
+    "image-banner": {
+      "type": "image-banner",
+      "disabled": true,
+      "settings": {
+        "full_width": true,
+        "color_scheme": "",
+        "subheading": "Feature your content",
+        "heading": "Banner title",
+        "heading_size": "h3",
+        "text_information": "This is where you can tell a quick story, highlight a collection, or introduce an event, making your visuals more impactful.",
+        "text_align": "left",
+        "button_label": "Shop now",
+        "button_style": "primary",
+        "button_link": "",
+        "button_label_2": "Zweiter Button",
+        "button_link_2": "",
+        "image_ratio": "adapt",
+        "opacity_overlay": 0.2,
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "products_grid_VihQmC": {
+      "type": "products-grid",
+      "name": "t:sections.products-grid.name",
+      "settings": {
+        "heading": "Tassen und Becher",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "products_per_page": 8,
+        "product_limit": 4,
+        "collection": "kaffeebecher-tassen",
+        "product_list": [],
+        "sort": "products_low",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "columns_mobile": "2",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "products_grid_fxNz9h": {
+      "type": "products-grid",
+      "name": "t:sections.products-grid.name",
+      "settings": {
+        "heading": "Zubereiter",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "products_per_page": 8,
+        "product_limit": 4,
+        "collection": "",
+        "product_list": [
+          "aeropress-coffee-maker-clear",
+          "aeropress-coffee-maker-das-original",
+          "aeropress-coffee-maker-go-inkl-100-papierfilter",
+          "brewista-tornado-duo-grosse-2-glas-dripper",
+          "hario-v60-01-rot-coffee-dripper",
+          "hario-v60-02-coffee-dripper",
+          "v60-glas-bruh-kit",
+          "moccamaster-kbg-select-filterkaffeemaschine"
+        ],
+        "sort": "alphabetical",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "columns_mobile": "2",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "products_grid_c3pAM6": {
+      "type": "products-grid",
+      "name": "t:sections.products-grid.name",
+      "settings": {
+        "heading": "Zubehör",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "products_per_page": 8,
+        "product_limit": 4,
+        "collection": "",
+        "product_list": [
+          "brewista-smart-scale-ii-waage",
+          "comandante-c40-mk4-nitro-blade-black-kaffeemuhle",
+          "rhino-classic-tamper-matte-fur-tischkanten",
+          "rhino-pro-schwarz-58mm-tamper"
+        ],
+        "sort": "alphabetical",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "columns_mobile": "2",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "products_grid_aQFcPy": {
+      "type": "products-grid",
+      "name": "t:sections.products-grid.name",
+      "settings": {
+        "heading": "Filterpapier",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "products_per_page": 8,
+        "product_limit": 4,
+        "collection": "",
+        "product_list": [
+          "aeropress-papier-micro-filter-200-stuck-xl-weiss",
+          "aeropress-papier-micro-filter-350-stuck-standard-weiss",
+          "hario-v60-papierfilter-100-stuck"
+        ],
+        "sort": "alphabetical",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "columns_mobile": "2",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "products_grid_bgiUr9": {
+      "type": "products-grid",
+      "name": "t:sections.products-grid.name",
+      "settings": {
+        "heading": "Wasserkocher",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "products_per_page": 8,
+        "product_limit": 4,
+        "collection": "",
+        "product_list": [
+          "brewista-artisan-1-0l-gooseneck-mattschwarz-wasserkocher-copy",
+          "brewista-artisan-1-0l-gooseneck-mattschwarz-wasserkocher"
+        ],
+        "sort": "alphabetical",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "columns_mobile": "2",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "brands_Ub6t6a": {
+      "type": "brands",
+      "blocks": {
+        "column_XP8ztQ": {
+          "type": "column",
+          "settings": {
+            "image_width": 100,
+            "brand_link": ""
+          }
+        },
+        "column_weiDfV": {
+          "type": "column",
+          "settings": {
+            "image_width": 100,
+            "brand_link": ""
+          }
+        },
+        "column_jikPLG": {
+          "type": "column",
+          "settings": {
+            "image_width": 100,
+            "brand_link": ""
+          }
+        },
+        "column_wBKHVR": {
+          "type": "column",
+          "settings": {
+            "image_width": 100,
+            "brand_link": ""
+          }
+        },
+        "column_HWX7CV": {
+          "type": "column",
+          "settings": {
+            "image_width": 100,
+            "brand_link": ""
+          }
+        },
+        "column_4EfM9y": {
+          "type": "column",
+          "settings": {
+            "image_width": 100,
+            "brand_link": ""
+          }
+        },
+        "column_PG34zn": {
+          "type": "column",
+          "settings": {
+            "image_width": 100,
+            "brand_link": ""
+          }
+        },
+        "column_YxGecU": {
+          "type": "column",
+          "settings": {
+            "image_width": 100,
+            "brand_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_XP8ztQ",
+        "column_weiDfV",
+        "column_jikPLG",
+        "column_wBKHVR",
+        "column_HWX7CV",
+        "column_4EfM9y",
+        "column_PG34zn",
+        "column_YxGecU"
+      ],
+      "disabled": true,
+      "name": "t:sections.brands.name",
+      "settings": {
+        "subheading": "",
+        "border_top": false,
+        "border_bottom": false,
+        "padding_top": "s",
+        "padding_bottom": "s",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "image-banner",
+    "products_grid_VihQmC",
+    "products_grid_fxNz9h",
+    "products_grid_c3pAM6",
+    "products_grid_aQFcPy",
+    "products_grid_bgiUr9",
+    "brands_Ub6t6a"
+  ]
+}

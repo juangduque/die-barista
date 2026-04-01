@@ -1,0 +1,21 @@
+.list-social {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list-social__item .icon {
+  height: 1.8rem;
+  width: 1.8rem;
+  color: rgba(var(--color-social));
+  transition: var(--duration-default);
+}
+
+.list-social__item:hover .icon {
+  color: rgb(var(--color-accent));
+}
+
+.list-social__link {
+  align-items: center;
+  display: flex;
+  padding: 0.4rem;
+}

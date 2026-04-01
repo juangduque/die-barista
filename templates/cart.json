@@ -1,0 +1,74 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "cart-items": {
+      "type": "main-cart-items",
+      "settings": {
+        "image_fit": "cover",
+        "show_vendor": false,
+        "padding_top": "no-indent",
+        "padding_bottom": "no-indent"
+      }
+    },
+    "cart-footer": {
+      "type": "main-cart-footer",
+      "blocks": {
+        "subtotal": {
+          "type": "subtotal",
+          "settings": {}
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "subtotal",
+        "buttons"
+      ],
+      "settings": {
+        "show_cart_note": false,
+        "padding_top": "no-indent",
+        "padding_bottom": "no-indent"
+      }
+    },
+    "product-carousel": {
+      "type": "product-carousel",
+      "settings": {
+        "heading": "Weitere Produkte",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "product_list": [
+          "probierset-espresso",
+          "probierset-filterkaffee",
+          "probierset-vollautomat"
+        ],
+        "product_limit": 3,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": false,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "controls_color_scheme": "light",
+        "columns_mobile": "2",
+        "margin_top": "s",
+        "margin_bottom": "xs"
+      }
+    }
+  },
+  "order": [
+    "cart-items",
+    "cart-footer",
+    "product-carousel"
+  ]
+}

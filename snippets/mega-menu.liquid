@@ -1,0 +1,185 @@
+<div class="container mega-menu-main mega-menu-main-{{ block_items }}">
+	<div class="mega-menu__wrapper">
+		<ul class="mega-menu__list list-unstyled focus-inset">
+			{% for link in link.links %}
+				<li>
+					<a
+						href="{{ link.url }}"
+						class="mega-menu__link header__menu-item list-menu__item link link--text focus-inset caption-large{% if link.current %} header__menu-item--active{% endif %}"
+						{% if link.current %}
+							aria-current="page"
+						{% endif %}
+					>
+						<span>
+							{{ link.title | escape }}
+						</span>
+					</a>
+					{% if link.links != blank %}
+						<ul class="mega-menu__submenu list-menu motion-reduce">
+							{%- for link in link.links -%}
+								{% assign mega_link_title = link.title | escape | downcase %}
+								<li data-hover-opacity="6">
+									<a
+										href="{{ link.url }}"
+										class="mega-menu__submenu-item header__menu-item list-menu__item link link--text focus-inset caption-large{% if link.current %} header__menu-item--active{% endif %} {% if mega_link_title == "sale" %}item-sale{% endif %}"
+										{% if link.current %}
+											aria-current="page"
+										{% endif %}
+									>
+										<span>
+											{{ link.title | escape }}
+										</span>
+									</a>
+								</li>
+							{%- endfor -%}
+						</ul>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% for block in blocks %}
+		{% assign mega_menu_trigger = block.settings.mega_menu_trigger
+			| handle
+			| strip
+		%}
+		{% if link.handle == mega_menu_trigger %}
+			{% if block.settings.show_mega_menu_1
+				or block.settings.show_mega_menu_2
+			%}
+				<div class="mega-menu__items">
+					{% if block.settings.show_mega_menu_1 %}
+						<div class="mega-menu__item">
+							<div class="mega-menu__img">
+								{% if block.settings.image_1 != blank %}
+									{%- capture sizes -%}
+                  (min-width: 1700px) 1700px, (min-width: 1420px) 1420px, (min-width: 1100px) 1100px, (min-width: 710px) 710px, calc(100vw - 30px)
+                {%- endcapture -%}
+									{{
+										block.settings.image_1
+										| image_url: width: block.settings.image_1.width
+										| image_tag:
+											loading: 'lazy',
+											sizes: sizes,
+											widths: '360, 550, 710, 1100, 1420, 1700, 1920',
+											width: block.settings.image_1.width,
+											class: 'mega-menu__item-image'
+									}}
+								{% else %}
+									{{
+										'hero-apparel-1'
+										| placeholder_svg_tag: 'placeholder-svg'
+									}}
+								{%- endif -%}
+							</div>
+
+							{%- if block.settings.heading_1 != blank
+								or block.settings.button_label_1 != blank
+							-%}
+								<div class="title-wrapper">
+									{%- if block.settings.heading_1 != blank -%}
+										<h2 class="mega-menu__item-heading">
+											{{ block.settings.heading_1 }}
+										</h2>
+									{%- endif -%}
+									{% if block.settings.button_label_1 != blank -%}
+										<a
+											{% if block.settings.button_link_1.url != blank %}
+												href="{{ block.settings.button_link_1 }}"
+											{% endif %}
+											class="button button--simple-move"
+											{% if block.settings.button_link_1.url == blank %}
+												aria-disabled="true"
+											{% endif %}
+										>
+											<span>{{ block.settings.button_label_1 }}</span>
+											<span>
+												{% render 'icon-button-arrow' %}
+											</span>
+										</a>
+									{% endif %}
+								</div>
+							{%- endif -%}
+
+							<a
+								{% if block.settings.button_link_1.url != blank %}
+									href="{{ block.settings.button_link_1 }}"
+								{% endif %}
+								class="mega-menu__item-link-overlay"
+								{% if block.settings.button_link_1.url == blank %}
+									aria-disabled="true"
+								{% endif %}
+								aria-label="Promo banner"
+							></a>
+						</div>
+					{% endif %}
+					{% if block.settings.show_mega_menu_2 %}
+						<div class="mega-menu__item">
+							<div class="mega-menu__img">
+								{% if block.settings.image_2 != blank %}
+									{%- capture sizes -%}
+                  (min-width: 1700px) 1700px, (min-width: 1420px) 1420px, (min-width: 1100px) 1100px, (min-width: 710px) 710px, calc(100vw - 30px)
+                {%- endcapture -%}
+									{{
+										block.settings.image_2
+										| image_url: width: block.settings.image_2.width
+										| image_tag:
+											loading: 'lazy',
+											sizes: sizes,
+											widths: '360, 550, 710, 1100, 1420, 1700, 1920',
+											width: block.settings.image_2.width,
+											class: 'mega-menu__item-image'
+									}}
+								{% else %}
+									{{
+										'hero-apparel-2'
+										| placeholder_svg_tag: 'placeholder-svg'
+									}}
+								{%- endif -%}
+							</div>
+
+							{%- if block.settings.heading_2 != blank
+								or block.settings.button_label_2 != blank
+							-%}
+								<div class="title-wrapper">
+									{%- if block.settings.heading_2 != blank -%}
+										<h2 class="mega-menu__item-heading">
+											{{ block.settings.heading_2 }}
+										</h2>
+									{%- endif -%}
+									{% if block.settings.button_label_2 != blank -%}
+										<a
+											{% if block.settings.button_link_2.url != blank %}
+												href="{{ block.settings.button_link_2 }}"
+											{% endif %}
+											class="button button--simple-move"
+											{% if block.settings.button_link_2.url == blank %}
+												aria-disabled="true"
+											{% endif %}
+										>
+											<span>{{ block.settings.button_label_2 }}</span>
+											<span>
+												{% render 'icon-button-arrow' %}
+											</span>
+										</a>
+									{% endif %}
+								</div>
+							{%- endif -%}
+
+							<a
+								{% if block.settings.button_link_2.url != blank %}
+									href="{{ block.settings.button_link_2 }}"
+								{% endif %}
+								class="mega-menu__item-link-overlay"
+								{% if block.settings.button_link_2.url == blank %}
+									aria-disabled="true"
+								{% endif %}
+								aria-label="Promo banner"
+							></a>
+						</div>
+					{% endif %}
+				</div>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+</div>

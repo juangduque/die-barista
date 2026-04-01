@@ -1,0 +1,62 @@
+.information-bar__border-top {
+  border-top: 0.1rem solid rgb(var(--color-border));
+}
+.information-bar__border-bottom {
+  border-bottom: 0.1rem solid rgb(var(--color-border));
+}
+@media screen and (min-width: 750px) {
+  .information-bar__wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 2rem 4rem;
+    flex-wrap: wrap;
+  }
+}
+@media screen and (min-width: 800px) {
+  .information-bar__wrapper {
+    gap: 2rem 4rem;
+  }
+}
+.information-bar__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+@media screen and (max-width: 750px) {
+  .information-bar__link {
+    width: 100% !important;
+  }
+}
+.information-bar__link:not([aria-disabled=true]):hover .link-hover-line::after {
+  width: 100%;
+}
+.information-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+@media screen and (min-width: 576px) {
+  .information-bar__inner {
+    gap: 0.8rem;
+  }
+}
+@media screen and (min-width: 800px) {
+  .information-bar__inner {
+    gap: 1.2rem;
+  }
+}
+.information-bar__message {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  font-weight: var(--font-subtitle-weight);
+  pointer-events: none;
+  padding: 0 0 0.3rem;
+  max-width: 25rem;
+  color: rgb(var(--color-foreground-secondary));
+}
+.information-bar .information-bar__link.swiper-slide {
+  width: initial;
+}

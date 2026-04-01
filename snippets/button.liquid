@@ -1,0 +1,38 @@
+{% comment %}
+
+
+{% endcomment %}
+{% liquid
+	assign btn_label = layout.settings.button_label
+	assign btn_link = layout.settings.button_link
+	assign btn_style = layout.settings.button_style
+	assign enable_arrow = layout.settings.button_arrow
+	if blog_link != blank
+		assign btn_label = 'Read all'
+		assign btn_link = blog_link
+	endif
+%}
+
+{% if btn_label != blank %}
+	<a
+		{% if btn_link != blank %}
+			href="{{ btn_link }}"
+		{% endif %}
+		class="button button--{% if simple != true %}{{ btn_style }} button--primary-size {% else %}simple{% endif %}"
+		{% if btn_link == blank %}
+			aria-disabled="true"
+		{% endif %}
+	>
+		{% if simple and icon == true %}
+			<span>
+				{% render 'icon-instagram' %}
+			</span>
+		{% endif %}
+		{{ btn_label | escape }}
+		{% if enable_arrow and simple != true %}
+			<span>
+				{% render 'icon-button-arrow' %}
+			</span>
+		{% endif %}
+	</a>
+{% endif %}

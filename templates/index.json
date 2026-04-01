@@ -1,0 +1,1166 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_3xcraf": {
+      "type": "image-banner",
+      "disabled": true,
+      "custom_css": [
+        ".image-banner__button--secondary {background-color: lightgray;}"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "full_width": false,
+        "color_scheme": "scheme-dad14f79-dcd2-40eb-ad8c-425a5dcfab3d",
+        "subheading": "",
+        "heading": "",
+        "heading_size": "h1",
+        "text_information": "",
+        "text_align": "center",
+        "button_label": "JETZT SPAREN >>",
+        "button_style": "primary",
+        "button_link": "shopify://collections/special",
+        "button_label_2": "",
+        "button_link_2": "shopify://collections/kaffeeabo",
+        "image": "shopify://shop_images/LP_Black_Friday_1.png",
+        "mobile_image": "shopify://shop_images/LP_Black_Friday_1500_x_1500_px_1.png",
+        "image_ratio": "landscape",
+        "opacity_overlay": 0,
+        "margin_top": "xs",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "image_banner_ygxU3Q": {
+      "type": "image-banner",
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "full_width": false,
+        "color_scheme": "background-3",
+        "subheading": "",
+        "heading": "<strong>KAFFEE FÜR JEDEN LIEBHABER</strong>",
+        "heading_size": "h1",
+        "text_information": "Erlebe mit uns die besten Kaffees der Welt, aus nachhaltigem Anbau, täglich frisch geröstet. Unterstütze mit jeder Tasse Kaffeefarmer:innen und ihre Familien vor Ort.",
+        "text_align": "left",
+        "button_label": "Alle Kaffees",
+        "button_style": "primary",
+        "button_link": "shopify://collections/kaffee",
+        "button_label_2": "ZUM ABO",
+        "button_link_2": "shopify://collections/kaffeeabo",
+        "image": "shopify://shop_images/DSC074232.jpg",
+        "image_ratio": "landscape",
+        "opacity_overlay": 0.2,
+        "margin_top": "xs",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "image_banner_KiRrqk": {
+      "type": "image-banner",
+      "disabled": true,
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "full_width": false,
+        "color_scheme": "scheme-6b1e0909-00dd-42c2-b82d-98da3f0504e7",
+        "subheading": "",
+        "heading": "🎅 SANTAS COZY ROAST IST ZURÜCK!",
+        "heading_size": "h1",
+        "text_information": "Unser limitierter Winterkaffee ist zurück. Solange der Vorrat reicht.",
+        "text_align": "left",
+        "button_label": "JETZT BESTELLEN",
+        "button_style": "secondary",
+        "button_link": "shopify://products/santas-cosy-roast",
+        "button_label_2": "",
+        "button_link_2": "shopify://collections/kaffee",
+        "image": "shopify://shop_images/CosyRoastSnapshot-2_b398dd5b-7414-484e-adc1-e32c3c80c269.jpg",
+        "image_ratio": "landscape",
+        "opacity_overlay": 0.2,
+        "margin_top": "xs",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "cards-grid": {
+      "type": "cards-grid",
+      "blocks": {
+        "column_PinLjY": {
+          "type": "column",
+          "settings": {
+            "column_start": 1,
+            "column_end": 2,
+            "row_start": "1",
+            "row_end": "unset",
+            "min_height": "small",
+            "image": "shopify://shop_images/tabitha-turner-KWZ-rg9o76A-unsplash.jpg",
+            "image_size": "cover",
+            "effect_opacity": 0.3,
+            "text_align": "bottom-left",
+            "text_color_scheme": "light",
+            "full_width": true,
+            "subheading": "Espresso",
+            "heading": "Für deinen Siebträger",
+            "heading_size": "h1",
+            "heading_width": 30,
+            "card_link": "shopify://collections/espressobohnen"
+          }
+        },
+        "block-1": {
+          "type": "column",
+          "settings": {
+            "column_start": 2,
+            "column_end": 3,
+            "row_start": "1",
+            "row_end": "unset",
+            "min_height": "small",
+            "image": "shopify://shop_images/nivona-caferomatica-nicr793-grau.jpg",
+            "image_size": "cover",
+            "effect_opacity": 0.3,
+            "text_align": "bottom-left",
+            "text_color_scheme": "light",
+            "full_width": true,
+            "subheading": "Für den",
+            "heading": "Vollautomat",
+            "heading_size": "h1",
+            "heading_width": 50,
+            "card_link": "shopify://collections/vollautomatenkaffee"
+          }
+        },
+        "block-2": {
+          "type": "column",
+          "settings": {
+            "column_start": 3,
+            "column_end": 4,
+            "row_start": "unset",
+            "row_end": "unset",
+            "min_height": "small",
+            "image": "shopify://shop_images/szymon-satora-YXyP5nlzKjM-unsplash.jpg",
+            "image_size": "cover",
+            "effect_opacity": 0.3,
+            "text_align": "bottom-left",
+            "text_color_scheme": "light",
+            "full_width": true,
+            "subheading": "Der perfekte",
+            "heading": "Filterkaffee",
+            "heading_size": "h1",
+            "heading_width": 50,
+            "card_link": "shopify://collections/filter"
+          }
+        },
+        "column_mMNiff": {
+          "type": "column",
+          "settings": {
+            "column_start": 4,
+            "column_end": 5,
+            "row_start": "1",
+            "row_end": "unset",
+            "min_height": "small",
+            "image": "shopify://shop_images/DSC07429.jpg",
+            "image_size": "cover",
+            "effect_opacity": 0.4,
+            "text_align": "bottom-left",
+            "text_color_scheme": "light",
+            "full_width": true,
+            "subheading": "Probiersets",
+            "heading": "Finde deinen Lieblingskaffee",
+            "heading_size": "h1",
+            "heading_width": 30,
+            "card_link": "shopify://collections/die-barista-probierpaket"
+          }
+        }
+      },
+      "block_order": [
+        "column_PinLjY",
+        "block-1",
+        "block-2",
+        "column_mMNiff"
+      ],
+      "custom_css": [
+        ".cards-grid {margin-top: 2px;}",
+        ".cards-grid__item,.cards-grid__image {border-radius: 0px !important;}"
+      ],
+      "settings": {
+        "columns": 4,
+        "gap": 2,
+        "heading": "",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "margin_top": "no-indent",
+        "margin_bottom": "xs"
+      }
+    },
+    "ss_feature_7_i7YEKH": {
+      "type": "ss-feature-7",
+      "blocks": {
+        "item_7XhLbD": {
+          "type": "item",
+          "settings": {
+            "icon": "love",
+            "heading": "<h3>Frisch geröstet mit Liebe zum Detail</h3>",
+            "text": "<p>Unsere Kaffees werden in kleinen Chargen schonend geröstet – so entfalten sich Aroma und Charakter jeder Bohne optimal. Wir lieben Vielfalt und bringen dir nur Kaffee in die Tasse, hinter dem wir selbst mit voller Überzeugung stehen.</p>",
+            "image_block_bg": "rgba(0,0,0,0)",
+            "image_svg_color": ""
+          }
+        },
+        "item_APiRVL": {
+          "type": "item",
+          "settings": {
+            "icon": "time",
+            "heading": "<h3>Monatliche Kaffeelieferungen</h3>",
+            "text": "<p>Ob Abo oder Einzelbestellung: Wir machen es dir leicht, stets besten Kaffee im Haus zu haben. Unsere Röstungen kommen zuverlässig, frisch und flexibel zu dir – ganz nach deinem Rhythmus.</p><p></p>",
+            "image_block_bg": "rgba(0,0,0,0)",
+            "image_svg_color": ""
+          }
+        },
+        "item_x4w7wz": {
+          "type": "item",
+          "settings": {
+            "icon": "globe",
+            "heading": "<h3>Wissen, das wirklich weiterhilft</h3>",
+            "text": "<p>Du willst mehr über Kaffee erfahren? Auf unserer Plattform findest du praktische Tipps, fundiertes Wissen und Empfehlungen rund um Bohnen, Zubereitung und Zubehör – klar, ehrlich und ohne Fachchinesisch.</p>",
+            "image_block_bg": "rgba(0,0,0,0)",
+            "image_svg_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_7XhLbD",
+        "item_APiRVL",
+        "item_x4w7wz"
+      ],
+      "name": "Vorteile",
+      "settings": {
+        "heading": "",
+        "heading_custom": false,
+        "heading_font": "archivo_n8",
+        "heading_size": 26,
+        "heading_size_mobile": 22,
+        "heading_height": 130,
+        "heading_align": "center",
+        "items_row": 3,
+        "items_row_mobile": 1,
+        "items_gap": 20,
+        "items_gap_mobile": 20,
+        "items_style": "slider",
+        "items_mt": 0,
+        "items_padding_vertical": 0,
+        "items_padding_horizontal": 24,
+        "items_radius": 0,
+        "image_block_width": 25,
+        "image_block_width_mobile": 30,
+        "image_block_radius": 200,
+        "image_width": 100,
+        "image_width_mobile": 80,
+        "item_heading_custom": false,
+        "item_heading_font": "roboto_n5",
+        "item_heading_size": 22,
+        "item_heading_size_mobile": 18,
+        "item_heading_height": 130,
+        "item_heading_align": "center",
+        "item_heading_mt": 24,
+        "item_text_custom": false,
+        "item_text_font": "roboto_n5",
+        "item_text_size": 14,
+        "item_text_size_mobile": 14,
+        "item_text_height": 130,
+        "item_text_align": "center",
+        "item_text_mt": 12,
+        "heading_color": "#000000",
+        "items_bg_color": "#ffffff",
+        "item_heading_color": "#181818",
+        "item_text_color": "#181818",
+        "pagination_color": "#181818",
+        "background_color": "#ffffff",
+        "background_gradient": "",
+        "border_color": "#000000",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top": 20,
+        "padding_bottom": 36,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "content_width": 160,
+        "border_thickness": 0
+      }
+    },
+    "rich_text_yJAiaU": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_9pYtFr": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>BESTSELLER</p>",
+            "heading_size": "medium"
+          }
+        }
+      },
+      "block_order": [
+        "heading_9pYtFr"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "background-1",
+        "full_width": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent",
+        "padding_top": "s",
+        "padding_bottom": "xs"
+      }
+    },
+    "product-carousel": {
+      "type": "product-carousel",
+      "disabled": true,
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "product_list": [
+          "santas-cosy-roast",
+          "italian-stallone-espresso-500g",
+          "probierset-espresso",
+          "die-espresso-mischung-500g",
+          "der-italiener",
+          "die-crema"
+        ],
+        "product_limit": 6,
+        "image_ratio": "square",
+        "image_fit": "cover",
+        "show_secondary_image": false,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "controls_color_scheme": "light",
+        "columns_mobile": "2",
+        "margin_top": "xs",
+        "margin_bottom": "s"
+      }
+    },
+    "featured_products_rinPfW": {
+      "type": "featured-products",
+      "name": "t:sections.featured-products.name",
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "product_list": [
+          "italian-stallone-espresso-500g",
+          "probierset-espresso",
+          "die-espresso-mischung-500g",
+          "der-italiener",
+          "die-crema",
+          "kiez-crema-500g"
+        ],
+        "product_limit": 6,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": false,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "columns_mobile": "2",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "rich_text_kznnaN": {
+      "type": "rich-text",
+      "blocks": {
+        "button_EbXVC4": {
+          "type": "button",
+          "settings": {
+            "button_label": "Zu allen Kaffeesorten",
+            "button_link": "shopify://collections/kaffee",
+            "button_style": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "button_EbXVC4"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "background-1",
+        "full_width": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent",
+        "padding_top": "no-indent",
+        "padding_bottom": "xs"
+      }
+    },
+    "ss_testimonials_34_BpRNqi": {
+      "type": "ss-testimonials-34",
+      "blocks": {
+        "heading_FBPJgj": {
+          "type": "heading",
+          "settings": {
+            "heading": "<h2>DAS SAGEN UNSERE KUNDEN</h2>",
+            "heading_custom": false,
+            "heading_font": "archivo_n8",
+            "heading_size": 32,
+            "heading_size_mobile": 30,
+            "heading_height": 130,
+            "heading_mt": 12,
+            "heading_mt_mobile": 10,
+            "heading_color": "#121212"
+          }
+        },
+        "rating_LkM7GM": {
+          "type": "rating",
+          "settings": {
+            "stars_count": 4.5,
+            "stars_size": 20,
+            "stars_size_mobile": 20,
+            "stars_mt": 0,
+            "stars_mt_mobile": 0,
+            "stars_color": "#121212"
+          }
+        },
+        "testimonial_VULLx3": {
+          "type": "testimonial",
+          "settings": {
+            "stars_count": 5,
+            "title": "Lieblingshändler",
+            "text": "<p>Ein begeistertes, gut gelauntes und kompetentes Team mit perfektem Service. Beim Einkauf bist Du König.</p>",
+            "author": "Markus B.",
+            "product": "",
+            "custom_title": "",
+            "url": ""
+          }
+        },
+        "testimonial_LrJCey": {
+          "type": "testimonial",
+          "settings": {
+            "stars_count": 5,
+            "title": "DIE BESTE ESPRESSO MISCHUNG EVER!",
+            "text": "<p>Richtig gute Espressomischung – vollmundig, aromatisch und perfekt für den Start in den Tag! Ich trinke sie super gerne und kann sie nur weiterempfehlen. Man schmeckt, dass hier Qualität und Leidenschaft drinstecken!</p>",
+            "author": "Raheem H.",
+            "product": "",
+            "custom_title": "",
+            "url": ""
+          }
+        },
+        "testimonial_X3HCjW": {
+          "type": "testimonial",
+          "settings": {
+            "stars_count": 5,
+            "title": "Starker Kaffee, starker Service",
+            "text": "<p>Kaffee so stark wie der Service. Der beste Kaffee den ich seit langem hatte. Die Abholung geht auch schnell und reibungslos. Was will man mehr? Wir nehmen den Kaffee sogar mit in den Urlaub, denn kaum etwas kann den Urlaub so sehr verderben wie ein schlechter Kaffee am Morgen.</p>",
+            "author": "Corinna H.",
+            "product": "",
+            "custom_title": "",
+            "url": ""
+          }
+        },
+        "testimonial_UrBUCq": {
+          "type": "testimonial",
+          "disabled": true,
+          "settings": {
+            "stars_count": 5,
+            "title": "Aromatisch, Kräftig, Tolles Gesamtpaket",
+            "text": "<p>Es ist wirklich ein sehr guter Kaffee. Aromatisch, kräftig, gut. Seitdem ich wieder den Kaffee von Cemil bestelle, macht Kaffee trinken wieder Spaß.</p>",
+            "author": "Max S.",
+            "product": "",
+            "custom_title": "",
+            "url": ""
+          }
+        },
+        "testimonial_wrzcYi": {
+          "type": "testimonial",
+          "disabled": true,
+          "settings": {
+            "stars_count": 5,
+            "title": "KAFFEEGENUSS PUR!",
+            "text": "<p>Jeder Schluck ist ein Genuss, der mich in eine kleine Kaffeewelt entführt. Ob ich nun einen starken Espresso oder einen cremigen Cappuccino genieße, die Qualität ist durchweg beeindruckend.</p>",
+            "author": "Seref",
+            "product": "",
+            "custom_title": "",
+            "url": ""
+          }
+        },
+        "button_fENnht": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button": "Read more",
+            "button_url": "",
+            "button_custom": false,
+            "button_font": "josefin_sans_n4",
+            "button_size": 16,
+            "button_size_mobile": 16,
+            "button_height": 100,
+            "button_padding_vertical": 14,
+            "button_padding_vertical_mobile": 14,
+            "button_padding_horizontal": 24,
+            "button_padding_horizontal_mobile": 24,
+            "button_radius": 100,
+            "button_border_thickness": 1,
+            "button_mt": 30,
+            "button_mt_mobile": 30,
+            "button_style": "outline",
+            "button_align": "center",
+            "button_align_mobile": "center",
+            "button_color": "#121212",
+            "button_hover_color": "#ffffff",
+            "button_bg_color": "#ffffff",
+            "button_bg_hover_color": "#121212",
+            "button_border_color": "#121212",
+            "button_border_hover_color": "#121212"
+          }
+        }
+      },
+      "block_order": [
+        "heading_FBPJgj",
+        "rating_LkM7GM",
+        "testimonial_VULLx3",
+        "testimonial_LrJCey",
+        "testimonial_X3HCjW",
+        "testimonial_UrBUCq",
+        "testimonial_wrzcYi",
+        "button_fENnht"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".testimonials-product-template--25582002438409__ss_testimonials_34_BpRNqi {display: none;}",
+        ".section-template--25582002438409__ss_testimonials_34_BpRNqi {max-width: 1920px; justify-self: center;}",
+        "@media (min-width: 1200px) {.section-template--25582002438409__ss_testimonials_34_BpRNqi {margin-top: 0px; margin-bottom: 0px; margin-left: 5rem; margin-right: 5rem; border-radius: 0px; }}"
+      ],
+      "name": "REWIES",
+      "settings": {
+        "content_align": "center",
+        "content_align_mobile": "center",
+        "slider_view": 3,
+        "slider_view_mobile": 1.2,
+        "slider_gap": 10,
+        "slider_gap_mobile": 10,
+        "slider_mt": 40,
+        "slider_mt_mobile": 28,
+        "slide_padding_horizontal": 10,
+        "slide_padding_horizontal_mobile": 16,
+        "slide_padding_vertical": 10,
+        "slide_padding_vertical_mobile": 16,
+        "slide_radius": 0,
+        "slide_border_thickness": 1,
+        "slide_content_align": "center",
+        "slide_content_align_mobile": "center",
+        "slide_stars_size": 16,
+        "slide_stars_size_mobile": 16,
+        "slide_stars_mt": 0,
+        "slide_stars_mt_mobile": 0,
+        "slide_title_custom": false,
+        "slide_title_font": "josefin_sans_n4",
+        "slide_title_size": 19,
+        "slide_title_size_mobile": 18,
+        "slide_title_height": 130,
+        "slide_title_mt": 10,
+        "slide_title_mt_mobile": 10,
+        "text_custom": false,
+        "text_font": "josefin_sans_n4",
+        "text_size": 16,
+        "text_size_mobile": 14,
+        "text_height": 150,
+        "text_mt": 10,
+        "text_mt_mobile": 10,
+        "use_read_more": true,
+        "read_more": "Mehr anzeigen",
+        "read_less": "Weniger anzeigen",
+        "small_text_size": 132,
+        "verify": "verifiziert",
+        "verify_custom": false,
+        "verify_font": "josefin_sans_n4",
+        "verify_size": 14,
+        "verify_size_mobile": 12,
+        "verify_height": 130,
+        "verify_mt": 40,
+        "verify_mt_mobile": 32,
+        "verify_icon_size": 18,
+        "verify_icon_size_mobile": 16,
+        "verify_icon": true,
+        "author_custom": false,
+        "author_font": "josefin_sans_n4",
+        "author_size": 14,
+        "author_size_mobile": 12,
+        "author_height": 130,
+        "arrow_size": 48,
+        "arrow_size_mobile": 38,
+        "arrow_icon_size": 10,
+        "arrow_icon_size_mobile": 8,
+        "arrow_border_thickness": 0,
+        "arrow_radius": 100,
+        "arrow_hover_effect": "scale",
+        "arrow_show_desktop": true,
+        "arrow_show_mobile": false,
+        "scrollbar_height": 4,
+        "scrollbar_mt": 20,
+        "scrollbar_mt_mobile": 16,
+        "scrollbar_show_desktop": false,
+        "scrollbar_show_mobile": true,
+        "product_padding_horizontal": 8,
+        "product_padding_horizontal_mobile": 8,
+        "product_padding_vertical": 8,
+        "product_padding_vertical_mobile": 8,
+        "product_radius": 8,
+        "product_mt": 24,
+        "product_mt_mobile": 24,
+        "product_image_radius": 0,
+        "product_image_border_thickness": 0,
+        "product_image_ratio": "square",
+        "product_image_ratio_mobile": "square",
+        "product_title_custom": false,
+        "product_title_font": "josefin_sans_n4",
+        "product_title_size": 14,
+        "product_title_size_mobile": 14,
+        "product_title_height": 130,
+        "product_title_align": "center",
+        "product_title_align_mobile": "center",
+        "product_button_text": "",
+        "product_button_custom": false,
+        "product_button_font": "josefin_sans_n4",
+        "product_button_size": 13,
+        "product_button_size_mobile": 13,
+        "product_button_height": 100,
+        "product_button_padding_horizontal": 12,
+        "product_button_padding_horizontal_mobile": 12,
+        "product_button_padding_vertical": 10,
+        "product_button_padding_vertical_mobile": 10,
+        "product_button_radius": 100,
+        "product_button_border_thickness": 1,
+        "product_button_mt": 10,
+        "product_button_mt_mobile": 10,
+        "product_button_style": "outline",
+        "slide_stars_color": "#333333",
+        "slide_title_color": "#2d2d2d",
+        "text_color": "#484545",
+        "text_more_less_color": "#838282",
+        "author_color": "#121212",
+        "verify_color": "#121212",
+        "verify_icon_color": "#ffffff",
+        "verify_icon_bg_color": "#418b37",
+        "slide_bg_color": "#ffffff",
+        "slide_border_color": "#cccccc",
+        "product_title_color": "#121212",
+        "product_bg_color": "#f3f3f3",
+        "product_image_border_color": "#121212",
+        "product_button_color": "#121212",
+        "product_button_hover_color": "#ffffff",
+        "product_button_bg_color": "rgba(0,0,0,0)",
+        "product_button_bg_hover_color": "#121212",
+        "product_button_border_color": "#121212",
+        "product_button_border_hover_color": "#121212",
+        "arrow_color": "#7b7b7b",
+        "arrow_hover_color": "#7b7b7b",
+        "arrow_bg_color": "#ebebeb",
+        "arrow_bg_hover_color": "#f5f5f5",
+        "arrow_border_color": "#c7c7c7",
+        "arrow_border_hover_color": "#c7c7c7",
+        "scrollbar_drag_bg_color": "#838282",
+        "scrollbar_bg_color": "#f3f3f3",
+        "background_color": "#ffffff",
+        "background_gradient": "",
+        "border_color": "#000000",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_horizontal": 0,
+        "margin_horizontal_mobile": 0,
+        "padding_top": 24,
+        "padding_bottom": 52,
+        "padding_horizontal": 5,
+        "padding_horizontal_mobile": 1.5,
+        "full_width": false,
+        "content_width": 1900,
+        "border_thickness": 0,
+        "section_radius": 0,
+        "lazy": true
+      }
+    },
+    "rich_text_iXCd6t": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_WTbyyW": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>DAS SAGEN UNSERE KAFFEGENIEßER</p>",
+            "heading_size": "medium"
+          }
+        }
+      },
+      "block_order": [
+        "heading_WTbyyW"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "background-2",
+        "full_width": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent",
+        "padding_top": "s",
+        "padding_bottom": "no-indent"
+      }
+    },
+    "1755532523211c3d75": {
+      "type": "apps",
+      "blocks": {
+        "klaviyo_reviews_featured_reviews_carousel_eemy7E": {
+          "type": "shopify://apps/klaviyo-reviews/blocks/featured-reviews-carousel/db20e365-d984-4ac4-9655-e1588d951ca9",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "klaviyo_reviews_featured_reviews_carousel_eemy7E"
+      ],
+      "custom_css": [
+        ".container,.spaced-section {background-color: white;}"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "rich_text_HGDGUq": {
+      "type": "rich-text",
+      "blocks": {
+        "button_UHeAmL": {
+          "type": "button",
+          "settings": {
+            "button_label": "ALlE BEWERTUNGEN ANSEHEN",
+            "button_link": "shopify://pages/rezensionen-und-bewertungen",
+            "button_style": "tertiary"
+          }
+        }
+      },
+      "block_order": [
+        "button_UHeAmL"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "background-2",
+        "full_width": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent",
+        "padding_top": "no-indent",
+        "padding_bottom": "xs"
+      }
+    },
+    "rich_text_wJ4L4f": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_NtmFGn": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>KAFFEE NACH ZUBEREITUNG</p>",
+            "heading_size": "medium"
+          }
+        }
+      },
+      "block_order": [
+        "heading_NtmFGn"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "color_scheme": "background-1",
+        "full_width": true,
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent",
+        "padding_top": "s",
+        "padding_bottom": "no-indent"
+      }
+    },
+    "categories-list": {
+      "type": "categories-list",
+      "blocks": {
+        "block-1": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "espressobohnen",
+            "image": "shopify://shop_images/extraktion-von-kaffee-blake-verdoorn-gM-RfQsZK98-unsplash.jpg",
+            "custom_title": "Für den Siebträger"
+          }
+        },
+        "block-3": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "filter",
+            "image": "shopify://shop_images/szymon-satora-YXyP5nlzKjM-unsplash.jpg",
+            "custom_title": "Unser Filterkaffee"
+          }
+        },
+        "block-4": {
+          "type": "collection_item",
+          "settings": {
+            "collection": "vollautomatenkaffee",
+            "image": "shopify://shop_images/nivona-caferomatica-nicr793-grau.jpg",
+            "custom_title": "Für den Vollautomaten"
+          }
+        }
+      },
+      "block_order": [
+        "block-1",
+        "block-3",
+        "block-4"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "collections_to_show": 3,
+        "show_view_all": false,
+        "margin_top": "xs",
+        "margin_bottom": "s"
+      }
+    },
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "block-1": {
+          "type": "slide",
+          "settings": {
+            "color_scheme": "background-3",
+            "image": "shopify://shop_images/DSC07711.jpg",
+            "overlay_opacity": 0.6,
+            "heading": "ENTDECKE UNSERE PROBIERSETS",
+            "description": "Nicht sicher? Probiere dich durch & finde deine passenden Bohnen.",
+            "button_label": "Zu DEN PROBIERSETS",
+            "button_link": "shopify://collections/die-barista-probierpaket",
+            "button_second_label": "COFFEEFINDER",
+            "button_second_link": "https://shop.diebarista.com/tools/perfect-product-finder/coffeefinder#/questions/1"
+          }
+        }
+      },
+      "block_order": [
+        "block-1"
+      ],
+      "settings": {
+        "full_width": false,
+        "height": "21/9",
+        "heading_size": "h3",
+        "heading_width": "m",
+        "description_heading_width": "m",
+        "button_style": "tag",
+        "enable_autoplay": true,
+        "hover_autoplay_stop": false,
+        "enable_slider_btns": true,
+        "enable_pagination": true,
+        "slide_duration": 6,
+        "controls_color_scheme": "light",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "f5d0f161-1d91-448b-8640-8978d60e6876": {
+      "type": "product-carousel",
+      "settings": {
+        "heading": "ZU GUTEM KAFFEE GEHÖRT DAS PERFEKTE EQUIPMENT",
+        "heading_size": "h3",
+        "button_label": "Zu Equipment",
+        "button_link": "shopify://collections/equipment",
+        "product_list": [
+          "brewista-artisan-1-0l-gooseneck-mattschwarz-wasserkocher-copy",
+          "brewista-artisan-1-0l-gooseneck-mattschwarz-wasserkocher",
+          "brewista-smart-scale-ii-waage",
+          "brewista-tornado-duo-grosse-2-glas-dripper",
+          "cappuccino-tasse-mit-untertasse",
+          "comandante-c40-mk4-nitro-blade-black-kaffeemuhle",
+          "hario-v60-02-coffee-dripper",
+          "v60-glas-bruh-kit"
+        ],
+        "product_limit": 6,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_sku": false,
+        "show_desc": false,
+        "controls_color_scheme": "light",
+        "columns_mobile": "2",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "height": "21/9",
+        "mobile_height": "21/9",
+        "image": "shopify://shop_images/f7f62acb-c708-4894-87a9-8738c18a7f71.jpg",
+        "display_reverse": "left",
+        "color_scheme": "",
+        "padding_on_off": true,
+        "title": "KAFFEEWISSEN AUS ERSTER HAND",
+        "info_heading_size": "h3",
+        "title_link": "",
+        "text": "<p>Du willst mehr über Kaffee erfahren? Auf unserer Plattform findest du praktische Tipps, fundiertes Wissen und Empfehlungen rund um Bohnen, Zubereitung und Zubehör – klar, ehrlich und ohne Fachchinesisch.</p>",
+        "text_position": "center",
+        "button_label": "ZUM LEXIKON",
+        "button_link": "shopify://pages/kaffeelexikon",
+        "button_second_label": "ZUM BLOG",
+        "button_second_link": "shopify://blogs/allgemeines-kaffeewissen",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "94834546-3901-482b-af31-d0b338f5356b": {
+      "type": "collapsible-content",
+      "blocks": {
+        "template--20335414018331__94834546-3901-482b-af31-d0b338f5356b-accordion-1": {
+          "type": "accordion",
+          "settings": {
+            "default_open": true,
+            "question": "Where do you source your coffee beans from?",
+            "answer": "<p> We take pride in sourcing our beans from reputable coffee-growing regions around the world. Our beans are carefully selected for their quality and unique flavors, ensuring a rich and diverse coffee experience.</p>"
+          }
+        },
+        "template--20335414018331__94834546-3901-482b-af31-d0b338f5356b-accordion-2": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "What makes your coffee unique?",
+            "answer": "<p> Our coffee is a masterpiece of flavor, sourced from the finest coffee beans across the globe. We meticulously roast and blend each batch to bring out distinctive notes that reflect our dedication to quality and craftsmanship.</p>"
+          }
+        },
+        "template--20335414018331__94834546-3901-482b-af31-d0b338f5356b-accordion-3": {
+          "type": "accordion",
+          "settings": {
+            "default_open": false,
+            "question": "Do you ship internationally?",
+            "answer": "<p> Yes, we offer international shipping to many countries. Please note that shipping rates and delivery times vary by destination. You can find more information about international shipping at checkout.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--20335414018331__94834546-3901-482b-af31-d0b338f5356b-accordion-1",
+        "template--20335414018331__94834546-3901-482b-af31-d0b338f5356b-accordion-2",
+        "template--20335414018331__94834546-3901-482b-af31-d0b338f5356b-accordion-3"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".container {background-color: white;}",
+        ".collapsible-content__toggle {background-color: transparent; border-bottom: solid darkgrey;}"
+      ],
+      "settings": {
+        "content_position": "left",
+        "heading": "Häufig gestellte Fragen",
+        "heading_size": "h3",
+        "text": "",
+        "margin_top": "xs",
+        "margin_bottom": "xs"
+      }
+    },
+    "information_bar_9EnLVg": {
+      "type": "information-bar",
+      "blocks": {
+        "information_zMCrRb": {
+          "type": "information",
+          "settings": {
+            "icon": "return",
+            "text": "Special Promotion",
+            "link": ""
+          }
+        },
+        "information_q4NTVk": {
+          "type": "information",
+          "settings": {
+            "icon": "earth",
+            "text": "Special Promotion",
+            "link": ""
+          }
+        },
+        "information_FaifLR": {
+          "type": "information",
+          "settings": {
+            "icon": "check_mark_4",
+            "text": "Special Promotion",
+            "link": ""
+          }
+        },
+        "information_GLDG6C": {
+          "type": "information",
+          "settings": {
+            "icon": "lock_2",
+            "text": "Special Promotion",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "information_zMCrRb",
+        "information_q4NTVk",
+        "information_FaifLR",
+        "information_GLDG6C"
+      ],
+      "disabled": true,
+      "name": "t:sections.information-bar.name",
+      "settings": {
+        "border_top": false,
+        "border_bottom": false,
+        "image_width": "small",
+        "object_fit": "contain",
+        "padding_top": "xs",
+        "padding_bottom": "xs",
+        "margin_top": "no-indent",
+        "margin_bottom": "no-indent"
+      }
+    },
+    "cd210294-e4e7-479e-88e1-7aa96226ad1c": {
+      "type": "featured-blog",
+      "disabled": true,
+      "settings": {
+        "heading": "Erfahre mehr über Kaffee",
+        "heading_size": "h4",
+        "post_layout": "4",
+        "blog": "allgemeines-kaffeewissen",
+        "post_limit": 4,
+        "post_limit_mobile": 3,
+        "show_image": true,
+        "show_tags": false,
+        "show_date": true,
+        "show_author": true,
+        "show_excerpt": false,
+        "overlay_opacity": 0.3,
+        "show_view_all": true,
+        "show_view_all_mobile": true,
+        "button_label": "Mehr sehen",
+        "padding_top": "no-indent",
+        "padding_bottom": "s"
+      }
+    },
+    "b072e41d-561f-49ac-94fd-ec538f6e5b8e": {
+      "type": "cards-grid",
+      "blocks": {
+        "template--20335414018331__b072e41d-561f-49ac-94fd-ec538f6e5b8e-column-1": {
+          "type": "column",
+          "settings": {
+            "column_start": 1,
+            "column_end": 3,
+            "row_start": "unset",
+            "row_end": "unset",
+            "min_height": "small",
+            "image_size": "cover",
+            "effect_opacity": 0.2,
+            "text_align": "left",
+            "text_color_scheme": "light",
+            "full_width": true,
+            "subheading": "Flash Sale",
+            "heading": "Stock Up on Favorite Roasts – Up to 30% Off!",
+            "heading_size": "h3",
+            "heading_width": 36,
+            "card_link": ""
+          }
+        },
+        "template--20335414018331__b072e41d-561f-49ac-94fd-ec538f6e5b8e-column-2": {
+          "type": "column",
+          "settings": {
+            "column_start": 3,
+            "column_end": 5,
+            "row_start": "unset",
+            "row_end": "unset",
+            "min_height": "small",
+            "image_size": "cover",
+            "effect_opacity": 0.2,
+            "text_align": "left",
+            "text_color_scheme": "light",
+            "full_width": true,
+            "subheading": "Gift Card",
+            "heading": "The Perfect Personalized Coffee Gift",
+            "heading_size": "h3",
+            "heading_width": 28,
+            "card_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--20335414018331__b072e41d-561f-49ac-94fd-ec538f6e5b8e-column-1",
+        "template--20335414018331__b072e41d-561f-49ac-94fd-ec538f6e5b8e-column-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "columns": 4,
+        "gap": 24,
+        "heading": "",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "margin_top": "no-indent",
+        "margin_bottom": "s"
+      }
+    },
+    "1753115718d46af9a1": {
+      "type": "apps",
+      "blocks": {
+        "klaviyo_reviews_average_rating_8RTT7c": {
+          "type": "shopify://apps/klaviyo-reviews/blocks/average-rating/db20e365-d984-4ac4-9655-e1588d951ca9",
+          "settings": {
+            "product": "die-espresso-mischung-500g"
+          }
+        },
+        "klaviyo_reviews_all_reviews_9XXmFb": {
+          "type": "shopify://apps/klaviyo-reviews/blocks/all-reviews/db20e365-d984-4ac4-9655-e1588d951ca9",
+          "settings": {}
+        },
+        "klaviyo_reviews_featured_reviews_carousel_GJ7dLY": {
+          "type": "shopify://apps/klaviyo-reviews/blocks/featured-reviews-carousel/db20e365-d984-4ac4-9655-e1588d951ca9",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "klaviyo_reviews_average_rating_8RTT7c",
+        "klaviyo_reviews_all_reviews_9XXmFb",
+        "klaviyo_reviews_featured_reviews_carousel_GJ7dLY"
+      ],
+      "disabled": true,
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "17531163789d448def": {
+      "type": "apps",
+      "blocks": {
+        "klaviyo_email_marketing_sms_form_embed_block_qgq7na": {
+          "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/form-embed-block/2632fe16-c075-4321-a88b-50b567f42507",
+          "settings": {
+            "formId": "<div class=\"klaviyo-form-TTJHQx\"></div>"
+          }
+        }
+      },
+      "block_order": [
+        "klaviyo_email_marketing_sms_form_embed_block_qgq7na"
+      ],
+      "custom_css": [
+        ".container {margin-bottom: 30px;}"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "image_banner_3xcraf",
+    "image_banner_ygxU3Q",
+    "image_banner_KiRrqk",
+    "cards-grid",
+    "ss_feature_7_i7YEKH",
+    "rich_text_yJAiaU",
+    "product-carousel",
+    "featured_products_rinPfW",
+    "rich_text_kznnaN",
+    "ss_testimonials_34_BpRNqi",
+    "rich_text_iXCd6t",
+    "1755532523211c3d75",
+    "rich_text_HGDGUq",
+    "rich_text_wJ4L4f",
+    "categories-list",
+    "slideshow",
+    "f5d0f161-1d91-448b-8640-8978d60e6876",
+    "image-with-text",
+    "94834546-3901-482b-af31-d0b338f5356b",
+    "information_bar_9EnLVg",
+    "cd210294-e4e7-479e-88e1-7aa96226ad1c",
+    "b072e41d-561f-49ac-94fd-ec538f6e5b8e",
+    "1753115718d46af9a1",
+    "17531163789d448def"
+  ]
+}

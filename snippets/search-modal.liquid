@@ -1,0 +1,146 @@
+<div class="search__modal search__line">
+	{%- if section.settings.show_items
+		and section.settings.product_list != blank
+		or section.settings.show_collection_card
+		and section.settings.collection_list != blank
+	-%}
+		<div class="search__items">
+			{% if section.settings.show_items
+				and section.settings.product_list != blank
+			%}
+				<div class="search__items-list featured-products__products-list--horizontal">
+					<div class="search__subtitle subtitle">
+						{{ 'sections.header.popular_items' | t }}
+					</div>
+					<div class="search__items-block">
+						{%- for product in section.settings.product_list -%}
+							<div class="search__items-item featured-products__products-item--horizontal quickview{%- if settings.quickview_hover -%}--hover{% endif %}">
+								{% render 'product-card-horizontal',
+									product_card_product: product,
+									media_size: 'portrait',
+									media_fit: 'cover',
+									show_vendor: section.settings.show_vendor,
+									show_desc: section.settings.show_desc,
+									section_id: section.id,
+									placeholder_index: forloop.index
+								%}
+							</div>
+						{%- endfor -%}
+					</div>
+				</div>
+			{% endif %}
+			{%- if section.settings.show_items
+				and section.settings.product_list != blank
+			-%}
+				<a
+					href="{{ routes.all_products_collection_url }}"
+					class="search__article-button button button--simple-move"
+					aria-label="{{ 'sections.header.shop_all' | t }}"
+				>
+					<span>{{ 'sections.header.shop_all' | t }}</span>
+					<span>
+						{% render 'icon-button-arrow' %}
+					</span>
+				</a>
+			{%- endif -%}
+		</div>
+	{% endif %}
+	{%- if section.settings.show_articles
+		and section.settings.blog.articles != blank
+	-%}
+		<div class="search__articles">
+			<div class="search__subtitle subtitle">
+				{{ 'sections.header.popular_articles' | t }}
+			</div>
+			<div class="search__articles-list">
+				{%- for article in section.settings.blog.articles limit: 4 -%}
+					<div class="header__article">
+						{% render 'article-card-small',
+							blog: section.settings.blog,
+							article: article,
+							show_image: section.settings.show_image,
+							show_date: section.settings.show_date,
+							show_author: false
+						%}
+					</div>
+				{%- endfor -%}
+			</div>
+			{%- if section.settings.show_articles
+				and section.settings.blog.articles != blank
+			-%}
+				<a
+					href="{{ section.settings.blog.url }}"
+					class="search__article-button button button--simple-move"
+					aria-label="{{ 'sections.header.read_all' | t }}"
+				>
+					<span>{{ 'sections.header.read_all' | t }}</span>
+					<span>
+						{% render 'icon-button-arrow' %}
+					</span>
+				</a>
+			{%- endif -%}
+		</div>
+	{% endif %}
+	{% if section.settings.show_search_block %}
+		<div class="search__block">
+			<div class="search__block__img">
+				{% if section.settings.search_image != blank %}
+					{%- capture sizes -%}
+          (min-width: 1700px) 1700px, (min-width: 1420px) 1420px, (min-width: 1100px) 1100px, (min-width: 710px) 710px, calc(100vw - 30px)
+        {%- endcapture -%}
+					{{
+						section.settings.search_image
+						| image_url: width: section.settings.search_image.width
+						| image_tag:
+							loading: 'lazy',
+							sizes: sizes,
+							widths: '360, 550, 710, 1100, 1420, 1700, 1920',
+							width: section.settings.search_image.width,
+							class: 'search__block-image'
+					}}
+				{% else %}
+					{{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+				{%- endif -%}
+			</div>
+
+			{%- if section.settings.search_heading != blank
+				or section.settings.button_label != blank
+			-%}
+				<div class="title-wrapper">
+					{%- if section.settings.search_heading != blank -%}
+						<h2 class="search__block-heading">
+							{{ section.settings.search_heading }}
+						</h2>
+					{%- endif -%}
+					{% if section.settings.button_label != blank -%}
+						<a
+							{% if section.settings.button_link.url != blank %}
+								href="{{ section.settings.button_link }}"
+							{% endif %}
+							class="button button--simple-move"
+							{% if section.settings.button_link.url == blank %}
+								aria-disabled="true"
+							{% endif %}
+						>
+							<span>{{ section.settings.button_label }}</span>
+							<span>
+								{% render 'icon-button-arrow' %}
+							</span>
+						</a>
+					{% endif %}
+				</div>
+			{%- endif -%}
+
+			<a
+				{% if section.settings.button_link.url != blank %}
+					href="{{ section.settings.button_link }}"
+				{% endif %}
+				class="search__block-link-overlay"
+				{% if section.settings.button_link.url == blank %}
+					aria-disabled="true"
+				{% endif %}
+				aria-label="Promo banner"
+			></a>
+		</div>
+	{% endif %}
+</div>

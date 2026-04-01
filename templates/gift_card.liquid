@@ -1,0 +1,510 @@
+{% layout none %}
+
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="theme-color" content="">
+		<link rel="canonical" href="{{ canonical_url }}">
+		<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+		<script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+
+		{%- if settings.favicon != blank -%}
+			<link
+				rel="icon"
+				type="image/png"
+				href="{{ settings.favicon | img_url: '32x32' }}"
+			>
+		{%- endif -%}
+
+		{%- unless settings.type_header_font.system? -%}
+			<link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+		{%- endunless -%}
+
+		<title>{{ page_title }}</title>
+
+		{% if page_description %}
+			<meta name="description" content="{{ page_description | escape }}">
+		{% endif %}
+
+		{% render 'meta-tags' %}
+
+		<script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+
+		{{ content_for_header }}
+
+		{%- liquid
+			assign body_font_ligh = settings.type_body_font | font_modify: 'weight', '300'
+			assign body_font_regular = settings.type_body_font | font_modify: 'weight', '400'
+			assign body_font_medium = settings.type_body_font | font_modify: 'weight', '500'
+			assign body_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
+			assign body_font_italic = settings.type_body_font | font_modify: 'style', 'italic'
+			assign body_font_bold_italic = body_font_bold | font_modify: 'style', 'italic'
+			assign heading_font_italic = settings.type_header_font | font_modify: 'style', 'italic'
+		%}
+		{{ 'base.css' | asset_url | stylesheet_tag }}
+		{% style %}
+			{{ settings.type_body_font | font_face: font_display: 'swap' }}
+			{{ settings.type_header_font | font_face: font_display: 'swap' }}
+			{{ settings.type_header_font | font_face: font_display: 'swap' }}
+			{{ settings.type_button_font | font_face: font_display: 'swap' }}
+			{{ settings.type_header_font_card | font_face: font_display: 'swap' }}
+			{{ body_font_ligh | font_face: font_display: 'swap' }}
+			{{ body_font_regular | font_face: font_display: 'swap' }}
+			{{ body_font_medium | font_face: font_display: 'swap' }}
+			{{ body_font_bold | font_face: font_display: 'swap' }}
+			{{ body_font_italic | font_face: font_display: 'swap' }}
+			{{ heading_font_italic | font_face: font_display: 'swap' }}
+			{{ body_font_bold_italic | font_face: font_display: 'swap' }}
+			{% for scheme in settings.color_schemes -%}
+				{% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
+				{% if forloop.index == 1 -%}
+					:root,
+				{%- endif %}
+				[data-scheme=light] .color-{{ scheme.id }} {
+					--color-background: {{ scheme.settings.colors_background_1.red }},{{ scheme.settings.colors_background_1.green }},{{ scheme.settings.colors_background_1.blue }};
+					--color-background-secondary: {{ scheme.settings.colors_background_2.red }},{{ scheme.settings.colors_background_2.green }},{{ scheme.settings.colors_background_2.blue }};
+					--color-base-background-1: {{ scheme.settings.colors_background_1.red }}, {{ scheme.settings.colors_background_1.green }}, {{ scheme.settings.colors_background_1.blue }};
+					--color-base-background-2: {{ scheme.settings.colors_background_2.red }}, {{ scheme.settings.colors_background_2.green }}, {{ scheme.settings.colors_background_2.blue }};
+					{% if scheme.settings.background_gradient != empty %}
+						--gradient-background: {{ scheme.settings.background_gradient }};
+					{% else %}
+						--gradient-background: {{ scheme.settings.colors_background_1 }};
+					{% endif %}
+					--color-foreground: {{ scheme.settings.colors_text.red }}, {{ scheme.settings.colors_text.green }}, {{ scheme.settings.colors_text.blue }};
+					--color-foreground-secondary: {{ scheme.settings.colors_secondary_text.red }}, {{ scheme.settings.colors_secondary_text.green }}, {{ scheme.settings.colors_secondary_text.blue }};
+					--color-foreground-title: {{ scheme.settings.colors_text_title.red }}, {{ scheme.settings.colors_text_title.green }}, {{ scheme.settings.colors_text_title.blue }};
+					--color-base-text: {{ scheme.settings.colors_text.red }}, {{ scheme.settings.colors_text.green }}, {{ scheme.settings.colors_text.blue }};
+					--color-secondary-text: {{ scheme.settings.colors_secondary_text.red }}, {{ scheme.settings.colors_secondary_text.green }}, {{ scheme.settings.colors_secondary_text.blue }};
+					--color-title-text: {{ scheme.settings.colors_text_title.red }}, {{ scheme.settings.colors_text_title.green }}, {{ scheme.settings.colors_text_title.blue }};
+
+					--color-button-text: {{ scheme.settings.colors_solid_button_labels.red }}, {{ scheme.settings.colors_solid_button_labels.green }}, {{ scheme.settings.colors_solid_button_labels.blue }};
+					--color-button-text-hover: {{ scheme.settings.colors_solid_button_labels_hover.red }}, {{ scheme.settings.colors_solid_button_labels_hover.green }}, {{ scheme.settings.colors_solid_button_labels_hover.blue }};
+					--color-button: {{ scheme.settings.colors_solid_button_background.red }}, {{ scheme.settings.colors_solid_button_background.green }}, {{ scheme.settings.colors_solid_button_background.blue }};
+					--color-button-hover: {{ scheme.settings.colors_solid_button_background_hover.red }}, {{ scheme.settings.colors_solid_button_background_hover.green }}, {{ scheme.settings.colors_solid_button_background_hover.blue }};
+
+					--color-button-secondary: {{ scheme.settings.colors_outline_button_labels.red }}, {{ scheme.settings.colors_outline_button_labels.green }}, {{ scheme.settings.colors_outline_button_labels.blue }};
+					--color-button-secondary-hover: {{ scheme.settings.colors_outline_button_labels_hover.red }}, {{ scheme.settings.colors_outline_button_labels_hover.green }}, {{ scheme.settings.colors_outline_button_labels_hover.blue }};
+					--color-button-secondary-text: {{ scheme.settings.colors_secondary_button_labels.red }}, {{ scheme.settings.colors_secondary_button_labels.green }}, {{ scheme.settings.colors_secondary_button_labels.blue }};
+					--color-button-secondary-text-hover: {{ scheme.settings.colors_secondary_button_labels_hover.red }}, {{ scheme.settings.colors_secondary_button_labels_hover.green }}, {{ scheme.settings.colors_secondary_button_labels_hover.blue }};
+
+					--color-button-tertiary-text: {{ scheme.settings.colors_tertiary_button_labels.red }}, {{ scheme.settings.colors_tertiary_button_labels.green }}, {{ scheme.settings.colors_tertiary_button_labels.blue }};
+					--color-button-tertiary-text-hover: {{ scheme.settings.colors_tertiary_button_labels_hover.red }}, {{ scheme.settings.colors_tertiary_button_labels_hover.green }}, {{ scheme.settings.colors_tertiary_button_labels_hover.blue }};
+					--color-button-tertiary: {{ scheme.settings.colors_tertiary_button_background.red }}, {{ scheme.settings.colors_tertiary_button_background.green }}, {{ scheme.settings.colors_tertiary_button_background.blue }};
+					--color-button-tertiary-hover: {{ scheme.settings.colors_tertiary_button_background_hover.red }}, {{ scheme.settings.colors_tertiary_button_background_hover.green }}, {{ scheme.settings.colors_tertiary_button_background_hover.blue }};
+
+					--color-overlay: {{ scheme.settings.colors_background_overlay.red }}, {{ scheme.settings.colors_background_overlay.green }}, {{ scheme.settings.colors_background_overlay.blue }};
+					--color-border-input: {{ scheme.settings.colors_input_border.red }}, {{ scheme.settings.colors_input_border.green }}, {{ scheme.settings.colors_input_border.blue }};
+					--color-border-input-hover: {{ scheme.settings.colors_input_hover_border.red }}, {{ scheme.settings.colors_input_hover_border.green }}, {{ scheme.settings.colors_input_hover_border.blue }};
+					--color-background-input: {{ scheme.settings.colors_input_background.red }}, {{ scheme.settings.colors_input_background.green }}, {{ scheme.settings.colors_input_background.blue }};
+					--color-border: {{ scheme.settings.color_border.red }}, {{ scheme.settings.color_border.green }}, {{ scheme.settings.color_border.blue }};
+					--color-accent: {{ scheme.settings.colors_accent.red }}, {{ scheme.settings.colors_accent.green }}, {{ scheme.settings.colors_accent.blue }};
+				}
+				@media (prefers-color-scheme: light) {
+					{% if forloop.index == 1 -%}
+						:root,
+					{%- endif %}
+					[data-scheme=auto] .color-{{ scheme.id }} {
+						--color-background: {{ scheme.settings.colors_background_1.red }},{{ scheme.settings.colors_background_1.green }},{{ scheme.settings.colors_background_1.blue }};
+						--color-background-secondary: {{ scheme.settings.colors_background_2.red }},{{ scheme.settings.colors_background_2.green }},{{ scheme.settings.colors_background_2.blue }};
+						--color-base-background-1: {{ scheme.settings.colors_background_1.red }}, {{ scheme.settings.colors_background_1.green }}, {{ scheme.settings.colors_background_1.blue }};
+						--color-base-background-2: {{ scheme.settings.colors_background_2.red }}, {{ scheme.settings.colors_background_2.green }}, {{ scheme.settings.colors_background_2.blue }};
+						{% if scheme.settings.background_gradient != empty %}
+							--gradient-background: {{ scheme.settings.background_gradient }};
+						{% else %}
+							--gradient-background: {{ scheme.settings.colors_background_1 }};
+						{% endif %}
+						--color-foreground: {{ scheme.settings.colors_text.red }}, {{ scheme.settings.colors_text.green }}, {{ scheme.settings.colors_text.blue }};
+						--color-foreground-secondary: {{ scheme.settings.colors_secondary_text.red }}, {{ scheme.settings.colors_secondary_text.green }}, {{ scheme.settings.colors_secondary_text.blue }};
+						--color-foreground-title: {{ scheme.settings.colors_text_title.red }}, {{ scheme.settings.colors_text_title.green }}, {{ scheme.settings.colors_text_title.blue }};
+						--color-base-text: {{ scheme.settings.colors_text.red }}, {{ scheme.settings.colors_text.green }}, {{ scheme.settings.colors_text.blue }};
+						--color-secondary-text: {{ scheme.settings.colors_secondary_text.red }}, {{ scheme.settings.colors_secondary_text.green }}, {{ scheme.settings.colors_secondary_text.blue }};
+						--color-title-text: {{ scheme.settings.colors_text_title.red }}, {{ scheme.settings.colors_text_title.green }}, {{ scheme.settings.colors_text_title.blue }};
+
+
+						--color-button-text: {{ scheme.settings.colors_solid_button_labels.red }}, {{ scheme.settings.colors_solid_button_labels.green }}, {{ scheme.settings.colors_solid_button_labels.blue }};
+						--color-button-text-hover: {{ scheme.settings.colors_solid_button_labels_hover.red }}, {{ scheme.settings.colors_solid_button_labels_hover.green }}, {{ scheme.settings.colors_solid_button_labels_hover.blue }};
+						--color-button: {{ scheme.settings.colors_solid_button_background.red }}, {{ scheme.settings.colors_solid_button_background.green }}, {{ scheme.settings.colors_solid_button_background.blue }};
+						--color-button-hover: {{ scheme.settings.colors_solid_button_background_hover.red }}, {{ scheme.settings.colors_solid_button_background_hover.green }}, {{ scheme.settings.colors_solid_button_background_hover.blue }};
+
+						--color-button-secondary: {{ scheme.settings.colors_outline_button_labels.red }}, {{ scheme.settings.colors_outline_button_labels.green }}, {{ scheme.settings.colors_outline_button_labels.blue }};
+						--color-button-secondary-hover: {{ scheme.settings.colors_outline_button_labels_hover.red }}, {{ scheme.settings.colors_outline_button_labels_hover.green }}, {{ scheme.settings.colors_outline_button_labels_hover.blue }};
+						--color-button-secondary-text: {{ scheme.settings.colors_secondary_button_labels.red }}, {{ scheme.settings.colors_secondary_button_labels.green }}, {{ scheme.settings.colors_secondary_button_labels.blue }};
+						--color-button-secondary-text-hover: {{ scheme.settings.colors_secondary_button_labels_hover.red }}, {{ scheme.settings.colors_secondary_button_labels_hover.green }}, {{ scheme.settings.colors_secondary_button_labels_hover.blue }};
+
+						--color-button-tertiary-text: {{ scheme.settings.colors_tertiary_button_labels.red }}, {{ scheme.settings.colors_tertiary_button_labels.green }}, {{ scheme.settings.colors_tertiary_button_labels.blue }};
+						--color-button-tertiary-text-hover: {{ scheme.settings.colors_tertiary_button_labels_hover.red }}, {{ scheme.settings.colors_tertiary_button_labels_hover.green }}, {{ scheme.settings.colors_tertiary_button_labels_hover.blue }};
+						--color-button-tertiary: {{ scheme.settings.colors_tertiary_button_background.red }}, {{ scheme.settings.colors_tertiary_button_background.green }}, {{ scheme.settings.colors_tertiary_button_background.blue }};
+						--color-button-tertiary-hover: {{ scheme.settings.colors_tertiary_button_background_hover.red }}, {{ scheme.settings.colors_tertiary_button_background_hover.green }}, {{ scheme.settings.colors_tertiary_button_background_hover.blue }};
+
+						--color-overlay: {{ scheme.settings.colors_background_overlay.red }}, {{ scheme.settings.colors_background_overlay.green }}, {{ scheme.settings.colors_background_overlay.blue }};
+						--color-border-input: {{ scheme.settings.colors_input_border.red }}, {{ scheme.settings.colors_input_border.green }}, {{ scheme.settings.colors_input_border.blue }};
+						--color-border-input-hover: {{ scheme.settings.colors_input_hover_border.red }}, {{ scheme.settings.colors_input_hover_border.green }}, {{ scheme.settings.colors_input_hover_border.blue }};
+						--color-background-input: {{ scheme.settings.colors_input_background.red }}, {{ scheme.settings.colors_input_background.green }}, {{ scheme.settings.colors_input_background.blue }};
+						--color-background-input-hover: {{ scheme.settings.colors_input_hover_background.red }}, {{ scheme.settings.colors_input_hover_background.green }}, {{ scheme.settings.colors_input_hover_background.blue }};
+						--color-border: {{ scheme.settings.color_border.red }}, {{ scheme.settings.color_border.green }}, {{ scheme.settings.color_border.blue }};
+						--color-accent: {{ scheme.settings.colors_accent.red }}, {{ scheme.settings.colors_accent.green }}, {{ scheme.settings.colors_accent.blue }};
+					}
+				}
+			     {% endfor %}
+
+			     {{ scheme_classes | prepend: 'body' }} {
+			     	color: rgba(var(--color-foreground));
+			     	background-color: rgb(var(--color-background));
+			     }
+			:root {
+			--spaced-section: 5rem;
+
+			--font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+			--font-body-style: {{ settings.type_body_font.style }};
+			--font-body-weight: {{ settings.type_body_font.weight }};
+
+			--font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+			--font-body-line-height: {{ settings.type_body_line_height }};
+
+			--font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+			--font-heading-style: {{ settings.type_header_font.style }};
+			{% if settings.type_header_font.system? %}
+			--font-heading-weight: 500;
+			{% else %}
+			--font-heading-weight: {{ settings.type_header_font.weight }};
+			{% endif %}
+			--font-heading-letter-spacing: {{ settings.type_header_letter_spacing }}em;
+			--font-heading-line-height: {{ settings.type_header_line_height }};
+
+			--font-subtitle-family: {{ settings.type_subtitle_font.family }}, {{ settings.type_subtitle_font.fallback_families }};
+			--font-subtitle-style: {{ settings.type_subtitle_font.style }};
+			{% if settings.type_subtitle_font.system? %}
+			--font-subtitle-weight: 500;
+			{% else %}
+			--font-subtitle-weight: {{ settings.type_subtitle_font.weight }};
+			{% endif %}
+			--font-subtitle-text-transform: {{ settings.subtitle_text_transform }};
+			--font-subtitle-scale: {{ settings.subtitle_scale | divided_by: 100.0 }};
+			--font-subtitle-letter-spacing: {{ settings.subtitle_letter_spacing }}em;
+
+			--font-heading-h1-scale: {{ settings.heading_h1_scale | divided_by: 100.0 }};
+			--font-heading-h2-scale: {{ settings.heading_h2_scale | divided_by: 100.0 }};
+			--font-heading-h3-scale: {{ settings.heading_h3_scale | divided_by: 100.0 }};
+			--font-heading-h4-scale: {{ settings.heading_h4_scale | divided_by: 100.0 }};
+
+			--font-heading-text-transform: {{ settings.heading_text_transform }};
+
+			--font-heading-card-family: {{ settings.type_header_font_card.family }}, {{ settings.type_header_font_card.fallback_families }};
+			--font-heading-card-style: {{ settings.type_header_font_card.style }};
+			{% if settings.type_header_font_card.system? %}
+			--font-heading-card-weight: 500;
+			{% else %}
+			--font-heading-card-weight: {{ settings.type_header_font_card.weight }};
+			{% endif %}
+			--font-text-card-family: {{ settings.type_text_font_card.family }}, {{ settings.type_text_font_card.fallback_families }};
+			--font-text-card-style: {{ settings.type_text_font_card.style }};
+			--font-text-card-weight: {{ settings.type_text_font_card.weight }};
+
+			--font-heading-card-scale: {{ settings.heading_scale_card | divided_by: 100.0 }};
+			--font-heading-card-letter-spacing: {{ settings.card_letter_spacing }}em;
+			--font-heading-card-text-transform: {{ settings.card_text_transform }};
+
+
+			--font-text-card-scale: {{ settings.text_scale_card | divided_by: 100.0 }};
+
+			--font-button-family: {{ settings.type_button_font.family }}, {{ settings.type_button_font.fallback_families }};
+			--font-button-style: {{ settings.type_button_font.style }};
+			{% if settings.type_button_font.system? %}
+			--font-button-weight: 700;
+			{% else %}
+			--font-button-weight: {{ settings.type_button_font.weight }};
+			{% endif %}
+			--font-button-text-transform: {{ settings.button_text_transform }};
+			--button-size: {{ settings.button_size }}px;
+			--font-button-letter-spacing:{{ settings.letter_spacing_button }}em;
+
+			--font-header-menu-family: {{ settings.type_header_menu_font.family }}, {{ settings.type_header_menu_font.fallback_families }};
+			--font-header-menu-style: {{ settings.type_header_menu_font.style }};
+			{% if settings.type_header_menu_font.system? %}
+			--font-header-menu-weight: 700;
+			{% else %}
+			--font-header-menu-weight: {{ settings.type_header_menu_font.weight }};
+			{% endif %}
+			--font-header-menu-text-transform: {{ settings.header_menu_text_transform }};
+			--font-header-link-size: {{ settings.link_size_header }}px;
+			--heading-menu-letter-spacing: {{ settings.header_menu_letter_spacing }}em;
+
+			--font-header-submenu-family: {{ settings.type_header_submenu_font.family }}, {{ settings.type_header_submenu_font.fallback_families }};
+			--font-header-submenu-style: {{ settings.type_header_submenu_font.style }};
+			{% if settings.type_header_submenu_font.system? %}
+			--font-header-submenu-weight: 500;
+			{% else %}
+			--font-header-submenu-weight: {{ settings.type_header_submenu_font.weight }};
+			{% endif %}
+			--font-header-submenu-text-transform: {{ settings.header_submenu_text_transform }};
+			--font-header-submenu-link-size: {{ settings.link_size_header_submenu }}px;
+			--heading-submenu-letter-spacing: {{ settings.letter_spacing_header_submenu }}em;
+
+			--font-header-megamenu-family: {{ settings.type_header_megamenu_font.family }}, {{ settings.type_header_megamenu_font.fallback_families }};
+			--font-header-megamenu-style: {{ settings.type_header_megamenu_font.style }};
+			{% if settings.type_header_megamenu_font.system? %}
+			--font-header-megamenu-weight: 400;
+			{% else %}
+			--font-header-megamenu-weight: {{ settings.type_header_megamenu_font.weight }};
+			{% endif %}
+			--font-header-megamenu-text-transform: {{ settings.header_megamenu_text_transform }};
+			--font-header-megamenu-link-size: {{ settings.link_size_header_megamenu }}px;
+			--heading-megamenu-letter-spacing: {{ settings.letter_spacing_header_megamenu }}em;
+
+			--font-footer-menu-family: {{ settings.type_footer_menu_font.family }}, {{ settings.type_footer_menu_font.fallback_families }};
+			--font-footer-menu-style: {{ settings.type_footer_menu_font.style }};
+			{% if settings.type_footer_menu_font.system? %}
+			--font-footer-menu-weight: 500;
+			{% else %}
+			--font-footer-menu-weight: {{ settings.type_footer_menu_font.weight }};
+			{% endif %}
+			--font-footer-link-size: {{ settings.link_size_footer }}px;
+			--font-footer-menu-text-transform: {{ settings.footer_menu_text_transform }};
+			--footer-letter-spacing: {{ settings.letter_spacing_footer }}em;
+
+			--font-footer-bottom-link-size: {{ settings.link_size_footer_bottom }}px;
+			--font-footer-bottom-menu-text-transform: {{ settings.footer_bottom_menu_text_transform }};
+			--footer-bottom-letter-spacing: {{ settings.letter_spacing_footer_bottom }}em;
+
+			--font-popups-heading-family: {{ settings.type_popups_heading_font.family }}, {{ settings.type_popups_heading_font.fallback_families }};
+			--font-popups-heading-style: {{ settings.type_popups_heading_font.style }};
+			{% if settings.type_popups_heading_font.system? %}
+			--font-popups-heading-weight: 500;
+			{% else %}
+			--font-popups-heading-weight: {{ settings.type_popups_heading_font.weight }};
+			{% endif %}
+			--font-popups-text-family: {{ settings.type_popups_text_font.family }}, {{ settings.type_popups_text_font.fallback_families }};
+			--font-popups-text-style: {{ settings.type_popups_text_font.style }};
+			--font-popups-text-weight: {{ settings.type_popups_text_font.weight }};
+			--font-popup-heading-scale: {{ settings.popup_heading_scale | divided_by: 100.0 }};
+			--font-popup-desc-scale: {{ settings.popup_desc_scale | divided_by: 100.0 }};
+			--font-popup-text-scale: {{ settings.popup_text_scale | divided_by: 100.0 }};
+			--font-notification-heading-scale: {{ settings.notification_heading_scale | divided_by: 100.0 }};
+			--font-notification-text-scale: {{ settings.notification_text_scale | divided_by: 100.0 }};
+
+			--border-radius-button: 2px;
+
+			--payment-terms-background-color: {{ settings.colors_background_1 }};
+
+			--color-badge-sale-background: {{ settings.badge_sale_background_color.red }}, {{ settings.badge_sale_background_color.green }}, {{ settings.badge_sale_background_color.blue }};
+			--color-badge-sale-text: {{ settings.badge_sale_text_color.red }}, {{ settings.badge_sale_text_color.green }}, {{ settings.badge_sale_text_color.blue }};
+			--color-badge-soldout-background: {{ settings.badge_soldout_background_color.red }}, {{ settings.badge_soldout_background_color.green }}, {{ settings.badge_soldout_background_color.blue }};
+			--color-badge-soldout-text: {{ settings.badge_soldout_text_color.red }}, {{ settings.badge_soldout_text_color.green }}, {{ settings.badge_soldout_text_color.blue }};
+			--color-background-card: {{ settings.background_card.red }}, {{ settings.background_card.green }}, {{ settings.background_card.blue }};
+			}
+
+			@media screen and (min-width: 990px) {
+				:root {
+					--spaced-section: 16rem;
+				}
+			}
+
+			*,
+			*::before,
+			*::after {
+			box-sizing: inherit;
+			}
+
+			html {
+			box-sizing: border-box;
+			font-size: 10px;
+			height: 100%;
+			}
+
+			body {
+			position: relative;
+			display: grid;
+			grid-template-rows: auto auto 1fr auto;
+			grid-template-columns: 100%;
+			min-height: 100%;
+			margin: 0;
+			font-size: calc(var(--font-body-scale) * 1rem);
+			line-height: 1.5;
+			font-family: var(--font-body-family);
+			font-style: var(--font-body-style);
+			font-weight: var(--font-body-weight);
+			overflow-x: hidden;
+			-webkit-font-smoothing: antialiased;
+			}
+		{% endstyle %}
+		{% render 'color-scheme-vars' %}
+		{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+		{{ 'template-giftcard.css' | asset_url | stylesheet_tag }}
+
+		{%- unless settings.type_body_font.system? -%}
+			<link
+				rel="preload"
+				as="font"
+				href="{{ settings.type_body_font | font_url }}"
+				type="font/woff2"
+				crossorigin
+			>
+		{%- endunless -%}
+		{%- unless settings.type_header_font.system? -%}
+			<link
+				rel="preload"
+				as="font"
+				href="{{ settings.type_header_font | font_url }}"
+				type="font/woff2"
+				crossorigin
+			>
+		{%- endunless -%}
+	</head>
+
+	<body>
+		{% section 'gift-card-header' %}
+		<main class="main" id="MainContent">
+			<section class="shopify-section gift-card">
+				<h1 class="gift-card__heading h2">
+					{{ 'gift_cards.issued.subtext' | t }}
+				</h1>
+				<div class="gift-card__price">
+					<p>
+						{% if settings.currency_code_enabled %}
+							{{ cart.currency.iso_code }}
+							{{ gift_card.initial_value | money_without_currency }}
+						{% else %}
+							{{ gift_card.initial_value | money }}
+						{% endif %}
+					</p>
+					{%- if gift_card.enabled == false or gift_card.expired -%}
+						<p class="gift-card__label badge badge--{{ settings.sold_out_badge_color_scheme }}">
+							{{ 'gift_cards.issued.expired' | t }}
+						</p>
+					{%- endif -%}
+				</div>
+
+				{% if settings.currency_code_enabled %}
+					{%- assign gift_card_balance = gift_card.balance
+						| money_with_currency
+					-%}
+				{% else %}
+					{%- assign gift_card_balance = gift_card.balance | money -%}
+				{% endif %}
+				{%- if gift_card.balance != gift_card.initial_value -%}
+					<p class="gift-card__label caption-large">
+						{{
+							'gift_cards.issued.remaining_html'
+							| t: balance: gift_card_balance
+						}}
+					</p>
+				{%- endif -%}
+				<div class="gift-card__image-wrapper">
+  <img
+    src="https://cdn.shopify.com/s/files/1/0365/4500/3656/files/DieBaristaGutschein.png?v=1753529956"
+    alt="Die Barista Geschenkkarte"
+    class="gift-card__image"
+    width="400"
+    height="{{ 400 | divided_by: 1.5 }}"
+    loading="lazy"
+  >
+</div>
+
+				<div
+					class="gift-card__qr-code"
+					data-identifier="{{ gift_card.qr_identifier }}"
+				></div>
+				<div class="gift-card__information">
+					<div class="field gift-card__field">
+						<input
+							dir="ltr"
+							type="text"
+							class="gift-card__number"
+							value="{{ gift_card.code | format_code }}"
+							aria-label="{{ 'gift_cards.issued.gift_card_code' | t }}"
+							readonly
+						>
+						<div class="gift-card__copy-code">
+							<button class="link gift-card__copy-link">
+								<span class="link-hover-line">
+									{{ 'gift_cards.issued.copy_code' | t }}
+								</span>
+							</button>
+							<span
+								class="gift-card__copy-success form__message"
+								role="status"
+							></span>
+							<template>
+								{%- render 'icon-success' -%}
+								{{ 'gift_cards.issued.copy_code_success' | t }}
+							</template>
+						</div>
+					</div>
+					{%- if gift_card.pass_url -%}
+						<a href="{{ gift_card.pass_url }}" class="gift_card__apple-wallet">
+							<img
+								src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}"
+								width="120"
+								height="40"
+								alt="{{ 'gift_cards.issued.add_to_apple_wallet' | t }}"
+								loading="lazy"
+							>
+						</a>
+					{%- endif -%}
+					<div class="gift-card__buttons no-print">
+						<a
+							href="{{ request.origin }}"
+							class="button image-section__button button--primary-size button--primary"
+							target="_blank"
+							rel="noopener"
+							aria-describedby="a11y-new-window-message"
+						>
+							<span>
+								<span>{{ 'gift_cards.issued.shop_link' | t }}</span>
+								<span>{{ 'gift_cards.issued.shop_link' | t }}</span>
+							</span>
+						</a>
+						<button
+							class="button image-section__button button--primary-size button--tertiary"
+							onclick="window.print();"
+						>
+							<span>
+								<span>{{ 'gift_cards.issued.print_gift_card' | t }}</span>
+								<span>{{ 'gift_cards.issued.print_gift_card' | t }}</span>
+							</span>
+						</button>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<div hidden>
+			<span id="a11y-new-window-message">
+				{{- 'accessibility.link_messages.new_window' | t -}}
+			</span>
+		</div>
+	</body>
+</html>
+
+<script>
+	const string = {qrImageAlt: {{ 'gift_cards.issued.qr_image_alt' | t | json }} };
+	document.addEventListener('DOMContentLoaded', function () {
+		QRCodeContainer = document.querySelector('.gift-card__qr-code');
+		if (QRCodeContainer) {
+			new QRCode(QRCodeContainer, {
+				text: QRCodeContainer.dataset.identifier,
+				width: 120,
+				height: 120,
+				imageAltText: string.qrImageAlt
+			});
+		}
+	});
+
+	const template = document.getElementsByTagName("template")[0];
+	const clonedTemplate = template.content.cloneNode(true);
+
+	let isMessageDisplayed = false;
+	document
+		.querySelector('.gift-card__copy-link')
+		.addEventListener('click', () => {
+			navigator.clipboard.writeText(document.querySelector('.gift-card__number').value).then(function () {
+				if (!isMessageDisplayed) {
+					document.querySelector('.gift-card__copy-success').appendChild(clonedTemplate);
+					isMessageDisplayed = true
+				}
+			});
+		});
+</script>

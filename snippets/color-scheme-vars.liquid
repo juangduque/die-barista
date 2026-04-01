@@ -1,0 +1,197 @@
+{% style %}
+	{% for scheme in settings.color_schemes -%}
+		{% assign scheme_classes = scheme_classes | append: ', .color-' | append: scheme.id %}
+		[data-scheme=dark] .color-{{ scheme.id }} {
+		--color-background: 33, 33, 33;
+		--color-background-secondary: 23, 23, 23;
+		--gradient-background: rgb(33, 33, 33);
+		--color-base-background-2: 23, 23, 23;
+		--color-base-background-3: 23, 23, 23;
+		--color-base-background-4: 33, 33, 33;
+		--color-foreground: 240, 240, 240;
+		--color-foreground-secondary: 204, 204, 204;
+		--color-foreground-title: 240, 240, 240;
+		--color-background-input: 15, 15, 15;
+		--color-border-input: 67, 67, 67;
+		--color-border-input-hover: 240, 240, 240;
+		--color-border: 67, 67, 67;
+		--color-announcement-bar: 0, 0, 0;
+		--color-announcement-bar-background-1: 0, 0, 0;
+		--color-link: 240, 240, 240;
+		--alpha-link: 0.5;
+		--color-button: 240, 240, 240;
+		--color-button-hover: 220, 220, 220;
+		--color-button-text: 0, 0, 0;
+		--color-button-text-hover: 0, 0, 0;
+		--color-button-secondary: 150, 150, 150;
+		--color-button-secondary-hover: 240, 240, 240;
+		--color-button-secondary-text: 240, 240, 240;
+		--color-button-secondary-text-hover: 150, 150, 150;
+		--color-button-tertiary: 240, 240, 240;
+		--color-button-tertiary-hover: 240, 240, 240;
+		--color-button-tertiary-text: 240, 240, 240;
+		--color-button-tertiary-text-hover: 40, 40, 40;
+		--alpha-button-background: 1;
+		--alpha-button-border: 1;
+		--color-social: 240, 240, 240;
+		--color-placeholder-input: 240, 240, 240;
+		--color-background-card: 23, 23, 23;
+		--color-error-background: 172, 71, 71;
+		--color-accent: 240, 240, 240;
+		--color-background-white: 23, 23, 23;
+		}
+		@media (prefers-color-scheme: dark) {
+			[data-scheme=auto] .color-{{ scheme.id }} {
+				--color-background: 33, 33, 33;
+				--color-background-secondary: 23, 23, 23;
+				--gradient-background: rgb(33, 33, 33);
+				--color-base-background-2: 23, 23, 23;
+				--color-base-background-3: 23, 23, 23;
+				--color-base-background-4: 33, 33, 33;
+				--color-foreground: 240, 240, 240;
+				--color-foreground-secondary: 204, 204, 204;
+				--color-foreground-title: 240, 240, 240;
+				--color-background-input: 15, 15, 15;
+				--color-border-input: 67, 67, 67;
+				--color-border-input-hover: 240, 240, 240;
+				--color-border: 67, 67, 67;
+				--color-announcement-bar: 0, 0, 0;
+				--color-announcement-bar-background-1: 0, 0, 0;
+				--color-link: 240, 240, 240;
+				--alpha-link: 0.5;
+				--color-button: 240, 240, 240;
+				--color-button-hover: 220, 220, 220;
+				--color-button-text: 0, 0, 0;
+				--color-button-text-hover: 0, 0, 0;
+				--color-button-secondary: 150, 150, 150;
+				--color-button-secondary-hover: 240, 240, 240;
+				--color-button-secondary-text: 240, 240, 240;
+				--color-button-secondary-text-hover: 150, 150, 150;
+				--color-button-tertiary: 240, 240, 240;
+				--color-button-tertiary-hover: 240, 240, 240;
+				--color-button-tertiary-text: 240, 240, 240;
+				--color-button-tertiary-text-hover: 40, 40, 40;
+				--alpha-button-background: 1;
+				--alpha-button-border: 1;
+				--color-social: 240, 240, 240;
+				--color-placeholder-input: 240, 240, 240;
+				--color-background-card: 23, 23, 23;
+				--color-error-background: 172, 71, 71;
+				--color-accent: 240, 240, 240;
+				--color-background-white: 23, 23, 23;
+			}
+		}
+	{% endfor %}
+	[data-scheme=dark] {
+		--color-background: 33, 33, 33;
+		--color-background-secondary: 23, 23, 23;
+		--gradient-background: rgb(33, 33, 33);
+		--color-base-background-2: 23, 23, 23;
+		--color-base-background-3: 23, 23, 23;
+		--color-base-background-4: 33, 33, 33;
+		--color-foreground: 240, 240, 240;
+		--color-foreground-secondary: 204, 204, 204;
+		--color-foreground-title: 240, 240, 240;
+		--color-background-input: 15, 15, 15;
+		--color-border-input: 67, 67, 67;
+		--color-border-input-hover: 240, 240, 240;
+		--color-border: 67, 67, 67;
+		--color-announcement-bar: 0, 0, 0;
+		--color-announcement-bar-background-1: 0, 0, 0;
+		--color-link: 240, 240, 240;
+		--alpha-link: 0.5;
+		--color-button: 240, 240, 240;
+		--color-button-hover: 220, 220, 220;
+		--color-button-text: 0, 0, 0;
+		--color-button-text-hover: 0, 0, 0;
+		--color-button-secondary: 150, 150, 150;
+		--color-button-secondary-hover: 240, 240, 240;
+		--color-button-secondary-text: 240, 240, 240;
+		--color-button-secondary-text-hover: 150, 150, 150;
+		--color-button-tertiary: 240, 240, 240;
+		--color-button-tertiary-hover: 240, 240, 240;
+		--color-button-tertiary-text: 240, 240, 240;
+		--color-button-tertiary-text-hover: 40, 40, 40;
+		--alpha-button-background: 1;
+		--alpha-button-border: 1;
+		--color-social: 240, 240, 240;
+		--color-placeholder-input: 240, 240, 240;
+		--color-background-card: 23, 23, 23;
+		--color-error-background: 172, 71, 71;
+		--color-accent: 240, 240, 240;
+		--color-background-white: 23, 23, 23;
+
+		.color-background-1 {
+			--color-background: 33, 33, 33;
+	 	}
+		.color-background-2 {
+			--color-background: 23, 23, 23;
+			--gradient-background: rgb(23, 23, 23);
+		}
+		.color-background-3 {
+			--color-background: 23, 23, 23;
+			--gradient-background: rgb(23, 23, 23);
+		}
+		.color-background-4 {
+			--color-background: 23, 23, 23;
+			--gradient-background: rgb(23, 23, 23);
+		}
+	}
+	@media (prefers-color-scheme: dark) {
+		[data-scheme=auto] {
+			--color-background: 33, 33, 33;
+			--color-background-secondary: 23, 23, 23;
+			--gradient-background: rgb(33, 33, 33);
+			--color-base-background-2: 23, 23, 23;
+			--color-base-background-3: 23, 23, 23;
+			--color-base-background-4: 33, 33, 33;
+			--color-foreground: 240, 240, 240;
+			--color-foreground-secondary: 204, 204, 204;
+			--color-foreground-title: 240, 240, 240;
+			--color-background-input: 15, 15, 15;
+			--color-border-input: 67, 67, 67;
+			--color-border-input-hover: 240, 240, 240;
+			--color-border: 67, 67, 67;
+			--color-announcement-bar: 0, 0, 0;
+			--color-announcement-bar-background-1: 0, 0, 0;
+			--color-link: 240, 240, 240;
+			--alpha-link: 0.5;
+			--color-button: 240, 240, 240;
+			--color-button-hover: 220, 220, 220;
+			--color-button-text: 0, 0, 0;
+			--color-button-text-hover: 0, 0, 0;
+			--color-button-secondary: 150, 150, 150;
+			--color-button-secondary-hover: 240, 240, 240;
+			--color-button-secondary-text: 240, 240, 240;
+			--color-button-secondary-text-hover: 150, 150, 150;
+			--color-button-tertiary: 240, 240, 240;
+			--color-button-tertiary-hover: 240, 240, 240;
+			--color-button-tertiary-text: 240, 240, 240;
+			--color-button-tertiary-text-hover: 40, 40, 40;
+			--alpha-button-background: 1;
+			--alpha-button-border: 1;
+			--color-social: 240, 240, 240;
+			--color-placeholder-input: 240, 240, 240;
+			--color-background-card: 23, 23, 23;
+			--color-error-background: 172, 71, 71;
+			--color-accent: 240, 240, 240;
+			--color-background-white: 23, 23, 23;
+
+			.color-background-1 {
+					--color-background: 33, 33, 33;
+			}
+			.color-background-2 {
+				--color-background: 23, 23, 23;
+				--gradient-background: rgb(23, 23, 23);
+			}
+			.color-background-3 {
+				--color-background: 23, 23, 23;
+				--gradient-background: rgb(23, 23, 23);
+			}
+			.color-background-2 {
+			--color-background: 23, 23, 23;
+			--gradient-background: rgb(23, 23, 23);
+		}
+		}
+	}
+{% endstyle %}

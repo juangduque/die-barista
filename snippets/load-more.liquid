@@ -1,0 +1,12 @@
+<input dir="ltr" type="hidden" value="{{ next_url }}" data-next-url>
+<input dir="ltr" type="hidden" value="{{ count_pages }}" data-total-pages>
+<input dir="ltr" type="hidden" value="{{ current_page }}" data-current-page>
+<div class="button-wrapper no-js-hidden">
+	<button class="button button--{{- settings.button_style }} js-load-more">
+		<span>
+			<span>{{ 'products.load_more.label' | t }}</span>
+			<span>{{ 'products.load_more.label' | t }}</span>
+		</span>
+		{%- render 'icon-loading' -%}
+	</button>
+</div>

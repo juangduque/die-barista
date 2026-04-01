@@ -1,0 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-search",
+      "settings": {
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "article_show_tags": true,
+        "article_show_date": true,
+        "article_show_author": true,
+        "article_show_desc": false,
+        "enable_filtering": false,
+        "enable_sorting": false,
+        "image_filter_ratio": "4/5",
+        "image_filter_fit": "cover",
+        "image_filter_columns": 3,
+        "columns_mobile": "1",
+        "padding_top": "no-indent",
+        "padding_bottom": "no-indent"
+      }
+    },
+    "product-carousel": {
+      "type": "product-carousel",
+      "disabled": true,
+      "settings": {
+        "heading": "You May Be Intersted",
+        "heading_size": "h3",
+        "button_label": "",
+        "button_link": "",
+        "product_list": [],
+        "product_limit": 4,
+        "image_ratio": "portrait",
+        "image_fit": "cover",
+        "show_secondary_image": false,
+        "show_vendor": true,
+        "show_sku": false,
+        "show_desc": false,
+        "controls_color_scheme": "light",
+        "columns_mobile": "1",
+        "margin_top": "no-indent",
+        "margin_bottom": "xl"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product-carousel"
+  ]
+}

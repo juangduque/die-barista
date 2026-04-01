@@ -1,0 +1,22 @@
+.ticker {
+  position: relative;
+  overflow: hidden;
+}
+.ticker .swiper-wrapper {
+  width: auto !important;
+  transition-timing-function: linear !important;
+}
+.ticker .swiper-slide {
+  width: auto !important;
+  flex-shrink: 1;
+  display: inline-flex;
+}
+.ticker__title {
+  margin: 0;
+  text-align: center;
+  text-transform: capitalize;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 0 16px;
+}

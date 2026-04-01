@@ -1,0 +1,290 @@
+.compare {
+  color: #ffffff;
+}
+.compare__border-top {
+  border-top: 0.1rem solid rgb(var(--color-border));
+}
+.compare__border-bottom {
+  border-bottom: 0.1rem solid rgb(var(--color-border));
+}
+.compare__default {
+  display: flex;
+  gap: 0.5rem;
+  border-radius: 0.4rem;
+}
+.compare__default svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+}
+@media screen and (max-width: 990px) {
+  .compare__default svg {
+    height: 25rem;
+  }
+}
+.compare__box {
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+}
+@media screen and (max-width: 1100px) {
+  .compare__box {
+    gap: 3rem;
+    flex-direction: column;
+  }
+}
+.compare__content {
+  width: 24%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+@media screen and (max-width: 1100px) {
+  .compare__content {
+    width: 100%;
+    max-width: 70rem;
+  }
+}
+@media screen and (min-width: 1201px) {
+  .compare__content {
+    min-height: 75rem;
+  }
+}
+.compare__content-true {
+  width: 76%;
+}
+@media screen and (max-width: 1100px) {
+  .compare__content-true {
+    width: 100%;
+  }
+}
+.compare__content-false {
+  width: 100%;
+}
+.compare .title-wrapper {
+  margin-bottom: 0.8rem;
+}
+.compare .compare__description {
+  color: rgb(var(--color-foreground-secondary));
+}
+.compare__title {
+  margin: 0;
+}
+.compare__text {
+  width: 100%;
+  margin: 0;
+  letter-spacing: -0.03rem;
+}
+@media screen and (min-width: 1100px) {
+  .compare__text {
+    max-width: 35rem;
+  }
+}
+.compare__default {
+  display: flex;
+  gap: 0.5rem;
+}
+@media screen and (min-width: 1100px) {
+  .compare__default {
+    height: 100%;
+  }
+}
+.compare__button {
+  margin-top: 2.4rem;
+  min-width: 19.4rem;
+  min-height: 5.8rem;
+}
+@media screen and (min-width: 1100px) {
+  .compare__button {
+    margin-top: 3.2rem;
+  }
+}
+.compare img-comparison-slider.rendered {
+  border-radius: 0.2rem;
+  outline: none;
+  width: 100%;
+  height: 100%;
+}
+.compare__figure {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.compare__figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.compare__figure_text {
+  position: absolute;
+  max-width: 27.4rem;
+  line-height: 1.2;
+  color: #ffffff;
+}
+.compare__figure_text--left {
+  left: 2rem;
+  top: 2rem;
+}
+@media screen and (min-width: 1100px) {
+  .compare__figure_text--left {
+    left: 6rem;
+    top: 6rem;
+  }
+}
+.compare__figure_text--right {
+  right: 2rem;
+  bottom: 2rem;
+}
+@media screen and (min-width: 1100px) {
+  .compare__figure_text--right {
+    right: 6rem;
+    bottom: 6rem;
+  }
+}
+.compare__figure_text .before_text {
+  font-size: 1.4rem;
+  margin-top: 0.4rem;
+  letter-spacing: -0.02rem;
+}
+.compare__figure_text .h4 {
+  color: #ffffff;
+}
+.compare .icon-handle .icon-handle_line1,
+.compare .icon-handle .icon-handle_line2 {
+  transition: var(--duration-default);
+}
+.compare .icon-handle:hover .icon-handle_line1 {
+  transform: translateX(-1.5px);
+  transition: var(--duration-default);
+}
+.compare .icon-handle:hover .icon-handle_line2 {
+  transform: translateX(1.5px);
+  transition: var(--duration-default);
+}
+.compare.compare--full .compare__slide {
+  width: 100%;
+}
+.compare.compare--full .compare__box {
+  max-height: 30rem;
+  min-height: 30rem;
+}
+.compare.compare--full .compare__box .compare__figure img {
+  max-height: 30rem;
+  min-height: 30rem;
+}
+@media screen and (min-width: 576px) {
+  .compare.compare--full .compare__box {
+    max-height: 25rem;
+  }
+  .compare.compare--full .compare__box .compare__figure img {
+    max-height: 25rem;
+  }
+}
+@media screen and (min-width: 750px) {
+  .compare.compare--full .compare__box {
+    max-height: 35rem;
+  }
+  .compare.compare--full .compare__box .compare__figure img {
+    max-height: 35rem;
+  }
+}
+@media screen and (min-width: 990px) {
+  .compare.compare--full .compare__box {
+    max-height: 45rem;
+  }
+  .compare.compare--full .compare__box .compare__figure img {
+    max-height: 45rem;
+  }
+}
+@media screen and (min-width: 1100px) {
+  .compare.compare--full .compare__box {
+    max-height: 55rem;
+  }
+  .compare.compare--full .compare__box .compare__figure img {
+    max-height: 55rem;
+  }
+}
+@media screen and (min-width: 1360px) {
+  .compare.compare--full .compare__box {
+    max-height: 65rem;
+  }
+  .compare.compare--full .compare__box .compare__figure img {
+    max-height: 65rem;
+  }
+}
+@media screen and (min-width: 1600px) {
+  .compare.compare--full .compare__box {
+    max-height: 75rem;
+  }
+  .compare.compare--full .compare__box .compare__figure img {
+    max-height: 75rem;
+  }
+}
+.compare.compare--full .compare__top_content {
+  margin-bottom: 1.9rem;
+}
+.compare.compare--full .compare__top_content .compare__text {
+  width: 100%;
+  margin: 0;
+}
+@media screen and (min-width: 1100px) {
+  .compare.compare--full .compare__top_content .compare__text {
+    max-width: 75rem;
+  }
+}
+@media screen and (min-width: 1201px) {
+  .compare.compare--simple .compare__figure {
+    display: block !important;
+  }
+  .compare.compare--simple .compare__figure img {
+    position: absolute;
+  }
+}
+@media screen and (max-width: 1100px) {
+  .compare.compare--simple .compare__slide {
+    max-height: 65rem;
+    min-height: 65rem;
+  }
+  .compare.compare--simple .compare__slide .compare__figure img {
+    max-height: 65rem;
+    min-height: 65rem;
+  }
+}
+@media screen and (max-width: 990px) {
+  .compare.compare--simple .compare__slide {
+    max-height: 55rem;
+    min-height: 55rem;
+  }
+  .compare.compare--simple .compare__slide .compare__figure img {
+    max-height: 55rem;
+    min-height: 55rem;
+  }
+}
+@media screen and (max-width: 750px) {
+  .compare.compare--simple .compare__slide {
+    max-height: 45rem;
+    min-height: 45rem;
+  }
+  .compare.compare--simple .compare__slide .compare__figure img {
+    max-height: 45rem;
+    min-height: 45rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .compare.compare--simple .compare__slide {
+    max-height: 30rem;
+    min-height: 30rem;
+  }
+  .compare.compare--simple .compare__slide .compare__figure img {
+    max-height: 30rem;
+    min-height: 30rem;
+  }
+}
+@media screen and (max-width: 750px) {
+  .compare .icon-handle {
+    width: 40px;
+    height: 40px;
+  }
+}

@@ -1,0 +1,182 @@
+.card-horizontal-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.6rem;
+  border-radius: 0.2rem;
+  padding: 1rem;
+  text-decoration: none;
+  overflow: hidden;
+}
+.card-horizontal-wrapper:hover img {
+  transform: scale(1.05);
+  transition: transform var(--duration-long) ease;
+}
+.card-horizontal-wrapper:hover .card-horizontal__view-details > span:first-child {
+  transform: translateY(-130%) translateZ(0);
+}
+.card-horizontal-wrapper:hover .card-horizontal__view-details > span:nth-of-type(2) {
+  transform: translateY(0) translateZ(0);
+}
+.card-horizontal-wrapper .price__regular,
+.card-horizontal-wrapper .price-item--sale {
+  font-size: 1.2rem;
+}
+.card-horizontal-wrapper .price--on-sale .price-item--regular {
+  font-size: 1rem;
+}
+.card-horizontal-wrapper:hover .card-horizontal__link {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.card-horizontal-wrapper .vendor_link {
+  pointer-events: all;
+  text-decoration: none;
+  transition: var(--duration-default);
+  z-index: 2;
+  position: relative;
+}
+.card-horizontal-wrapper .vendor_link:hover {
+  opacity: 0.7;
+}
+
+.card-horizontal__image {
+  position: relative;
+  flex-shrink: 0;
+  min-width: 6rem;
+  max-width: 6rem;
+  border-radius: 0.2rem;
+  overflow: hidden;
+}
+.card-horizontal__image img {
+  transition: transform var(--duration-long) ease;
+}
+.card-horizontal__information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.8rem;
+  height: 100%;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.card-horizontal__information-group {
+  flex-grow: 1;
+}
+.card-horizontal__title {
+  position: relative;
+  display: block;
+  margin: 0;
+  color: rgb(var(--color-foreground-title));
+  z-index: 2;
+  line-height: 0;
+}
+.card-horizontal__title a {
+  display: inline;
+  font-family: var(--font-heading-card-family);
+  font-size: 1.2rem;
+  font-style: var(--font-heading-card-style);
+  font-weight: var(--font-heading-card-weight);
+  line-height: var(--font-body-line-height);
+  word-break: break-word;
+  z-index: 2;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  transition-property: color;
+  transition-duration: var(--duration-long);
+  transition-timing-function: ease;
+}
+.card-horizontal__title svg {
+  margin-left: 0.8rem;
+  color: currentColor;
+  transition: opacity var(--duration-long) ease;
+  opacity: 0;
+}
+.card-horizontal__title:hover svg {
+  opacity: 1;
+}
+.card-horizontal__subtitle {
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0;
+  text-transform: none;
+}
+.card-horizontal__view-details {
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-heading-card-family);
+  font-style: var(--font-heading-card-style);
+  font-weight: var(--font-heading-card-weight);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.card-horizontal__view-details > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.card-horizontal__view-details > span:nth-of-type(2) {
+  position: absolute;
+  left: 0;
+  transform: translateY(130%) translateZ(0);
+}
+.card-horizontal__link {
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  width: auto;
+  height: auto;
+  min-width: 6.4rem;
+  min-height: unset;
+  background: none;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(var(--color-base-text), 1);
+  background-color: rgb(var(--color-background));
+  border: none;
+  border-radius: 3rem;
+  box-shadow: none;
+  transform: translateX(-50%) translateY(100%);
+  opacity: 0;
+  z-index: 3;
+  pointer-events: all;
+  text-align: center;
+  transition: transform var(--duration-short);
+}
+.card-horizontal__link.loading span {
+  opacity: 0;
+}
+.card-horizontal__link .loading-overlay__spinner {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+.card-horizontal__link span {
+  transition: opacity var(--duration-short);
+}
+.card-horizontal__link:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgb(var(--color-background));
+  border-radius: 3rem;
+  z-index: -1;
+  transition: transform var(--duration-default) ease;
+}
+.card-horizontal__link:hover::after {
+  transform: scale(1.1);
+}
+.card-horizontal__description {
+  margin-top: 1rem;
+  font-family: var(--font-text-card-family);
+  font-style: var(--font-text-card-style);
+  font-weight: var(--font-text-card-weight);
+  font-size: calc(var(--font-text-card-scale) * 1rem);
+  line-height: var(--font-body-line-height);
+}

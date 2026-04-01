@@ -1,0 +1,298 @@
+{% comment %}
+	Renders product variant options
+	Accepts:
+	- product: {Object} product object.
+	- option: {Object} current product_option object.
+	- block: {Object} block object.
+	Usage:
+	{% render 'product-variant-options',
+	  product: product,
+	  option: option,
+	  block: block
+	%}
+{% endcomment %}
+{%- liquid
+	assign variants_available_arr = product.variants | map: 'available'
+	assign variants_option1_arr = product.variants | map: 'option1'
+	assign variants_option2_arr = product.variants | map: 'option2'
+	assign variants_option3_arr = product.variants | map: 'option3'
+
+	assign product_form_id = 'product-form-' | append: section.id
+-%}
+
+{%- for value in option.values -%}
+	{%- liquid
+		assign option_disabled = true
+
+		for option1_name in variants_option1_arr
+			case option.position
+				when 1
+					if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+						assign option_disabled = false
+					endif
+				when 2
+					if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+						assign option_disabled = false
+					endif
+				when 3
+					if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+						assign option_disabled = false
+					endif
+			endcase
+		endfor
+	-%}
+
+	{% liquid
+		assign color_trigger = settings.trigger_swatch | handle | strip
+		assign name_option = option.name | handle | strip
+	%}
+
+	{% if settings.type_color_swatch == 'custom' 
+		and color_trigger == name_option
+		and block.settings.picker_type != 'dropdown'
+	%}
+		{% liquid
+			assign color_value = value | handle | strip
+			assign color_value_custom = color_value
+
+			if settings.custom_colors != blank
+				assign custom_colors_string = settings.custom_colors | strip
+				assign custom_colors_obj = custom_colors_string | newline_to_br | split: '<br />'
+
+				for obj in custom_colors_obj
+					assign obj_strip = obj | strip
+					assign obj_key = obj_strip | split: ':' | first
+					assign obj_value = obj_strip | split: ':' | last
+					assign obj_color_name = obj_key | handle | strip
+
+					if color_value == obj_color_name
+						assign obj_color_value = obj_value
+						assign color_value_custom = obj_color_value | strip
+						break
+					endif
+				endfor
+			endif
+		%}
+
+		{% liquid
+			assign variant_link = product.url
+
+			for variant in product.variants
+				assign flag = false
+				if variant.available
+					for option_variant in variant.options
+						if option_variant == value
+							assign flag = true
+							break
+						endif
+					endfor
+				endif
+
+				if flag == true
+					assign variant_link = variant.url
+					assign variant_id = variant.id
+					break
+				endif
+			endfor
+
+			if color_value_custom == 'white' or color_value_custom == '#fff' or color_value_custom == '#ffffff' or color_value_custom == '255,255,255' or color_value_custom == '255,255,255,1'
+				assign swatch_border = 'rgb(var(--color-border))'
+			else
+				assign swatch_border = 'transparent'
+			endif
+		%}
+
+		<input
+			dir="ltr"
+			type="radio"
+			id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ product.id }}"
+			name="{{ option.name }}-{{ section.id }}-{{ product.id }}"
+			value="{{ value | escape }}"
+			aria-label="color-swatch-option"
+			{% if variant_link %}
+				data-variant-link="{{ variant_link }}"
+			{% endif %}
+			{% if variant_id %}
+				data-variant-id="{{ variant_id }}"
+			{% endif %}
+			{% if no_form_id != true %}
+				form="{{ product_form_id }}"
+			{% endif %}
+			{% if option.selected_value == value %}
+				checked
+			{% endif %}
+			{% if option_disabled and no_form_id != true %}
+				class="disabled"
+			{% endif %}
+		>
+		{% if product_page != true %}
+			<label
+				for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ product.id }}"
+				{% if product_page != true %}
+				class="color-swatch {% if color_value_custom == 'white' or color_value_custom == '#fff' or color_value_custom == '#ffffff' or color_value_custom == '255,255,255' or color_value_custom == '255,255,255,1' %}color-white{% endif %}"
+					{% else %}
+					class="color-swatch-second"
+				{% endif %}
+				style="--swatch-color: {{ color_value_custom | remove: '-' }}; border-radius: {{ settings.swatch_border_radius }}px;"
+				aria-label="color-swatch"
+			>
+				<span
+					{% if product_page != true %}
+						class=" visibility-hidden"
+					{% endif %}
+				>
+					{{- value -}}
+				</span>
+			</label>
+		{% endif %}
+		{% if product_page == true %}
+			<label
+				class="color_swatch_block"
+				for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ product.id }}"
+			>
+				<label
+					for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ product.id }}"
+					{% if product_page != true %}
+						class="color-swatch"
+					{% else %}
+						class="color-swatch-second"
+					{% endif %}
+					style="--swatch-color: {{ color_value_custom | remove: '-' }}; border-radius: {{ settings.swatch_border_radius }}px; border-color: {{ swatch_border }}"
+				>
+					<span
+						class="color_swatch_value"
+						{% if product_page != true %}
+							class=" visibility-hidden"
+						{% endif %}
+					>
+						{{- value -}}
+					</span>
+				</label>
+				<span
+					class=" visibility-hidden"
+				>
+					{{- value -}}
+				</span>
+			</label>
+		{% endif %}
+		{% comment %}
+			{% if product_page %}
+				<label
+					for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ product.id }}"
+					class="color-swatch"
+				>
+					<span>{{- value -}}</span>
+				</label>
+			{% endif %}
+		{% endcomment %}
+	{% else %}
+		{%- if block.settings.picker_type == 'button' -%}
+			<input
+				dir="ltr"
+				type="radio"
+				id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+				name="{{ option.name }}"
+				value="{{ value | escape }}"
+				{% if no_form_id != true %}
+					form="{{ product_form_id }}"
+				{% endif %}
+				{% if option.selected_value == value %}
+					checked
+				{% endif %}
+				{% if option_disabled %}
+					class="disabled"
+				{% endif %}
+			>
+			<label
+				class="size_value_block"
+				for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+			>
+				{{ value -}}
+				<span class="visually-hidden">
+					{{- 'products.product.variant_sold_out_or_unavailable' | t -}}
+				</span>
+			</label>
+		{%- elsif block.settings.picker_type == 'dropdown' -%}
+			<option
+				value="{{ value | escape }}"
+				{% if option.selected_value == value %}
+					selected="selected"
+				{% endif %}
+			>
+				{% if option_disabled -%}
+					{{- 'products.product.value_unavailable' | t: option_value: value -}}
+				{%- else -%}
+					{{ value -}}
+				{%- endif %}
+			</option>
+		{% endif %}
+	{% endif %}
+{%- endfor -%}
+
+{% liquid
+	assign optionName = option.name | escape | downcase
+	assign size_text = 'general.size' | t | downcase
+%}
+
+{% if optionName == size_text and block.settings.show_size_guide %}
+	<modal-opener
+		class="no-js-hidden adv-btn-opener"
+		data-modal="#PopupModal-{{ block.id }}"
+		{{ block.shopify_attributes }}
+	>
+		<button
+			class="button button--simple-move size-guide-btn pickup-availability-button"
+			id="ProductPopup-{{ block.id }}"
+			type="button"
+			aria-haspopup="dialog"
+			aria-label="Open popup"
+		>
+			<span>{{ block.settings.size_guide_text }}</span>
+		</button>
+	</modal-opener>
+	{% comment %}<div class="size-guide-overlay"></div>{% endcomment %}
+	<modal-dialog
+		id="PopupModal-{{ block.id }}"
+		class="product-popup-modal size_guide_image_container"
+		{{ block.shopify_attributes }}
+	>
+		<div
+			role="dialog"
+			aria-label="{{ block.settings.label }}"
+			aria-modal="true"
+			class="product-popup-modal__content"
+			tabindex="-1"
+		>
+			<button
+				id="ModalClose-{{ block.id }}"
+				type="button"
+				class="product-popup-modal__toggle modal-close-button"
+				aria-label="{{ 'accessibility.close' | t }}"
+			>
+				{% render 'icon-close' %}
+			</button>
+			<div class="product-popup-modal__content-info">
+				<h2 class="product-popup-modal__title">
+					{{ block.settings.size_guide_header }}
+				</h2>
+				<p class=".product-popup-modal__text">
+					{{ block.settings.size_guide_decription }}
+				</p>
+				{% if block.settings.size_guide_image != blank
+					and block.settings.show_size_guide
+				%}
+					<div class="size_guide_image">
+						{{
+							block.settings.size_guide_image
+							| image_url: width: 1790
+							| image_tag: loading: 'lazy', widths: '553, 895, 1790'
+						}}
+					</div>
+				{% endif %}
+				{%- if block.settings.page.content != blank -%}
+					{{ block.settings.page.content }}
+				{%- endif -%}
+			</div>
+		</div>
+	</modal-dialog>
+{% endif %}

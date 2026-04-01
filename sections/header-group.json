@@ -1,0 +1,137 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "t:sections.header.settings.header-group.label",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "disabled": true,
+      "settings": {
+        "color_scheme": "background-4",
+        "height": 40,
+        "height_mobile": 40,
+        "text": "<p>BLACK WEEK - SALE BIS ZU 60% - 21. - 30.11.</p>",
+        "enable_upper": true,
+        "effect_opacity": 1,
+        "button_label": "JETZT SPAREN",
+        "button_link": "shopify://collections/special",
+        "enable_country_selector": false,
+        "enable_language_selector": false
+      }
+    },
+    "custom_liquid_zAyen4": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<div class=\"countdown-timer-block\" countdown-timer-id=\"cmgxw7kf20046zkk4ytmjswqw\"></div>"
+      }
+    },
+    "custom_liquid_WMHJVN": {
+      "type": "custom-liquid",
+      "custom_css": [],
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<style>\n  .usp-bar {\n    display:flex; align-items:center; justify-content:center; gap:1.5rem;\n    padding:8px 12px; line-height:1; font-size:14px;\n    color:var(--color-text, #fff);\nbackground-color:#252525;\nheight:40px;\n  }\n  .usp-bar a { color:inherit; text-decoration:none; }\n  .usp-item { display:flex; align-items:center; gap:.5rem; white-space:nowrap; }\n \n\n  /* Sterne */\n  .stars { display:flex; align-items:center; gap:.5rem; }\n  .stars svg { width:16px; height:16px; flex:0 0 16px; fill:currentColor; }\n  .stars--desktop { display:flex; }\n  .stars--mobile  { display:none; }\n\n  /* Responsiv */\n  @media (max-width: 768px) {\n    .usp-bar { gap:.75rem; font-size:13px; padding:8px; }\n    .stars--desktop { display:none; }\n    .stars--mobile  { display:flex; }\n    .hide-mobile { display:none; }\n  }\n</style>\n\n<div class=\"usp-bar\">\n  <!-- Bewertungen: verlinkt -->\n  <a class=\"usp-item\" href=\"https://shop.diebarista.com/pages/rezensionen-und-bewertungen\" aria-label=\"Zu unseren Bewertungen\">\n    <!-- Desktop: 5 Sterne -->\n    <span class=\"stars stars--desktop\" aria-hidden=\"true\">\n      {% for i in (1..5) %}\n        <svg viewBox=\"0 0 20 20\" role=\"img\"><path d=\"M10 1.5l2.7 5.48 6.05.88-4.38 4.26 1.03 6.02L10 14.94 4.6 18.14l1.03-6.02L1.25 7.86l6.05-.88L10 1.5z\"/></svg>\n      {% endfor %}\n    </span>\n    <!-- Mobil: 1 Stern -->\n    <span class=\"stars stars--mobile\" aria-hidden=\"true\">\n      <svg viewBox=\"0 0 20 20\" role=\"img\"><path d=\"M10 1.5l2.7 5.48 6.05.88-4.38 4.26 1.03 6.02L10 14.94 4.6 18.14l1.03-6.02L1.25 7.86l6.05-.88L10 1.5z\"/></svg>\n    </span>\n    <span>4,9&nbsp;von&nbsp;5</span>\n  </a>\n\n  <span class=\"usp-sep\">|</span>\n\n  <!-- USP 1 -->\n  <span class=\"usp-item\">Versand&nbsp;in&nbsp;1–2 Wektagen & kostenlos&nbsp;ab&nbsp;50&nbsp;€</span>\n\n\n</div>"
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "follow": {
+          "type": "follow",
+          "disabled": true,
+          "settings": {
+            "color_scheme": "",
+            "heading": "This is Where Your Socials Go — Use a Clear Heading to Introduce the Section",
+            "info": "<p>Use this space to encourage users to follow your brand for exclusive updates.</p>",
+            "enable_subscribe": true,
+            "show_social": true,
+            "button_style": "secondary",
+            "overlay_opacity": 0.4
+          }
+        },
+        "94a9e0ae-7041-4487-a1e3-7d6cff7267c1": {
+          "type": "mega_menu",
+          "settings": {
+            "mega_menu_trigger": "KAFFEE",
+            "show_mega_menu_1": true,
+            "heading_1": "Unsere Besteseller",
+            "image_1": "shopify://shop_images/der_italiener_original.jpg",
+            "button_link_1": "shopify://collections/best-selling-products",
+            "button_label_1": "Jetzt ansehen",
+            "show_mega_menu_2": true,
+            "heading_2": "Unsere Probierpakete",
+            "image_2": "shopify://shop_images/Kaffeeset21zu1.jpg",
+            "button_link_2": "shopify://collections/probiersets",
+            "button_label_2": "Jetzt durchtesten"
+          }
+        },
+        "mega_menu_6geq6Q": {
+          "type": "mega_menu",
+          "settings": {
+            "mega_menu_trigger": "EQUIPMENT",
+            "show_mega_menu_1": true,
+            "heading_1": "LIGRE youn - Siebträgermaschine",
+            "image_1": "shopify://shop_images/Pic_231208_Ligre266510_press.jpg",
+            "button_link_1": "shopify://pages/ligre-youn",
+            "button_label_1": "Jetzt entdecken",
+            "show_mega_menu_2": false,
+            "heading_2": "Categories",
+            "button_link_2": "",
+            "button_label_2": "View all"
+          }
+        }
+      },
+      "block_order": [
+        "follow",
+        "94a9e0ae-7041-4487-a1e3-7d6cff7267c1",
+        "mega_menu_6geq6Q"
+      ],
+      "custom_css": [
+        "@media screen and (max-width: 550px) {.header__heading-logo {width: 100px; }}"
+      ],
+      "settings": {
+        "header_type": "bottom-menu",
+        "color_scheme": "background-2",
+        "border_bottom": false,
+        "logo": "shopify://shop_images/sxhwarz_logo_graden.png",
+        "logo_width": 100,
+        "menu": "oberes-men",
+        "menu_2": "hauptmenue",
+        "enable_country_selector": false,
+        "enable_country_on_mobile": true,
+        "enable_language_selector": false,
+        "enable_language_on_mobile": true,
+        "mobile_menu_link": false,
+        "sticky_header_type": "always",
+        "enable_search": true,
+        "enable_search_modal": false,
+        "show_items": false,
+        "product_list": [],
+        "show_vendor": true,
+        "show_articles": true,
+        "blog": "about-barista",
+        "show_image": true,
+        "show_date": true,
+        "show_search_block": true,
+        "search_heading": "Featured Product",
+        "button_link": "",
+        "button_label": "Shop Now"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "custom_liquid_zAyen4",
+    "custom_liquid_WMHJVN",
+    "header"
+  ]
+}

@@ -1,0 +1,65 @@
+{% if roast %}
+<div class="roast-scale">
+  <div class="roast-scale__label">Röstgrad</div>
+  <div class="roast-scale__container">
+    <div class="roast-scale__bar">
+      <div class="roast-scale__fill" style="width: {{ roast | times: 100 | divided_by: 6 }}%;"></div>
+      <div class="roast-scale__division"></div>
+      <div class="roast-scale__division"></div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<style>
+  .roast-scale {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 10px 0;
+    width: 60%;
+  }
+
+  .roast-scale__label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .roast-scale__container {
+    position: relative;
+  }
+
+  .roast-scale__bar {
+    height: 0.5rem;
+    background: rgb(173, 173, 173);
+    border: solid 1px black;
+    border-radius: 4px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .roast-scale__fill {
+    background-color: #1f1f1f;
+    height: 100%;
+    border-radius: 0px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .roast-scale__division {
+    position: absolute;
+    top: -1px;
+    bottom: -1px;
+    width: 2px;
+    background: white;
+    z-index: 2;
+  }
+
+  .roast-scale__division:nth-of-type(2) {
+    left: 33.33%;
+  }
+
+  .roast-scale__division:nth-of-type(3) {
+    left: 66.66%;
+  }
+</style>
