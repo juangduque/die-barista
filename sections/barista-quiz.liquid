@@ -1,0 +1,227 @@
+{% comment %}
+  Section: barista-quiz.liquid
+  Pfad: sections/barista-quiz.liquid
+{% endcomment %}
+
+<style>
+.barista-quiz { background: #C8231A; padding: 70px 0; }
+.barista-quiz__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.barista-quiz__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+}
+.barista-quiz__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.barista-quiz__label::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: rgba(255,255,255,0.4);
+  flex-shrink: 0;
+}
+.barista-quiz__headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(42px, 6vw, 72px);
+  color: #FFFFFF;
+  line-height: 0.95;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+.barista-quiz__text {
+  color: rgba(255,255,255,0.7);
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+.barista-quiz__btn {
+  background: #0F0F0D;
+  color: white;
+  border: none;
+  padding: 16px 36px;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.barista-quiz__btn:hover { background: #222; color: white; }
+
+/* Options */
+.barista-quiz__options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.barista-quiz__option {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 20px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+.barista-quiz__option:hover {
+  background: rgba(0,0,0,0.4);
+  border-color: rgba(255,255,255,0.4);
+  transform: translateY(-2px);
+}
+.barista-quiz__option.selected {
+  background: rgba(0,0,0,0.5);
+  border-color: white;
+}
+.barista-quiz__option-icon { font-size: 28px; display: block; }
+.barista-quiz__option-label {
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.4;
+}
+
+@media (max-width: 1024px) {
+  .barista-quiz__inner { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 640px) {
+  .barista-quiz__container { padding: 0 20px; }
+  .barista-quiz__options { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+
+<section class="barista-quiz">
+  <div class="barista-quiz__container">
+    <div class="barista-quiz__inner">
+
+      <div>
+        {%- if section.settings.label != blank -%}
+          <div class="barista-quiz__label">{{ section.settings.label }}</div>
+        {%- endif -%}
+        <h2 class="barista-quiz__headline">{{ section.settings.headline | newline_to_br }}</h2>
+        {%- if section.settings.text != blank -%}
+          <p class="barista-quiz__text">{{ section.settings.text }}</p>
+        {%- endif -%}
+        <a href="{{ section.settings.btn_url | default: '#' }}" class="barista-quiz__btn">
+          {{ section.settings.btn_label | default: 'Finder starten' }} →
+        </a>
+      </div>
+
+      <div class="barista-quiz__options" id="barista-quiz-options">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'option' -%}
+            <div class="barista-quiz__option" {{ block.shopify_attributes }} onclick="baristaQuizSelect(this)">
+              <span class="barista-quiz__option-icon">{{ block.settings.icon }}</span>
+              <span class="barista-quiz__option-label">{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+function baristaQuizSelect(el) {
+  el.classList.toggle('selected');
+}
+</script>
+
+{% schema %}
+{
+  "name": "Barista Kaffee-Quiz",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "option",
+      "name": "Quiz Option",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Emoji",
+          "default": "☕"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Beschriftung",
+          "default": "Espresso"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow Label",
+      "default": "Kaffee-Finder"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Überschrift",
+      "default": "WELCHER KAFFEE\nPASST ZU DIR?"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Beschreibungstext",
+      "default": "Beantworte 3 kurze Fragen und Gemil sagt dir, welche Lieblingsröstung das Beste für dich ist."
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Text",
+      "default": "Finder starten"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barista Kaffee-Quiz",
+      "blocks": [
+        { "type": "option", "settings": { "icon": "☕", "label": "Espresso-trinker" } },
+        { "type": "option", "settings": { "icon": "🫖", "label": "Filterkaffee Fan" } },
+        { "type": "option", "settings": { "icon": "🥛", "label": "Mit Milch bitte" } },
+        { "type": "option", "settings": { "icon": "🌿", "label": "Fruchtig & leicht" } },
+        { "type": "option", "settings": { "icon": "💪", "label": "Stark & dunkel" } },
+        { "type": "option", "settings": { "icon": "🌍", "label": "Single Origin" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

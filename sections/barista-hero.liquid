@@ -1,0 +1,298 @@
+{% comment %}
+  Section: barista-hero.liquid
+  Pfad: sections/barista-hero.liquid
+  Im Theme Editor: Sections > Add section > "Barista Hero"
+{% endcomment %}
+
+<style>
+.barista-hero {
+  position: relative;
+  min-height: calc(100vh - 60px);
+  background: var(--db-black, #0F0F0D);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+.barista-hero__image-side {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.barista-hero__image-side::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 55%, #0F0F0D 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.barista-hero__image-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transform: scale(1.03);
+  transition: transform 8s ease;
+}
+.barista-hero__image-side img.loaded { transform: scale(1); }
+
+.barista-hero__badge {
+  position: absolute;
+  top: 36%;
+  right: 0;
+  z-index: 5;
+  background: #C8231A;
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  transform: rotate(-90deg) translateX(50%);
+  transform-origin: right center;
+  white-space: nowrap;
+}
+
+.barista-hero__content {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 60px 80px 48px;
+}
+
+.barista-hero__eyebrow {
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #888580;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.barista-hero__eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: #C8231A;
+  flex-shrink: 0;
+}
+
+.barista-hero__location {
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #C8231A;
+  margin-bottom: 24px;
+}
+
+.barista-hero__headline {
+  font-family: 'Bebas Neue', var(--db-font-display, sans-serif);
+  font-size: clamp(52px, 7vw, 84px);
+  line-height: 0.92;
+  color: #FFFFFF;
+  letter-spacing: 1px;
+  margin-bottom: 0;
+}
+.barista-hero__headline .accent { color: #C8231A; display: block; }
+
+.barista-hero__text {
+  color: #C8C4BC;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 24px 0 36px;
+  max-width: 380px;
+  font-weight: 300;
+}
+
+.barista-hero__buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+  .barista-hero { grid-template-columns: 1fr; min-height: auto; }
+  .barista-hero__image-side { height: 50vw; max-height: 400px; }
+  .barista-hero__content { padding: 50px 40px; }
+}
+@media (max-width: 640px) {
+  .barista-hero__content { padding: 40px 20px; }
+  .barista-hero__buttons { flex-direction: column; }
+  .barista-hero__buttons .db-btn-primary,
+  .barista-hero__buttons .db-btn-secondary { text-align: center; justify-content: center; }
+}
+</style>
+
+<section class="barista-hero" id="barista-hero">
+
+  {%- if section.settings.image != blank -%}
+  <div class="barista-hero__image-side">
+    {{
+      section.settings.image
+      | image_url: width: 1200
+      | image_tag:
+        loading: 'eager',
+        fetchpriority: 'high',
+        id: 'barista-hero-img',
+        alt: section.settings.image.alt | default: shop.name
+    }}
+    {%- if section.settings.badge_text != blank -%}
+      <div class="barista-hero__badge">{{ section.settings.badge_text }}</div>
+    {%- endif -%}
+  </div>
+  {%- else -%}
+  <div class="barista-hero__image-side" style="background:#1A1208;"></div>
+  {%- endif -%}
+
+  <div class="barista-hero__content">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="barista-hero__eyebrow">{{ section.settings.eyebrow }}</div>
+    {%- endif -%}
+    {%- if section.settings.location != blank -%}
+      <div class="barista-hero__location">📍 {{ section.settings.location }}</div>
+    {%- endif -%}
+
+    <h1 class="barista-hero__headline">
+      {{ section.settings.headline_line1 }}<br>
+      {{ section.settings.headline_line2 }}<br>
+      <span class="accent">{{ section.settings.headline_accent }}</span>
+    </h1>
+
+    {%- if section.settings.subtext != blank -%}
+      <p class="barista-hero__text">{{ section.settings.subtext }}</p>
+    {%- endif -%}
+
+    <div class="barista-hero__buttons">
+      {%- if section.settings.btn1_label != blank -%}
+        <a href="{{ section.settings.btn1_url }}" class="db-btn-primary">
+          {{ section.settings.btn1_label }} →
+        </a>
+      {%- endif -%}
+      {%- if section.settings.btn2_label != blank -%}
+        <a href="{{ section.settings.btn2_url }}" class="db-btn-secondary">
+          {{ section.settings.btn2_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var img = document.getElementById('barista-hero-img');
+    if (img) {
+      if (img.complete) { img.classList.add('loaded'); }
+      else { img.addEventListener('load', function () { img.classList.add('loaded'); }); }
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Barista Hero",
+  "tag": "div",
+  "class": "barista-hero-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Bild & Badge"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Bild (Barista/Kaffee)"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text (vertikal)",
+      "default": "Handwerk aus Hamburg"
+    },
+    {
+      "type": "header",
+      "content": "Texte"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Wir rösten. Gemil freut sich."
+    },
+    {
+      "type": "text",
+      "id": "location",
+      "label": "Standort",
+      "default": "Direkt aus Hamburg"
+    },
+    {
+      "type": "text",
+      "id": "headline_line1",
+      "label": "Headline Zeile 1",
+      "default": "HANDWERK"
+    },
+    {
+      "type": "text",
+      "id": "headline_line2",
+      "label": "Headline Zeile 2",
+      "default": "STATT"
+    },
+    {
+      "type": "text",
+      "id": "headline_accent",
+      "label": "Headline Akzent (rot)",
+      "default": "MASSEN-PRODUKTION"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Beschreibungstext",
+      "default": "Jede Bohne ein Fingerabdruck. Gemil reist zu kleinen Farmen in aller Welt: Ohne industrielle Chemikalien, ohne Maschinen-Komposition – nur reiner Geschmack."
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "btn1_label",
+      "label": "Button 1 Text",
+      "default": "Jetzt entdecken"
+    },
+    {
+      "type": "url",
+      "id": "btn1_url",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "btn2_label",
+      "label": "Button 2 Text",
+      "default": "Unsere Story"
+    },
+    {
+      "type": "url",
+      "id": "btn2_url",
+      "label": "Button 2 Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barista Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,266 @@
+{% comment %}
+  ============================================================
+  DIE BARISTA ROASTERY — SECTION 06: MID PAGE CTA
+  File: sections/section-06-mid-cta.liquid
+
+  Design: Compact horizontal strip on surface background
+  - Left: headline + dynamic "Produktname · Variante" subtext
+  - Right: dynamic variant price + red ATC button
+  - Native Shopify product form — no metafields, no AJAX
+  - Variant title built from option1/option2 with "·" separator
+    (avoids default " / " Shopify slash join)
+  - Deliberate one-time purchase only (no selling plan)
+    — user already made Abo decision in Section 01
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+
+  comment
+    Build variant display string with "·" separator, not the default " / "
+    e.g. "250g · Ganze Bohne" instead of "250g / Ganze Bohne"
+  endcomment
+  assign variant_parts = ''
+  if current_variant.option1 != blank and current_variant.option1 != 'Default Title'
+    assign variant_parts = current_variant.option1
+  endif
+  if current_variant.option2 != blank
+    if variant_parts != ''
+      assign variant_parts = variant_parts | append: ' · ' | append: current_variant.option2
+    else
+      assign variant_parts = current_variant.option2
+    endif
+  endif
+  if current_variant.option3 != blank
+    assign variant_parts = variant_parts | append: ' · ' | append: current_variant.option3
+  endif
+
+  # Subtext: "Der Italiener · 250g · Ganze Bohne"
+  assign subtext = product.title
+  if variant_parts != ''
+    assign subtext = subtext | append: ' · ' | append: variant_parts
+  endif
+
+  # Editable headline, default "Überzeugt?"
+  assign headline = section.settings.headline | default: 'Überzeugt?'
+-%}
+
+<div
+  class="mid-cta"
+  id="mid-cta-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  aria-label="Jetzt kaufen"
+>
+  <div class="mid-cta__inner">
+
+    <!-- ── LEFT: TEXT ── -->
+    <div class="mid-cta__text">
+      <h2 class="mid-cta__headline">{{- headline -}}</h2>
+      <p class="mid-cta__subtext">{{- subtext -}}</p>
+    </div>
+
+    <!-- ── RIGHT: PRICE + FORM ── -->
+    {%- form 'product', product,
+        id: 'mid-cta-form',
+        class: 'mid-cta__form',
+        novalidate: 'novalidate'
+    -%}
+
+      <input type="hidden" name="id"       value="{{ current_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+      {%- comment -%} No selling_plan — this is intentionally a one-time purchase strip {%- endcomment -%}
+
+      <div class="mid-cta__action">
+
+        <!-- Price -->
+        <span class="mid-cta__price" aria-label="Preis: {{ current_variant.price | money }}">
+          {{- current_variant.price | money -}}
+        </span>
+
+        <!-- ATC button -->
+        <button
+          type="submit"
+          class="mid-cta__btn"
+          aria-label="{{ product.title }} in den Warenkorb legen"
+          {%- unless current_variant.available %} disabled aria-disabled="true"{% endunless -%}
+        >
+          {%- if current_variant.available -%}
+            In den Warenkorb
+          {%- else -%}
+            Ausverkauft
+          {%- endif -%}
+        </button>
+
+      </div>
+
+    {%- endform -%}
+
+  </div><!-- /mid-cta__inner -->
+</div>
+
+
+<style>
+/* ── DESIGN TOKENS ── */
+#mid-cta-{{ section.id }} {
+  --db-red:       #E23528;
+  --db-red-hover: #c9291e;
+  --db-black:     #00090B;
+  --db-mud:       #7B5D4D;
+  --db-surface:   #fff8f5;
+  --db-radius:    2px;
+  --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
+  --db-font-body:    'New Frank', 'DM Sans', sans-serif;
+}
+
+/* ── STRIP WRAPPER ── */
+.mid-cta {
+  background: var(--db-surface);
+  /* Compact strip — matches Figma height, not a full section */
+  padding: 1.5rem 0;
+}
+
+.mid-cta__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* ── LEFT TEXT ── */
+.mid-cta__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mid-cta__headline {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--db-black);
+  margin: 0;
+}
+
+.mid-cta__subtext {
+  font-family: var(--db-font-body);
+  font-size: 0.85rem;
+  color: var(--db-mud);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ── RIGHT ACTION (price + button) ── */
+.mid-cta__form {
+  flex-shrink: 0;
+}
+
+.mid-cta__action {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.mid-cta__price {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  color: var(--db-black);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ── ATC BUTTON ── */
+.mid-cta__btn {
+  background: var(--db-red);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--db-radius);
+  padding: 0.9rem 1.75rem;
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+  line-height: 1;
+}
+
+.mid-cta__btn:hover {
+  background: var(--db-red-hover);
+}
+
+.mid-cta__btn:disabled {
+  background: var(--db-mud);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ── RESPONSIVE ── */
+
+/* Tablet: tighten padding */
+@media (max-width: 900px) {
+  .mid-cta__inner {
+    padding: 0 2rem;
+  }
+}
+
+/* Narrow tablet: price moves above button */
+@media (max-width: 520px) {
+  .mid-cta {
+    padding: 1.5rem 0;
+  }
+
+  .mid-cta__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 0 1.25rem;
+  }
+
+  .mid-cta__action {
+    width: 100%;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .mid-cta__btn {
+    flex: 1;      /* button fills remaining space next to price */
+    text-align: center;
+  }
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Mid Page CTA",
+  "tag": "div",
+  "class": "barista-section-mid-cta",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Überschrift",
+      "default": "Überzeugt?",
+      "info": "Kurz und prägnant. Wird in Social Gothic dargestellt."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mid Page CTA",
+      "settings": {
+        "headline": "Überzeugt?"
+      }
+    }
+  ]
+}
+{% endschema %}

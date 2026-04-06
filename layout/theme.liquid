@@ -4,7 +4,7 @@
 	lang="{{ request.locale.iso_code }}"
 	data-scheme="{{ settings.color_scheme }}"
 	dir="{% render 'direction' %}"
->
+>{{ 'barista-theme.css' | asset_url | stylesheet_tag }}
 	<head>
 
 			<!-- Google Tag Manager -->
@@ -536,7 +536,7 @@
 			});
 		</script>
 	</head>
-
+{% render 'barista-globals' %}
 	<body class="template-{{ template.name }} template-{{ template | replace: '.', '-' }}">
 
 		<!-- Google Tag Manager (noscript) -->

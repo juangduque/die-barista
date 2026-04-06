@@ -1,0 +1,274 @@
+{% comment %}
+  Section: barista-story.liquid
+  Pfad: sections/barista-story.liquid
+{% endcomment %}
+
+<style>
+.barista-story {
+  background: #0F0F0D;
+  overflow: hidden;
+}
+.barista-story__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 520px;
+}
+
+/* Image side */
+.barista-story__img-side {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+}
+.barista-story__img-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.barista-story__img-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  background: linear-gradient(180deg, #0D0906 0%, #1C1208 100%);
+}
+
+.barista-story__quote-card {
+  position: absolute;
+  bottom: 28px;
+  left: 20px;
+  right: 20px;
+  background: #4A5E3A;
+  padding: 22px 24px;
+  z-index: 3;
+}
+.barista-story__quote-text {
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.7;
+  margin-bottom: 12px;
+  font-family: 'Playfair Display', serif;
+}
+.barista-story__quote-author {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+}
+
+/* Content side */
+.barista-story__content {
+  padding: 70px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.barista-story__content .db-section-label { color: #888580; }
+.barista-story__content .db-section-label::before { background: #C8231A; }
+
+.barista-story__headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 5vw, 62px);
+  color: #FFFFFF;
+  line-height: 1;
+  letter-spacing: 1px;
+  margin: 8px 0 24px;
+}
+.barista-story__text {
+  color: #C8C4BC;
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 36px;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+}
+
+/* Features */
+.barista-story__features { display: flex; flex-direction: column; gap: 14px; }
+
+.barista-story__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: border-color 0.2s, background 0.2s;
+  cursor: default;
+}
+.barista-story__feature:hover {
+  border-color: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.03);
+}
+.barista-story__feature-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: #C8231A;
+  line-height: 1;
+  min-width: 32px;
+}
+.barista-story__feature-title {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+}
+.barista-story__feature-text {
+  font-size: 12px;
+  color: #888580;
+  line-height: 1.5;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+}
+
+@media (max-width: 1024px) {
+  .barista-story__grid { grid-template-columns: 1fr; }
+  .barista-story__content { padding: 50px 40px; }
+  .barista-story__img-side { min-height: 380px; }
+}
+@media (max-width: 640px) {
+  .barista-story__content { padding: 40px 20px; }
+}
+</style>
+
+<section class="barista-story" id="ueber-uns">
+  <div class="barista-story__grid">
+
+    <!-- Image Side -->
+    <div class="barista-story__img-side">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 900
+          | image_tag:
+            loading: 'lazy',
+            alt: section.settings.image.alt | default: 'Die Barista Story'
+        }}
+      {%- else -%}
+        <div class="barista-story__img-placeholder"></div>
+      {%- endif -%}
+
+      {%- if section.settings.quote != blank -%}
+        <div class="barista-story__quote-card">
+          <p class="barista-story__quote-text">„{{ section.settings.quote }}"</p>
+          <div class="barista-story__quote-author">{{ section.settings.quote_author }}</div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Content Side -->
+    <div class="barista-story__content">
+      {%- if section.settings.label != blank -%}
+        <div class="db-section-label">{{ section.settings.label }}</div>
+      {%- endif -%}
+
+      <h2 class="barista-story__headline">{{ section.settings.headline | newline_to_br }}</h2>
+
+      {%- if section.settings.text != blank -%}
+        <p class="barista-story__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+
+      <div class="barista-story__features">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'feature' -%}
+            <div class="barista-story__feature" {{ block.shopify_attributes }}>
+              <div class="barista-story__feature-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+              <div>
+                <div class="barista-story__feature-title">{{ block.settings.title }}</div>
+                <div class="barista-story__feature-text">{{ block.settings.text }}</div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Barista Story",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titel",
+          "default": "Ursprung"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Beschreibung",
+          "default": "Direkter Kontakt zu Farmen, die wir kennen und denen wir vertrauen."
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Bild & Zitat"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Barista Bild"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Zitat",
+      "default": "Kaffee ist nicht nur ein Getränk, es ist eine Einladung für das beste Erlebnis – jede Röstung."
+    },
+    {
+      "type": "text",
+      "id": "quote_author",
+      "label": "Zitat Autor",
+      "default": "Gemil Araci – Die Barista"
+    },
+    {
+      "type": "header",
+      "content": "Texte"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow Label",
+      "default": "Die Barista"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Überschrift (Zeilenumbruch mit Enter)",
+      "default": "MEHR ALS\nNUR BOHNEN."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Beschreibungstext",
+      "default": "Seit 2018 direkt in Hamburg. Was als Leidenschaft in der Garage begann, ist heute ein ernsthaftes Rösterei-Konzept. Jede Röstung wird nur mit persönlichem Geschmack. Ohne industrielle Farmaroma, mit viel Raum, Erfahrung und Bildung."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barista Story",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "Ursprung", "text": "Direkter Kontakt zu Farmen, die wir kennen und denen wir vertrauen." } },
+        { "type": "feature", "settings": { "title": "Röstung", "text": "Jede Charge handgeröstet – für gleichbleibende Premiumqualität." } },
+        { "type": "feature", "settings": { "title": "Charakter", "text": "Kaffee mit Seele und Boden – damit du das Beste genießen kannst." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,276 @@
+{% comment %}
+  ============================================================
+  DIE BARISTA ROASTERY — SECTION 08: PASST DAZU (CROSS-SELLS)
+  File: sections/section-08-passt-dazu-JT.liquid
+
+  Design: 4-column product grid, surface background, tonal cards
+  - Header: "PASST DAZU" left + "ALLE RÖSTUNGEN →" right
+  - Cards: image with badge, warm beige text area, square black ATC button
+  - Data: product.metafields.custom.cross_sells.value (list.product_reference)
+  - Fallback: Theme Customizer product_list setting
+  - Mobile: native CSS snap-scroll horizontal
+  - Quick-add: proper Shopify form per card, no AJAX
+
+  Metafield setup in Shopify Admin:
+    Namespace: custom
+    Key: cross_sells
+    Type: list.product_reference
+    → Returns array of product objects via .value
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  comment
+    Resolve cross-sell products:
+    1. Try metafield list.product_reference (.value returns product objects directly)
+    2. Fall back to Theme Customizer product_list setting
+  endcomment
+
+  assign cross_sell_products = product.metafields.custom.cross_sells.value
+
+  if cross_sell_products == blank
+    assign cross_sell_products = section.settings.cross_sell_products
+  endif
+
+  assign header_title    = section.settings.header_title    | default: 'Passt Dazu'
+  assign cta_label       = section.settings.cta_label       | default: 'Alle Röstungen'
+  assign cta_url         = section.settings.cta_url         | default: '/collections/all'
+-%}
+
+<section
+  class="passt-section"
+  id="passt-dazu-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  aria-labelledby="passt-heading-{{ section.id }}"
+>
+  <div class="passt-inner">
+
+    <!-- ── SECTION HEADER ── -->
+    <div class="passt-header">
+      <h2 class="passt-header__title" id="passt-heading-{{ section.id }}">
+        {{- header_title -}}
+      </h2>
+      {%- unless cta_url == blank -%}
+        <a
+          href="{{ cta_url }}"
+          class="passt-header__link"
+          aria-label="{{ cta_label }} — alle Produkte anzeigen"
+        >
+          {{- cta_label -}} →
+        </a>
+      {%- endunless -%}
+    </div>
+
+    <!-- ── PRODUCT GRID ── -->
+    {%- if cross_sell_products != blank -%}
+      <ul
+        class="passt-grid"
+        role="list"
+        aria-label="Empfohlene Produkte"
+      >
+        {%- for cross_product in cross_sell_products limit: 4 -%}
+          {%- render 'passt-dazu-card-JT', cross_product: cross_product -%}
+        {%- endfor -%}
+      </ul>
+
+    {%- else -%}
+      {%- comment -%} Editor placeholder when no products are set {%- endcomment -%}
+      <p class="passt-empty">
+        Produkte im Theme Customizer oder über das Metafeld <code>custom.cross_sells</code> hinzufügen.
+      </p>
+    {%- endif -%}
+
+  </div><!-- /passt-inner -->
+</section>
+
+
+<style>
+/* ── DESIGN TOKENS ── */
+#passt-dazu-{{ section.id }} {
+  --db-red:    #E23528;
+  --db-black:  #00090B;
+  --db-crema:  #EFDFD3;
+  --db-mud:    #7B5D4D;
+  --db-surface:      #fff8f5;
+  --db-surface-low:  #fff1e7;
+  --db-surface-mid:  #fbebdf;
+  --db-surface-high: #f5e5d9;
+  --db-outline:      #906f6a;
+  --db-radius: 2px;
+  --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
+  --db-font-body:    'New Frank', 'DM Sans', sans-serif;
+}
+
+/* ── SECTION ── */
+.passt-section {
+  background: var(--db-surface);
+  padding: 5rem 0;
+}
+
+.passt-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+/* ── HEADER ── */
+.passt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.passt-header__title {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: var(--db-black);
+  margin: 0;
+}
+
+.passt-header__link {
+  font-family: var(--db-font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--db-red);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.passt-header__link:hover {
+  opacity: 0.75;
+}
+
+/* ── GRID ── */
+.passt-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+/* ── EMPTY STATE ── */
+.passt-empty {
+  font-family: var(--db-font-body);
+  font-size: 0.85rem;
+  color: var(--db-outline);
+  padding: 2rem;
+  background: var(--db-surface-low);
+  border-radius: var(--db-radius);
+}
+
+/* ── RESPONSIVE ── */
+
+/* Tablet: 2 columns */
+@media (max-width: 1023px) {
+  .passt-inner {
+    padding: 0 2rem;
+  }
+
+  .passt-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: horizontal snap-scroll */
+@media (max-width: 640px) {
+  .passt-section {
+    padding: 3.5rem 0;
+  }
+
+  .passt-inner {
+    padding: 0;  /* remove inner padding so cards bleed to edge */
+  }
+
+  .passt-header {
+    padding: 0 1.25rem;
+  }
+
+  .passt-grid {
+    /* Horizontal snap scroll — no vertical stacking fatigue */
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 80vw;  /* shows hint of next card */
+    grid-template-columns: unset;
+    gap: 0.75rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-left: 1.25rem;
+    padding: 0 1.25rem 1rem;  /* breathing room + bottom for scroll indicator feel */
+    scrollbar-width: none;
+  }
+
+  .passt-grid::-webkit-scrollbar {
+    display: none;
+  }
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Passt Dazu — Cross-Sells",
+  "tag": "section",
+  "class": "barista-section-crosssell",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "header_title",
+      "label": "Überschrift",
+      "default": "Passt Dazu"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Link-Text rechts",
+      "default": "Alle Röstungen"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Link-URL",
+      "info": "z.B. /collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Produkte"
+    },
+    {
+      "type": "paragraph",
+      "content": "⚡ Produkte werden automatisch aus dem Metafeld custom.cross_sells geladen (list.product_reference). Untenstehende Auswahl ist der Fallback."
+    },
+    {
+      "type": "product_list",
+      "id": "cross_sell_products",
+      "label": "Empfohlene Produkte (Fallback)",
+      "limit": 4,
+      "info": "Wird ignoriert wenn das Metafeld custom.cross_sells gesetzt ist."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Passt Dazu — Cross-Sells",
+      "settings": {
+        "header_title": "Passt Dazu",
+        "cta_label": "Alle Röstungen"
+      }
+    }
+  ]
+}
+{% endschema %}

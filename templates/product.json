@@ -60,6 +60,7 @@
             "badge1_text": "<strong>LIMITIERT</strong>",
             "badge2_text": "Spare heute 30% mit dem Code: SANTA",
             "badge3_text": "",
+            "badge4_text": "",
             "badge1_color": "#ffffff",
             "badge1_background_color": "#181818",
             "badge1_border_color": "#000000",
@@ -69,6 +70,9 @@
             "badge3_color": "#ffffff",
             "badge3_background_color": "#000000",
             "badge3_border_color": "#000000",
+            "badge4_color": "#ffffff",
+            "badge4_background_color": "#000000",
+            "badge4_border_color": "#000000",
             "font_size": 14,
             "border_width": 1,
             "border_radius": 40,
@@ -91,6 +95,7 @@
             "badge1_text": "{{ product.metafields.custom.badges.value }}",
             "badge2_text": "",
             "badge3_text": "",
+            "badge4_text": "",
             "badge1_color": "#ffffff",
             "badge1_background_color": "#1caf18",
             "badge1_border_color": "#000000",
@@ -100,6 +105,9 @@
             "badge3_color": "#ffffff",
             "badge3_background_color": "#000000",
             "badge3_border_color": "#000000",
+            "badge4_color": "#ffffff",
+            "badge4_background_color": "#000000",
+            "badge4_border_color": "#000000",
             "font_size": 14,
             "border_width": 1,
             "border_radius": 40,
@@ -114,9 +122,9 @@
           "type": "variant_picker",
           "settings": {
             "picker_type": "button",
-            "show_size_guide": true,
-            "size_guide_header": "Your Size Guide Title Here",
-            "size_guide_decription": "Finding your perfect fit is simple! Use our detailed size guide to choose the right size and make sure your new purchase fits just right.",
+            "show_size_guide": false,
+            "size_guide_header": "Header",
+            "size_guide_decription": "",
             "size_guide_text": "Size Guide",
             "page": ""
           }
@@ -128,7 +136,7 @@
             "low_stock_threshold": 10,
             "show_zero_as_out": false,
             "text_available": "<strong>Auf Lager - </strong>Lieferung in 1-2 Werktagen",
-            "text_low_stock": "<strong>Niedriger Bestand  - </strong>Lieferung in 1-2 Werktagen",
+            "text_low_stock": "<strong>Niedriger Bestand - </strong>Lieferung in 1-2 Werktagen",
             "text_unavailable": "<strong>Ausverkauft</strong>",
             "alignment": "left",
             "dot_style": "dot_with_animated_ring",
@@ -149,22 +157,6 @@
           "type": "shopify://apps/kaching-subscriptions/blocks/app-block/1fa39fd7-f6a3-4bbc-9383-7d91d27b44f5",
           "settings": {
             "product": "{{product}}"
-          }
-        },
-        "buy_box_discount_timer_3BzfYT": {
-          "type": "shopify://apps/buy-box/blocks/discount-timer/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "t": "4 FÜR 3 endet in: <strong>%CT% </strong><em>- Rabatt wird im automatisch abgezogen</em>",
-            "st": "00:00",
-            "ct": "23,59",
-            "sd": "",
-            "ed": "",
-            "tc": "#bc2323",
-            "cc": "#bc2323",
-            "s": 15,
-            "margin_top": 0,
-            "margin_bottom": 0
           }
         },
         "buy_buttons": {
@@ -188,48 +180,9 @@
             "max-width": "100%"
           }
         },
-        "inventory_status": {
-          "type": "inventory_status",
-          "disabled": true,
-          "settings": {}
-        },
-        "share": {
-          "type": "share",
-          "disabled": true,
-          "settings": {
-            "show_share_facebook": true,
-            "show_share_twitter": true,
-            "show_share_pinterest": true,
-            "show_share_copy": true
-          }
-        },
-        "shipping": {
-          "type": "shipping",
-          "disabled": true,
-          "settings": {
-            "icon": "alert_2",
-            "button_label": "Read more",
-            "heading": "Shipping Info",
-            "popup_heading": "How Our Shipping Works",
-            "popup_text": "<p>We offer fast, trackable shipping on all orders. Most items ship within 1–2 business days, with delivery options tailored to your needs.</p>"
-          }
-        },
         "pickup_availability": {
           "type": "pickup_availability",
           "settings": {}
-        },
-        "payment_methods": {
-          "type": "payment_methods",
-          "disabled": true,
-          "settings": {}
-        },
-        "custom_liquid_EXaTD7": {
-          "type": "custom_liquid",
-          "name": "coffee-scale",
-          "disabled": true,
-          "settings": {
-            "custom_liquid": "<div class=\"coffee-scale\">\n  {% assign roast = product.metafields.coffee_attributes.roasting_level.value | default: 7 %}\n  {% assign acidity = product.metafields.coffee_attributes.acid_level.value | default: 3 %}\n  {% assign strength = product.metafields.coffee_attributes.strength_level.value | default: 8 %}\n\n\n  <div class=\"scale-row\">\n    <span class=\"label\">Röstgrad</span>\n    <div class=\"scale-container\">\n      <div class=\"scale-bar\">\n        <div class=\"scale-fill\" style=\"width: {{ roast }}0%; background-color: #1f1f1f; display: block;\"></div>\n      </div>\n    </div>\n  </div>\n  <div class=\"scale-row\">\n    <span class=\"label\">Säure</span>\n    <div class=\"scale-container\">\n      <div class=\"scale-bar\">\n        <div class=\"scale-fill\" style=\"width: {{ acidity }}0%; background-color: #1f1f1f; display: block;\"></div>\n      </div>\n    </div>\n  </div>\n  <div class=\"scale-row\">\n    <span class=\"label\">Stärke</span>\n    <div class=\"scale-container\">\n      <div class=\"scale-bar\">\n        <div class=\"scale-fill\" style=\"width: {{ strength }}0%; background-color: #1f1f1f; display: block;\"></div>\n      </div>\n    </div>\n  </div>\n\n  <style>\n    .coffee-scale {\n      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;\n      margin: 20px auto;\n      background-color: #f9f9f9;\n      padding: 10px;\n      border-radius: 5px;\n    }\n    .description {\n      text-align: center;\n      margin-bottom: 20px;\n    }\n    .description h2 {\n      font-size: 16px;\n      color: #333;\n      margin-bottom: 5px;\n    }\n    .description p {\n      font-size: 14px;\n      color: #555;\n      margin: 0;\n    }\n    .scale-row {\n      display: flex;\n      align-items: center;\n      margin: 10px 0;\n      gap: 20px;\n    }\n    .label {\n      flex: 0 0 100px;\n      font-size: 14px;\n      color: #333;\n      font-weight: 500;\n    }\n    .scale-container {\n      flex: 1;\n    }\n    .scale-bar {\n      height: 6px;\n      background: #e0e0e0;\n      border-radius: 3px;\n      position: relative;\n      overflow: visible;\n    }\n    .scale-fill {\n      position: absolute;\n      left: 0;\n      top: 0;\n      height: 100%;\n      min-width: 0;\n      border-radius: 3px;\n      z-index: 1;\n    }\n  </style>\n</div>"
-          }
         },
         "advantage1": {
           "type": "advantage",
@@ -242,279 +195,15 @@
             "about_tab_text_second": ""
           }
         },
-        "advantage2": {
-          "type": "advantage",
-          "disabled": true,
-          "settings": {
-            "heading": "Zubereitung",
-            "text": "<p>Use this space to describe the specific advantage, including how it benefits the customer, what makes it stand out, and why it matters.</p>",
-            "about_tab_icon": "none",
-            "about_tab_text": "",
-            "about_tab_icon_second": "none",
-            "about_tab_text_second": ""
-          }
-        },
         "advantage3": {
           "type": "advantage",
           "settings": {
             "heading": "Versand & Lieferung",
-            "text": "<p>Wir liefern ausschließlich innerhalb Deutschlands.<br/>Die Versandkosten betragen <strong>4,90 € pro Bestellung</strong>.<br/>Ab 50€ Bestellwert ist der Versand <strong>kostenlos</strong>.<br/><br/>Die Lieferzeit liegt in der Regel bei <strong>3–5 Werktagen</strong> nach Zahlungseingang (keine Zustellung an Sonn- & Feiertagen).<br/><br/>Da wir großen Wert darauf legen, dir immer <strong>frisch geröstete Ware</strong> zu senden, kann es bei hohem Bestellaufkommen in seltenen Fällen zu <strong>kurzen Verzögerungen</strong> kommen – vielen Dank für dein Verständnis!</p>",
+            "text": "<p>Wir liefern ausschließlich innerhalb Deutschlands. Die Versandkosten betragen <strong>4,90 € pro Bestellung</strong>. Ab 50€ Bestellwert ist der Versand <strong>kostenlos</strong>.</p>",
             "about_tab_icon": "none",
             "about_tab_text": "",
             "about_tab_icon_second": "none",
             "about_tab_text_second": ""
-          }
-        },
-        "buy_box_buy_box_wrapper_EgXB7L": {
-          "type": "shopify://apps/buy-box/blocks/buy-box-wrapper/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "use_in_mobile": false,
-            "box_shadow": "small",
-            "ht": "",
-            "hb": "#f0f0f0",
-            "htc": "#000000",
-            "background_color": "#ffffff",
-            "border_color": "#dadce0",
-            "header_font_size": 13,
-            "border_radius": 5,
-            "border_width": 1,
-            "padding_top": 20,
-            "padding_bottom": 20,
-            "padding_sides": 20,
-            "margin_sides_mobile": 0,
-            "margin_left": 0,
-            "max-width": "44rem"
-          }
-        },
-        "buy_box_trust_badges_4JGmmy": {
-          "type": "shopify://apps/buy-box/blocks/trust-badges/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "i1": "delivery",
-            "t1": "<p>Free delivery</p>",
-            "i2": "return",
-            "t2": "<p>30 days returns</p>",
-            "i3": "guarantee",
-            "t3": "<p>2 years guarantee</p>",
-            "ic": "#000000",
-            "e": "#000000",
-            "d": 20,
-            "f": 12,
-            "a": 0,
-            "b": 0,
-            "c": "44rem"
-          }
-        },
-        "buy_box_banner_dWRCq7": {
-          "type": "shopify://apps/buy-box/blocks/banner/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "sb": true,
-            "i": "none",
-            "t": "🎉   <strong>This shirt is a keeper</strong>",
-            "d": "Did you know our shirts are rarely returned? The fit is just right – see for yourself!",
-            "tt": "#000000",
-            "tc": "#000000",
-            "ci": "#000000",
-            "bc": "#f0f0f0",
-            "brc": "",
-            "is": 20,
-            "ts": 12,
-            "ds": 11,
-            "br": 20,
-            "mt": 0,
-            "mb": 0,
-            "mw": "44rem"
-          }
-        },
-        "buy_box_copy_discount_JJpQaj": {
-          "type": "shopify://apps/buy-box/blocks/copy-discount/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "m": "Save up to 70% off!",
-            "n": "BLACKFRIDAY",
-            "o": "Copied!",
-            "d": "#ffffff",
-            "e": "#000000",
-            "f": "#ffffff",
-            "h": "#000000",
-            "g": "#ffffff",
-            "i": "#ffffff",
-            "j": 12,
-            "k": 0,
-            "l": 0,
-            "a": 0,
-            "b": 0,
-            "c": "44rem"
-          }
-        },
-        "buy_box_inventory_bar_cNMFx3": {
-          "type": "shopify://apps/buy-box/blocks/inventory-bar/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "a": false,
-            "m": 5,
-            "mi": 100,
-            "s2": false,
-            "s": true,
-            "hz": true,
-            "l": 25,
-            "c": 10,
-            "z": "<strong>%IC%</strong> in stock - delivery in <strong>1-2</strong> days",
-            "y": "<strong>%IC%</strong> left in stock - Only a few left!",
-            "x": "<strong>%IC%</strong> left in stock - Nearly sold out!",
-            "d": "#00bf4d",
-            "i": "#00bf4d",
-            "e": "#ffa500",
-            "n": "#ffa500",
-            "j": "#b40c1c",
-            "o": "#b40c1c",
-            "r": "rgba(0,0,0,0)",
-            "k": "#e6e6e6",
-            "f": 14,
-            "h": 8,
-            "u": 5,
-            "g": "center",
-            "t": 0,
-            "b": 0,
-            "w": "44rem"
-          }
-        },
-        "buy_box_testimonials_BTixm8": {
-          "type": "shopify://apps/buy-box/blocks/testimonials/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "style": "classic",
-            "use_stock_images": false,
-            "a1": "Lisa Brown",
-            "c1": "<p>This product is amazing!</p>",
-            "a2": "Marc Johnson",
-            "c2": "<p>Amazing quality and fast shipping!</p>",
-            "a3": "Luis Garcia",
-            "c3": "<p>The product quality is outstanding.</p>",
-            "bgc": "#fafafa",
-            "bc": "#dadce0",
-            "sc": "#00b67a",
-            "tc": "#202124",
-            "is": 64,
-            "ns": 15,
-            "ss": 15,
-            "ts": 12,
-            "br": 4,
-            "ibr": 8,
-            "mt": 0,
-            "mb": 0,
-            "mw": "44rem"
-          }
-        },
-        "buy_box_social_proof_f3cViC": {
-          "type": "shopify://apps/buy-box/blocks/social-proof/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "image_1": "stock_image_1",
-            "name_1": "<strong>Lisa</strong>",
-            "image_2": "stock_image_2",
-            "name_2": "<strong>Marc</strong>",
-            "image_3": "none",
-            "name_3": "",
-            "text": "and <strong>1000+</strong> others love our products!",
-            "show_verified": true,
-            "name_color": "#000000",
-            "text_color": "#000000",
-            "background_color": "#dadada",
-            "icon_size": 20,
-            "text_size": 12,
-            "border_radius": 5,
-            "border_radius_mobile": 0,
-            "alignment": "left",
-            "mobile_breakpoint": 750,
-            "margin_sides_mobile": 0,
-            "margin_sides": 0,
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        "buy_box_star_rating_p7dPz9": {
-          "type": "shopify://apps/buy-box/blocks/star-rating/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "rating": 4.7,
-            "text": "200+ Ratings",
-            "link": "",
-            "star_color": "#00b67a",
-            "star_background_color": "#eaeaea",
-            "text_color": "#000000",
-            "star_size": 16,
-            "font_size": 14,
-            "margin_top": 0,
-            "margin_bottom": 0,
-            "max-width": "44rem"
-          }
-        },
-        "buy_box_divider_bQHVHA": {
-          "type": "shopify://apps/buy-box/blocks/divider/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "text": "Only a few left!",
-            "divider_color": "#aaaaaa",
-            "text_color": "#000000",
-            "font_size": 16,
-            "divider_size": 2,
-            "top_margin": 0,
-            "bottom_margin": 0,
-            "max-width": "44rem"
-          }
-        },
-        "buy_box_selling_points_ihxc6L": {
-          "type": "shopify://apps/buy-box/blocks/selling-points/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "sellingPoint_1_text": "Unique products, unforgettable experiences.",
-            "sellingPoint_2_text": "Exceptional quality, unparalleled service.",
-            "sellingPoint_3_text": "Join our community of satisfied customers today.",
-            "sellingPoint_4_text": "",
-            "sellingPoint_5_text": "",
-            "icon": "checkmark",
-            "icon_color": "#037e05",
-            "text_color": "#212121",
-            "icon_size": 16,
-            "text_size": 12,
-            "alignment": "start",
-            "row_spacing": 8,
-            "margin_top": -13,
-            "margin_bottom": 5,
-            "max-width": "44rem"
-          }
-        },
-        "buy_box_connected_product_picker_3KVMq3": {
-          "type": "shopify://apps/buy-box/blocks/connected-product-picker/17b7c6ef-0c82-4743-acf4-050c34e5b233",
-          "disabled": true,
-          "settings": {
-            "title": "Variant",
-            "product_list": [],
-            "text_color": "#000000",
-            "border_color": "#eaeaea",
-            "border_color_active": "#000000",
-            "product_title_color": "#ffffff",
-            "product_title_background_color": "#333333",
-            "font_size": 14,
-            "product_title_font_size": 12,
-            "image_width": 50,
-            "border_radius": 4,
-            "gap": 8,
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        "complementary": {
-          "type": "complementary",
-          "settings": {
-            "heading_complementary": "You might also like",
-            "product_list_limit": 3,
-            "image_ratio": "portrait",
-            "card_image_fit": "cover",
-            "show_vendor": true
           }
         },
         "buy_box_benefits_list_XenLBk": {
@@ -554,35 +243,15 @@
         "variant_picker",
         "buy_box_inventory_status_xKtYHr",
         "kaching_subscriptions_app_block_zyQNR4",
-        "buy_box_discount_timer_3BzfYT",
         "buy_buttons",
         "buy_box_payment_icons_6tWdDi",
-        "inventory_status",
-        "share",
-        "shipping",
         "pickup_availability",
-        "payment_methods",
-        "custom_liquid_EXaTD7",
         "advantage1",
-        "advantage2",
         "advantage3",
-        "buy_box_buy_box_wrapper_EgXB7L",
-        "buy_box_trust_badges_4JGmmy",
-        "buy_box_banner_dWRCq7",
-        "buy_box_copy_discount_JJpQaj",
-        "buy_box_inventory_bar_cNMFx3",
-        "buy_box_testimonials_BTixm8",
-        "buy_box_social_proof_f3cViC",
-        "buy_box_star_rating_p7dPz9",
-        "buy_box_divider_bQHVHA",
-        "buy_box_selling_points_ihxc6L",
-        "buy_box_connected_product_picker_3KVMq3",
-        "complementary",
         "buy_box_benefits_list_XenLBk"
       ],
       "custom_css": [
         ".product-form__submit {background-color: black; color: white;}",
-        "@media (min-width: 750px) {#shopify-block-AU2lyNDYzb3NLUVVjT__buy_box_benefits_list_XenLBk {display: none; }}",
         ".about-tab-content div p {margin: 0; padding-left: 10px; line-height: 3rem;}",
         "@media (max-width: 750px) {.product-section .sticky-slider {margin-bottom: 0rem; }}"
       ],
@@ -597,130 +266,331 @@
         "padding_bottom": "no-indent"
       }
     },
-    "17530181556126f781": {
-      "type": "apps",
+    "cemils-empfehlung": {
+      "type": "section-02-cemils-empfehlung-JT",
+      "settings": {
+        "video_url": "",
+        "image_alt": "Cemil — Gründer & Röstmeister der Die Barista Roastery",
+        "label_text": "Cemils Empfehlung",
+        "headline": "Cemils Empfehlung",
+        "quote": "Dieser Kaffee ist wie ein Kurzurlaub in Neapel. Dunkel geröstet, kräftig im Körper, mit einem Finish das an Zartbitterschokolade erinnert. Am liebsten trinke ich ihn als doppelten Espresso — puro, ohne alles.",
+        "person_name": "Cemil — Gründer & Röstmeister",
+        "person_title": "Die Barista Roastery, Hammeln",
+        "bg_color": "#759769",
+        "text_color": "#efdfd3",
+        "media_side": "left"
+      }
+    },
+    "produktfakten": {
+      "type": "section-03-produktfakten-JT",
+      "settings": {
+        "section_label": "Steckbrief",
+        "section_headline": "Die Fakten",
+        "herkunft_value": "",
+        "herkunft_sub": "",
+        "varietaet_value": "",
+        "varietaet_sub": "",
+        "anbauhoe_value": "",
+        "anbauhoe_sub": "",
+        "verarbeitung_value": "",
+        "verarbeitung_sub": "",
+        "roastprofil_value": "",
+        "roastprofil_sub": "",
+        "geschmack_value": "",
+        "geschmack_sub": ""
+      }
+    },
+    "die-story": {
+      "type": "section-04-die-story-JT",
+      "settings": {
+        "kicker": "Die Story",
+        "headline": "Temperamentvolle Italienische Lebensart",
+        "paragraph_1": "Seit 2018 röstet Die Barista in Hamburg. Was als Leidenschaft für den Garage begann, ist heute eine Mission: Den ehrlichsten Kaffee der Region zu produzieren.",
+        "paragraph_2": "Jede Röstung erzählt eine Geschichte — von der Kooperative in Brasilien bis zur Trommel in Hamburg-Wandsbek. Direkt gehandelt, persönlich ausgewählt.",
+        "ursprung": "Brasilien, Indien",
+        "roestung": "Dunkle Trommelröstung für maximale Süße",
+        "charakter": "Vollmundig mit Noten von Kakao und Haselnuss",
+        "varietaet": "60% Arabica, 40% Robusta"
+      }
+    },
+    "brew-guide": {
+      "type": "section-05-brew-guide-JT",
+      "settings": {
+        "brew_headline": "So schmeckt er am besten.",
+        "brew_subline": "Unsere Zubereitungsempfehlungen für jede Methode — damit jede Tasse perfekt wird.",
+        "show_sieb": true,
+        "show_voll": true,
+        "show_moka": true,
+        "show_french": true,
+        "show_filter": true,
+        "sieb_menge": "18",
+        "sieb_mahlgrad": "Fein",
+        "sieb_wasser": "40",
+        "sieb_temperatur": "93",
+        "sieb_dauer": "25",
+        "voll_menge": "14",
+        "voll_mahlgrad": "Mittel",
+        "voll_wasser": "200",
+        "voll_temperatur": "93",
+        "voll_dauer": "30",
+        "moka_menge": "15",
+        "moka_mahlgrad": "Mittel-fein",
+        "moka_wasser": "200",
+        "moka_temperatur": "95",
+        "moka_dauer": "4",
+        "french_menge": "30",
+        "french_mahlgrad": "Grob",
+        "french_wasser": "500",
+        "french_temperatur": "96",
+        "french_dauer": "4",
+        "filter_menge": "15",
+        "filter_mahlgrad": "Mittel",
+        "filter_wasser": "250",
+        "filter_temperatur": "94",
+        "filter_dauer": "3"
+      }
+    },
+    "mid-cta": {
+      "type": "section-06-mid-cta-JT",
+      "settings": {
+        "headline": "Überzeugt?"
+      }
+    },
+    "passt-dazu": {
+      "type": "section-08-passt-dazu-JT",
+      "settings": {
+        "header_title": "Passt Dazu",
+        "cta_label": "Alle Röstungen",
+        "cta_url": "/collections/all",
+        "cross_sell_products": []
+      }
+    },
+    "trust-bar": {
+      "type": "section-09-trust-bar-JT",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "section-10-newsletter-JT",
+      "settings": {
+        "bg_color": "#759769",
+        "text_color": "#efdfd3",
+        "headline": "Kaffee-Wissen. Direkt von Cemil.",
+        "subtext": "Erhalte Röst-Tipps, Zubereitungsrezepte und exklusive Angebote — direkt in dein Postfach. Kein Spam, nur Kaffee.",
+        "use_klaviyo": false,
+        "klaviyo_form_id": "",
+        "placeholder": "Deine E-Mail-Adresse",
+        "btn_label": "Abonnieren",
+        "success_msg": "Danke! Du bist dabei.",
+        "quote_text": "Kein Spam, versprochen. Nur echte Leidenschaft für Genießer des schwarzen Goldes.",
+        "quote_author": "— Cemil"
+      }
+    },
+    "section_01_hero_buyblock_jt_7YxEgR": {
+      "type": "section-01-hero-buyblock-JT",
+      "name": "Hero & Buy Block",
+      "settings": {
+        "trust_item_1": "Frisch geröstet",
+        "trust_item_2": "Versand in 1–3 Tagen",
+        "trust_item_3": "Ab 39€ kostenlos",
+        "abo_discount_label": "Spare 10% bei jeder Sendung",
+        "abo_discount_pct": 10,
+        "selling_plan_id": "",
+        "color_espresso": "#E23528",
+        "color_crema": "#EFDFD3",
+        "color_wechselnd": "#759769"
+      }
+    },
+    "section_02_cemils_empfehlung_jt_GiYYLG": {
+      "type": "section-02-cemils-empfehlung-JT",
+      "name": "Cemils Empfehlung",
+      "settings": {
+        "video_url": "",
+        "image_alt": "Cemil — Gründer & Röstmeister der Die Barista Roastery",
+        "label_text": "Cemils Empfehlung",
+        "headline": "Cemils Empfehlung",
+        "quote": "Dieser Kaffee ist wie ein Kurzurlaub in Neapel. Dunkel geröstet, kräftig im Körper, mit einem Finish das an Zartbitterschokolade erinnert. Am liebsten trinke ich ihn als doppelten Espresso — puro, ohne alles.",
+        "person_name": "Cemil — Gründer & Röstmeister",
+        "person_title": "Die Barista Roastery, Hammeln",
+        "bg_color": "#759769",
+        "text_color": "#efdfd3",
+        "media_side": "left"
+      }
+    },
+    "section_03_produktfakten_jt_WzJTDT": {
+      "type": "section-03-produktfakten-JT",
+      "name": "Produktfakten",
+      "settings": {
+        "section_label": "Steckbrief",
+        "section_headline": "Die Fakten",
+        "herkunft_value": "Brasilien · Indien",
+        "herkunft_sub": "",
+        "varietaet_value": "80% Arabica · 20% Robusta",
+        "varietaet_sub": "",
+        "anbauhoe_value": "1.200 – 1.600 M",
+        "anbauhoe_sub": "",
+        "verarbeitung_value": "Washed",
+        "verarbeitung_sub": "Traditionell gewaschen und sonnengetrocknet",
+        "roastprofil_value": "Dunkel",
+        "roastprofil_sub": "Langzeit-Trommelröstung für minimale Säure",
+        "geschmack_value": "Erdig · Schokoladig",
+        "geschmack_sub": "Temperamentvoll mit langem, warmem Finish"
+      }
+    },
+    "section_04_die_story_jt_NkhHP3": {
+      "type": "section-04-die-story-JT",
+      "name": "Die Story — Herkunft",
+      "settings": {
+        "kicker": "Die Story",
+        "headline": "Temperamentvolle Italienische Lebensart",
+        "paragraph_1": "Seit 2018 röstet Die Barista in Hamburg. Was als Leidenschaft für den Garage begann, ist heute eine Mission: Den ehrlichsten Kaffee der Region zu produzieren.",
+        "paragraph_2": "Jede Röstung erzählt eine Geschichte — von der Kooperative in Brasilien bis zur Trommel in Hamburg-Wandsbek. Direkt gehandelt, persönlich ausgewählt.",
+        "ursprung": "Brasilien, Indien",
+        "roestung": "Dunkle Trommelröstung für maximale Süße",
+        "charakter": "Vollmundig mit Noten von Kakao und Haselnuss",
+        "varietaet": "60% Arabica, 40% Robusta"
+      }
+    },
+    "section_05_brew_guide_jt_JaedKq": {
+      "type": "section-05-brew-guide-JT",
+      "name": "Brew Guide",
+      "settings": {
+        "brew_headline": "So schmeckt er am besten.",
+        "brew_subline": "Unsere Zubereitungsempfehlungen für jede Methode — damit jede Tasse perfekt wird.",
+        "show_sieb": true,
+        "show_voll": true,
+        "show_moka": true,
+        "show_french": true,
+        "show_filter": true,
+        "sieb_menge": "18",
+        "sieb_mahlgrad": "Fein",
+        "sieb_wasser": "40",
+        "sieb_temperatur": "93",
+        "sieb_dauer": "25",
+        "voll_menge": "14",
+        "voll_mahlgrad": "Mittel",
+        "voll_wasser": "200",
+        "voll_temperatur": "93",
+        "voll_dauer": "30",
+        "moka_menge": "15",
+        "moka_mahlgrad": "Mittel-fein",
+        "moka_wasser": "200",
+        "moka_temperatur": "95",
+        "moka_dauer": "4",
+        "french_menge": "30",
+        "french_mahlgrad": "Grob",
+        "french_wasser": "500",
+        "french_temperatur": "96",
+        "french_dauer": "4",
+        "filter_menge": "15",
+        "filter_mahlgrad": "Mittel",
+        "filter_wasser": "250",
+        "filter_temperatur": "94",
+        "filter_dauer": "3"
+      }
+    },
+    "section_06_mid_cta_jt_XVyMb7": {
+      "type": "section-06-mid-cta-JT",
+      "name": "Mid Page CTA",
+      "settings": {
+        "headline": "Überzeugt?"
+      }
+    },
+    "reviews": {
+      "type": "section-07-reviews-JT",
+      "settings": {}
+    },
+    "section_08_passt_dazu_jt_xfRGYh": {
+      "type": "section-08-passt-dazu-JT",
+      "name": "Passt Dazu — Cross-Sells",
+      "settings": {
+        "header_title": "Passt Dazu",
+        "cta_label": "Alle Röstungen",
+        "cta_url": "",
+        "cross_sell_products": []
+      }
+    },
+    "section_09_trust_bar_jt_FVyKrT": {
+      "type": "section-09-trust-bar-JT",
       "blocks": {
-        "buy_box_benefits_yPLK8a": {
-          "type": "shopify://apps/buy-box/blocks/benefits/17b7c6ef-0c82-4743-acf4-050c34e5b233",
+        "usp_item_weXmfT": {
+          "type": "usp_item",
           "settings": {
-            "benefit_1_icon": "pp",
-            "benefit_1_text": "<p>30 Tage später zahlen</p>",
-            "benefit_2_icon": "customers",
-            "benefit_2_text": "<p>Über 5000 glückliche Barista</p>",
-            "benefit_3_icon": "klarna",
-            "benefit_3_text": "<p>Kauf auf Rechnung</p>",
-            "benefit_4_icon": "delivery",
-            "benefit_4_text": "<p>Kostenloser Versand ab 50€</p>",
-            "icon_color": "#000000",
-            "text_color": "#000000",
-            "background_color": "rgba(0,0,0,0)",
-            "border_color": "rgba(0,0,0,0)",
-            "icon_size": 20,
-            "text_size": 12,
-            "border_radius": 5,
-            "layout_direction": "row",
-            "alignment": "center",
-            "benefit_padding_y": 8,
-            "benefit_padding_x": 12,
-            "margin_top": 0,
-            "max-width": "44rem"
+            "emoji": "☕",
+            "title": "Frisch Geröstet",
+            "text": "Jede Bestellung wird frisch in Hamburg geröstet"
+          }
+        },
+        "usp_item_TWQc8J": {
+          "type": "usp_item",
+          "settings": {
+            "emoji": "🤲",
+            "title": "Handwerk",
+            "text": "Kleine Chargen im Trommelröstverfahren"
+          }
+        },
+        "usp_item_hYj6eT": {
+          "type": "usp_item",
+          "settings": {
+            "emoji": "📦",
+            "title": "Schneller Versand",
+            "text": "1–3 Werktage · Ab 39€ kostenlos"
+          }
+        },
+        "usp_item_ipzbLh": {
+          "type": "usp_item",
+          "settings": {
+            "emoji": "↩️",
+            "title": "14 Tage Rückgabe",
+            "text": "Jederzeit kündbar · Volle Kontrolle"
           }
         }
       },
       "block_order": [
-        "buy_box_benefits_yPLK8a"
+        "usp_item_weXmfT",
+        "usp_item_TWQc8J",
+        "usp_item_hYj6eT",
+        "usp_item_ipzbLh"
       ],
-      "custom_css": [
-        ".benefit_boxes {max-width: 100%; flex-direction: row; align-content: space-between;}",
-        ".benefit_boxes__container {width: 50%px; justify-content: center;}",
-        ".benefit_boxes_row {width: 50%; align-content: center;}",
-        "@media (max-width: 750px) {.shopify-block {display: none; }}"
-      ],
-      "settings": {
-        "include_margins": true
-      }
+      "name": "Trust Bar",
+      "settings": {}
     },
-    "rich_text_qacgpN": {
-      "type": "rich-text",
-      "blocks": {
-        "text_g379jr": {
-          "type": "text",
-          "settings": {
-            "text": "{{ product.description }}"
-          }
-        }
-      },
-      "block_order": [
-        "text_g379jr"
-      ],
-      "custom_css": [
-        ".rich-text {text-align: left;}"
-      ],
-      "name": "t:sections.rich-text.presets.name",
+    "section_10_newsletter_jt_34VDg9": {
+      "type": "section-10-newsletter-JT",
+      "name": "Newsletter",
       "settings": {
-        "color_scheme": "background-2",
-        "full_width": true,
-        "margin_top": "no-indent",
-        "margin_bottom": "no-indent",
-        "padding_top": "s",
-        "padding_bottom": "s"
-      }
-    },
-    "product-recommendations": {
-      "type": "product-recommendations",
-      "settings": {
-        "heading": "Ähnliche Kaffeesorten",
-        "heading_size": "h3",
-        "products_limit": 6,
-        "product_limit": 4,
-        "columns_mobile": "2",
-        "image_ratio": "square",
-        "image_fit": "cover",
-        "show_secondary_image": true,
-        "show_vendor": true,
-        "show_sku": false,
-        "show_desc": false,
-        "margin_top": "xs",
-        "margin_bottom": "s"
-      }
-    },
-    "all-brands": {
-      "type": "all-brands",
-      "disabled": true,
-      "settings": {
-        "per_row": 8,
-        "heading": "Brands",
-        "heading_size": "h3",
-        "border_top": true,
-        "border_bottom": false,
-        "padding_top": "s",
-        "padding_bottom": "s",
-        "margin_top": "no-indent",
-        "margin_bottom": "no-indent"
-      }
-    },
-    "1752952775382bcb41": {
-      "type": "apps",
-      "blocks": {
-        "klaviyo_reviews_product_reviews_LKqfUh": {
-          "type": "shopify://apps/klaviyo-reviews/blocks/product-reviews/db20e365-d984-4ac4-9655-e1588d951ca9",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "klaviyo_reviews_product_reviews_LKqfUh"
-      ],
-      "settings": {
-        "include_margins": true
+        "bg_color": "#759769",
+        "text_color": "#efdfd3",
+        "headline": "Kaffee-Wissen. Direkt von Cemil.",
+        "subtext": "Erhalte Röst-Tipps, Zubereitungsrezepte und exklusive Angebote — direkt in dein Postfach. Kein Spam, nur Kaffee.",
+        "use_klaviyo": false,
+        "klaviyo_form_id": "",
+        "placeholder": "Deine E-Mail-Adresse",
+        "btn_label": "Abonnieren",
+        "success_msg": "Danke! Du bist dabei.",
+        "quote_text": "Kein Spam, versprochen. Nur echte Leidenschaft für Genießer des schwarzen Goldes.",
+        "quote_author": "— Cemil"
       }
     }
   },
   "order": [
     "main",
-    "17530181556126f781",
-    "rich_text_qacgpN",
-    "product-recommendations",
-    "all-brands",
-    "1752952775382bcb41"
+    "cemils-empfehlung",
+    "produktfakten",
+    "die-story",
+    "brew-guide",
+    "mid-cta",
+    "passt-dazu",
+    "trust-bar",
+    "newsletter",
+    "section_01_hero_buyblock_jt_7YxEgR",
+    "section_02_cemils_empfehlung_jt_GiYYLG",
+    "section_03_produktfakten_jt_WzJTDT",
+    "section_04_die_story_jt_NkhHP3",
+    "section_05_brew_guide_jt_JaedKq",
+    "section_06_mid_cta_jt_XVyMb7",
+    "reviews",
+    "section_08_passt_dazu_jt_xfRGYh",
+    "section_09_trust_bar_jt_FVyKrT",
+    "section_10_newsletter_jt_34VDg9"
   ]
 }

@@ -1,0 +1,343 @@
+{% comment %}
+  ============================================================
+  SNIPPET: passt-dazu-card-JT
+  File: snippets/passt-dazu-card-JT.liquid
+
+  Usage:
+    {%- render 'passt-dazu-card-JT', cross_product: product_object -%}
+
+  Variables:
+    cross_product — a Shopify product object
+
+  Badge logic (priority order):
+    1. product.metafields.coffee_attributes.badge_label  (explicit badge metafield)
+    2. First tag that matches known category list
+    3. No badge shown
+  
+  Subtitle logic:
+    coffee_attributes.roastprofil_value · coffee_attributes.geschmack_value
+    (consistent with Section 03 metafield namespace)
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign cp = cross_product
+
+  # First available variant for price + ATC
+  assign cp_variant = cp.selected_or_first_available_variant
+
+  comment
+    Badge: explicit metafield first, then tag-based fallback
+    Known category tags: espresso, single-origin, ganze-bohne, kaffee, filter, crema
+  endcomment
+  assign badge_label = cp.metafields.coffee_attributes.badge_label
+
+  if badge_label == blank
+    assign badge_label = ''
+    assign badge_tags = 'espresso,single origin,single-origin,ganze bohne,ganze-bohne,kaffee,filter,crema'
+    assign badge_tags_arr = badge_tags | split: ','
+    for tag in cp.tags
+      assign tag_lower = tag | downcase | strip
+      for badge_tag in badge_tags_arr
+        if tag_lower == badge_tag
+          assign badge_label = tag | upcase
+          break
+        endif
+      endfor
+      if badge_label != ''
+        break
+      endif
+    endfor
+  endif
+
+  # Subtitle: roast · taste from coffee_attributes namespace
+  assign subtitle_roast = cp.metafields.coffee_attributes.roastprofil_value
+  assign subtitle_taste = cp.metafields.coffee_attributes.geschmack_value
+
+  if subtitle_roast != blank and subtitle_taste != blank
+    assign subtitle = subtitle_roast | append: ' · ' | append: subtitle_taste
+  elsif subtitle_roast != blank
+    assign subtitle = subtitle_roast
+  elsif subtitle_taste != blank
+    assign subtitle = subtitle_taste
+  else
+    assign subtitle = ''
+  endif
+-%}
+
+<li class="passt-card" style="scroll-snap-align: start;">
+  <article class="passt-card__article" aria-label="{{ cp.title | escape }}">
+
+    <!-- ── IMAGE + BADGE ── -->
+    <a href="{{ cp.url }}" class="passt-card__image-link" tabindex="-1" aria-hidden="true">
+      <figure class="passt-card__figure">
+
+        {%- if cp.featured_media -%}
+          <img
+            src="{{ cp.featured_media | image_url: width: 600 }}"
+            srcset="
+              {{ cp.featured_media | image_url: width: 300 }} 300w,
+              {{ cp.featured_media | image_url: width: 600 }} 600w
+            "
+            sizes="(max-width: 640px) 80vw, (max-width: 1023px) 50vw, 25vw"
+            alt="{{ cp.featured_media.alt | default: cp.title | escape }}"
+            width="{{ cp.featured_media.width }}"
+            height="{{ cp.featured_media.height }}"
+            loading="lazy"
+            class="passt-card__img"
+          >
+        {%- else -%}
+          <div class="passt-card__img-placeholder" aria-hidden="true">
+            <span>{{ cp.title | escape }}</span>
+          </div>
+        {%- endif -%}
+
+        {%- unless badge_label == blank -%}
+          <span class="passt-card__badge" aria-label="Kategorie: {{ badge_label }}">
+            {{- badge_label -}}
+          </span>
+        {%- endunless -%}
+
+      </figure>
+    </a>
+
+    <!-- ── TEXT + ACTION ── -->
+    <div class="passt-card__body">
+
+      <!-- Title link -->
+      <a href="{{ cp.url }}" class="passt-card__title-link">
+        <h3 class="passt-card__title">{{- cp.title | escape -}}</h3>
+      </a>
+
+      <!-- Subtitle: Röstprofil · Geschmack -->
+      {%- unless subtitle == blank -%}
+        <p class="passt-card__subtitle">{{- subtitle -}}</p>
+      {%- endunless -%}
+
+      <!-- Bottom row: price + quick-add -->
+      <div class="passt-card__bottom">
+
+        <!-- Price -->
+        <span class="passt-card__price" aria-label="Preis: {{ cp_variant.price | money }}">
+          {{- cp_variant.price | money -}}
+        </span>
+
+        <!-- Quick-add form — proper Shopify form, no AJAX -->
+        {%- form 'product', cp,
+            id: 'quick-add-form-' | append: cp.id,
+            class: 'passt-card__form'
+        -%}
+          <input type="hidden" name="id"       value="{{ cp_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+
+          <button
+            type="submit"
+            class="passt-card__atc-btn"
+            aria-label="{{ cp.title | escape }} in den Warenkorb"
+            {%- unless cp_variant.available %} disabled aria-disabled="true"{% endunless -%}
+          >
+            {%- if cp_variant.available -%}
+              <!-- Cart icon SVG — 40×40 black square, white icon -->
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                <line x1="3" y1="6" x2="21" y2="6" stroke="white" stroke-width="2"/>
+                <path d="M16 10a4 4 0 01-8 0" stroke="white" stroke-width="2"/>
+              </svg>
+            {%- else -%}
+              <!-- Sold out X -->
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <line x1="6" y1="6" x2="18" y2="18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            {%- endif -%}
+          </button>
+
+        {%- endform -%}
+
+      </div><!-- /passt-card__bottom -->
+
+    </div><!-- /passt-card__body -->
+
+  </article>
+</li>
+
+
+<style>
+/* ── PRODUCT CARD ── */
+/* Token variables inherited from parent section or defined here as fallback */
+.passt-card {
+  --db-black:        #00090B;
+  --db-mud:          #7B5D4D;
+  --db-surface-low:  #fff1e7;
+  --db-surface-mid:  #fbebdf;
+  --db-surface-high: #f5e5d9;
+  --db-outline:      #906f6a;
+  --db-radius:       2px;
+  --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
+  --db-font-body:    'New Frank', 'DM Sans', sans-serif;
+
+  list-style: none;
+}
+
+.passt-card__article {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--db-surface-low);
+}
+
+/* ── IMAGE AREA ── */
+.passt-card__image-link {
+  display: block;
+  text-decoration: none;
+}
+
+.passt-card__figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--db-surface-mid);
+  aspect-ratio: 4 / 5;
+}
+
+.passt-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.passt-card__image-link:hover .passt-card__img {
+  transform: scale(1.04);
+}
+
+.passt-card__img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--db-surface-high);
+  color: var(--db-outline);
+  font-family: var(--db-font-body);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* ── BADGE ── */
+/* Absolutely positioned top-left over the image */
+.passt-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--db-black);
+  color: #ffffff;
+  font-family: var(--db-font-body);
+  font-size: 0.58rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 4px 8px;
+  border-radius: var(--db-radius);
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+/* ── CARD BODY ── */
+/* Warm beige — NOT white. Matches tonal system. */
+.passt-card__body {
+  background: var(--db-surface-low);
+  padding: 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+/* ── TITLE ── */
+.passt-card__title-link {
+  text-decoration: none;
+}
+
+.passt-card__title {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: var(--db-black);
+  margin: 0;
+  transition: opacity 0.2s;
+}
+
+.passt-card__title-link:hover .passt-card__title {
+  opacity: 0.7;
+}
+
+/* ── SUBTITLE ── */
+/* Röstprofil · Geschmack — muted, small, uppercase */
+.passt-card__subtitle {
+  font-family: var(--db-font-body);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--db-mud);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ── BOTTOM ROW: PRICE + ATC ── */
+.passt-card__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.passt-card__price {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  color: var(--db-black);
+  line-height: 1;
+}
+
+/* ── QUICK-ADD FORM ── */
+.passt-card__form {
+  flex-shrink: 0;
+}
+
+/* 40×40 black square button — matches Figma exactly */
+.passt-card__atc-btn {
+  width: 40px;
+  height: 40px;
+  background: var(--db-black);
+  border: none;
+  border-radius: var(--db-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+
+.passt-card__atc-btn:hover {
+  opacity: 0.8;
+}
+
+.passt-card__atc-btn:disabled {
+  background: var(--db-outline);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+</style>

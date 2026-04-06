@@ -1,0 +1,1754 @@
+{% comment %}
+  ============================================================
+  DIE BARISTA ROASTERY — SECTION 01: HERO + BUY BLOCK
+  File: sections/barista-hero-buyblock.liquid
+  
+  Features:
+  - Split layout: Product gallery (left) + Buy block (right)
+  - Weight selector: 250g / 1kg (1kg default + bestseller badge)
+  - Grind selector: Siebträger / Moka / Filter / Ganze Bohne
+  - Coffee need slider → smart recommendation box
+  - Purchase toggle: Einmalkauf / Abo (Abo preselected)
+  - Dynamic pricing with price-per-cup display
+  - Seal Subscriptions compatible
+  - Mobile sticky ATC bar
+  - Tasting tags, flavor scales, trust micro-bar
+  - Category color strip (per product: Espresso=Red, Crema=Crema, Green=Wechselnd)
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign product = product
+  assign current_variant = product.selected_or_first_available_variant
+  
+  comment
+    Resolve category color from product tags or metafield
+    Tag: "kategorie-espresso" → red, "kategorie-crema" → crema, "kategorie-wechselnd" → green
+  endcomment
+  assign category_color = '#E23528'
+  if product.tags contains 'kategorie-crema'
+    assign category_color = '#EFDFD3'
+  elsif product.tags contains 'kategorie-wechselnd'
+    assign category_color = '#759769'
+  endif
+
+  comment
+    Metafields used:
+    product.metafields.coffee_attributes.roasting_level → integer 0–6
+    product.metafields.coffee_attributes.acid_level     → integer 0–6
+    product.metafields.coffee_attributes.strength_level → integer 0–6
+    product.metafields.barista.tasting_notes            → comma-separated string e.g. "Schokolade, Nuss, Karamell"
+    product.metafields.barista.category_label           → string e.g. "Espresso · Ganze Bohne"
+    product.metafields.barista.short_desc               → string (1–2 sentences)
+  endcomment
+  assign roast_level    = product.metafields.coffee_attributes.roasting_level.value | default: 4
+  assign acidity        = product.metafields.coffee_attributes.acid_level.value | default: 3
+  assign strength       = product.metafields.coffee_attributes.strength_level.value | default: 2
+  assign tasting_notes  = product.metafields.barista.tasting_notes | default: ''
+  assign category_label = product.metafields.barista.category_label | default: 'Espresso · Ganze Bohne'
+  assign short_desc     = product.metafields.barista.short_desc | default: product.description | truncate: 160
+
+  # Scale 0–6 → percentage (divide by 6, not 5)
+  assign roast_pct    = roast_level | times: 100 | divided_by: 6
+  assign strength_pct = strength | times: 100 | divided_by: 6
+  assign acidity_pct  = acidity | times: 100 | divided_by: 6
+
+  comment
+    Identify 250g and 1kg variants by title keyword
+    We loop product.variants to find them
+  endcomment
+  assign variant_250 = nil
+  assign variant_1kg = nil
+  for v in product.variants
+    if v.title contains '250' or v.option1 contains '250' or v.option2 contains '250'
+      if variant_250 == nil
+        assign variant_250 = v
+      endif
+    endif
+    if v.title contains '1 kg' or v.title contains '1kg' or v.option1 contains '1 kg' or v.option1 contains '1kg' or v.option2 contains '1 kg' or v.option2 contains '1kg'
+      if variant_1kg == nil
+        assign variant_1kg = v
+      endif
+    endif
+  endfor
+
+  if variant_250 == nil
+    assign variant_250 = product.variants[0]
+  endif
+  if variant_1kg == nil
+    assign variant_1kg = product.variants[1] | default: product.variants[0]
+  endif
+
+  comment
+    Price-per-cup: 1 cup ≈ 7g
+    250g → ~35 cups, 1kg → ~142 cups
+  endcomment
+  assign cups_250  = 35
+  assign cups_1kg  = 142
+  assign price_250_cents = variant_250.price
+  assign price_1kg_cents = variant_1kg.price
+  assign ppc_250 = price_250_cents | divided_by: cups_250
+  assign ppc_1kg = price_1kg_cents | divided_by: cups_1kg
+-%}
+
+{{ 'barista-hero-buyblock.css' | asset_url | stylesheet_tag }}
+
+<section 
+  class="barista-hero" 
+  id="barista-hero"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-variant-250="{{ variant_250.id }}"
+  data-variant-1kg="{{ variant_1kg.id }}"
+  data-price-250="{{ variant_250.price }}"
+  data-price-1kg="{{ variant_1kg.price }}"
+  data-ppc-250="{{ ppc_250 }}"
+  data-ppc-1kg="{{ ppc_1kg }}"
+  style="--category-color: {{ category_color }};"
+>
+
+  <!-- ═══════════════════════════════════════════════
+       GALLERY (LEFT)
+       ═══════════════════════════════════════════════ -->
+  <div class="barista-gallery">
+    <!-- Category color strip -->
+    <div class="barista-gallery__strip"></div>
+
+    <!-- Main image -->
+    <div class="barista-gallery__main" id="galleryMain">
+      {%- if product.featured_media -%}
+        <img
+          src="{{ product.featured_media | image_url: width: 800 }}"
+          alt="{{ product.featured_media.alt | escape }}"
+          width="800"
+          height="{{ 800 | divided_by: product.featured_media.aspect_ratio | round }}"
+          loading="eager"
+          fetchpriority="high"
+          class="barista-gallery__img"
+          id="galleryMainImg"
+        >
+      {%- else -%}
+        <div class="barista-gallery__placeholder">Produktbild</div>
+      {%- endif -%}
+    </div>
+
+    <!-- Thumbnails -->
+    {%- if product.media.size > 1 -%}
+    <div class="barista-gallery__thumbs" role="list">
+      {%- for media in product.media limit: 4 -%}
+      <button
+        class="barista-gallery__thumb {% if forloop.first %}is-active{% endif %}"
+        data-media-src="{{ media | image_url: width: 800 }}"
+        data-media-alt="{{ media.alt | escape }}"
+        aria-label="Produktbild {{ forloop.index }}"
+        role="listitem"
+      >
+        <img
+          src="{{ media | image_url: width: 130 }}"
+          alt="{{ media.alt | escape }}"
+          width="65"
+          height="65"
+          loading="lazy"
+        >
+      </button>
+      {%- endfor -%}
+    </div>
+    {%- endif -%}
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       BUY BLOCK (RIGHT)
+       ═══════════════════════════════════════════════ -->
+  <div class="barista-buyblock">
+
+    <!-- Category label -->
+    <p class="barista-cat-label" aria-label="Produktkategorie">
+      {{- category_label -}}
+    </p>
+
+    <!-- Product title -->
+    <h1 class="barista-title">{{ product.title }}</h1>
+
+    <!-- Short description -->
+    <p class="barista-desc">{{ short_desc }}</p>
+
+    <!-- Tasting Notes Tags -->
+    {%- unless tasting_notes == '' -%}
+    <div class="barista-tasting-notes" aria-label="Geschmacksrichtungen">
+      {%- assign notes_arr = tasting_notes | split: ',' -%}
+      {%- for note in notes_arr -%}
+        <span class="barista-tag">{{ note | strip }}</span>
+      {%- endfor -%}
+    </div>
+    {%- endunless -%}
+
+    <!-- Flavor Scales — matches existing .coffee-scale structure -->
+    <div class="coffee-scale barista-scales" aria-label="Kaffeeprofil">
+
+      <div class="scale-row">
+        <span class="label barista-scale__label">Röstgrad</span>
+        <div class="scale-container">
+          <div class="scale-bar barista-scale__track"
+               role="progressbar"
+               aria-valuenow="{{ roast_level }}"
+               aria-valuemin="0"
+               aria-valuemax="6"
+               aria-label="Röstgrad: {{ roast_level }} von 6">
+            <div class="scale-fill barista-scale__fill" style="width: {{ roast_pct }}%; background-color: var(--db-black, #00090B);"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scale-row">
+        <span class="label barista-scale__label">Stärke</span>
+        <div class="scale-container">
+          <div class="scale-bar barista-scale__track"
+               role="progressbar"
+               aria-valuenow="{{ strength }}"
+               aria-valuemin="0"
+               aria-valuemax="6"
+               aria-label="Stärke: {{ strength }} von 6">
+            <div class="scale-fill barista-scale__fill" style="width: {{ strength_pct }}%; background-color: var(--db-black, #00090B);"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scale-row">
+        <span class="label barista-scale__label">Säure</span>
+        <div class="scale-container">
+          <div class="scale-bar barista-scale__track"
+               role="progressbar"
+               aria-valuenow="{{ acidity }}"
+               aria-valuemin="0"
+               aria-valuemax="6"
+               aria-label="Säure: {{ acidity }} von 6">
+            <div class="scale-fill barista-scale__fill" style="width: {{ acidity_pct }}%; background-color: var(--db-black, #00090B);"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─────────────────────────────────────────────
+         CONFIGURATOR FORM
+         ───────────────────────────────────────────── -->
+    {%- form 'product', product, id: 'barista-product-form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+
+      <input type="hidden" name="id" id="barista-variant-id" value="{{ variant_1kg.id }}">
+      
+      <!-- Subscription properties (Seal Subscriptions) -->
+      <input type="hidden" id="barista-selling-plan" name="selling_plan" value="" disabled>
+
+      <!-- ── 1. WEIGHT SELECTOR ── -->
+      <div class="barista-group">
+        <span class="barista-group__label">Gewicht wählen</span>
+        <div class="barista-weight-options" role="radiogroup" aria-label="Gewicht auswählen">
+
+          <!-- 250g -->
+          <button
+            type="button"
+            class="barista-weight-btn"
+            data-weight="250"
+            data-variant-id="{{ variant_250.id }}"
+            data-price="{{ variant_250.price }}"
+            data-ppc="{{ ppc_250 }}"
+            aria-pressed="false"
+            aria-label="250 Gramm, {{ ppc_250 | money }} pro Tasse"
+          >
+            <span class="barista-weight-btn__size">250g</span>
+            <span class="barista-weight-btn__sub">Perfekt zum Probieren</span>
+            <span class="barista-weight-btn__ppc" id="ppc250Display">
+              Nur {{ ppc_250 | money }} / Tasse
+            </span>
+          </button>
+
+          <!-- 1kg — DEFAULT + BESTSELLER -->
+          <button
+            type="button"
+            class="barista-weight-btn barista-weight-btn--featured is-active"
+            data-weight="1000"
+            data-variant-id="{{ variant_1kg.id }}"
+            data-price="{{ variant_1kg.price }}"
+            data-ppc="{{ ppc_1kg }}"
+            aria-pressed="true"
+            aria-label="1 Kilogramm, {{ ppc_1kg | money }} pro Tasse, Bestseller"
+          >
+            <span class="barista-weight-btn__badge">🔥 Bestseller</span>
+            <span class="barista-weight-btn__size">1 kg</span>
+            <span class="barista-weight-btn__sub">Bester Preis pro Tasse</span>
+            <span class="barista-weight-btn__ppc" id="ppc1kgDisplay">
+              Nur {{ ppc_1kg | money }} / Tasse
+            </span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- ── 2. GRIND SELECTOR ── -->
+      <div class="barista-group">
+        <span class="barista-group__label">Mahlgrad für</span>
+        <div class="barista-grind-options" role="radiogroup" aria-label="Mahlgrad auswählen">
+
+          <button type="button" class="barista-grind-btn" data-grind="Siebträger" aria-pressed="false">
+            <span class="barista-grind-btn__icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="8" width="16" height="12" rx="1" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M20 13h4v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <rect x="7" y="20" width="4" height="3" rx="0.5" fill="currentColor"/>
+                <rect x="13" y="20" width="4" height="3" rx="0.5" fill="currentColor"/>
+              </svg>
+            </span>
+            <span class="barista-grind-btn__label">Siebträger</span>
+          </button>
+
+          <button type="button" class="barista-grind-btn" data-grind="Moka" aria-pressed="false">
+            <span class="barista-grind-btn__icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 22V18c0-2 1-3 4-4V8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M10 8h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M18 8v6c-3 1-4 2-4 4v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M8 22h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <ellipse cx="14" cy="11" rx="2" ry="1.5" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+            <span class="barista-grind-btn__label">Moka</span>
+          </button>
+
+          <button type="button" class="barista-grind-btn" data-grind="Filter" aria-pressed="false">
+            <span class="barista-grind-btn__icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 8h14l-2 12H9L7 8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M5 8h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M12 12v6M16 12v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="barista-grind-btn__label">Filter</span>
+          </button>
+
+          <button type="button" class="barista-grind-btn is-active" data-grind="Ganze Bohne" aria-pressed="true">
+            <span class="barista-grind-btn__icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="14" cy="14" rx="7" ry="5" stroke="currentColor" stroke-width="1.8" transform="rotate(-30 14 14)"/>
+                <path d="M14 9.5 Q16 14 14 18.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              </svg>
+            </span>
+            <span class="barista-grind-btn__label">Ganze Bohne</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- ── 3. COFFEE NEED SLIDER ── -->
+      <div class="barista-slider-box">
+        <div class="barista-slider-box__header">
+          <span class="barista-slider-box__title">Dein Kaffee-Bedarf</span>
+          <span class="barista-slider-box__sub">Tassen pro Tag</span>
+          <span class="barista-slider-box__count" id="cupsDisplay" aria-live="polite">2 Tassen</span>
+        </div>
+        <input
+          type="range"
+          id="cupsSlider"
+          class="barista-slider"
+          min="1"
+          max="10"
+          value="2"
+          step="1"
+          aria-label="Tassen pro Tag"
+          aria-valuemin="1"
+          aria-valuemax="10"
+          aria-valuenow="2"
+        >
+        <!-- Smart recommendation box -->
+        <div class="barista-recommendation" id="recommendationBox" aria-live="polite">
+          <span class="barista-recommendation__text" id="recommendationText">
+            Wir empfehlen: <strong>1 kg alle 5 Wochen</strong>
+          </span>
+          <span class="barista-recommendation__savings" id="savingsText">
+            Du sparst <strong id="savingsAmount">0,00&nbsp;€</strong> pro Monat mit dem Abo
+          </span>
+        </div>
+      </div>
+
+      <!-- ── 4. PURCHASE TYPE TOGGLE ── -->
+      <div class="barista-group">
+        <div class="barista-purchase-options" role="radiogroup" aria-label="Kaufoption wählen">
+
+          <!-- Einmalkauf -->
+          <label class="barista-purchase-opt" id="optEinmal" aria-pressed="false">
+            <input
+              type="radio"
+              name="purchase_type"
+              value="einmal"
+              class="barista-purchase-radio"
+              aria-label="Einmalkauf, Direktversand"
+            >
+            <span class="barista-purchase-opt__radio"></span>
+            <span class="barista-purchase-opt__content">
+              <span class="barista-purchase-opt__title">Einmalkauf</span>
+              <span class="barista-purchase-opt__sub">Direktversand</span>
+            </span>
+            <span class="barista-purchase-opt__price" id="priceEinmal">
+              {{ variant_1kg.price | money }}
+            </span>
+          </label>
+
+          <!-- Abo — PRESELECTED -->
+          <label class="barista-purchase-opt barista-purchase-opt--abo is-active" id="optAbo" aria-pressed="true">
+            <input
+              type="radio"
+              name="purchase_type"
+              value="abo"
+              class="barista-purchase-radio"
+              checked
+              aria-label="Abo-Lieferung, 10% sparen"
+            >
+            <span class="barista-purchase-opt__radio"></span>
+            <span class="barista-purchase-opt__content">
+              <span class="barista-purchase-opt__title">
+                Abo-Lieferung
+                <span class="barista-badge barista-badge--popular">Most Popular</span>
+              </span>
+              <span class="barista-purchase-opt__sub">Spare 10% bei jeder Sendung</span>
+            </span>
+            <span class="barista-purchase-opt__price barista-purchase-opt__price--abo" id="priceAbo">
+              {{ variant_1kg.price | times: 0.9 | money }}
+            </span>
+          </label>
+
+        </div>
+      </div>
+
+      <!-- ── 5. PRICE DISPLAY ── -->
+      <div class="barista-price-row" aria-live="polite">
+        <span class="barista-price-main" id="priceMain">{{ variant_1kg.price | money }}</span>
+        <span class="barista-price-per-kg" id="pricePerKg">
+          {%- assign price_per_kg = variant_1kg.price | times: 100 -%}
+          {{ variant_1kg.price | money }} / kg inkl. MwSt.
+        </span>
+        <span class="barista-price-old" id="priceOld" style="display:none;"></span>
+      </div>
+
+      <!-- ── 6. ADD TO CART BUTTON ── -->
+      <button
+        type="submit"
+        class="barista-atc-btn"
+        id="barista-atc-main"
+        aria-label="In den Warenkorb legen"
+      >
+        <svg class="barista-atc-btn__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2"/>
+          <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        In den Warenkorb
+      </button>
+      <p class="barista-atc-microcopy" id="atcMicrocopy">Spare heute 10% mit dem Abo</p>
+
+      <!-- ── Trust Micro-Bar ── -->
+      <div class="barista-trust-bar" aria-label="Vertrauenssignale">
+        <span class="barista-trust-item">
+          <span class="barista-trust-item__dot barista-trust-item__dot--green" aria-hidden="true"></span>
+          Frisch geröstet
+        </span>
+        <span class="barista-trust-item">
+          <span class="barista-trust-item__dot barista-trust-item__dot--green" aria-hidden="true"></span>
+          Versand in 1–3 Tagen
+        </span>
+        <span class="barista-trust-item">
+          <span class="barista-trust-item__dot barista-trust-item__dot--green" aria-hidden="true"></span>
+          Ab 39€ kostenlos
+        </span>
+      </div>
+
+    {%- endform -%}
+  </div><!-- /barista-buyblock -->
+
+</section><!-- /barista-hero -->
+
+
+<!-- ═══════════════════════════════════════════════
+     STICKY MOBILE ATC BAR
+     ═══════════════════════════════════════════════ -->
+<div class="barista-sticky-atc" id="barista-sticky-atc" role="region" aria-label="Schnellkauf" hidden>
+  <div class="barista-sticky-atc__info">
+    <span class="barista-sticky-atc__title">{{ product.title }}</span>
+    <span class="barista-sticky-atc__meta" id="stickyMeta">1 kg · Ganze Bohne</span>
+  </div>
+  <div class="barista-sticky-atc__right">
+    <span class="barista-sticky-atc__price" id="stickyPrice">{{ variant_1kg.price | money }}</span>
+    <button
+      type="button"
+      class="barista-sticky-atc__btn"
+      id="barista-sticky-btn"
+      aria-label="In den Warenkorb legen"
+    >
+      In den Warenkorb
+    </button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     SCOPED CSS
+     ═══════════════════════════════════════════════ -->
+<style>
+/* ── DESIGN TOKENS ── */
+.barista-hero,
+.barista-sticky-atc {
+  --db-red:    #E23528;
+  --db-red-hover: #c9291e;
+  --db-black:  #00090B;
+  --db-crema:  #EFDFD3;
+  --db-green:  #759769;
+  --db-mud:    #7B5D4D;
+  --db-surface:      #fff8f5;
+  --db-surface-low:  #fff1e7;
+  --db-surface-mid:  #fbebdf;
+  --db-surface-high: #f5e5d9;
+  --db-surface-top:  #f0e0d4;
+  --db-outline:      #906f6a;
+  --db-radius: 2px;
+  --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
+  --db-font-body:    'New Frank', 'DM Sans', sans-serif;
+}
+
+/* ── HERO LAYOUT ── */
+.barista-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 90vh;
+  background: var(--db-surface);
+  position: relative;
+}
+
+/* ── GALLERY ── */
+.barista-gallery {
+  background: var(--db-surface-low);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.barista-gallery__strip {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  background: var(--category-color, var(--db-red));
+}
+
+.barista-gallery__main {
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  border-radius: var(--db-radius);
+  background: var(--db-surface-mid);
+}
+
+.barista-gallery__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.25s ease;
+}
+
+.barista-gallery__img.is-loading {
+  opacity: 0;
+}
+
+.barista-gallery__placeholder {
+  color: var(--db-outline);
+  font-family: var(--db-font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.barista-gallery__thumbs {
+  display: flex;
+  gap: 8px;
+}
+
+.barista-gallery__thumb {
+  width: 65px;
+  height: 65px;
+  padding: 3px;
+  border: 2px solid transparent;
+  border-radius: var(--db-radius);
+  background: var(--db-surface-high);
+  cursor: pointer;
+  transition: border-color 0.2s;
+  overflow: hidden;
+}
+
+.barista-gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--db-radius);
+}
+
+.barista-gallery__thumb.is-active,
+.barista-gallery__thumb:hover {
+  border-color: var(--db-black);
+}
+
+/* ── BUY BLOCK ── */
+.barista-buyblock {
+  padding: 3.5rem 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: 100vh;
+  background: var(--db-surface);
+}
+
+/* Category label */
+.barista-cat-label {
+  font-family: var(--db-font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--db-red);
+  margin-bottom: 0.5rem;
+}
+
+/* Product title */
+.barista-title {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: var(--db-black);
+  margin-bottom: 0.75rem;
+}
+
+/* Short desc */
+.barista-desc {
+  font-family: var(--db-font-body);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--db-mud);
+  max-width: 420px;
+  margin-bottom: 1.25rem;
+}
+
+/* Tasting notes */
+.barista-tasting-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 1.25rem;
+}
+
+.barista-tag {
+  background: var(--db-surface-high);
+  color: var(--db-black);
+  font-family: var(--db-font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 5px 12px;
+  border-radius: var(--db-radius);
+}
+
+/* ── FLAVOR SCALES — merged from existing .coffee-scale ── */
+/* Preserves original class names so existing metafield snippets still work */
+.coffee-scale.barista-scales {
+  margin: 0 0 1.5rem;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.barista-scales .scale-row {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  gap: 16px;
+}
+
+.barista-scales .label,
+.barista-scale__label {
+  flex: 0 0 70px;
+  font-family: var(--db-font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--db-outline);
+}
+
+.barista-scales .scale-container {
+  flex: 1;
+}
+
+.barista-scales .scale-bar,
+.barista-scale__track {
+  height: 5px;
+  background: var(--db-surface-high);
+  border-radius: var(--db-radius);
+  position: relative;
+  overflow: visible;
+}
+
+.barista-scales .scale-fill,
+.barista-scale__fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  min-width: 0;
+  border-radius: var(--db-radius);
+  z-index: 1;
+  transition: width 0.4s ease;
+}
+
+/* Group label */
+.barista-group {
+  margin-bottom: 1.25rem;
+}
+
+.barista-group__label {
+  display: block;
+  font-family: var(--db-font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--db-outline);
+  margin-bottom: 8px;
+}
+
+/* ── WEIGHT SELECTOR ── */
+.barista-weight-options {
+  display: flex;
+  gap: 10px;
+}
+
+.barista-weight-btn {
+  flex: 1;
+  background: var(--db-surface-low);
+  border: 2px solid transparent;
+  border-radius: var(--db-radius);
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--db-font-body);
+  transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+  position: relative;
+  line-height: 1.3;
+}
+
+.barista-weight-btn:hover {
+  border-color: var(--db-outline);
+}
+
+.barista-weight-btn.is-active {
+  border-color: var(--db-red);
+  transform: scale(1.02);
+  background: #fff;
+}
+
+/* Featured (1kg) card — slightly larger */
+.barista-weight-btn--featured {
+  flex: 1.15;
+  padding: 14px 16px;
+}
+
+.barista-weight-btn__badge {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--db-red);
+  margin-bottom: 4px;
+}
+
+.barista-weight-btn__size {
+  display: block;
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  color: var(--db-black);
+}
+
+.barista-weight-btn__sub {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--db-mud);
+  margin-top: 2px;
+}
+
+.barista-weight-btn__ppc {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--db-outline);
+  margin-top: 4px;
+}
+
+.barista-weight-btn.is-active .barista-weight-btn__ppc {
+  color: var(--db-red);
+}
+
+/* ── GRIND SELECTOR ── */
+.barista-grind-options {
+  display: flex;
+  gap: 8px;
+}
+
+.barista-grind-btn {
+  flex: 1;
+  background: var(--db-surface-low);
+  border: 2px solid transparent;
+  border-radius: var(--db-radius);
+  padding: 10px 8px;
+  text-align: center;
+  cursor: pointer;
+  font-family: var(--db-font-body);
+  transition: border-color 0.18s, background 0.18s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.barista-grind-btn:hover {
+  border-color: var(--db-outline);
+}
+
+.barista-grind-btn.is-active {
+  border-color: var(--db-black);
+  background: var(--db-surface);
+}
+
+.barista-grind-btn__icon {
+  color: var(--db-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.barista-grind-btn__label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--db-black);
+  line-height: 1.2;
+}
+
+/* ── SLIDER ── */
+.barista-slider-box {
+  background: var(--db-surface-low);
+  border: 2px solid var(--db-surface-high);
+  border-radius: var(--db-radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.barista-slider-box__header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 0.75rem;
+}
+
+.barista-slider-box__title {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--db-black);
+  flex: 1;
+}
+
+.barista-slider-box__sub {
+  font-family: var(--db-font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--db-outline);
+}
+
+.barista-slider-box__count {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: var(--db-red);
+  letter-spacing: 0.02em;
+  min-width: 80px;
+  text-align: right;
+}
+
+/* Custom range slider */
+.barista-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--db-surface-top);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+}
+
+.barista-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--db-red);
+  border-radius: var(--db-radius);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.barista-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--db-red);
+  border: none;
+  border-radius: var(--db-radius);
+  cursor: pointer;
+}
+
+.barista-slider:active::-webkit-slider-thumb {
+  transform: scale(1.25);
+}
+
+/* Recommendation box */
+.barista-recommendation {
+  background: rgba(239, 223, 211, 0.6);
+  border: 1.5px dashed var(--db-outline);
+  border-radius: var(--db-radius);
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: baristaPulse 0.3s ease;
+}
+
+@keyframes baristaPulse {
+  0%   { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.barista-recommendation__text {
+  font-family: var(--db-font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--db-black);
+}
+
+.barista-recommendation__text strong {
+  color: var(--db-red);
+}
+
+.barista-recommendation__savings {
+  font-family: var(--db-font-body);
+  font-size: 0.68rem;
+  color: var(--db-mud);
+}
+
+.barista-recommendation__savings strong {
+  color: var(--db-green);
+  font-weight: 700;
+}
+
+/* ── PURCHASE OPTIONS ── */
+.barista-purchase-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.barista-purchase-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--db-surface-low);
+  border: 2px solid transparent;
+  border-radius: var(--db-radius);
+  cursor: pointer;
+  transition: border-color 0.18s;
+}
+
+.barista-purchase-opt:hover {
+  border-color: var(--db-outline);
+}
+
+.barista-purchase-opt.is-active {
+  border-color: var(--db-red);
+  background: #fff;
+}
+
+.barista-purchase-opt--abo {
+  padding: 14px 14px;
+}
+
+.barista-purchase-radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.barista-purchase-opt__radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--db-outline);
+  flex-shrink: 0;
+  transition: border-color 0.18s, background 0.18s;
+  position: relative;
+}
+
+.barista-purchase-opt.is-active .barista-purchase-opt__radio {
+  border-color: var(--db-red);
+  background: var(--db-red);
+}
+
+.barista-purchase-opt.is-active .barista-purchase-opt__radio::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.barista-purchase-opt__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.barista-purchase-opt__title {
+  font-family: var(--db-font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--db-black);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.barista-purchase-opt__sub {
+  font-size: 0.68rem;
+  color: var(--db-mud);
+}
+
+.barista-purchase-opt__price {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 1.15rem;
+  color: var(--db-black);
+}
+
+.barista-purchase-opt__price--abo {
+  color: var(--db-green);
+}
+
+/* Badges */
+.barista-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.58rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 7px;
+  border-radius: var(--db-radius);
+  line-height: 1.4;
+}
+
+.barista-badge--popular {
+  background: var(--db-red);
+  color: #fff;
+}
+
+/* ── PRICE DISPLAY ── */
+.barista-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.barista-price-main {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--db-black);
+  line-height: 1;
+}
+
+.barista-price-per-kg {
+  font-family: var(--db-font-body);
+  font-size: 0.72rem;
+  color: var(--db-outline);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.barista-price-old {
+  font-family: var(--db-font-body);
+  font-size: 1rem;
+  color: var(--db-outline);
+  text-decoration: line-through;
+}
+
+/* ── ADD TO CART BUTTON ── */
+.barista-atc-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 17px 24px;
+  background: var(--db-red);
+  color: #fff;
+  border: none;
+  border-radius: var(--db-radius);
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-bottom: 0.5rem;
+}
+
+.barista-atc-btn:hover {
+  background: var(--db-red-hover);
+  transform: translateY(-1px);
+}
+
+.barista-atc-btn:active {
+  transform: translateY(0);
+}
+
+.barista-atc-btn__icon {
+  flex-shrink: 0;
+}
+
+.barista-atc-microcopy {
+  text-align: center;
+  font-family: var(--db-font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--db-mud);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+/* ── TRUST BAR ── */
+.barista-trust-bar {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.barista-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--db-font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--db-outline);
+}
+
+.barista-trust-item__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.barista-trust-item__dot--green {
+  background: var(--db-green);
+}
+
+/* ── STICKY ATC ── */
+.barista-sticky-atc {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--db-black);
+  color: var(--db-crema);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  gap: 12px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.barista-sticky-atc.is-visible {
+  transform: translateY(0);
+}
+
+.barista-sticky-atc__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.barista-sticky-atc__title {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.barista-sticky-atc__meta {
+  font-family: var(--db-font-body);
+  font-size: 0.65rem;
+  color: rgba(239, 223, 211, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.barista-sticky-atc__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.barista-sticky-atc__price {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: var(--db-crema);
+}
+
+.barista-sticky-atc__btn {
+  background: var(--db-red);
+  color: #fff;
+  border: none;
+  border-radius: var(--db-radius);
+  padding: 10px 18px;
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.barista-sticky-atc__btn:hover {
+  background: var(--db-red-hover);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .barista-buyblock {
+    padding: 2.5rem 2rem 2rem;
+  }
+  .barista-gallery {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .barista-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .barista-gallery {
+    min-height: 55vw;
+    padding: 1.5rem;
+  }
+
+  .barista-gallery__main {
+    max-width: 280px;
+    aspect-ratio: 3/4;
+  }
+
+  .barista-buyblock {
+    padding: 1.75rem 1.25rem 6rem;
+    max-height: none;
+  }
+
+  .barista-scales {
+    gap: 1rem;
+  }
+
+  .barista-weight-options {
+    gap: 8px;
+  }
+
+  .barista-grind-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .barista-trust-bar {
+    gap: 0.75rem;
+  }
+
+  /* Sticky visible on mobile only */
+  .barista-sticky-atc[hidden] {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .barista-sticky-atc {
+    display: none !important;
+  }
+}
+</style>
+
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  /* ─ State ─ */
+  const state = {
+    weightGrams:   1000,
+    grind:         'Ganze Bohne',
+    purchaseType:  'abo',
+    cups:          2,
+    variantId:     null,
+    prices: {
+      250:  parseInt(document.querySelector('[data-variant-250]')?.dataset.price250 || '0'),
+      1000: parseInt(document.querySelector('[data-variant-1kg]')?.dataset.price1kg || '0')
+    }
+  };
+
+  /* ─ Read data from section element ─ */
+  const sectionEl  = document.getElementById('barista-hero');
+  if (!sectionEl) return;
+
+  const variantId250  = sectionEl.dataset.variant250;
+  const variantId1kg  = sectionEl.dataset.variant1kg;
+  const rawPrice250   = parseInt(sectionEl.dataset.price250  || 0);
+  const rawPrice1kg   = parseInt(sectionEl.dataset.price1kg  || 0);
+  const rawPpc250     = parseInt(sectionEl.dataset.ppc250    || 0);
+  const rawPpc1kg     = parseInt(sectionEl.dataset.ppc1kg    || 0);
+
+  state.prices[250]  = rawPrice250;
+  state.prices[1000] = rawPrice1kg;
+  state.variantId    = variantId1kg;
+
+  /* ─ Money formatter ─ */
+  function formatMoney(cents) {
+    return (cents / 100).toLocaleString('de-DE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }) + '\u00a0€';
+  }
+
+  /* ─ Animate number (for savings count-up) ─ */
+  function animateNumber(el, from, to, suffix, duration) {
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const val = from + (to - from) * easeOut(progress);
+      el.textContent = formatMoney(Math.round(val)) + (suffix || '');
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+  /* ─ Update price display ─ */
+  function updatePrices() {
+    const base = state.prices[state.weightGrams] || 0;
+    const isAbo = state.purchaseType === 'abo';
+    const displayed = isAbo ? Math.round(base * 0.9) : base;
+    const oldPrice  = isAbo ? base : null;
+    const ppcCents  = state.weightGrams === 250 ? rawPpc250 : rawPpc1kg;
+    const ppcDisp   = isAbo ? Math.round(ppcCents * 0.9) : ppcCents;
+    const pricePerKgCents = state.weightGrams === 1000 ? displayed : displayed * 4;
+
+    // Main price
+    const priceMainEl = document.getElementById('priceMain');
+    if (priceMainEl) priceMainEl.textContent = formatMoney(displayed);
+
+    // Per kg
+    const pricePerKgEl = document.getElementById('pricePerKg');
+    if (pricePerKgEl) pricePerKgEl.textContent = formatMoney(pricePerKgCents) + ' / kg inkl. MwSt.';
+
+    // Old price (crossed out original when abo active)
+    const priceOldEl = document.getElementById('priceOld');
+    if (priceOldEl) {
+      if (oldPrice) {
+        priceOldEl.textContent = formatMoney(oldPrice);
+        priceOldEl.style.display = '';
+      } else {
+        priceOldEl.style.display = 'none';
+      }
+    }
+
+    // Abo price in option row
+    const priceAboEl = document.getElementById('priceAbo');
+    if (priceAboEl) priceAboEl.textContent = formatMoney(Math.round(base * 0.9));
+
+    // Einmal price in option row
+    const priceEinmalEl = document.getElementById('priceEinmal');
+    if (priceEinmalEl) priceEinmalEl.textContent = formatMoney(base);
+
+    // Sticky price
+    const stickyPriceEl = document.getElementById('stickyPrice');
+    if (stickyPriceEl) stickyPriceEl.textContent = formatMoney(displayed);
+
+    // Microcopy
+    const microcopyEl = document.getElementById('atcMicrocopy');
+    if (microcopyEl) {
+      microcopyEl.textContent = isAbo
+        ? 'Spare heute 10% mit dem Abo'
+        : 'Oder: 10% sparen mit Abo-Lieferung';
+    }
+  }
+
+  /* ─ Update recommendation box ─ */
+  function updateRecommendation() {
+    const cups = state.cups;
+    // Monthly usage: cups × 7g × 30 days
+    const monthlyGrams = cups * 7 * 30;
+    // Bias toward 1kg
+    let recKg = 1;
+    let recWeeks = Math.max(1, Math.round(1000 / (cups * 7 * 7)));
+
+    const countEl  = document.getElementById('cupsDisplay');
+    const textEl   = document.getElementById('recommendationText');
+    const savingsEl = document.getElementById('savingsAmount');
+
+    if (countEl) countEl.textContent = cups + ' Tasse' + (cups !== 1 ? 'n' : '');
+
+    if (textEl) {
+      textEl.innerHTML = 'Wir empfehlen: <strong>1 kg alle ' + recWeeks + ' Woche' + (recWeeks !== 1 ? 'n' : '') + '</strong>';
+    }
+
+    // Monthly savings with abo vs one-time (based on 1kg price)
+    const monthlyPurchases = 4 / recWeeks;
+    const monthlyCost      = state.prices[1000] * monthlyPurchases;
+    const monthlySavings   = Math.round(monthlyCost * 0.1);
+
+    if (savingsEl) {
+      animateNumber(savingsEl, 0, monthlySavings, '', 400);
+    }
+
+    // Trigger animation on box
+    const boxEl = document.getElementById('recommendationBox');
+    if (boxEl) {
+      boxEl.style.animation = 'none';
+      boxEl.offsetHeight; // force reflow
+      boxEl.style.animation = '';
+    }
+  }
+
+  /* ─ Update variant input ─ */
+  function updateVariant() {
+    const variantInput = document.getElementById('barista-variant-id');
+    if (variantInput) {
+      variantInput.value = state.weightGrams === 250 ? variantId250 : variantId1kg;
+    }
+    state.variantId = state.weightGrams === 250 ? variantId250 : variantId1kg;
+
+    // Update selling plan field
+    const sellingPlanInput = document.getElementById('barista-selling-plan');
+    if (sellingPlanInput) {
+      if (state.purchaseType === 'abo') {
+        sellingPlanInput.disabled = false;
+        // Seal Subscriptions selling plan discovery:
+        // The selling plan ID needs to match what Seal Subscriptions creates.
+        // We emit a custom event that Seal Subscriptions can listen to,
+        // or fall back to a data attribute on the section element.
+        const sellingPlanId = sectionEl.dataset.sellingPlanId || '';
+        sellingPlanInput.value = sellingPlanId;
+      } else {
+        sellingPlanInput.disabled = true;
+        sellingPlanInput.value = '';
+      }
+    }
+  }
+
+  /* ─ Update sticky meta ─ */
+  function updateStickyMeta() {
+    const metaEl = document.getElementById('stickyMeta');
+    if (!metaEl) return;
+    const weightLabel = state.weightGrams === 250 ? '250 g' : '1 kg';
+    metaEl.textContent = weightLabel + ' · ' + state.grind;
+  }
+
+  /* ─ Full state sync ─ */
+  function syncAll() {
+    updateVariant();
+    updatePrices();
+    updateRecommendation();
+    updateStickyMeta();
+  }
+
+  /* ─ Weight buttons ─ */
+  document.querySelectorAll('.barista-weight-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.barista-weight-btn').forEach(function(b) {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-pressed', 'true');
+      state.weightGrams = parseInt(btn.dataset.weight);
+      syncAll();
+    });
+  });
+
+  /* ─ Grind buttons ─ */
+  document.querySelectorAll('.barista-grind-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.barista-grind-btn').forEach(function(b) {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-pressed', 'true');
+      state.grind = btn.dataset.grind;
+      updateStickyMeta();
+    });
+  });
+
+  /* ─ Cups slider ─ */
+  const slider = document.getElementById('cupsSlider');
+  if (slider) {
+    slider.addEventListener('input', function() {
+      state.cups = parseInt(this.value);
+      this.setAttribute('aria-valuenow', state.cups);
+      updateRecommendation();
+    });
+  }
+
+  /* ─ Purchase type ─ */
+  document.querySelectorAll('.barista-purchase-radio').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      const val = this.value;
+      state.purchaseType = val;
+
+      document.querySelectorAll('.barista-purchase-opt').forEach(function(opt) {
+        opt.classList.remove('is-active');
+        opt.setAttribute('aria-pressed', 'false');
+      });
+
+      const parentOpt = this.closest('.barista-purchase-opt');
+      if (parentOpt) {
+        parentOpt.classList.add('is-active');
+        parentOpt.setAttribute('aria-pressed', 'true');
+      }
+
+      updateVariant();
+      updatePrices();
+    });
+  });
+
+  // Make entire label clickable for purchase options
+  document.querySelectorAll('.barista-purchase-opt').forEach(function(opt) {
+    opt.addEventListener('click', function() {
+      const radio = opt.querySelector('.barista-purchase-radio');
+      if (radio && !radio.checked) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+  });
+
+  /* ─ Gallery thumbnails ─ */
+  document.querySelectorAll('.barista-gallery__thumb').forEach(function(thumb) {
+    thumb.addEventListener('click', function() {
+      document.querySelectorAll('.barista-gallery__thumb').forEach(function(t) {
+        t.classList.remove('is-active');
+      });
+      thumb.classList.add('is-active');
+
+      const mainImg = document.getElementById('galleryMainImg');
+      if (mainImg && thumb.dataset.mediaSrc) {
+        mainImg.classList.add('is-loading');
+        mainImg.onload = function() { mainImg.classList.remove('is-loading'); };
+        mainImg.src = thumb.dataset.mediaSrc;
+        mainImg.alt = thumb.dataset.mediaAlt || '';
+      }
+    });
+  });
+
+  /* ─ Sticky ATC bar (mobile only) ─ */
+  const stickyBar = document.getElementById('barista-sticky-atc');
+  const heroSection = document.getElementById('barista-hero');
+
+  if (stickyBar && heroSection && window.innerWidth <= 768) {
+    stickyBar.removeAttribute('hidden');
+
+    const observer = new IntersectionObserver(function(entries) {
+      const atcBtn = document.getElementById('barista-atc-main');
+      if (atcBtn) {
+        const atcRect = atcBtn.getBoundingClientRect();
+        if (atcRect.bottom < 0) {
+          stickyBar.classList.add('is-visible');
+        } else {
+          stickyBar.classList.remove('is-visible');
+        }
+      }
+    }, { threshold: 0 });
+
+    observer.observe(heroSection);
+
+    // Sticky ATC submit
+    const stickyBtn = document.getElementById('barista-sticky-btn');
+    if (stickyBtn) {
+      stickyBtn.addEventListener('click', function() {
+        const form = document.getElementById('barista-product-form');
+        if (form) form.submit();
+      });
+    }
+  }
+
+  /* ─ Initial sync ─ */
+  syncAll();
+
+  // Preselect Abo radio
+  const aboRadio = document.querySelector('.barista-purchase-radio[value="abo"]');
+  if (aboRadio) {
+    aboRadio.checked = true;
+    aboRadio.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+})();
+</script>
+
+
+{% schema %}
+{
+  "name": "Hero & Buy Block",
+  "tag": "section",
+  "class": "barista-section-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Produktseite"
+    },
+    {
+      "type": "text",
+      "id": "trust_item_1",
+      "label": "Trust-Punkt 1",
+      "default": "Frisch geröstet"
+    },
+    {
+      "type": "text",
+      "id": "trust_item_2",
+      "label": "Trust-Punkt 2",
+      "default": "Versand in 1–3 Tagen"
+    },
+    {
+      "type": "text",
+      "id": "trust_item_3",
+      "label": "Trust-Punkt 3",
+      "default": "Ab 39€ kostenlos"
+    },
+    {
+      "type": "text",
+      "id": "abo_discount_label",
+      "label": "Abo Rabatt-Text",
+      "default": "Spare 10% bei jeder Sendung"
+    },
+    {
+      "type": "range",
+      "id": "abo_discount_pct",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "unit": "%",
+      "label": "Abo Rabatt",
+      "default": 10
+    },
+    {
+      "type": "text",
+      "id": "selling_plan_id",
+      "label": "Seal Subscriptions — Selling Plan ID",
+      "info": "Die numerische Selling Plan ID aus Seal Subscriptions. Wird für das Abo-Formular benötigt."
+    },
+    {
+      "type": "header",
+      "content": "Kategorie-Farbcodierung"
+    },
+    {
+      "type": "color",
+      "id": "color_espresso",
+      "label": "Farbe: Espresso",
+      "default": "#E23528"
+    },
+    {
+      "type": "color",
+      "id": "color_crema",
+      "label": "Farbe: Crema",
+      "default": "#EFDFD3"
+    },
+    {
+      "type": "color",
+      "id": "color_wechselnd",
+      "label": "Farbe: Wechselnde Sorten",
+      "default": "#759769"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero & Buy Block"
+    }
+  ]
+}
+{% endschema %}

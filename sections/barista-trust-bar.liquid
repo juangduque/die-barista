@@ -1,0 +1,129 @@
+{% comment %}
+  Section: barista-trust-bar.liquid
+  Pfad: sections/barista-trust-bar.liquid
+{% endcomment %}
+
+<style>
+.barista-trust-bar {
+  background: #EDE8DC;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding: 20px 0;
+}
+.barista-trust-bar__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.barista-trust-bar__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #1A1915;
+}
+.barista-trust-bar__stars {
+  color: #C8231A;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.barista-trust-bar__rating-sub {
+  font-size: 10px;
+  color: #888580;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: none;
+}
+.barista-trust-bar__icon { font-size: 18px; opacity: 0.6; }
+
+@media (max-width: 640px) {
+  .barista-trust-bar__inner { justify-content: center; gap: 16px; padding: 0 20px; }
+}
+</style>
+
+<div class="barista-trust-bar">
+  <div class="barista-trust-bar__inner">
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+
+        {%- when 'rating' -%}
+        <div class="barista-trust-bar__item" {{ block.shopify_attributes }}>
+          <div>
+            <div class="barista-trust-bar__stars">★★★★★</div>
+            <div class="barista-trust-bar__rating-sub">{{ block.settings.rating_text }}</div>
+          </div>
+        </div>
+
+        {%- when 'trust_item' -%}
+        <div class="barista-trust-bar__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <span class="barista-trust-bar__icon">{{ block.settings.icon }}</span>
+          {%- endif -%}
+          {{ block.settings.label }}
+        </div>
+
+      {%- endcase -%}
+    {%- endfor -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Barista Trust Bar",
+  "tag": "div",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "rating",
+      "name": "Bewertung",
+      "settings": [
+        {
+          "type": "text",
+          "id": "rating_text",
+          "label": "Bewertungstext",
+          "default": "4.9 / 5 · 2.400+ Bewertungen"
+        }
+      ]
+    },
+    {
+      "type": "trust_item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Emoji Icon",
+          "default": "🚀"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Text",
+          "default": "Frisch echt geröstet"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barista Trust Bar",
+      "blocks": [
+        { "type": "rating" },
+        { "type": "trust_item", "settings": { "icon": "🚀", "label": "Frisch echt geröstet" } },
+        { "type": "trust_item", "settings": { "icon": "✦", "label": "Alle Röstungen" } },
+        { "type": "trust_item", "settings": { "icon": "📦", "label": "Versandkostenfrei ab 30€" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

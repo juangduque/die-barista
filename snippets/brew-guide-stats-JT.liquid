@@ -1,0 +1,76 @@
+{% comment %}
+  ============================================================
+  SNIPPET: brew-guide-stats-JT
+  File: snippets/brew-guide-stats-JT.liquid
+
+  Usage:
+    {%- render 'brew-guide-stats-JT',
+      menge: '18',       menge_unit: 'G',
+      mahlgrad: 'Fein',  mahlgrad_unit: '',
+      wasser: '40',      wasser_unit: 'ML',
+      temp: '93',        temp_unit: '°C',
+      dauer: '25',       dauer_unit: 'SEK'
+    -%}
+
+  Variables passed in:
+    menge, menge_unit
+    mahlgrad, mahlgrad_unit
+    wasser, wasser_unit
+    temp, temp_unit
+    dauer, dauer_unit
+  ============================================================
+{% endcomment %}
+
+<div class="brew-stats" role="list" aria-label="Zubereitungsparameter">
+
+  <div class="brew-stat" role="listitem">
+    <span class="brew-stat__label">Menge</span>
+    <div class="brew-stat__value-wrap">
+      <span class="brew-stat__value">{{- menge -}}</span>
+      {%- unless menge_unit == blank -%}
+        <span class="brew-stat__unit">{{- menge_unit -}}</span>
+      {%- endunless -%}
+    </div>
+  </div>
+
+  <div class="brew-stat" role="listitem">
+    <span class="brew-stat__label">Mahlgrad</span>
+    <div class="brew-stat__value-wrap">
+      <span class="brew-stat__value">{{- mahlgrad -}}</span>
+      {%- unless mahlgrad_unit == blank -%}
+        <span class="brew-stat__unit">{{- mahlgrad_unit -}}</span>
+      {%- endunless -%}
+    </div>
+  </div>
+
+  <div class="brew-stat" role="listitem">
+    <span class="brew-stat__label">Wasser</span>
+    <div class="brew-stat__value-wrap">
+      <span class="brew-stat__value">{{- wasser -}}</span>
+      {%- unless wasser_unit == blank -%}
+        <span class="brew-stat__unit">{{- wasser_unit -}}</span>
+      {%- endunless -%}
+    </div>
+  </div>
+
+  <div class="brew-stat" role="listitem">
+    <span class="brew-stat__label">Temperatur</span>
+    <div class="brew-stat__value-wrap">
+      <span class="brew-stat__value">{{- temp -}}</span>
+      {%- unless temp_unit == blank -%}
+        <span class="brew-stat__unit">{{- temp_unit -}}</span>
+      {%- endunless -%}
+    </div>
+  </div>
+
+  <div class="brew-stat" role="listitem">
+    <span class="brew-stat__label">Dauer</span>
+    <div class="brew-stat__value-wrap">
+      <span class="brew-stat__value">{{- dauer -}}</span>
+      {%- unless dauer_unit == blank -%}
+        <span class="brew-stat__unit">{{- dauer_unit -}}</span>
+      {%- endunless -%}
+    </div>
+  </div>
+
+</div>

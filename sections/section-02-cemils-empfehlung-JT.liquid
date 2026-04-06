@@ -1,0 +1,571 @@
+{% comment %}
+  ============================================================
+  DIE BARISTA ROASTERY — SECTION 02: CEMILS EMPFEHLUNG
+  File: sections/section-02-cemils-empfehlung.liquid
+
+  Design: Full-width split — photo (left) + green editorial panel (right)
+  Based on: Figma design + brand guidelines
+  - Social Gothic headline
+  - New Frank body/quote
+  - Green (#759769) right panel — NOT generic beige
+  - Lean schema: only what matters for editorial content
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign media_side   = section.settings.media_side | default: 'left'
+  assign bg_color     = section.settings.bg_color   | default: '#759769'
+  assign text_color   = section.settings.text_color | default: '#EFDFD3'
+  assign label_text   = section.settings.label_text | default: 'Cemils Empfehlung'
+  assign headline     = section.settings.headline   | default: 'Cemils Empfehlung'
+  assign quote        = section.settings.quote
+  assign person_name  = section.settings.person_name  | default: 'Cemil — Gründer & Röstmeister'
+  assign person_title = section.settings.person_title | default: 'Die Barista Roastery, Hammeln'
+  assign image        = section.settings.image
+  assign image_alt    = section.settings.image_alt | default: 'Cemil — Gründer & Röstmeister der Die Barista Roastery'
+-%}
+
+<section
+  class="cemil-section {% if media_side == 'right' %}cemil-section--reversed{% endif %}"
+  id="cemils-empfehlung"
+  data-section-id="{{ section.id }}"
+  style="--cemil-bg: {{ bg_color }}; --cemil-text: {{ text_color }};"
+  aria-label="Cemils Empfehlung"
+>
+
+  <!-- ═══ MEDIA BLOCK (LEFT) ═══ -->
+  <!-- Priority: Shopify-hosted video → external MP4 URL → fallback image -->
+  <div class="cemil-media" id="cemilMedia-{{ section.id }}">
+
+    {%- if section.settings.video != blank -%}
+      {{- section.settings.video | video_tag:
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: false,
+          playsinline: true,
+          preload: "metadata",
+          class: "cemil-media__video",
+          aria-label: image_alt
+      -}}
+
+    {%- elsif section.settings.video_url != blank -%}
+      <video
+        class="cemil-media__video"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="metadata"
+        aria-label="{{ image_alt | escape }}"
+        id="cemilVideo-{{ section.id }}"
+      >
+        <source src="{{ section.settings.video_url }}" type="video/mp4">
+        {%- if image != blank -%}
+          <img
+            src="{{ image | image_url: width: 1200 }}"
+            alt="{{ image_alt | escape }}"
+            width="1200"
+            height="960"
+            class="cemil-media__img"
+          >
+        {%- endif -%}
+      </video>
+
+    {%- elsif image != blank -%}
+      <img
+        src="{{ image | image_url: width: 1200 }}"
+        srcset="
+          {{ image | image_url: width: 600  }} 600w,
+          {{ image | image_url: width: 900  }} 900w,
+          {{ image | image_url: width: 1200 }} 1200w
+        "
+        sizes="(max-width: 768px) 100vw, 55vw"
+        alt="{{ image_alt | escape }}"
+        width="{{ image.width }}"
+        height="{{ image.height }}"
+        loading="lazy"
+        class="cemil-media__img"
+      >
+
+    {%- else -%}
+      <div class="cemil-media__placeholder" aria-hidden="true">
+        <span>Video oder Foto hochladen</span>
+      </div>
+    {%- endif -%}
+
+    <!-- Sound toggle (only visible when video is active) -->
+    {%- if section.settings.video != blank or section.settings.video_url != blank -%}
+      <button
+        class="cemil-sound-toggle"
+        id="cemilSoundToggle-{{ section.id }}"
+        data-section-id="{{ section.id }}"
+        aria-label="Ton einschalten"
+        aria-pressed="false"
+        type="button"
+      >
+        <!-- Muted icon -->
+        <svg class="cemil-sound-icon cemil-sound-icon--off" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <!-- Unmuted icon -->
+        <svg class="cemil-sound-icon cemil-sound-icon--on" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M19.07 4.93a10 10 0 010 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M15.54 8.46a5 5 0 010 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    {%- endif -%}
+
+  </div>
+
+  <!-- ═══ EDITORIAL PANEL (RIGHT) ═══ -->
+  <div class="cemil-panel">
+    <div class="cemil-panel__inner">
+
+      <!-- Label -->
+      {%- unless label_text == blank -%}
+        <p class="cemil-label" aria-label="Abschnittsbezeichnung">
+          {{- label_text -}}
+        </p>
+      {%- endunless -%}
+
+      <!-- Headline -->
+      {%- unless headline == blank -%}
+        <h2 class="cemil-headline">
+          {{- headline -}}
+        </h2>
+      {%- endunless -%}
+
+      <!-- Quote -->
+      {%- unless quote == blank -%}
+        <blockquote class="cemil-quote">
+          <p>{{- quote -}}</p>
+        </blockquote>
+      {%- endunless -%}
+
+      <!-- Signature -->
+      <footer class="cemil-signature" aria-label="Person">
+        {%- unless person_name == blank -%}
+          <p class="cemil-signature__name">{{- person_name -}}</p>
+        {%- endunless -%}
+        {%- unless person_title == blank -%}
+          <p class="cemil-signature__title">{{- person_title -}}</p>
+        {%- endunless -%}
+      </footer>
+
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SCOPED CSS
+     ═══════════════════════════════════════════════ -->
+<style>
+/* ── DESIGN TOKENS ── */
+#cemils-empfehlung {
+  --db-red:    #E23528;
+  --db-black:  #00090B;
+  --db-crema:  #EFDFD3;
+  --db-green:  #759769;
+  --db-mud:    #7B5D4D;
+  --db-radius: 2px;
+  --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
+  --db-font-body:    'New Frank', 'DM Sans', sans-serif;
+}
+
+/* ── SECTION LAYOUT ── */
+.cemil-section {
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  min-height: 420px;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Reversed: panel left, photo right */
+.cemil-section--reversed {
+  grid-template-columns: 45fr 55fr;
+}
+
+.cemil-section--reversed .cemil-media {
+  order: 2;
+}
+
+.cemil-section--reversed .cemil-panel {
+  order: 1;
+}
+
+/* ── MEDIA BLOCK ── */
+.cemil-media {
+  position: relative;
+  overflow: hidden;
+  background: #2a2a2a;
+  min-height: 360px;
+}
+
+.cemil-media__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.cemil-media:hover .cemil-media__img {
+  transform: scale(1.03);
+}
+
+.cemil-media__placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  background: var(--db-mud);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--db-crema);
+  font-family: var(--db-font-body);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.6;
+}
+
+/* ── EDITORIAL PANEL ── */
+.cemil-panel {
+  background: var(--cemil-bg, #759769);
+  color: var(--cemil-text, #EFDFD3);
+  display: flex;
+  align-items: center;
+}
+
+.cemil-panel__inner {
+  padding: 4rem 3.5rem;
+  max-width: 520px;
+  width: 100%;
+}
+
+/* ── LABEL ── */
+.cemil-label {
+  font-family: var(--db-font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--db-red);
+  margin-bottom: 0.75rem;
+  line-height: 1;
+}
+
+/* ── HEADLINE ── */
+.cemil-headline {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: var(--cemil-text, #EFDFD3);
+  margin-bottom: 1.75rem;
+}
+
+/* ── QUOTE ── */
+.cemil-quote {
+  margin: 0 0 2rem;
+  padding: 0;
+  border: none;
+}
+
+.cemil-quote p {
+  font-family: var(--db-font-body);
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  line-height: 1.72;
+  color: var(--cemil-text, #EFDFD3);
+  opacity: 0.92;
+  font-style: normal;
+}
+
+/* Opening quote mark — brand style */
+.cemil-quote p::before {
+  content: '\201E'; /* „ German opening quote */
+  font-family: var(--db-font-display);
+  font-size: 1.4em;
+  line-height: 0;
+  vertical-align: -0.3em;
+  color: var(--db-red);
+  margin-right: 2px;
+}
+
+/* ── SIGNATURE ── */
+.cemil-signature {
+  border-top: 1px solid rgba(239, 223, 211, 0.2);
+  padding-top: 1.25rem;
+  margin-top: 0;
+}
+
+.cemil-signature__name {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cemil-text, #EFDFD3);
+  line-height: 1.3;
+  margin-bottom: 3px;
+}
+
+.cemil-signature__title {
+  font-family: var(--db-font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cemil-text, #EFDFD3);
+  opacity: 0.72;
+  line-height: 1.4;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .cemil-section,
+  .cemil-section--reversed {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  /* Always: photo top, text bottom on mobile */
+  .cemil-media {
+    order: 1 !important;
+    min-height: 56vw;
+    max-height: 400px;
+  }
+
+  .cemil-panel {
+    order: 2 !important;
+  }
+
+  .cemil-panel__inner {
+    padding: 2.5rem 1.5rem;
+    max-width: 100%;
+  }
+
+  .cemil-headline {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    margin-bottom: 1.25rem;
+  }
+
+  .cemil-quote p {
+    font-size: 0.97rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cemil-media {
+    min-height: 65vw;
+  }
+
+  .cemil-panel__inner {
+    padding: 2rem 1.25rem;
+  }
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Cemils Empfehlung",
+  "tag": "section",
+  "class": "barista-section-cemil",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video (Priorität über Foto)"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video (Shopify-gehostet)",
+      "info": "Hochformat (9:16) empfohlen für mobile. Video spielt automatisch, stumm und in Schleife ab."
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video-URL (externes MP4)",
+      "info": "Alternative: direkter Link zu einer .mp4-Datei (z.B. von deinem CDN). Wird ignoriert wenn ein Shopify-Video hochgeladen ist."
+    },
+    {
+      "type": "header",
+      "content": "Fallback-Bild (wenn kein Video)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Cemil Foto",
+      "info": "Querformat empfohlen. Mindestbreite: 1200px. Wird nur angezeigt wenn kein Video gesetzt ist."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Bild / Video Alt-Text",
+      "default": "Cemil — Gründer & Röstmeister der Die Barista Roastery"
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Kleines Label (oben)",
+      "default": "Cemils Empfehlung"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Überschrift",
+      "default": "Cemils Empfehlung"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Zitat / Empfehlung",
+      "default": "Dieser Kaffee ist wie ein Kurzurlaub in Neapel. Dunkel geröstet, kräftig im Körper, mit einem Finish das an Zartbitterschokolade erinnert. Am liebsten trinke ich ihn als doppelten Espresso — puro, ohne alles."
+    },
+    {
+      "type": "text",
+      "id": "person_name",
+      "label": "Name",
+      "default": "Cemil — Gründer & Röstmeister"
+    },
+    {
+      "type": "text",
+      "id": "person_title",
+      "label": "Titel / Ort",
+      "default": "Die Barista Roastery, Hammeln"
+    },
+    {
+      "type": "header",
+      "content": "Design"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Panel-Hintergrundfarbe",
+      "default": "#759769",
+      "info": "Grün für Wechselnde Sorten, Rot (#E23528) für Espresso-Sorten"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Textfarbe",
+      "default": "#EFDFD3"
+    },
+    {
+      "type": "select",
+      "id": "media_side",
+      "label": "Foto-Position",
+      "options": [
+        { "value": "left",  "label": "Links (Standard)" },
+        { "value": "right", "label": "Rechts" }
+      ],
+      "default": "left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cemils Empfehlung",
+      "settings": {
+        "label_text": "Cemils Empfehlung",
+        "headline": "Cemils Empfehlung",
+        "quote": "Dieser Kaffee ist wie ein Kurzurlaub in Neapel. Dunkel geröstet, kräftig im Körper, mit einem Finish das an Zartbitterschokolade erinnert. Am liebsten trinke ich ihn als doppelten Espresso — puro, ohne alles.",
+        "person_name": "Cemil — Gründer & Röstmeister",
+        "person_title": "Die Barista Roastery, Hammeln",
+        "bg_color": "#759769",
+        "text_color": "#EFDFD3",
+        "media_side": "left"
+      }
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+/* ── VIDEO MEDIA (appended) ── */
+
+/* Video fills the media block identically to an image */
+.cemil-media__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.6s ease;
+  /* Remove default browser controls chrome */
+  background: #000;
+}
+
+.cemil-media:hover .cemil-media__video {
+  transform: scale(1.03);
+}
+
+/* ── SOUND TOGGLE ── */
+.cemil-sound-toggle {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 9, 11, 0.72);
+  border: 1.5px solid rgba(239, 223, 211, 0.3);
+  border-radius: 2px;
+  color: #EFDFD3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.cemil-sound-toggle:hover {
+  background: rgba(226, 53, 40, 0.85);
+  border-color: rgba(226, 53, 40, 0.6);
+}
+
+/* Icon visibility states — toggled by JS */
+.cemil-sound-icon--on  { display: none; }
+.cemil-sound-icon--off { display: block; }
+
+.cemil-sound-toggle[aria-pressed="true"] .cemil-sound-icon--off { display: none; }
+.cemil-sound-toggle[aria-pressed="true"] .cemil-sound-icon--on  { display: block; }
+
+/* Ensure .cemil-media is positioned for the absolute toggle */
+.cemil-media {
+  position: relative;
+}
+</style>
+
+<script>
+(function() {
+  var toggleBtn = document.getElementById('cemilSoundToggle-{{ section.id }}');
+  if (!toggleBtn) return;
+
+  /* Find the video element inside the same media block */
+  var mediaBlock = document.getElementById('cemilMedia-{{ section.id }}');
+  var video = mediaBlock ? mediaBlock.querySelector('video') : null;
+  if (!video) return;
+
+  toggleBtn.addEventListener('click', function () {
+    var muted = video.muted;
+    video.muted = !muted;
+    toggleBtn.setAttribute('aria-pressed', muted ? 'true' : 'false');
+    toggleBtn.setAttribute('aria-label', muted ? 'Ton ausschalten' : 'Ton einschalten');
+  });
+})();
+</script>

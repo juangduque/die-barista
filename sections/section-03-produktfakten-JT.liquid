@@ -1,0 +1,448 @@
+{% comment %}
+  ============================================================
+  DIE BARISTA ROASTERY — SECTION 03: PRODUKTFAKTEN
+  File: sections/section-03-produktfakten.liquid
+
+  Design: Contained grid on warm surface background
+  - STECKBRIEF label + DIE FAKTEN headline (left-aligned)
+  - 3×2 fact grid inside surface-container panel
+  - Social Gothic for values, New Frank for subtexts
+  - Tonal stacking — NO borders, NO shadows
+  - Metafield-first, Theme Customizer as override
+
+  Metafields (namespace: coffee_attributes):
+    .herkunft_value      → e.g. "Brasilien · Indien"
+    .herkunft_sub        → e.g. "" (optional)
+    .varietaet_value     → e.g. "80% Arabica · 20% Robusta"
+    .varietaet_sub       → optional
+    .anbauhoe_value     → e.g. "1.200 – 1.600 M"
+    .anbauhoe_sub       → optional
+    .verarbeitung_value  → e.g. "Washed"
+    .verarbeitung_sub    → e.g. "Traditionell gewaschen und sonnengetrocknet"
+    .roastprofil_value   → e.g. "Dunkel"
+    .roastprofil_sub     → e.g. "Langzeit-Trommelröstung für minimale Säure"
+    .geschmack_value     → e.g. "Erdig · Schokoladig"
+    .geschmack_sub       → e.g. "Temperamentvoll mit langem, warmem Finish"
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  # Pull from metafields first, fall back to section settings
+
+  assign mf = product.metafields.coffee_attributes
+
+  assign herkunft_val     = mf.herkunft_value      | default: section.settings.herkunft_value
+  assign herkunft_sub     = mf.herkunft_sub         | default: section.settings.herkunft_sub
+  assign varietaet_val    = mf.varietaet_value      | default: section.settings.varietaet_value
+  assign varietaet_sub    = mf.varietaet_sub        | default: section.settings.varietaet_sub
+  assign anbauhoe_val    = mf.anbauhoe_value      | default: section.settings.anbauhoe_value
+  assign anbauhoe_sub    = mf.anbauhoe_sub        | default: section.settings.anbauhoe_sub
+  assign verarbeitung_val = mf.verarbeitung_value   | default: section.settings.verarbeitung_value
+  assign verarbeitung_sub = mf.verarbeitung_sub     | default: section.settings.verarbeitung_sub
+  assign roastprofil_val  = mf.roastprofil_value    | default: section.settings.roastprofil_value
+  assign roastprofil_sub  = mf.roastprofil_sub      | default: section.settings.roastprofil_sub
+  assign geschmack_val    = mf.geschmack_value      | default: section.settings.geschmack_value
+  assign geschmack_sub    = mf.geschmack_sub        | default: section.settings.geschmack_sub
+
+  # Custom label/headline override
+  assign section_label    = section.settings.section_label | default: 'Steckbrief'
+  assign section_headline = section.settings.section_headline | default: 'Die Fakten'
+-%}
+
+<section
+  class="fakten-section"
+  id="produktfakten"
+  data-section-id="{{ section.id }}"
+  aria-label="Produktfakten"
+>
+  <div class="fakten-inner">
+
+    <!-- ── HEADER ── -->
+    <header class="fakten-header">
+      {%- unless section_label == blank -%}
+        <p class="fakten-label">{{- section_label -}}</p>
+      {%- endunless -%}
+      <h2 class="fakten-headline">{{- section_headline -}}</h2>
+    </header>
+
+    <!-- ── FACT GRID ── -->
+    <div class="fakten-grid" role="list" aria-label="Produkteigenschaften">
+
+      <!-- 1. Herkunft -->
+      {%- unless herkunft_val == blank -%}
+      <div class="fakten-card" role="listitem">
+        <span class="fakten-card__label">Herkunft</span>
+        <strong class="fakten-card__value">{{- herkunft_val -}}</strong>
+        {%- unless herkunft_sub == blank -%}
+          <p class="fakten-card__sub">{{- herkunft_sub -}}</p>
+        {%- endunless -%}
+      </div>
+      {%- endunless -%}
+
+      <!-- 2. Varietät -->
+      {%- unless varietaet_val == blank -%}
+      <div class="fakten-card" role="listitem">
+        <span class="fakten-card__label">Varietät</span>
+        <strong class="fakten-card__value">{{- varietaet_val -}}</strong>
+        {%- unless varietaet_sub == blank -%}
+          <p class="fakten-card__sub">{{- varietaet_sub -}}</p>
+        {%- endunless -%}
+      </div>
+      {%- endunless -%}
+
+      <!-- 3. Anbauhöhe -->
+      {%- unless anbauhoe_val == blank -%}
+      <div class="fakten-card" role="listitem">
+        <span class="fakten-card__label">Anbauhöhe</span>
+        <strong class="fakten-card__value">{{- anbauhoe_val -}}</strong>
+        {%- unless anbauhoe_sub == blank -%}
+          <p class="fakten-card__sub">{{- anbauhoe_sub -}}</p>
+        {%- endunless -%}
+      </div>
+      {%- endunless -%}
+
+      <!-- 4. Verarbeitung -->
+      {%- unless verarbeitung_val == blank -%}
+      <div class="fakten-card" role="listitem">
+        <span class="fakten-card__label">Verarbeitung</span>
+        <strong class="fakten-card__value">{{- verarbeitung_val -}}</strong>
+        {%- unless verarbeitung_sub == blank -%}
+          <p class="fakten-card__sub">{{- verarbeitung_sub -}}</p>
+        {%- endunless -%}
+      </div>
+      {%- endunless -%}
+
+      <!-- 5. Röstprofil -->
+      {%- unless roastprofil_val == blank -%}
+      <div class="fakten-card" role="listitem">
+        <span class="fakten-card__label">Röstprofil</span>
+        <strong class="fakten-card__value">{{- roastprofil_val -}}</strong>
+        {%- unless roastprofil_sub == blank -%}
+          <p class="fakten-card__sub">{{- roastprofil_sub -}}</p>
+        {%- endunless -%}
+      </div>
+      {%- endunless -%}
+
+      <!-- 6. Geschmack -->
+      {%- unless geschmack_val == blank -%}
+      <div class="fakten-card" role="listitem">
+        <span class="fakten-card__label">Geschmack</span>
+        <strong class="fakten-card__value">{{- geschmack_val -}}</strong>
+        {%- unless geschmack_sub == blank -%}
+          <p class="fakten-card__sub">{{- geschmack_sub -}}</p>
+        {%- endunless -%}
+      </div>
+      {%- endunless -%}
+
+    </div><!-- /fakten-grid -->
+
+  </div><!-- /fakten-inner -->
+</section>
+
+
+<style>
+/* ── DESIGN TOKENS ── */
+#produktfakten {
+  --db-red:    #E23528;
+  --db-black:  #00090B;
+  --db-crema:  #EFDFD3;
+  --db-mud:    #7B5D4D;
+  --db-surface:      #fff8f5;
+  --db-surface-low:  #fff1e7;
+  --db-surface-mid:  #fbebdf;
+  --db-surface-high: #f5e5d9;
+  --db-outline:      #906f6a;
+  --db-radius: 2px;
+  --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
+  --db-font-body:    'New Frank', 'DM Sans', sans-serif;
+}
+
+/* ── SECTION WRAPPER ── */
+.fakten-section {
+  background: var(--db-surface);
+  padding: 5rem 0 4rem;
+}
+
+.fakten-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+/* ── HEADER ── */
+.fakten-header {
+  margin-bottom: 2.5rem;
+}
+
+.fakten-label {
+  font-family: var(--db-font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--db-red);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.fakten-headline {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: var(--db-black);
+}
+
+/* ── FACT GRID ── */
+/* 
+  One large container panel — tonal stacking, NOT individual bordered cards.
+  The 3px gap between cards creates visual separation via the surface color bleeding through.
+  This matches the Figma exactly: panel sits on --db-surface, gap reveals the background.
+*/
+.fakten-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;       /* gap IS the "border" — reveals surface background */
+  background: var(--db-surface); /* gap color = section background, not a card color */
+}
+
+/* ── FACT CARD ── */
+.fakten-card {
+  background: var(--db-surface-low);
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  /* NO border, NO shadow — tonal stacking only */
+}
+
+/* ── CARD LABEL ── */
+.fakten-card__label {
+  font-family: var(--db-font-body);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--db-outline);
+  line-height: 1;
+}
+
+/* ── CARD VALUE ── */
+/* Social Gothic — same treatment as product title */
+.fakten-card__value {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--db-black);
+  display: block;
+}
+
+/* ── CARD SUBTEXT ── */
+/* New Frank — descriptive, secondary information */
+.fakten-card__sub {
+  font-family: var(--db-font-body);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--db-mud);
+  max-height: 2.8em;         /* max 2 lines as per design spec */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin: 0;
+}
+
+/* ── RESPONSIVE ── */
+
+/* Tablet: 2 columns */
+@media (max-width: 900px) {
+  .fakten-inner {
+    padding: 0 2rem;
+  }
+
+  .fakten-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: 1 column */
+@media (max-width: 540px) {
+  .fakten-section {
+    padding: 3.5rem 0 3rem;
+  }
+
+  .fakten-inner {
+    padding: 0 1.25rem;
+  }
+
+  .fakten-header {
+    margin-bottom: 1.75rem;
+  }
+
+  .fakten-grid {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .fakten-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .fakten-card__value {
+    font-size: 1.05rem;
+  }
+
+  .fakten-card__sub {
+    -webkit-line-clamp: 3; /* allow 3 lines on narrow mobile */
+    max-height: 4.2em;
+  }
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Produktfakten",
+  "tag": "section",
+  "class": "barista-section-fakten",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Abschnitts-Header"
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Kleines Label",
+      "default": "Steckbrief",
+      "info": "Wird rot dargestellt. Leer lassen zum Ausblenden."
+    },
+    {
+      "type": "text",
+      "id": "section_headline",
+      "label": "Überschrift",
+      "default": "Die Fakten"
+    },
+    {
+      "type": "paragraph",
+      "content": "⚡ Felder werden automatisch aus Produkt-Metafields geladen (coffee_attributes.*). Die folgenden Werte sind nur Fallbacks wenn kein Metafield gesetzt ist."
+    },
+    {
+      "type": "header",
+      "content": "1 · Herkunft"
+    },
+    {
+      "type": "text",
+      "id": "herkunft_value",
+      "label": "Wert",
+      "placeholder": "Brasilien · Indien"
+    },
+    {
+      "type": "text",
+      "id": "herkunft_sub",
+      "label": "Beschreibung (optional)",
+    },
+    {
+      "type": "header",
+      "content": "2 · Varietät"
+    },
+    {
+      "type": "text",
+      "id": "varietaet_value",
+      "label": "Wert",
+      "placeholder": "80% Arabica · 20% Robusta"
+    },
+    {
+      "type": "text",
+      "id": "varietaet_sub",
+      "label": "Beschreibung (optional)",
+    },
+    {
+      "type": "header",
+      "content": "3 · Anbauhöhe"
+    },
+    {
+      "type": "text",
+      "id": "anbauhoe_value",
+      "label": "Wert",
+      "placeholder": "1.200 – 1.600 M"
+    },
+    {
+      "type": "text",
+      "id": "anbauhoe_sub",
+      "label": "Beschreibung (optional)",
+    },
+    {
+      "type": "header",
+      "content": "4 · Verarbeitung"
+    },
+    {
+      "type": "text",
+      "id": "verarbeitung_value",
+      "label": "Wert",
+      "placeholder": "Washed"
+    },
+    {
+      "type": "text",
+      "id": "verarbeitung_sub",
+      "label": "Beschreibung (optional)",
+      "placeholder": "Traditionell gewaschen und sonnengetrocknet"
+    },
+    {
+      "type": "header",
+      "content": "5 · Röstprofil"
+    },
+    {
+      "type": "text",
+      "id": "roastprofil_value",
+      "label": "Wert",
+      "placeholder": "Dunkel"
+    },
+    {
+      "type": "text",
+      "id": "roastprofil_sub",
+      "label": "Beschreibung (optional)",
+      "placeholder": "Langzeit-Trommelröstung für minimale Säure"
+    },
+    {
+      "type": "header",
+      "content": "6 · Geschmack"
+    },
+    {
+      "type": "text",
+      "id": "geschmack_value",
+      "label": "Wert",
+      "placeholder": "Erdig · Schokoladig"
+    },
+    {
+      "type": "text",
+      "id": "geschmack_sub",
+      "label": "Beschreibung (optional)",
+      "placeholder": "Temperamentvoll mit langem, warmem Finish"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Produktfakten",
+      "settings": {
+        "section_label": "Steckbrief",
+        "section_headline": "Die Fakten",
+        "herkunft_value": "Brasilien · Indien",
+        "varietaet_value": "80% Arabica · 20% Robusta",
+        "anbauhoe_value": "1.200 – 1.600 M",
+        "verarbeitung_value": "Washed",
+        "verarbeitung_sub": "Traditionell gewaschen und sonnengetrocknet",
+        "roastprofil_value": "Dunkel",
+        "roastprofil_sub": "Langzeit-Trommelröstung für minimale Säure",
+        "geschmack_value": "Erdig · Schokoladig",
+        "geschmack_sub": "Temperamentvoll mit langem, warmem Finish"
+      }
+    }
+  ]
+}
+{% endschema %}

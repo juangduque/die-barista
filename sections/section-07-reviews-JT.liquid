@@ -1,0 +1,48 @@
+
+
+<script>
+(function() {
+  'use strict';
+
+  /* Inject stars into each .reviews-card__stars and .reviews-aggregate__stars */
+  var sectionEl = document.getElementById('reviews-{{ section.id }}');
+  if (!sectionEl) return;
+
+  /* Star SVG strings */
+  var starFull  = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1l1.854 3.756 4.146.603-3 2.924.708 4.127L8 10.25l-3.708 1.16.708-4.127-3-2.924 4.146-.603L8 1z" fill="#E23528"/></svg>';
+  var starHalf  = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="hg" x1="0" x2="100%" y1="0" y2="0"><stop offset="50%" stop-color="#E23528"/><stop offset="50%" stop-color="transparent"/></linearGradient></defs><path d="M8 1l1.854 3.756 4.146.603-3 2.924.708 4.127L8 10.25l-3.708 1.16.708-4.127-3-2.924 4.146-.603L8 1z" fill="url(#hg)" stroke="#E23528" stroke-width="1"/></svg>';
+  var starEmpty = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1l1.854 3.756 4.146.603-3 2.924.708 4.127L8 10.25l-3.708 1.16.708-4.127-3-2.924 4.146-.603L8 1z" stroke="#E23528" stroke-width="1" fill="none"/></svg>';
+
+  function renderStars(container, ratingOutOfTen) {
+    if (!container) return;
+    var html = '';
+    for (var i = 1; i <= 5; i++) {
+      var threshold = i * 2; /* full star needs rating >= 2i */
+      if (ratingOutOfTen >= threshold) {
+        html += starFull;
+      } else if (ratingOutOfTen >= threshold - 1) {
+        html += starHalf;
+      } else {
+        html += starEmpty;
+      }
+    }
+    container.innerHTML = html;
+  }
+
+  /* Render stars for each review card */
+  var cards = sectionEl.querySelectorAll('.reviews-card');
+  cards.forEach(function(card, index) {
+    var starsEl = card.querySelector('.reviews-card__stars');
+    /* Rating data passed via data attribute on the card */
+    var rating  = parseInt(card.dataset.rating || '10', 10);
+    renderStars(starsEl, rating);
+  });
+
+  /* Aggregate stars (manual mode only — Judge.me renders its own) */
+  var aggStars = sectionEl.querySelector('.reviews-aggregate__stars');
+  if (aggStars) {
+    renderStars(aggStars, 9); /* default 4.5 stars for manual mode */
+  }
+
+})();
+</script>

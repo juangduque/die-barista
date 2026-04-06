@@ -1,0 +1,302 @@
+{% comment %}
+  Section: barista-newsletter.liquid
+  Pfad: sections/barista-newsletter.liquid
+  Nutzt Shopify's nativen customer newsletter oder Klaviyo.
+{% endcomment %}
+
+<style>
+.barista-newsletter {
+  background: #F5F0E8;
+  padding: 80px 0;
+  border-bottom: 3px solid #0F0F0D;
+}
+.barista-newsletter__container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+.barista-newsletter__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.barista-newsletter__headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 5vw, 62px);
+  line-height: 0.95;
+  margin-bottom: 20px;
+  color: #1A1915;
+}
+.barista-newsletter__text {
+  color: #888580;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+/* Form */
+.barista-newsletter__form { display: flex; gap: 0; }
+.barista-newsletter__input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1px solid rgba(0,0,0,0.18);
+  background: white;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+.barista-newsletter__input:focus { border-color: #0F0F0D; }
+.barista-newsletter__input::placeholder { color: #C8C4BC; }
+.barista-newsletter__submit {
+  background: #0F0F0D;
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+  border-radius: 0;
+}
+.barista-newsletter__submit:hover { background: #C8231A; }
+
+.barista-newsletter__success {
+  display: none;
+  background: #4A5E3A;
+  color: white;
+  padding: 14px 20px;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+}
+.barista-newsletter__success.visible { display: block; }
+.barista-newsletter__form.hidden { display: none; }
+
+.barista-newsletter__privacy {
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 11px;
+  color: #C8C4BC;
+  margin-top: 10px;
+}
+
+/* Quote card */
+.barista-newsletter__quote {
+  background: #EDE8DC;
+  padding: 28px;
+  border-left: 3px solid #C8231A;
+}
+.barista-newsletter__quote-text {
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #1A1915;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+}
+.barista-newsletter__quote-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.barista-newsletter__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.barista-newsletter__avatar-placeholder {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6B4F30, #3D2810);
+  flex-shrink: 0;
+}
+.barista-newsletter__author-name {
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: #1A1915;
+}
+.barista-newsletter__author-role {
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-size: 11px;
+  color: #888580;
+}
+
+@media (max-width: 1024px) {
+  .barista-newsletter__inner { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 640px) {
+  .barista-newsletter__container { padding: 0 20px; }
+  .barista-newsletter__form { flex-direction: column; }
+  .barista-newsletter__submit { width: 100%; padding: 14px; }
+}
+</style>
+
+<section class="barista-newsletter">
+  <div class="barista-newsletter__container">
+    <div class="barista-newsletter__inner">
+
+      <!-- Form side -->
+      <div class="db-reveal">
+        {%- if section.settings.label != blank -%}
+          <div class="db-section-label">{{ section.settings.label }}</div>
+        {%- endif -%}
+        <h2 class="barista-newsletter__headline">{{ section.settings.headline | newline_to_br }}</h2>
+        {%- if section.settings.text != blank -%}
+          <p class="barista-newsletter__text">{{ section.settings.text }}</p>
+        {%- endif -%}
+
+        {%- comment -%} Shopify Customer Newsletter Form {%- endcomment -%}
+        {% form 'customer', id: 'barista-newsletter-form', class: 'barista-newsletter__form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input
+            type="email"
+            name="contact[email]"
+            class="barista-newsletter__input"
+            id="barista-newsletter-email"
+            placeholder="{{ section.settings.placeholder | default: 'Deine E-Mail-Adresse' }}"
+            required
+            autocomplete="email">
+          <button type="submit" class="barista-newsletter__submit">
+            {{ section.settings.btn_label | default: 'Abonnieren' }}
+          </button>
+        {% endform %}
+
+        {%- if form.posted_successfully? -%}
+          <div class="barista-newsletter__success visible">
+            ✓ {{ section.settings.success_msg | default: 'Erfolgreich abonniert! Danke.' }}
+          </div>
+        {%- endif -%}
+
+        <p class="barista-newsletter__privacy">{{ section.settings.privacy_note }}</p>
+      </div>
+
+      <!-- Quote side -->
+      <div class="barista-newsletter__quote db-reveal db-reveal-d2">
+        {%- if section.settings.quote != blank -%}
+          <p class="barista-newsletter__quote-text">„{{ section.settings.quote }}"</p>
+        {%- endif -%}
+        <div class="barista-newsletter__quote-author">
+          {%- if section.settings.author_image != blank -%}
+            {{
+              section.settings.author_image
+              | image_url: width: 88
+              | image_tag:
+                loading: 'lazy',
+                alt: section.settings.author_name,
+                class: 'barista-newsletter__avatar'
+            }}
+          {%- else -%}
+            <div class="barista-newsletter__avatar-placeholder"></div>
+          {%- endif -%}
+          <div>
+            <div class="barista-newsletter__author-name">{{ section.settings.author_name }}</div>
+            <div class="barista-newsletter__author-role">{{ section.settings.author_role }}</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Barista Newsletter",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Texte"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow Label",
+      "default": "Kaffee-Wissen"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Überschrift",
+      "default": "KAFFEE-WISSEN.\nDIREKT VON\nGEMIL."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Beschreibungstext",
+      "default": "Unser wöchentlicher Newsletter bringt dir das Beste aus der Rösterei: Tipps, neue Röstungen, Hintergrundwissen und Exklusiv-Angebote."
+    },
+    {
+      "type": "header",
+      "content": "Formular"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "E-Mail Placeholder",
+      "default": "Deine E-Mail-Adresse"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Text",
+      "default": "Abonnieren"
+    },
+    {
+      "type": "text",
+      "id": "success_msg",
+      "label": "Erfolgsmeldung",
+      "default": "Erfolgreich abonniert! Danke."
+    },
+    {
+      "type": "text",
+      "id": "privacy_note",
+      "label": "Datenschutzhinweis",
+      "default": "Kein Spam. Jederzeit abmeldbar."
+    },
+    {
+      "type": "header",
+      "content": "Zitat"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Zitat",
+      "default": "Guter Kaffee braucht keine Erklärung – er spricht durch seinen Geschmack. Aber es hilft zu wissen, woher die Bohne kommt und was sie erlebt hat."
+    },
+    {
+      "type": "image_picker",
+      "id": "author_image",
+      "label": "Autoren-Foto"
+    },
+    {
+      "type": "text",
+      "id": "author_name",
+      "label": "Autorenname",
+      "default": "Gemil Araci"
+    },
+    {
+      "type": "text",
+      "id": "author_role",
+      "label": "Autoren-Rolle",
+      "default": "Gründer & Röstmeister, Die Barista"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barista Newsletter"
+    }
+  ]
+}
+{% endschema %}

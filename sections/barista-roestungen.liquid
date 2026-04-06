@@ -1,0 +1,360 @@
+{% comment %}
+  Section: barista-roestungen.liquid
+  Pfad: sections/barista-roestungen.liquid
+  Zieht echte Shopify-Produkte aus einer konfigurierbaren Collection.
+{% endcomment %}
+
+<style>
+.barista-roestungen {
+  padding: 80px 0 60px;
+  background: #F5F0E8;
+}
+.barista-roestungen__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.barista-roestungen__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+}
+
+/* ── Product Grid ── */
+.barista-roestungen__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ── Product Card ── */
+.barista-product-card {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  text-decoration: none;
+  display: block;
+}
+.barista-product-card:hover { transform: translateY(-4px); }
+.barista-product-card:hover .barista-product-card__inner { border-color: #1A1915; }
+
+.barista-product-card__inner {
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+  padding: 28px 24px 20px;
+  height: 100%;
+}
+
+/* Color variants via metafield or tag */
+.barista-product-card--red .barista-product-card__inner  { background: #C8231A; }
+.barista-product-card--white .barista-product-card__inner { background: #EDE8DC; }
+.barista-product-card--olive .barista-product-card__inner { background: #4A5E3A; }
+
+.barista-product-card__roast-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.barista-product-card--red .barista-product-card__roast-label   { color: rgba(255,255,255,0.6); }
+.barista-product-card--white .barista-product-card__roast-label { color: #888580; }
+.barista-product-card--olive .barista-product-card__roast-label { color: rgba(255,255,255,0.6); }
+
+.barista-product-card__img-wrap {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.barista-product-card__img-wrap img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+.barista-product-card:hover .barista-product-card__img-wrap img { transform: scale(1.05); }
+
+.barista-product-card__name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  text-decoration: none;
+}
+.barista-product-card--red .barista-product-card__name   { color: white; }
+.barista-product-card--white .barista-product-card__name { color: #1A1915; }
+.barista-product-card--olive .barista-product-card__name { color: white; }
+
+.barista-product-card__detail {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+}
+.barista-product-card--red .barista-product-card__detail   { color: rgba(255,255,255,0.5); }
+.barista-product-card--white .barista-product-card__detail { color: #888580; }
+.barista-product-card--olive .barista-product-card__detail { color: rgba(255,255,255,0.5); }
+
+.barista-product-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.barista-product-card__price {
+  font-family: var(--db-font-body, 'Source Sans 3', sans-serif);
+  font-weight: 700;
+  font-size: 17px;
+}
+.barista-product-card--red .barista-product-card__price   { color: white; }
+.barista-product-card--white .barista-product-card__price { color: #1A1915; }
+.barista-product-card--olive .barista-product-card__price { color: white; }
+
+.barista-product-card__add-btn {
+  width: 34px;
+  height: 34px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1;
+  transition: background 0.2s, transform 0.1s;
+  flex-shrink: 0;
+}
+.barista-product-card--white .barista-product-card__add-btn { background: #1A1915; }
+.barista-product-card--red .barista-product-card__add-btn   { background: rgba(0,0,0,0.35); }
+.barista-product-card--olive .barista-product-card__add-btn { background: rgba(0,0,0,0.35); }
+.barista-product-card__add-btn:hover { background: #A01A13 !important; }
+.barista-product-card__add-btn:active { transform: scale(0.9); }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .barista-roestungen__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .barista-roestungen__grid { grid-template-columns: 1fr; }
+  .barista-roestungen__container { padding: 0 20px; }
+  .barista-roestungen__header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .barista-roestungen { padding: 60px 0 40px; }
+}
+</style>
+
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign product_limit = section.settings.product_limit | default: 6
+  assign color_cycle = 'red,white,olive,red,white,olive' | split: ','
+-%}
+
+<section class="barista-roestungen" id="roestungen">
+  <div class="barista-roestungen__container">
+
+    <div class="barista-roestungen__header db-reveal">
+      <div>
+        {%- if section.settings.label != blank -%}
+          <div class="db-section-label">{{ section.settings.label }}</div>
+        {%- endif -%}
+        <h2 class="db-section-title">{{ section.settings.title }}</h2>
+      </div>
+      {%- if section.settings.all_link_label != blank and section.settings.all_link_url != blank -%}
+        <a href="{{ section.settings.all_link_url }}" class="db-section-link">{{ section.settings.all_link_label }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="barista-roestungen__grid">
+      {%- if collection != blank -%}
+
+        {%- for product in collection.products limit: product_limit -%}
+          {%- assign color_index = forloop.index0 | modulo: 3 -%}
+          {%- assign card_color = color_cycle[color_index] -%}
+
+          {%- comment -%}
+            Override Farbe via Product Tag: "card-red", "card-white", "card-olive"
+          {%- endcomment -%}
+          {%- for tag in product.tags -%}
+            {%- if tag == 'card-red' -%}{%- assign card_color = 'red' -%}{%- endif -%}
+            {%- if tag == 'card-white' -%}{%- assign card_color = 'white' -%}{%- endif -%}
+            {%- if tag == 'card-olive' -%}{%- assign card_color = 'olive' -%}{%- endif -%}
+          {%- endfor -%}
+
+          <div class="barista-product-card barista-product-card--{{ card_color }} db-reveal db-reveal-d{{ forloop.index | modulo: 3 | plus: 1 }}">
+            <div class="barista-product-card__inner">
+
+              {%- comment -%} Röst-Label via Product Metafield oder Tag {%- endcomment -%}
+              <div class="barista-product-card__roast-label">
+                {%- if product.metafields.custom.roast_label != blank -%}
+                  {{ product.metafields.custom.roast_label }}
+                {%- else -%}
+                  {%- for tag in product.tags -%}
+                    {%- if tag contains 'roast:' -%}{{ tag | remove: 'roast:' | strip }}{%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+
+              <a href="{{ product.url }}" class="barista-product-card__img-wrap">
+                {%- if product.featured_image != blank -%}
+                  {{
+                    product.featured_image
+                    | image_url: width: 400
+                    | image_tag:
+                      loading: 'lazy',
+                      alt: product.title,
+                      width: product.featured_image.width,
+                      height: product.featured_image.height
+                  }}
+                {%- else -%}
+                  <div style="width:80px;height:130px;background:rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,255,255,0.5);text-align:center;padding:8px;font-weight:700;letter-spacing:1px;">{{ product.title | upcase | truncate: 20 }}</div>
+                {%- endif -%}
+              </a>
+
+              <div class="barista-product-card__name">{{ product.title | upcase }}</div>
+
+              <div class="barista-product-card__detail">
+                {%- if product.metafields.custom.roast_detail != blank -%}
+                  {{ product.metafields.custom.roast_detail }}
+                {%- else -%}
+                  {{ product.type }}
+                {%- endif -%}
+              </div>
+
+              <div class="barista-product-card__footer">
+                <span class="barista-product-card__price">
+                  {{ product.price | money }}
+                </span>
+                <button
+                  class="barista-product-card__add-btn"
+                  data-product-id="{{ product.variants.first.id }}"
+                  data-product-title="{{ product.title | escape }}"
+                  onclick="baristaAddToCart(this)"
+                  aria-label="{{ product.title }} in den Warenkorb">
+                  +
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        {%- else -%}
+          <p style="color:#888;grid-column:1/-1;text-align:center;padding:40px;">
+            Keine Produkte in dieser Collection gefunden.
+          </p>
+        {%- endfor -%}
+
+      {%- else -%}
+        <p style="color:#888;grid-column:1/-1;text-align:center;padding:40px;">
+          Bitte wähle eine Collection im Theme Editor aus.
+        </p>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+<script>
+function baristaAddToCart(btn) {
+  var variantId = btn.getAttribute('data-product-id');
+  var title = btn.getAttribute('data-product-title');
+  if (!variantId) return;
+
+  btn.disabled = true;
+  btn.textContent = '…';
+
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({ id: variantId, quantity: 1 })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    btn.textContent = '✓';
+    baristaShowToast(title + ' im Warenkorb!');
+
+    // Shopify cart count aktualisieren
+    fetch('/cart.js')
+      .then(function(r) { return r.json(); })
+      .then(function(cart) {
+        var counter = document.querySelector('.cart-count, [data-cart-count], .header__cart-count');
+        if (counter) counter.textContent = cart.item_count;
+      });
+
+    setTimeout(function() {
+      btn.textContent = '+';
+      btn.disabled = false;
+    }, 2000);
+  })
+  .catch(function() {
+    btn.textContent = '+';
+    btn.disabled = false;
+    baristaShowToast('Fehler beim Hinzufügen.', true);
+  });
+}
+</script>
+
+{% schema %}
+{
+  "name": "Barista Röstungen",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Produkt-Collection"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 6,
+      "label": "Anzahl Produkte"
+    },
+    {
+      "type": "header",
+      "content": "Texte"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Eyebrow Label",
+      "default": "Aktuell beliebt"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Überschrift",
+      "default": "DIE RÖSTUNGEN"
+    },
+    {
+      "type": "text",
+      "id": "all_link_label",
+      "label": "\"Alle ansehen\" Text",
+      "default": "Alle ansehen"
+    },
+    {
+      "type": "url",
+      "id": "all_link_url",
+      "label": "\"Alle ansehen\" Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Barista Röstungen"
+    }
+  ]
+}
+{% endschema %}

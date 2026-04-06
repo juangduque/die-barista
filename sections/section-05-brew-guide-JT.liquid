@@ -1,0 +1,837 @@
+{% comment %}
+  ============================================================
+  DIE BARISTA ROASTERY — SECTION 05: BREW GUIDE
+  File: sections/section-05-brew-guide.liquid
+
+  Design: Full-bleed red (#E23528) background
+  - Left-aligned header (not centered — matches Figma)
+  - 5-tab interface: Siebträger / Vollautomat / Espressokocher / French Press / Handfilter
+  - Each tab: 5 brewing params (Menge, Mahlgrad, Wasser, Temperatur, Dauer)
+  - Active tab: black panel. Inactive: crema/beige. Separator = red background gap.
+  - Individual metafields per param (not JSON — better client UX in Shopify admin)
+  - Full ARIA tab accessibility (role=tablist, role=tab, role=tabpanel)
+  - Vanilla JS tab switching, keyboard accessible
+
+  Metafields (namespace: coffee_attributes):
+    brew_sieb_menge        → e.g. "18"       unit: "G"
+    brew_sieb_mahlgrad     → e.g. "Fein"     unit: ""
+    brew_sieb_wasser       → e.g. "40"       unit: "ML"
+    brew_sieb_temperatur   → e.g. "93"       unit: "°C"
+    brew_sieb_dauer        → e.g. "25"       unit: "SEK"
+
+    brew_voll_menge        → e.g. "14"
+    brew_voll_mahlgrad     → e.g. "Mittel"
+    brew_voll_wasser       → e.g. "200"
+    brew_voll_temperatur   → e.g. "93"
+    brew_voll_dauer        → e.g. "30"
+
+    brew_moka_menge        → e.g. "15"
+    brew_moka_mahlgrad     → e.g. "Mittel-fein"
+    brew_moka_wasser       → e.g. "200"
+    brew_moka_temperatur   → e.g. "95"
+    brew_moka_dauer        → e.g. "4"        unit for dauer: "MIN"
+
+    brew_french_menge      → e.g. "30"
+    brew_french_mahlgrad   → e.g. "Grob"
+    brew_french_wasser     → e.g. "500"
+    brew_french_temperatur → e.g. "96"
+    brew_french_dauer      → e.g. "4"
+
+    brew_filter_menge      → e.g. "15"
+    brew_filter_mahlgrad   → e.g. "Mittel"
+    brew_filter_wasser     → e.g. "250"
+    brew_filter_temperatur → e.g. "94"
+    brew_filter_dauer      → e.g. "3"
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign mf = product.metafields.coffee_attributes
+
+  # Section text
+  assign brew_headline = section.settings.brew_headline | default: 'So schmeckt er am besten.'
+  assign brew_subline  = section.settings.brew_subline  | default: 'Unsere Zubereitungsempfehlungen für jede Methode — damit jede Tasse perfekt wird.'
+
+  # Tab visibility — allows hiding unsupported methods per product
+  assign show_sieb   = section.settings.show_sieb   | default: true
+  assign show_voll   = section.settings.show_voll   | default: true
+  assign show_moka   = section.settings.show_moka   | default: true
+  assign show_french = section.settings.show_french | default: true
+  assign show_filter = section.settings.show_filter | default: true
+
+  # Siebträger params
+  assign sieb_menge       = mf.brew_sieb_menge       | default: section.settings.sieb_menge       | default: '18'
+  assign sieb_mahlgrad    = mf.brew_sieb_mahlgrad     | default: section.settings.sieb_mahlgrad    | default: 'Fein'
+  assign sieb_wasser      = mf.brew_sieb_wasser       | default: section.settings.sieb_wasser      | default: '40'
+  assign sieb_temperatur  = mf.brew_sieb_temperatur   | default: section.settings.sieb_temperatur  | default: '93'
+  assign sieb_dauer       = mf.brew_sieb_dauer        | default: section.settings.sieb_dauer       | default: '25'
+
+  # Vollautomat params
+  assign voll_menge       = mf.brew_voll_menge        | default: section.settings.voll_menge       | default: '14'
+  assign voll_mahlgrad    = mf.brew_voll_mahlgrad      | default: section.settings.voll_mahlgrad    | default: 'Mittel'
+  assign voll_wasser      = mf.brew_voll_wasser        | default: section.settings.voll_wasser      | default: '200'
+  assign voll_temperatur  = mf.brew_voll_temperatur    | default: section.settings.voll_temperatur  | default: '93'
+  assign voll_dauer       = mf.brew_voll_dauer         | default: section.settings.voll_dauer       | default: '30'
+
+  # Espressokocher / Moka params
+  assign moka_menge       = mf.brew_moka_menge        | default: section.settings.moka_menge       | default: '15'
+  assign moka_mahlgrad    = mf.brew_moka_mahlgrad      | default: section.settings.moka_mahlgrad    | default: 'Mittel-fein'
+  assign moka_wasser      = mf.brew_moka_wasser        | default: section.settings.moka_wasser      | default: '200'
+  assign moka_temperatur  = mf.brew_moka_temperatur    | default: section.settings.moka_temperatur  | default: '95'
+  assign moka_dauer       = mf.brew_moka_dauer         | default: section.settings.moka_dauer       | default: '4'
+
+  # French Press params
+  assign french_menge      = mf.brew_french_menge      | default: section.settings.french_menge      | default: '30'
+  assign french_mahlgrad   = mf.brew_french_mahlgrad   | default: section.settings.french_mahlgrad   | default: 'Grob'
+  assign french_wasser     = mf.brew_french_wasser     | default: section.settings.french_wasser     | default: '500'
+  assign french_temperatur = mf.brew_french_temperatur | default: section.settings.french_temperatur | default: '96'
+  assign french_dauer      = mf.brew_french_dauer      | default: section.settings.french_dauer      | default: '4'
+
+  # Handfilter params
+  assign filter_menge      = mf.brew_filter_menge      | default: section.settings.filter_menge      | default: '15'
+  assign filter_mahlgrad   = mf.brew_filter_mahlgrad   | default: section.settings.filter_mahlgrad   | default: 'Mittel'
+  assign filter_wasser     = mf.brew_filter_wasser     | default: section.settings.filter_wasser     | default: '250'
+  assign filter_temperatur = mf.brew_filter_temperatur | default: section.settings.filter_temperatur | default: '94'
+  assign filter_dauer      = mf.brew_filter_dauer      | default: section.settings.filter_dauer      | default: '3'
+-%}
+
+<section
+  class="brew-section"
+  id="brew-guide-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  aria-label="Zubereitungsempfehlungen"
+>
+  <div class="brew-inner">
+
+    <!-- ── SECTION HEADER ── -->
+    <header class="brew-header">
+      <h2 class="brew-headline" id="brew-guide-title-{{ section.id }}">
+        {{- brew_headline -}}
+      </h2>
+      {%- unless brew_subline == blank -%}
+        <p class="brew-subline">{{- brew_subline -}}</p>
+      {%- endunless -%}
+    </header>
+
+    <!-- ── TAB INTERFACE ── -->
+    <div class="brew-tabs-wrapper">
+
+      <!-- Tab List -->
+      <div
+        class="brew-tablist"
+        role="tablist"
+        aria-label="Zubereitungsmethode wählen"
+        aria-labelledby="brew-guide-title-{{ section.id }}"
+      >
+
+        {%- if show_sieb -%}
+        <button
+          class="brew-tab is-active"
+          role="tab"
+          id="tab-sieb-{{ section.id }}"
+          aria-controls="panel-sieb-{{ section.id }}"
+          aria-selected="true"
+          tabindex="0"
+          data-tab="sieb"
+        >
+          <!-- Siebträger SVG icon -->
+          <svg class="brew-tab__icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="5" y="10" width="18" height="13" rx="1" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M23 15h4v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="8" y="23" width="5" height="4" rx="0.5" fill="currentColor"/>
+            <rect x="15" y="23" width="5" height="4" rx="0.5" fill="currentColor"/>
+            <path d="M14 10V7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span class="brew-tab__label">Siebträger</span>
+        </button>
+        {%- endif -%}
+
+        {%- if show_voll -%}
+        <button
+          class="brew-tab"
+          role="tab"
+          id="tab-voll-{{ section.id }}"
+          aria-controls="panel-voll-{{ section.id }}"
+          aria-selected="false"
+          tabindex="-1"
+          data-tab="voll"
+        >
+          <!-- Vollautomat SVG icon -->
+          <svg class="brew-tab__icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="5" y="6" width="19" height="22" rx="1" stroke="currentColor" stroke-width="1.8"/>
+            <rect x="9" y="10" width="11" height="7" rx="0.5" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="11" cy="22" r="1.5" fill="currentColor"/>
+            <circle cx="18" cy="22" r="1.5" fill="currentColor"/>
+            <path d="M14 17v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span class="brew-tab__label">Vollautomat</span>
+        </button>
+        {%- endif -%}
+
+        {%- if show_moka -%}
+        <button
+          class="brew-tab"
+          role="tab"
+          id="tab-moka-{{ section.id }}"
+          aria-controls="panel-moka-{{ section.id }}"
+          aria-selected="false"
+          tabindex="-1"
+          data-tab="moka"
+        >
+          <!-- Espressokocher / Moka pot SVG icon -->
+          <svg class="brew-tab__icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M11 27V22c0-2.5 1-4 5-5V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M21 12v5c-4 1-5 2.5-5 5v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M10 12h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M9 27h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <ellipse cx="16" cy="8" rx="3" ry="2" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span class="brew-tab__label">Espressokocher</span>
+        </button>
+        {%- endif -%}
+
+        {%- if show_french -%}
+        <button
+          class="brew-tab"
+          role="tab"
+          id="tab-french-{{ section.id }}"
+          aria-controls="panel-french-{{ section.id }}"
+          aria-selected="false"
+          tabindex="-1"
+          data-tab="french"
+        >
+          <!-- French Press SVG icon -->
+          <svg class="brew-tab__icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="10" y="10" width="12" height="15" rx="1" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M8 22h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M16 6v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M10 18h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 1.5"/>
+          </svg>
+          <span class="brew-tab__label">French Press</span>
+        </button>
+        {%- endif -%}
+
+        {%- if show_filter -%}
+        <button
+          class="brew-tab"
+          role="tab"
+          id="tab-filter-{{ section.id }}"
+          aria-controls="panel-filter-{{ section.id }}"
+          aria-selected="false"
+          tabindex="-1"
+          data-tab="filter"
+        >
+          <!-- Handfilter / Pour-over SVG icon -->
+          <svg class="brew-tab__icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M9 8h14l-3 13H12L9 8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M7 8h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M14 12v7M18 12v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M15 25h2v3h-2z" fill="currentColor"/>
+          </svg>
+          <span class="brew-tab__label">Handfilter</span>
+        </button>
+        {%- endif -%}
+
+      </div><!-- /brew-tablist -->
+
+      <!-- ── TAB PANELS ── -->
+
+      <!-- Siebträger Panel -->
+      {%- if show_sieb -%}
+      <div
+        class="brew-panel"
+        role="tabpanel"
+        id="panel-sieb-{{ section.id }}"
+        aria-labelledby="tab-sieb-{{ section.id }}"
+        tabindex="0"
+      >
+        {%- render 'brew-guide-stats-JT',
+          menge: sieb_menge,       menge_unit: 'G',
+          mahlgrad: sieb_mahlgrad, mahlgrad_unit: '',
+          wasser: sieb_wasser,     wasser_unit: 'ML',
+          temp: sieb_temperatur,   temp_unit: '°C',
+          dauer: sieb_dauer,       dauer_unit: 'SEK'
+        -%}
+      </div>
+      {%- endif -%}
+
+      <!-- Vollautomat Panel -->
+      {%- if show_voll -%}
+      <div
+        class="brew-panel"
+        role="tabpanel"
+        id="panel-voll-{{ section.id }}"
+        aria-labelledby="tab-voll-{{ section.id }}"
+        tabindex="0"
+        hidden
+      >
+        {%- render 'brew-guide-stats-JT',
+          menge: voll_menge,       menge_unit: 'G',
+          mahlgrad: voll_mahlgrad, mahlgrad_unit: '',
+          wasser: voll_wasser,     wasser_unit: 'ML',
+          temp: voll_temperatur,   temp_unit: '°C',
+          dauer: voll_dauer,       dauer_unit: 'SEK'
+        -%}
+      </div>
+      {%- endif -%}
+
+      <!-- Espressokocher Panel -->
+      {%- if show_moka -%}
+      <div
+        class="brew-panel"
+        role="tabpanel"
+        id="panel-moka-{{ section.id }}"
+        aria-labelledby="tab-moka-{{ section.id }}"
+        tabindex="0"
+        hidden
+      >
+        {%- render 'brew-guide-stats-JT',
+          menge: moka_menge,       menge_unit: 'G',
+          mahlgrad: moka_mahlgrad, mahlgrad_unit: '',
+          wasser: moka_wasser,     wasser_unit: 'ML',
+          temp: moka_temperatur,   temp_unit: '°C',
+          dauer: moka_dauer,       dauer_unit: 'MIN'
+        -%}
+      </div>
+      {%- endif -%}
+
+      <!-- French Press Panel -->
+      {%- if show_french -%}
+      <div
+        class="brew-panel"
+        role="tabpanel"
+        id="panel-french-{{ section.id }}"
+        aria-labelledby="tab-french-{{ section.id }}"
+        tabindex="0"
+        hidden
+      >
+        {%- render 'brew-guide-stats-JT',
+          menge: french_menge,       menge_unit: 'G',
+          mahlgrad: french_mahlgrad, mahlgrad_unit: '',
+          wasser: french_wasser,     wasser_unit: 'ML',
+          temp: french_temperatur,   temp_unit: '°C',
+          dauer: french_dauer,       dauer_unit: 'MIN'
+        -%}
+      </div>
+      {%- endif -%}
+
+      <!-- Handfilter Panel -->
+      {%- if show_filter -%}
+      <div
+        class="brew-panel"
+        role="tabpanel"
+        id="panel-filter-{{ section.id }}"
+        aria-labelledby="tab-filter-{{ section.id }}"
+        tabindex="0"
+        hidden
+      >
+        {%- render 'brew-guide-stats-JT',
+          menge: filter_menge,       menge_unit: 'G',
+          mahlgrad: filter_mahlgrad, mahlgrad_unit: '',
+          wasser: filter_wasser,     wasser_unit: 'ML',
+          temp: filter_temperatur,   temp_unit: '°C',
+          dauer: filter_dauer,       dauer_unit: 'MIN'
+        -%}
+      </div>
+      {%- endif -%}
+
+    </div><!-- /brew-tabs-wrapper -->
+
+  </div><!-- /brew-inner -->
+</section>
+
+
+<style>
+/* ── DESIGN TOKENS ── */
+#brew-guide-{{ section.id }} {
+  --db-red:    #E23528;
+  --db-black:  #00090B;
+  --db-crema:  #EFDFD3;
+  --db-mud:    #7B5D4D;
+  --db-surface:      #fff8f5;
+  --db-surface-low:  #fff1e7;
+  --db-surface-high: #f5e5d9;
+  --db-outline:      #906f6a;
+  --db-radius: 2px;
+  --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
+  --db-font-body:    'New Frank', 'DM Sans', sans-serif;
+}
+
+/* ── SECTION ── */
+.brew-section {
+  background: var(--db-red);
+  padding: 5rem 0;
+}
+
+.brew-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+/* ── HEADER — left-aligned, matches Figma ── */
+.brew-header {
+  margin-bottom: 2.5rem;
+}
+
+.brew-headline {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.brew-subline {
+  font-family: var(--db-font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 520px;
+}
+
+/* ── TAB WRAPPER ── */
+.brew-tabs-wrapper {
+  /* Gap between tablist and panel = 3px of red background showing through */
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* ── TAB LIST ── */
+.brew-tablist {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px; /* red background bleeds through — same tonal gap trick as other sections */
+}
+
+/* ── TAB BUTTON ── */
+.brew-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 1.25rem 0.75rem;
+  background: var(--db-crema);
+  border: none;
+  border-radius: var(--db-radius);
+  cursor: pointer;
+  font-family: var(--db-font-body);
+  color: var(--db-black);
+  transition: background 0.18s, color 0.18s;
+  /* No box-shadow, no border — matches design rules */
+}
+
+.brew-tab:hover {
+  background: var(--db-surface-low);
+}
+
+/* Active tab — black panel, white content */
+.brew-tab.is-active,
+.brew-tab[aria-selected="true"] {
+  background: var(--db-black);
+  color: #ffffff;
+}
+
+.brew-tab__icon {
+  flex-shrink: 0;
+  transition: color 0.18s;
+}
+
+.brew-tab__label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-align: center;
+}
+
+/* ── TAB PANEL ── */
+.brew-panel {
+  background: var(--db-surface-low);
+  border-radius: var(--db-radius);
+  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.brew-panel[hidden] {
+  display: none;
+}
+
+/* ── STATS GRID (inside snippet) ── */
+/* 
+  These styles apply to the brew-guide-stats snippet content.
+  5 equal columns on desktop, graceful degradation below.
+*/
+.brew-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+}
+
+/* Vertical divider between stats — surface background gap approach */
+.brew-stat + .brew-stat {
+  border-left: 1px solid var(--db-surface-high);
+  padding-left: 1.5rem;
+}
+
+.brew-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-right: 1.5rem;
+}
+
+.brew-stat__label {
+  font-family: var(--db-font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--db-outline);
+  line-height: 1;
+}
+
+/* Value + unit wrapper */
+.brew-stat__value-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  line-height: 1;
+}
+
+.brew-stat__value {
+  font-family: var(--db-font-display);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--db-black);
+  line-height: 1;
+}
+
+/* Unit — smaller, baseline-aligned */
+.brew-stat__unit {
+  font-family: var(--db-font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--db-mud);
+  padding-bottom: 2px;
+}
+
+/* ── RESPONSIVE ── */
+
+/* Tablet: 5 tabs still fit, panel stats 3+2 */
+@media (max-width: 1024px) {
+  .brew-inner {
+    padding: 0 2rem;
+  }
+
+  .brew-tablist {
+    gap: 2px;
+  }
+
+  .brew-tab {
+    padding: 1rem 0.5rem;
+  }
+
+  .brew-tab__label {
+    font-size: 0.58rem;
+  }
+
+  /* Stats: top 3, bottom 2 centered */
+  .brew-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem 0;
+  }
+
+  /* Restyle dividers for grid wrap */
+  .brew-stat + .brew-stat {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .brew-stat {
+    padding-right: 0;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--db-surface-high);
+  }
+
+  .brew-stat:nth-child(3n + 1) {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  /* 4th and 5th stat: 2 across, centered */
+  .brew-stat:nth-child(4) {
+    grid-column: 1;
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .brew-stat:nth-child(5) {
+    grid-column: 2;
+  }
+}
+
+/* Mobile: horizontal scroll tabs, 2-col stats */
+@media (max-width: 640px) {
+  .brew-section {
+    padding: 3.5rem 0;
+  }
+
+  .brew-inner {
+    padding: 0 1.25rem;
+  }
+
+  /* Tabs: horizontally scrollable, don't wrap */
+  .brew-tablist {
+    grid-template-columns: repeat(5, minmax(80px, 1fr));
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .brew-tablist::-webkit-scrollbar {
+    display: none;
+  }
+
+  .brew-tab {
+    scroll-snap-align: start;
+    min-width: 80px;
+    padding: 0.85rem 0.5rem;
+  }
+
+  .brew-tab__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Stats: 2 columns, 5th spans full width */
+  .brew-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem 0;
+  }
+
+  .brew-stat {
+    border-left: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .brew-stat:nth-child(even) {
+    padding-left: 1.25rem !important;
+    border-left: 1px solid var(--db-surface-high) !important;
+  }
+
+  /* 5th stat spans full row */
+  .brew-stat:nth-child(5) {
+    grid-column: 1 / -1;
+    border-left: none !important;
+    padding-left: 0 !important;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--db-surface-high);
+  }
+}
+</style>
+
+
+<script>
+(function() {
+  'use strict';
+
+  var sectionId = '{{ section.id }}';
+  var tablist   = document.querySelector('#brew-guide-' + sectionId + ' [role="tablist"]');
+  if (!tablist) return;
+
+  var tabs   = Array.from(tablist.querySelectorAll('[role="tab"]'));
+  var panels = Array.from(
+    document.querySelectorAll('#brew-guide-' + sectionId + ' [role="tabpanel"]')
+  );
+
+  function activateTab(tab) {
+    /* Deactivate all */
+    tabs.forEach(function(t) {
+      t.setAttribute('aria-selected', 'false');
+      t.setAttribute('tabindex', '-1');
+      t.classList.remove('is-active');
+    });
+
+    panels.forEach(function(p) {
+      p.hidden = true;
+    });
+
+    /* Activate selected */
+    tab.setAttribute('aria-selected', 'true');
+    tab.setAttribute('tabindex', '0');
+    tab.classList.add('is-active');
+
+    var panelId = tab.getAttribute('aria-controls');
+    var panel   = document.getElementById(panelId);
+    if (panel) {
+      panel.hidden = false;
+    }
+  }
+
+  /* Click */
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      activateTab(tab);
+    });
+  });
+
+  /* Keyboard: arrow left/right to navigate tabs */
+  tablist.addEventListener('keydown', function(e) {
+    var currentIndex = tabs.indexOf(document.activeElement);
+    var nextIndex;
+
+    if (e.key === 'ArrowRight') {
+      nextIndex = (currentIndex + 1) % tabs.length;
+    } else if (e.key === 'ArrowLeft') {
+      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    } else if (e.key === 'Home') {
+      nextIndex = 0;
+    } else if (e.key === 'End') {
+      nextIndex = tabs.length - 1;
+    } else {
+      return;
+    }
+
+    e.preventDefault();
+    activateTab(tabs[nextIndex]);
+    tabs[nextIndex].focus();
+  });
+
+})();
+</script>
+
+
+{% schema %}
+{
+  "name": "Brew Guide",
+  "tag": "section",
+  "class": "barista-section-brew",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "brew_headline",
+      "label": "Überschrift",
+      "default": "So schmeckt er am besten."
+    },
+    {
+      "type": "textarea",
+      "id": "brew_subline",
+      "label": "Unterzeile",
+      "default": "Unsere Zubereitungsempfehlungen für jede Methode — damit jede Tasse perfekt wird."
+    },
+    {
+      "type": "header",
+      "content": "Tabs ein-/ausblenden"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sieb",
+      "label": "Siebträger anzeigen",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_voll",
+      "label": "Vollautomat anzeigen",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_moka",
+      "label": "Espressokocher anzeigen",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_french",
+      "label": "French Press anzeigen",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter",
+      "label": "Handfilter anzeigen",
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": "⚡ Brewing-Parameter werden automatisch aus Produkt-Metafields geladen (coffee_attributes.brew_*). Untenstehende Werte sind Fallbacks."
+    },
+    {
+      "type": "header",
+      "content": "Siebträger (Fallback)"
+    },
+    { "type": "text", "id": "sieb_menge",      "label": "Menge",       "default": "18" },
+    { "type": "text", "id": "sieb_mahlgrad",   "label": "Mahlgrad",    "default": "Fein" },
+    { "type": "text", "id": "sieb_wasser",     "label": "Wasser (ML)", "default": "40" },
+    { "type": "text", "id": "sieb_temperatur", "label": "Temperatur",  "default": "93" },
+    { "type": "text", "id": "sieb_dauer",      "label": "Dauer (SEK)", "default": "25" },
+    {
+      "type": "header",
+      "content": "Vollautomat (Fallback)"
+    },
+    { "type": "text", "id": "voll_menge",      "label": "Menge",       "default": "14" },
+    { "type": "text", "id": "voll_mahlgrad",   "label": "Mahlgrad",    "default": "Mittel" },
+    { "type": "text", "id": "voll_wasser",     "label": "Wasser (ML)", "default": "200" },
+    { "type": "text", "id": "voll_temperatur", "label": "Temperatur",  "default": "93" },
+    { "type": "text", "id": "voll_dauer",      "label": "Dauer (SEK)", "default": "30" },
+    {
+      "type": "header",
+      "content": "Espressokocher (Fallback)"
+    },
+    { "type": "text", "id": "moka_menge",      "label": "Menge",       "default": "15" },
+    { "type": "text", "id": "moka_mahlgrad",   "label": "Mahlgrad",    "default": "Mittel-fein" },
+    { "type": "text", "id": "moka_wasser",     "label": "Wasser (ML)", "default": "200" },
+    { "type": "text", "id": "moka_temperatur", "label": "Temperatur",  "default": "95" },
+    { "type": "text", "id": "moka_dauer",      "label": "Dauer (MIN)", "default": "4" },
+    {
+      "type": "header",
+      "content": "French Press (Fallback)"
+    },
+    { "type": "text", "id": "french_menge",      "label": "Menge",       "default": "30" },
+    { "type": "text", "id": "french_mahlgrad",   "label": "Mahlgrad",    "default": "Grob" },
+    { "type": "text", "id": "french_wasser",     "label": "Wasser (ML)", "default": "500" },
+    { "type": "text", "id": "french_temperatur", "label": "Temperatur",  "default": "96" },
+    { "type": "text", "id": "french_dauer",      "label": "Dauer (MIN)", "default": "4" },
+    {
+      "type": "header",
+      "content": "Handfilter (Fallback)"
+    },
+    { "type": "text", "id": "filter_menge",      "label": "Menge",       "default": "15" },
+    { "type": "text", "id": "filter_mahlgrad",   "label": "Mahlgrad",    "default": "Mittel" },
+    { "type": "text", "id": "filter_wasser",     "label": "Wasser (ML)", "default": "250" },
+    { "type": "text", "id": "filter_temperatur", "label": "Temperatur",  "default": "94" },
+    { "type": "text", "id": "filter_dauer",      "label": "Dauer (MIN)", "default": "3" }
+  ],
+  "presets": [
+    {
+      "name": "Brew Guide",
+      "settings": {
+        "brew_headline": "So schmeckt er am besten.",
+        "brew_subline": "Unsere Zubereitungsempfehlungen für jede Methode — damit jede Tasse perfekt wird.",
+        "show_sieb": true,
+        "show_voll": true,
+        "show_moka": true,
+        "show_french": true,
+        "show_filter": true
+      }
+    }
+  ]
+}
+{% endschema %}

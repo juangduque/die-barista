@@ -1,0 +1,143 @@
+/* ============================================================
+   DIE BARISTA – Global Theme Styles
+   Einbinden in layout/theme.liquid:
+   {{ 'barista-theme.css' | asset_url | stylesheet_tag }}
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --db-cream:       #F5F0E8;
+  --db-cream-dark:  #EDE8DC;
+  --db-black:       #0F0F0D;
+  --db-red:         #C8231A;
+  --db-red-dark:    #A01A13;
+  --db-olive:       #4A5E3A;
+  --db-olive-light: #6B7F57;
+  --db-white:       #FFFFFF;
+  --db-gray:        #888580;
+  --db-gray-light:  #C8C4BC;
+  --db-text:        #1A1915;
+  --db-font-display: 'Bebas Neue', sans-serif;
+  --db-font-serif:   'Playfair Display', serif;
+  --db-font-body:    'Source Sans 3', sans-serif;
+}
+
+/* ── Shared Utilities ── */
+.db-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--db-gray);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.db-section-label::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--db-red);
+}
+
+.db-section-title {
+  font-family: var(--db-font-display);
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--db-text);
+}
+
+.db-btn-primary {
+  background: var(--db-red);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.db-btn-primary:hover { background: var(--db-red-dark); color: white; }
+.db-btn-primary:active { transform: scale(0.98); }
+
+.db-btn-secondary {
+  background: transparent;
+  color: var(--db-white);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 14px 28px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.db-btn-secondary:hover { border-color: white; background: rgba(255,255,255,0.05); color: white; }
+
+.db-section-link {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--db-red);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.2s;
+}
+.db-section-link:hover { gap: 10px; }
+.db-section-link::after { content: '→'; }
+
+/* ── Scroll Reveal ── */
+.db-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.db-reveal.db-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.db-reveal-d1 { transition-delay: 0.1s; }
+.db-reveal-d2 { transition-delay: 0.2s; }
+.db-reveal-d3 { transition-delay: 0.3s; }
+.db-reveal-d4 { transition-delay: 0.4s; }
+.db-reveal-d5 { transition-delay: 0.5s; }
+
+/* ── Cart Toast ── */
+.db-cart-toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--db-black);
+  color: white;
+  padding: 14px 24px;
+  font-family: var(--db-font-body);
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+.db-cart-toast.show { transform: translateY(0); opacity: 1; }
+.db-cart-toast .icon { color: var(--db-red); }
