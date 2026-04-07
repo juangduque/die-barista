@@ -1,5 +1,12 @@
 {
   "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "rte_image_style": "custom"
+      }
+    },
     "home_hero": {
       "type": "landing-hero-handwerk",
       "settings": {
@@ -193,6 +200,7 @@
     }
   },
   "order": [
+    "main",
     "home_hero",
     "home_trust",
     "home_roasts",

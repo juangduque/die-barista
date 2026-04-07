@@ -1,0 +1,109 @@
+{{ 'section-landing-instagram-row.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #landing-hw-ig-{{ section.id }} {
+    --landing-hw-ig-bg: {{ section.settings.section_bg }};
+  }
+{% endstyle %}
+
+<section
+  id="landing-hw-ig-{{ section.id }}"
+  class="landing-hw-ig"
+>
+  <div class="landing-hw-ig__inner">
+    <div class="landing-hw-ig__head">
+      {%- if section.settings.title != blank -%}
+        <h2 class="landing-hw-ig__title">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtext != blank -%}
+        <div class="landing-hw-ig__sub rte">{{ section.settings.subtext }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="landing-hw-ig__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'tile' -%}
+          <div class="landing-hw-ig__cell" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" rel="noopener" target="_blank" aria-label="{{ block.settings.alt | escape }}">
+              {%- endif -%}
+              {{
+                block.settings.image
+                | image_url: width: 800
+                | image_tag:
+                  loading: 'lazy',
+                  sizes: '(min-width: 750px) 25vw, 50vw',
+                  widths: '200, 400, 600, 800',
+                  alt: block.settings.alt
+              }}
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- endif -%}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing HW Instagram",
+  "tag": "section",
+  "class": "landing-hw-ig-section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "#DieBaristaMomente"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Teile deine Kaffee-Routine mit unserer Community in Hameln."
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Background",
+      "default": "#fdfaf7"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Image alt text",
+          "default": "Die Barista Moment"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing HW Instagram"
+    }
+  ]
+}
+{% endschema %}

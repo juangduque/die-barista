@@ -1,0 +1,144 @@
+{{ 'section-landing-quiz-cta.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #landing-hw-quiz-{{ section.id }} {
+    --landing-hw-quiz-bg: {{ section.settings.background_color }};
+    --landing-hw-quiz-accent: {{ section.settings.accent_color }};
+  }
+{% endstyle %}
+
+<section
+  id="landing-hw-quiz-{{ section.id }}"
+  class="landing-hw-quiz"
+>
+  <div class="landing-hw-quiz__inner">
+    <div class="landing-hw-quiz__left">
+      {%- if section.settings.title != blank -%}
+        <h2 class="landing-hw-quiz__title">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.subtitle != blank -%}
+        <p class="landing-hw-quiz__subtitle">{{ section.settings.subtitle | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <a
+          class="landing-hw-quiz__btn"
+          {% if section.settings.button_link != blank %}
+            href="{{ section.settings.button_link }}"
+          {% else %}
+            aria-disabled="true"
+          {% endif %}
+        >
+          {{ section.settings.button_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="landing-hw-quiz__cards">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            <div class="landing-hw-quiz__card" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon_image != blank -%}
+                <div class="landing-hw-quiz__card-icon">
+                  {{
+                    block.settings.icon_image
+                    | image_url: width: 120
+                    | image_tag: loading: 'lazy', widths: '60, 120'
+                  }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h3 class="landing-hw-quiz__card-title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="landing-hw-quiz__card-text">{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing HW Quiz",
+  "tag": "section",
+  "class": "landing-hw-quiz-section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Welcher Kaffee passt zu dir?"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Beantworte 3 kurze Fragen und finde deinen Match."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Quiz starten"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#00090b"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (button)",
+      "default": "#e23528"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon (optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Schritt"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing HW Quiz",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Zubereitung", "text": "Siebträger, Filter oder Vollautomat?" } },
+        { "type": "step", "settings": { "title": "Geschmack", "text": "Welche Noten magst du?" } },
+        { "type": "step", "settings": { "title": "Dein Ritual", "text": "Morgens stark oder den ganzen Tag über?" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

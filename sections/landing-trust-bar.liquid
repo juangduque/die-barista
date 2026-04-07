@@ -1,0 +1,102 @@
+{{ 'section-landing-trust-bar.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #landing-hw-trust-{{ section.id }} {
+    --landing-hw-trust-bg: {{ section.settings.background_color }};
+    --landing-hw-trust-text: {{ section.settings.text_color }};
+  }
+{% endstyle %}
+
+<section
+  id="landing-hw-trust-{{ section.id }}"
+  class="landing-hw-trust"
+>
+  <div class="landing-hw-trust__inner">
+    <div class="landing-hw-trust__grid">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'item' -%}
+            <div class="landing-hw-trust__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon_image != blank -%}
+                <div class="landing-hw-trust__icon">
+                  {{
+                    block.settings.icon_image
+                    | image_url: width: 80
+                    | image_tag: loading: 'lazy', widths: '40, 80'
+                  }}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.label != blank -%}
+                <p class="landing-hw-trust__label">{{ block.settings.label | escape }}</p>
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing HW Trust",
+  "tag": "section",
+  "class": "landing-hw-trust-section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#efdfd3"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon (optional)"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Trust point"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing HW Trust",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": { "label": "4,9/5 Sterne" }
+        },
+        {
+          "type": "item",
+          "settings": { "label": "Frisch aus Hameln" }
+        },
+        {
+          "type": "item",
+          "settings": { "label": "Kleine Batches" }
+        },
+        {
+          "type": "item",
+          "settings": { "label": "Versandfrei ab 40€" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

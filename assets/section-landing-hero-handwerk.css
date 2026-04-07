@@ -1,0 +1,241 @@
+/* Landing Handwerk — hero */
+.landing-hw-hero {
+  --landing-hw-hero-bg: #00090b;
+  --landing-hw-hero-accent: #e23528;
+  --landing-hw-hero-green: #759769;
+  --landing-hw-hero-text-muted: rgba(239, 223, 211, 0.6);
+  background: var(--landing-hw-page-bg, #fdfaf7);
+}
+
+.landing-hw-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: min(100vh, 52rem);
+  background: var(--landing-hw-hero-bg);
+  color: #fff;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-hw-hero__inner {
+    grid-template-columns: 1fr 1fr;
+    min-height: 54.375rem;
+  }
+}
+
+.landing-hw-hero__visual {
+  position: relative;
+  min-height: 20rem;
+  order: 1;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-hw-hero__visual {
+    order: 0;
+  }
+}
+
+.landing-hw-hero__visual-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.landing-hw-hero__visual-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.landing-hw-hero__visual-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 9, 11, 0) 0%,
+    rgba(0, 9, 11, 0.45) 100%
+  );
+  pointer-events: none;
+}
+
+.landing-hw-hero__visual-sat {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  mix-blend-mode: saturation;
+  pointer-events: none;
+}
+
+.landing-hw-hero__visual-portrait {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 28rem);
+  margin: 0 auto;
+  aspect-ratio: 1;
+  align-self: center;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-hw-hero__visual {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .landing-hw-hero__visual-portrait {
+    position: relative;
+    z-index: 2;
+    width: 53.625rem;
+    max-width: 100%;
+    margin: 0;
+    aspect-ratio: 1;
+  }
+}
+
+.landing-hw-hero__visual-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.landing-hw-hero__content {
+  position: relative;
+  z-index: 3;
+  padding: 2.5rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  order: 2;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-hw-hero__content {
+    padding: 4rem 4rem 4rem 3rem;
+    order: 1;
+  }
+}
+
+.landing-hw-hero__status {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.landing-hw-hero__status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: var(--landing-hw-hero-green);
+  flex-shrink: 0;
+}
+
+.landing-hw-hero__status-text {
+  font-size: 0.875rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  font-family: var(--font-heading-family, sans-serif);
+  font-weight: 700;
+}
+
+.landing-hw-hero__eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.landing-hw-hero__eyebrow-rule {
+  width: 2rem;
+  height: 4px;
+  background: var(--landing-hw-hero-accent);
+  border: 1px solid #000;
+}
+
+.landing-hw-hero__eyebrow {
+  font-size: 0.8125rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--landing-hw-hero-accent);
+  margin: 0;
+  font-family: var(--font-heading-family, sans-serif);
+  font-weight: 700;
+}
+
+.landing-hw-hero__heading {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  font-family: var(--font-heading-family, sans-serif);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  max-width: 100%;
+}
+
+.landing-hw-hero__heading-line {
+  display: block;
+}
+
+.landing-hw-hero__heading-accent {
+  color: var(--landing-hw-hero-accent);
+}
+
+.landing-hw-hero__subtext {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--landing-hw-hero-text-muted);
+  max-width: 28rem;
+  margin: 1rem 0 0;
+}
+
+.landing-hw-hero__subtext p {
+  margin: 0 0 0.25rem;
+}
+
+.landing-hw-hero__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+
+.landing-hw-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: 1.25rem 2.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  font-family: var(--font-heading-family, sans-serif);
+  transition: opacity 0.2s ease;
+}
+
+.landing-hw-hero__btn:hover {
+  opacity: 0.92;
+}
+
+.landing-hw-hero__btn--primary {
+  background: var(--landing-hw-hero-accent);
+  color: #fff;
+  border: none;
+}
+
+.landing-hw-hero__btn--secondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.landing-hw-hero__btn[aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}

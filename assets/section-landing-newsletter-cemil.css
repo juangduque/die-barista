@@ -1,0 +1,150 @@
+.landing-hw-nl {
+  background: var(--landing-hw-nl-bg, #efdfd3);
+  padding: 4rem 1.25rem;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-hw-nl {
+    padding: 6rem 3rem;
+  }
+}
+
+.landing-hw-nl__grid {
+  max-width: 80rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-hw-nl__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+.landing-hw-nl__left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.landing-hw-nl__title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 4rem);
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  font-family: var(--font-heading-family, sans-serif);
+}
+
+.landing-hw-nl__subtitle {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.8;
+  color: #7b5d4d;
+}
+
+.landing-hw-nl__right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.landing-hw-nl__form-wrap form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.landing-hw-nl__form-wrap input[type='email'] {
+  flex: 1 1 14rem;
+  min-height: 3.25rem;
+  padding: 1rem 1rem;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.landing-hw-nl__form-wrap input[type='email']::placeholder {
+  color: #6b7280;
+}
+
+.landing-hw-nl__form-wrap button,
+.landing-hw-nl__form-wrap .button {
+  min-height: 3.25rem;
+  padding: 1rem 2.5rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.landing-hw-nl__profile {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.landing-hw-nl__avatar {
+  width: 6.625rem;
+  height: 6.625rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid #e23528;
+}
+
+.landing-hw-nl__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+.landing-hw-nl__quote-wrap {
+  flex: 1;
+  padding-top: 1rem;
+}
+
+.landing-hw-nl__quote {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  color: #7b5d4d;
+  letter-spacing: 0.06em;
+}
+
+.landing-hw-nl__quote p {
+  margin: 0;
+}
+
+.landing-hw-nl__author {
+  margin: 0.5rem 0 0;
+  font-size: 0.9375rem;
+  color: #7b5d4d;
+}
+
+.landing-hw-nl__embed {
+  margin-bottom: 1rem;
+}
+
+.landing-hw-nl__embed:empty {
+  display: none;
+}
+
+.landing-hw-nl .form-message {
+  padding: 1rem;
+  font-weight: 600;
+}
