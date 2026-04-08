@@ -58,22 +58,17 @@ shopify theme list --store die-barista-kaffee.myshopify.com
 
 ## Landing page (homepage)
 
-The new homepage (`/`) is defined only in `templates/index.json`: eight sections, no legacy homepage blocks.
+The homepage (`/`) is defined in `templates/index.json`. The index template currently ships with **nav, hero, and trust** only; add more sections in the theme editor or JSON as you rebuild.
 
-`templates/page.landing-handwerk.json` mirrors the same stack (plus a disabled `main-page`) if you assign that template to a **Page** for a separate URL.
+`templates/page.landing-handwerk.json` mirrors the same stack as the index (plus a disabled `main-page`) when you assign that template to a **Page**.
 
-**Template section IDs** (in the JSON / editor): `home_hero`, `home_trust`, `home_roasts`, `home_story`, `home_quiz`, `home_subscription`, `home_instagram`, `home_newsletter`.
+**Template section IDs** (index + Handwerk): `home_nav`, `home_hero`, `home_trust` (and `main` on the Handwerk page template only).
 
-**Section types** (Liquid files under `sections/`):
+**Landing section types** still in the theme:
 
-1. **Hero** (`landing-hero-handwerk`) — Split layout: background + portrait images, status line, eyebrow, headline, body, two CTAs.
-2. **Trust bar** (`landing-trust-bar`) — Repeating **blocks** "Item": optional icon image + label.
-3. **Röstungen Grid** (`landing-roast-grid`) — Heading + "Alle ansehen" link + **blocks** "Product": pick a product, card colour, optional short text. Up to 6 products; single-variant uses AJAX add-to-cart.
-4. **Story & Zitat** (`landing-story-quote`) — Image, quote overlay, title, **blocks** "Point" (number, heading, text), story link.
-5. **Quiz CTA** (`landing-quiz-cta`) — Coloured band, title, button URL, **blocks** "Step card".
-6. **Abo** (`landing-subscription`) — Rich-text title, **blocks** "Benefit", CTA button, image.
-7. **Instagram** (`landing-instagram-row`) — Title + subtext; **blocks** "Image" for each tile.
-8. **Newsletter** (`landing-newsletter-cemil`) — Title, Shopify newsletter form **or** Klaviyo HTML embed (toggle), portrait + quote.
+1. **Nav** (`landing-nav-barista`) — Sticky bar, nav item blocks, CTA.
+2. **Hero** (`landing-hero-handwerk`) — Split layout: background + portrait images, status line, eyebrow, headline, body, two CTAs.
+3. **Trust bar** (`landing-trust-bar`) — Repeating **blocks** "Item": icons / stars + label.
 
 **How to edit**
 
@@ -81,19 +76,12 @@ The new homepage (`/`) is defined only in `templates/index.json`: eight sections
 2. Open the **Home page** — sections appear in order in the left sidebar.
 3. Use the **right sidebar** for settings and blocks (add / reorder / remove).
 
-**Key links seeded in JSON**
+**Key links seeded in JSON (hero)**
 
 | Link | Target |
 |------|--------|
-| Röstungen "Alle ansehen" | collection `kaffee` |
-| Story | page `uber-uns` — change if handle differs |
-| Quiz button | Coffee Finder (external URL) |
-| Abo button | collection `kaffeeabo` |
-
-**Newsletter**
-
-- Default: Shopify `{% form 'customer' %}` with success message.
-- **Klaviyo:** enable "Use Klaviyo embed HTML" in section settings, paste the embed div, optionally turn off the Shopify form.
+| Primary CTA | collection `kaffee` |
+| Secondary | page `uber-uns` — change if handle differs |
 
 **Assets & fonts**
 
