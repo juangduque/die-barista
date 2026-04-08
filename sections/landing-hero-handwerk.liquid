@@ -62,22 +62,28 @@
       {%- endif -%}
 
       {%- if section.settings.heading_line_1 != blank
+        or section.settings.heading_line_statt != blank
         or section.settings.heading_accent != blank
         or section.settings.heading_line_2 != blank
       -%}
-        <h1 class="landing-hw-hero__heading">
-          {%- if section.settings.heading_line_1 != blank -%}
-            <span class="landing-hw-hero__heading-line">{{ section.settings.heading_line_1 }}</span>
-          {%- endif -%}
-          {%- if section.settings.heading_accent != blank -%}
-            <span class="landing-hw-hero__heading-line landing-hw-hero__heading-accent">
-              {{- section.settings.heading_accent -}}
-            </span>
-          {%- endif -%}
-          {%- if section.settings.heading_line_2 != blank -%}
-            <span class="landing-hw-hero__heading-line">{{ section.settings.heading_line_2 }}</span>
-          {%- endif -%}
-        </h1>
+        <div class="landing-hw-hero__heading-frame">
+          <h1 class="landing-hw-hero__heading">
+            {%- if section.settings.heading_line_1 != blank -%}
+              <span class="landing-hw-hero__heading-line">{{ section.settings.heading_line_1 | escape }}</span>
+            {%- endif -%}
+            {%- if section.settings.heading_line_statt != blank -%}
+              <span class="landing-hw-hero__heading-line">{{ section.settings.heading_line_statt | escape }}</span>
+            {%- endif -%}
+            {%- if section.settings.heading_accent != blank -%}
+              <span class="landing-hw-hero__heading-line landing-hw-hero__heading-accent">
+                {{- section.settings.heading_accent | escape -}}
+              </span>
+            {%- endif -%}
+            {%- if section.settings.heading_line_2 != blank -%}
+              <span class="landing-hw-hero__heading-line">{{ section.settings.heading_line_2 | escape }}</span>
+            {%- endif -%}
+          </h1>
+        </div>
       {%- endif -%}
 
       {%- if section.settings.subtext != blank -%}
@@ -148,7 +154,7 @@
       "type": "text",
       "id": "status_text",
       "label": "Status line",
-      "default": "Wir rösten alle drei Tage"
+      "default": "Wir rösten jede drei Tage"
     },
     {
       "type": "text",
@@ -160,18 +166,26 @@
       "type": "text",
       "id": "heading_line_1",
       "label": "Heading line 1",
-      "default": "Handwerk statt"
+      "default": "Handwerk",
+      "info": "Figma: first line (e.g. HANDWERK)"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_statt",
+      "label": "Heading line 2 (white)",
+      "default": "statt",
+      "info": "Line under first word (e.g. STATT). Leave empty to use only line 1."
     },
     {
       "type": "text",
       "id": "heading_accent",
-      "label": "Heading accent line",
+      "label": "Heading accent line (red)",
       "default": "Massen-"
     },
     {
       "type": "text",
       "id": "heading_line_2",
-      "label": "Heading line 2",
+      "label": "Heading last line (white)",
       "default": "Produktion"
     },
     {

@@ -1,4 +1,4 @@
-/* Landing Handwerk — hero */
+/* Landing Handwerk hero — Figma node 16:314 */
 .landing-hw-hero {
   --landing-hw-hero-bg: #00090b;
   --landing-hw-hero-accent: #e23528;
@@ -10,7 +10,7 @@
 .landing-hw-hero__inner {
   display: grid;
   grid-template-columns: 1fr;
-  min-height: min(100vh, 52rem);
+  min-height: min(100vh, 54.375rem);
   background: var(--landing-hw-hero-bg);
   color: #fff;
   overflow: hidden;
@@ -19,41 +19,62 @@
 @media screen and (min-width: 990px) {
   .landing-hw-hero__inner {
     grid-template-columns: 1fr 1fr;
-    min-height: 54.375rem;
+    min-height: max(54.375rem, min(100vh, 61rem));
   }
 }
 
+/* Left column — bg + desat + gradient + portrait (Figma isolate z-stacking) */
 .landing-hw-hero__visual {
   position: relative;
-  min-height: 20rem;
+  min-height: 22rem;
   order: 1;
+  isolation: isolate;
 }
 
 @media screen and (min-width: 990px) {
   .landing-hw-hero__visual {
     order: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 0;
   }
 }
 
 .landing-hw-hero__visual-bg {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+  z-index: 0;
 }
 
+/* Figma: image ~136% width, pulled left ~18% */
 .landing-hw-hero__visual-bg img {
-  width: 100%;
+  position: absolute;
+  top: 0;
+  left: -17.97%;
+  width: 135.94%;
   height: 100%;
+  max-width: none;
   object-fit: cover;
   object-position: center;
+}
+
+@media screen and (max-width: 989px) {
+  .landing-hw-hero__visual-bg img {
+    left: 0;
+    width: 100%;
+  }
 }
 
 .landing-hw-hero__visual-gradient {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(
     90deg,
     rgba(0, 9, 11, 0) 0%,
-    rgba(0, 9, 11, 0.45) 100%
+    rgba(0, 9, 11, 0.4) 100%
   );
   pointer-events: none;
 }
@@ -61,34 +82,34 @@
 .landing-hw-hero__visual-sat {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: #fff;
   mix-blend-mode: saturation;
   pointer-events: none;
 }
 
+/* Portrait — Figma ~858px frame */
 .landing-hw-hero__visual-portrait {
   position: relative;
   z-index: 2;
-  width: min(100%, 28rem);
+  width: min(100%, 22rem);
   margin: 0 auto;
   aspect-ratio: 1;
-  align-self: center;
+  align-self: flex-end;
+}
+
+@media screen and (min-width: 640px) {
+  .landing-hw-hero__visual-portrait {
+    width: min(100%, 36rem);
+  }
 }
 
 @media screen and (min-width: 990px) {
-  .landing-hw-hero__visual {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-  }
-
   .landing-hw-hero__visual-portrait {
-    position: relative;
-    z-index: 2;
-    width: 53.625rem;
+    width: min(53.625rem, 90vw);
     max-width: 100%;
     margin: 0;
-    aspect-ratio: 1;
+    flex-shrink: 0;
   }
 }
 
@@ -98,6 +119,7 @@
   object-fit: cover;
 }
 
+/* Right column — content */
 .landing-hw-hero__content {
   position: relative;
   z-index: 3;
@@ -105,22 +127,30 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
+  gap: 0;
   order: 2;
+}
+
+@media screen and (min-width: 750px) {
+  .landing-hw-hero__content {
+    padding: 3rem 3rem 3.5rem;
+  }
 }
 
 @media screen and (min-width: 990px) {
   .landing-hw-hero__content {
-    padding: 4rem 4rem 4rem 3rem;
+    padding: 7.5rem 5rem 5rem 5rem;
     order: 1;
+    justify-content: flex-start;
   }
 }
 
+/* Status — green dot + 14px uppercase, rgba white 0.6, tracking 1.1px */
 .landing-hw-hero__status {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.25rem;
+  gap: 12px;
+  margin-bottom: 1.75rem;
 }
 
 .landing-hw-hero__status-dot {
@@ -132,48 +162,79 @@
 }
 
 .landing-hw-hero__status-text {
-  font-size: 0.875rem;
-  letter-spacing: 0.07em;
+  font-size: 14px;
+  line-height: 16.5px;
+  letter-spacing: 1.1px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.6);
   margin: 0;
-  font-family: var(--font-heading-family, sans-serif);
+  font-family: 'Barlow', sans-serif;
   font-weight: 700;
 }
 
+/* Eyebrow — 32×4 rule + border, 13px red tracking 2px */
 .landing-hw-hero__eyebrow-row {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .landing-hw-hero__eyebrow-rule {
-  width: 2rem;
+  width: 32px;
   height: 4px;
+  flex-shrink: 0;
   background: var(--landing-hw-hero-accent);
   border: 1px solid #000;
+  box-sizing: border-box;
 }
 
 .landing-hw-hero__eyebrow {
-  font-size: 0.8125rem;
-  letter-spacing: 0.15em;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--landing-hw-hero-accent);
   margin: 0;
-  font-family: var(--font-heading-family, sans-serif);
+  font-family: 'Barlow', sans-serif;
   font-weight: 700;
 }
 
+/* Figma: black border + stacked shadows on headline block */
+.landing-hw-hero__heading-frame {
+  border: 1px solid #000;
+  box-shadow:
+    0 4px 4px rgba(0, 0, 0, 0.25),
+    0 4px 4px rgba(0, 0, 0, 0.25),
+    0 4px 4px rgba(0, 0, 0, 0.25),
+    0 4px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  box-sizing: border-box;
+}
+
+/* Social Gothic → Barlow Condensed Black; Figma 88px / 86.4px lh, tracking -3.84px */
 .landing-hw-hero__heading {
   margin: 0;
+  padding: 0.35rem 0.5rem 0.5rem;
   text-transform: uppercase;
-  letter-spacing: -0.04em;
-  line-height: 0.98;
-  font-family: var(--font-heading-family, sans-serif);
-  font-weight: 800;
-  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  letter-spacing: -3.84px;
+  line-height: 0.982;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.75rem, 11vw, 5.5rem);
   max-width: 100%;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-hw-hero__heading {
+    font-size: 88px;
+    line-height: 86.4px;
+    letter-spacing: -3.84px;
+    padding: 0.25rem 0.5rem 0.6rem;
+  }
 }
 
 .landing-hw-hero__heading-line {
@@ -184,58 +245,78 @@
   color: var(--landing-hw-hero-accent);
 }
 
+/* Body — ~15px / 26px, New Frank → Source Sans 3 medium */
 .landing-hw-hero__subtext {
-  font-size: 0.9375rem;
-  line-height: 1.65;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 26px;
   color: var(--landing-hw-hero-text-muted);
-  max-width: 28rem;
-  margin: 1rem 0 0;
+  max-width: 448px;
+  margin: 0 0 2.5rem;
 }
 
 .landing-hw-hero__subtext p {
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.15rem;
+}
+
+.landing-hw-hero__subtext p:last-child {
+  margin-bottom: 0;
 }
 
 .landing-hw-hero__buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1.75rem;
+  align-items: center;
+  gap: 18px;
+  margin-top: 0;
 }
 
+/* Primary — Figma pt 20.5 pb 21.5 px 40, 14px tracking 2.8px */
 .landing-hw-hero__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 3.25rem;
-  padding: 1.25rem 2.5rem;
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
   text-decoration: none;
   border-radius: 2px;
-  font-family: var(--font-heading-family, sans-serif);
-  transition: opacity 0.2s ease;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
 .landing-hw-hero__btn:hover {
-  opacity: 0.92;
+  opacity: 0.95;
 }
 
 .landing-hw-hero__btn--primary {
+  padding: 20.5px 40px 21.5px;
   background: var(--landing-hw-hero-accent);
   color: #fff;
   border: none;
 }
 
 .landing-hw-hero__btn--secondary {
+  padding: 21px 41px;
   background: transparent;
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .landing-hw-hero__btn[aria-disabled="true"] {
   opacity: 0.5;
   pointer-events: none;
+}
+
+@media screen and (max-width: 749px) {
+  .landing-hw-hero__btn--primary {
+    padding: 1rem 1.75rem;
+  }
+
+  .landing-hw-hero__btn--secondary {
+    padding: 1rem 1.75rem;
+  }
 }

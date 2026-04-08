@@ -96,12 +96,15 @@
       "settings": {
         "status_text": "Wir rösten jede drei Tage",
         "eyebrow_text": "Direkt aus Hameln",
-        "heading_line_1": "Handwerk statt",
+        "heading_line_1": "Handwerk",
+        "heading_line_statt": "statt",
         "heading_accent": "Massen-",
         "heading_line_2": "Produktion",
         "subtext": "<p>Jede Bohne ein Fingerabdruck. Cemil röstet in kleinen Chargen für maximalen Charakter. Keine Kompromisse, kein Standard – nur reiner Geschmack.</p>",
         "primary_label": "Jetzt entdecken",
-        "secondary_label": "Unsere Story"
+        "primary_link": "shopify://collections/kaffee",
+        "secondary_label": "Unsere Story",
+        "secondary_link": "shopify://pages/uber-uns"
       }
     },
     "home_trust": {
@@ -110,25 +113,29 @@
         "trust_1": {
           "type": "item",
           "settings": {
-            "label": "4,9/5 Sterne"
+            "label": "4,9/5 Sterne",
+            "show_star_row": true
           }
         },
         "trust_2": {
           "type": "item",
           "settings": {
-            "label": "Frisch aus Hameln"
+            "label": "Frisch aus Hameln",
+            "icon_preset": "location"
           }
         },
         "trust_3": {
           "type": "item",
           "settings": {
-            "label": "Kleine Batches"
+            "label": "Kleine Batches",
+            "icon_preset": "layers"
           }
         },
         "trust_4": {
           "type": "item",
           "settings": {
-            "label": "Versandfrei ab 40€"
+            "label": "Versandfrei ab 40€",
+            "icon_preset": "truck"
           }
         }
       },
@@ -138,7 +145,17 @@
         "trust_3",
         "trust_4"
       ],
-      "settings": {}
+      "settings": {
+        "section_label": "Unsere Versprechen",
+        "layout": "inline",
+        "show_icon_tile": false,
+        "show_vertical_rules": false,
+        "background_color": "#f2e3d5",
+        "accent_icon_color": "#d14f3f",
+        "icon_tile_color": "#fbebdf",
+        "title_color": "#000000",
+        "subtext_color": "#5c4a3e"
+      }
     },
     "home_roasts": {
       "type": "landing-roast-grid",
