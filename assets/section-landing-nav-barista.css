@@ -1,0 +1,454 @@
+/* Landing nav — Figma node 16:690 (Sticky Navigation) */
+.landing-hw-nav {
+  --landing-hw-nav-bg: #fdfaf7;
+  --landing-hw-nav-border: transparent;
+  --landing-hw-nav-text: #000000;
+  --landing-hw-nav-text-muted: rgba(0, 0, 0, 0.65);
+  --landing-hw-nav-accent: #e23528;
+  --landing-hw-nav-cta-bg: #e23528;
+  --landing-hw-nav-cta-fg: #ffffff;
+  background: var(--landing-hw-nav-bg);
+  border-bottom: 1px solid var(--landing-hw-nav-border);
+  color: var(--landing-hw-nav-text);
+  position: relative;
+  z-index: 25;
+}
+
+.landing-hw-nav--sticky {
+  position: sticky;
+  top: 0;
+}
+
+/* Figma: py 16px, px 48px; flex justify-between (logo | links | cart+CTA) */
+.landing-hw-nav__inner {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-sizing: border-box;
+  min-height: 3.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .landing-hw-nav__inner {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.landing-hw-nav__cluster {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.landing-hw-nav__cluster--left {
+  flex: 0 0 auto;
+  gap: 0.75rem;
+}
+
+.landing-hw-nav__cluster--right {
+  flex: 0 0 auto;
+  gap: 23.99px;
+}
+
+/* Center link row — Figma gap 40px */
+.landing-hw-nav__center {
+  display: none;
+  flex: 1 1 auto;
+  justify-content: center;
+  min-width: 0;
+  padding: 0 0.5rem;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-hw-nav__center {
+    display: flex;
+  }
+}
+
+.landing-hw-nav__drawer > summary.landing-hw-nav__menu-toggle {
+  display: flex;
+  list-style: none;
+}
+
+.landing-hw-nav__drawer > summary.landing-hw-nav__menu-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.landing-hw-nav__menu-toggle {
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--landing-hw-nav-text);
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+
+.landing-hw-nav__menu-toggle .icon {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-hw-nav__drawer {
+    display: none;
+  }
+}
+
+/* Brand: Figma 80×56 image OR stacked wordmark */
+.landing-hw-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  color: inherit;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.landing-hw-nav__brand:not(.landing-hw-nav__brand--simple) {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.landing-hw-nav__brand:focus-visible {
+  outline: 2px solid var(--landing-hw-nav-accent);
+  outline-offset: 3px;
+}
+
+.landing-hw-nav__brand-mark {
+  width: 1.25rem;
+  height: 1.5625rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-hw-nav__brand-mark img,
+.landing-hw-nav__brand-mark-img {
+  width: 1.25rem;
+  height: auto;
+  max-height: 1.5625rem;
+  object-fit: contain;
+  display: block;
+}
+
+.landing-hw-nav__brand-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.25rem;
+}
+
+.landing-hw-nav__brand-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  line-height: 24px;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--landing-hw-nav-text);
+}
+
+.landing-hw-nav__brand-sub {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 9.6px;
+  line-height: 14.4px;
+  letter-spacing: 2.88px;
+  text-transform: uppercase;
+  color: var(--landing-hw-nav-text-muted);
+}
+
+.landing-hw-nav__brand--simple {
+  flex-direction: row;
+}
+
+/* Figma composite logo frame */
+.landing-hw-nav__brand-img {
+  width: auto;
+  max-width: 5rem;
+  height: auto;
+  max-height: 3.5rem;
+  object-fit: contain;
+}
+
+.landing-hw-nav__brand-img--figma {
+  width: 5rem;
+  height: 3.5rem;
+  max-width: 5rem;
+  max-height: 3.5rem;
+  object-fit: contain;
+}
+
+/* Social Gothic → Barlow Bold; 14 / 20, tracking 0.7px, all caps black */
+.landing-hw-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 24px 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (min-width: 1100px) {
+  .landing-hw-nav__list {
+    flex-wrap: nowrap;
+    gap: 40px;
+  }
+}
+
+.landing-hw-nav__link {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--landing-hw-nav-text);
+  opacity: 1;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+  white-space: nowrap;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.landing-hw-nav__link:hover,
+.landing-hw-nav__link:focus-visible {
+  color: var(--landing-hw-nav-accent);
+}
+
+.landing-hw-nav__link--active {
+  color: var(--landing-hw-nav-accent);
+  border-bottom-color: var(--landing-hw-nav-accent);
+}
+
+.landing-hw-nav__link--static {
+  cursor: default;
+  border-bottom-color: transparent;
+}
+
+.landing-hw-nav__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  color: var(--landing-hw-nav-text);
+  text-decoration: none;
+}
+
+.landing-hw-nav__icon .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.landing-hw-nav__cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Figma: 16px badge, #e23528, 8px white Barlow Bold */
+.landing-hw-nav__cart .cart-count-bubble {
+  top: -4px;
+  right: -4px;
+  left: auto;
+  transform: none;
+  min-width: 16px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  font-family: 'Barlow', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 12px;
+  background-color: var(--landing-hw-nav-accent) !important;
+  color: #fff !important;
+  border-radius: 9999px;
+}
+
+.landing-hw-nav__cart .cart-count-bubble:not(.cart-have-count) span[aria-hidden='true'] {
+  opacity: 1;
+}
+
+/* Figma: px 24 py 12, radius 2px, Barlow Bold 12px, tracking 1.2px */
+.landing-hw-nav__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--landing-hw-nav-cta-fg);
+  background: var(--landing-hw-nav-cta-bg);
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.landing-hw-nav__cta:hover,
+.landing-hw-nav__cta:focus-visible {
+  filter: brightness(1.05);
+}
+
+@media screen and (max-width: 749px) {
+  .landing-hw-nav__cta {
+    padding: 10px 16px;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+}
+
+/* Mobile drawer */
+.landing-hw-nav__drawer {
+  position: relative;
+}
+
+.landing-hw-nav__drawer-body {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.landing-hw-nav__drawer[open] .landing-hw-nav__drawer-body {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.landing-hw-nav__drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.35);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.landing-hw-nav__drawer[open] .landing-hw-nav__drawer-backdrop {
+  opacity: 1;
+}
+
+.landing-hw-nav__drawer-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(20rem, 88vw);
+  max-width: 100%;
+  background: var(--landing-hw-nav-bg);
+  color: var(--landing-hw-nav-text);
+  box-shadow: 0.25rem 0 1.5rem rgba(0, 0, 0, 0.12);
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  transform: translateX(-100%);
+  transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.25rem 1.5rem;
+  overflow-y: auto;
+}
+
+.landing-hw-nav__drawer[open] .landing-hw-nav__drawer-panel {
+  transform: translateX(0);
+}
+
+.landing-hw-nav__drawer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.landing-hw-nav__drawer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+}
+
+.landing-hw-nav__drawer-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+
+.landing-hw-nav__drawer-close .icon {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.landing-hw-nav__drawer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.landing-hw-nav__drawer-link {
+  display: block;
+  padding: 0.65rem 0;
+  color: inherit;
+  text-decoration: none;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.landing-hw-nav__drawer-link:hover,
+.landing-hw-nav__drawer-link:focus-visible {
+  color: var(--landing-hw-nav-accent);
+}
+
+.landing-hw-nav__drawer-link--active {
+  color: var(--landing-hw-nav-accent);
+}
+
+.landing-hw-nav__drawer-link--static {
+  cursor: default;
+  pointer-events: none;
+}
+
+.landing-hw-nav__drawer-cta {
+  margin-top: 1.5rem;
+  padding: 12px 24px;
+  text-align: center;
+  font-family: 'Barlow', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--landing-hw-nav-cta-fg);
+  background: var(--landing-hw-nav-cta-bg);
+  border-radius: 2px;
+}

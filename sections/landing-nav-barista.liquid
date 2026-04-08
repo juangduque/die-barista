@@ -1,0 +1,560 @@
+{{ 'section-landing-nav-barista.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign bar_alpha = section.settings.bar_opacity | times: 0.01
+  assign nav_bg = section.settings.bar_fill | color_modify: 'alpha', bar_alpha
+  if section.settings.show_bar_border
+    assign border_alpha = section.settings.bar_border_opacity | times: 0.01
+    assign nav_border = section.settings.bar_border_color | color_modify: 'alpha', border_alpha
+  else
+    assign nav_border = 'transparent'
+  endif
+
+  assign nav_item_blocks_count = 0
+  for block in section.blocks
+    if block.type == 'nav_item' and block.settings.label != blank
+      assign nav_item_blocks_count = nav_item_blocks_count | plus: 1
+    endif
+  endfor
+  assign use_block_navigation = false
+  if nav_item_blocks_count > 0
+    assign use_block_navigation = true
+  endif
+
+  assign has_drawer_nav = false
+  if use_block_navigation
+    assign has_drawer_nav = true
+  elsif section.settings.menu != blank and section.settings.menu.links.size > 0
+    assign has_drawer_nav = true
+  endif
+-%}
+
+{% style %}
+  #landing-hw-nav-{{ section.id }} {
+    --landing-hw-nav-bg: {{ nav_bg }};
+    --landing-hw-nav-border: {{ nav_border }};
+    --landing-hw-nav-text: {{ section.settings.text_color }};
+    --landing-hw-nav-text-muted: {{ section.settings.text_color | color_modify: 'alpha', 0.7 }};
+    --landing-hw-nav-accent: {{ section.settings.accent_color }};
+    --landing-hw-nav-cta-bg: {{ section.settings.cta_background }};
+    --landing-hw-nav-cta-fg: {{ section.settings.cta_text_color }};
+  }
+{% endstyle %}
+
+<header
+  id="landing-hw-nav-{{ section.id }}"
+  class="landing-hw-nav{% if section.settings.sticky_header %} landing-hw-nav--sticky{% endif %}"
+>
+  <div class="landing-hw-nav__inner">
+    <div class="landing-hw-nav__cluster landing-hw-nav__cluster--left">
+      {%- if has_drawer_nav -%}
+        <details class="landing-hw-nav__drawer">
+          <summary class="landing-hw-nav__menu-toggle" aria-label="{{ 'sections.header.menu' | t }}">
+            {% render 'icon-hamburger' %}
+          </summary>
+          <div class="landing-hw-nav__drawer-body">
+            <div
+              class="landing-hw-nav__drawer-backdrop"
+              data-landing-hw-nav-close="{{ section.id }}"
+              aria-hidden="true"
+            ></div>
+            <div class="landing-hw-nav__drawer-panel">
+              <div class="landing-hw-nav__drawer-top">
+                <span class="landing-hw-nav__drawer-brand">{{ section.settings.brand_title | escape }}</span>
+                <button
+                  type="button"
+                  class="landing-hw-nav__drawer-close"
+                  data-landing-hw-nav-close="{{ section.id }}"
+                  aria-label="{{ 'accessibility.close' | t }}"
+                >
+                  {% render 'icon-close' %}
+                </button>
+              </div>
+              <ul class="landing-hw-nav__drawer-list" role="list">
+                {%- if use_block_navigation -%}
+                  {%- for block in section.blocks -%}
+                    {%- case block.type -%}
+                      {%- when 'nav_item' -%}
+                        {%- if block.settings.label != blank -%}
+                          {%- liquid
+                            assign drawer_active = false
+                            if block.settings.highlight_home and request.page_type == 'index'
+                              assign drawer_active = true
+                            elsif block.settings.link != blank and block.settings.link.url != blank and request.path == block.settings.link.url
+                              assign drawer_active = true
+                            endif
+                          -%}
+                          <li {{ block.shopify_attributes }}>
+                            {%- if block.settings.link != blank and block.settings.link.url != blank -%}
+                              <a
+                                class="landing-hw-nav__drawer-link{% if drawer_active %} landing-hw-nav__drawer-link--active{% endif %}"
+                                href="{{ block.settings.link }}"
+                                {% if drawer_active %}
+                                  aria-current="page"
+                                {% endif %}
+                              >
+                                {{ block.settings.label | escape }}
+                              </a>
+                            {%- else -%}
+                              <span class="landing-hw-nav__drawer-link landing-hw-nav__drawer-link--static">
+                                {{- block.settings.label | escape -}}
+                              </span>
+                            {%- endif -%}
+                          </li>
+                        {%- endif -%}
+                    {%- endcase -%}
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- for link in section.settings.menu.links -%}
+                    <li>
+                      <a
+                        class="landing-hw-nav__drawer-link{% if link.active or link.current %} landing-hw-nav__drawer-link--active{% endif %}"
+                        href="{{ link.url }}"
+                        {% if link.current %}
+                          aria-current="page"
+                        {% endif %}
+                      >
+                        {{ link.title | escape }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                {%- endif -%}
+              </ul>
+              {%- if section.settings.show_cta and section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+                <a class="landing-hw-nav__drawer-cta" href="{{ section.settings.cta_url }}">
+                  {{ section.settings.cta_label | escape }}
+                </a>
+              {%- endif -%}
+            </div>
+          </div>
+        </details>
+      {%- endif -%}
+
+      <a
+        href="{{ routes.root_url }}"
+        class="landing-hw-nav__brand{% if section.settings.use_simple_logo %} landing-hw-nav__brand--simple{% endif %}"
+        {% if request.page_type == 'index' %}
+          aria-current="page"
+        {% endif %}
+      >
+        {%- if section.settings.use_simple_logo and section.settings.logo != blank -%}
+          {%- assign logo_w = section.settings.logo_width -%}
+          {%- assign logo_size = logo_w | append: 'x' -%}
+          {%- assign logo_size_2x = logo_w | times: 2 | at_most: 5760 -%}
+          <img
+            srcset="{{ section.settings.logo | image_url: width: logo_size }} 1x, {{ section.settings.logo | image_url: width: logo_size_2x }} 2x"
+            src="{{ section.settings.logo | image_url: width: logo_size }}"
+            class="landing-hw-nav__brand-img{% if section.settings.use_simple_logo %} landing-hw-nav__brand-img--figma{% endif %}"
+            width="{{ logo_w }}"
+            height="{{ section.settings.logo.height }}"
+            alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+            loading="eager"
+          >
+        {%- else -%}
+          <div class="landing-hw-nav__brand-mark" aria-hidden="true">
+            {%- if section.settings.logo_mark != blank -%}
+              {{
+                section.settings.logo_mark
+                | image_url: width: 80
+                | image_tag: loading: 'eager', class: 'landing-hw-nav__brand-mark-img', widths: '40, 80'
+              }}
+            {%- else -%}
+              <img
+                src="{{ 'landing-nav-logo-mark.svg' | asset_url }}"
+                width="20"
+                height="25"
+                alt=""
+                loading="eager"
+              >
+            {%- endif -%}
+          </div>
+          <div class="landing-hw-nav__brand-copy">
+            <span class="landing-hw-nav__brand-title">{{ section.settings.brand_title | escape }}</span>
+            <span class="landing-hw-nav__brand-sub">{{ section.settings.brand_subtitle | escape }}</span>
+          </div>
+        {%- endif -%}
+      </a>
+    </div>
+
+    {%- if use_block_navigation -%}
+      <nav class="landing-hw-nav__center" aria-label="{{ section.settings.menu_title | escape }}">
+        <ul class="landing-hw-nav__list" role="list">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'nav_item' -%}
+                {%- if block.settings.label != blank -%}
+                  {%- liquid
+                    assign center_active = false
+                    if block.settings.highlight_home and request.page_type == 'index'
+                      assign center_active = true
+                    elsif block.settings.link != blank and block.settings.link.url != blank and request.path == block.settings.link.url
+                      assign center_active = true
+                    endif
+                  -%}
+                  <li {{ block.shopify_attributes }}>
+                    {%- if block.settings.link != blank and block.settings.link.url != blank -%}
+                      <a
+                        href="{{ block.settings.link }}"
+                        class="landing-hw-nav__link{% if center_active %} landing-hw-nav__link--active{% endif %}"
+                        {% if center_active %}
+                          aria-current="page"
+                        {% endif %}
+                      >
+                        {{ block.settings.label | escape }}
+                      </a>
+                    {%- else -%}
+                      <span class="landing-hw-nav__link landing-hw-nav__link--static">{{ block.settings.label | escape }}</span>
+                    {%- endif -%}
+                  </li>
+                {%- endif -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- elsif section.settings.menu != blank and section.settings.menu.links.size > 0 -%}
+      <nav class="landing-hw-nav__center" aria-label="{{ section.settings.menu_title | escape }}">
+        <ul class="landing-hw-nav__list" role="list">
+          {%- for link in section.settings.menu.links -%}
+            <li>
+              <a
+                href="{{ link.url }}"
+                class="landing-hw-nav__link{% if link.active or link.current %} landing-hw-nav__link--active{% endif %}"
+                {% if link.current %}
+                  aria-current="page"
+                {% endif %}
+              >
+                {{ link.title | escape }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    <div class="landing-hw-nav__cluster landing-hw-nav__cluster--right">
+      {%- if section.settings.show_account -%}
+        <a
+          href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+          class="landing-hw-nav__icon link link--text focus-inset"
+          aria-label="{{ 'customer.account_fallback' | t }}"
+        >
+          {% render 'icon-account' %}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.show_search -%}
+        <a
+          href="{{ routes.search_url }}"
+          class="landing-hw-nav__icon link link--text focus-inset"
+          aria-label="{{ 'general.search.search' | t }}"
+        >
+          {% render 'icon-search' %}
+        </a>
+      {%- endif -%}
+      <a
+        href="{{ routes.cart_url }}"
+        class="landing-hw-nav__icon landing-hw-nav__cart link link--text focus-inset"
+        id="cart-icon-bubble"
+        aria-label="{{ 'accessibility.cart_link' | t }}"
+      >
+        {% render 'icon-cart' %}
+        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+        {%- if cart != empty -%}
+          <div class="cart-count-bubble cart-have-count">
+            {%- if cart.item_count < 100 -%}
+              <span aria-hidden="true">{{ cart.item_count }}</span>
+            {%- endif -%}
+            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+          </div>
+        {%- else -%}
+          <div class="cart-count-bubble">
+            <span aria-hidden="true">0</span>
+          </div>
+        {%- endif -%}
+      </a>
+      {%- if section.settings.show_cta and section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+        <a class="landing-hw-nav__cta" href="{{ section.settings.cta_url }}">
+          {{ section.settings.cta_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</header>
+
+<script>
+  (function () {
+    var id = {{ section.id | json }};
+    var root = document.getElementById('landing-hw-nav-' + id);
+    if (!root) return;
+    var drawer = root.querySelector('.landing-hw-nav__drawer');
+    if (!drawer) return;
+
+    root.querySelectorAll('[data-landing-hw-nav-close="' + id + '"]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        drawer.removeAttribute('open');
+      });
+    });
+
+    drawer.querySelectorAll('.landing-hw-nav__drawer-panel a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        drawer.removeAttribute('open');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Landing nav (Figma)",
+  "tag": "section",
+  "class": "landing-hw-nav-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Sticky on scroll",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_simple_logo",
+      "label": "Use single logo image",
+      "default": false,
+      "info": "Figma 16:690 uses one 80×80px frame (composite mark + wordmark)"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image (simple mode)"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 60,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo width (simple mode)",
+      "default": 80
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_mark",
+      "label": "Logo mark (icon)",
+      "info": "Optional; default SVG if empty"
+    },
+    {
+      "type": "text",
+      "id": "brand_title",
+      "label": "Wordmark line 1",
+      "default": "DIE BARISTA"
+    },
+    {
+      "type": "text",
+      "id": "brand_subtitle",
+      "label": "Wordmark line 2",
+      "default": "ROASTERY"
+    },
+    {
+      "type": "header",
+      "content": "Menu"
+    },
+    {
+      "type": "text",
+      "id": "menu_title",
+      "label": "Menu label (a11y)",
+      "default": "Hauptnavigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu (fallback)",
+      "info": "Only used when no Nav item blocks are added"
+    },
+    {
+      "type": "header",
+      "content": "Utilities"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show CTA button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "ABO STARTEN"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bar_fill",
+      "label": "Bar fill",
+      "default": "#fdfaf7"
+    },
+    {
+      "type": "range",
+      "id": "bar_opacity",
+      "min": 70,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Bar fill opacity",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bar_border",
+      "label": "Show bottom border",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bar_border_color",
+      "label": "Bottom border",
+      "default": "#e8e0d6"
+    },
+    {
+      "type": "range",
+      "id": "bar_border_opacity",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Border opacity",
+      "default": 50
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text / icons",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (hover, active, badge)",
+      "default": "#e23528"
+    },
+    {
+      "type": "color",
+      "id": "cta_background",
+      "label": "CTA background",
+      "default": "#e23528"
+    },
+    {
+      "type": "color",
+      "id": "cta_text_color",
+      "label": "CTA text",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "nav_item",
+      "name": "Nav item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Link"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight_home",
+          "label": "Active on homepage",
+          "default": false,
+          "info": "Underline on the home template when no URL match"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing nav (Figma)",
+      "blocks": [
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "Kaffee",
+            "highlight_home": false
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "Equipment",
+            "highlight_home": false
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "Abo",
+            "highlight_home": false
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "Coffee Finder",
+            "highlight_home": false
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "Geschenke",
+            "highlight_home": false
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "Kaffee-Wissen",
+            "highlight_home": false
+          }
+        },
+        {
+          "type": "nav_item",
+          "settings": {
+            "label": "Über Uns",
+            "highlight_home": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

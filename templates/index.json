@@ -1,5 +1,96 @@
 {
   "sections": {
+    "home_nav": {
+      "type": "landing-nav-barista",
+      "blocks": {
+        "nav_kaffee": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Kaffee",
+            "link": "shopify://collections/kaffee",
+            "highlight_home": false
+          }
+        },
+        "nav_equipment": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Equipment",
+            "link": "shopify://collections/equipment",
+            "highlight_home": false
+          }
+        },
+        "nav_abo": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Abo",
+            "link": "shopify://collections/kaffeeabo",
+            "highlight_home": false
+          }
+        },
+        "nav_finder": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Coffee Finder",
+            "link": "https://shop.diebarista.com/tools/perfect-product-finder/coffeefinder#/questions/1",
+            "highlight_home": false
+          }
+        },
+        "nav_geschenke": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Geschenke",
+            "link": "shopify://collections/geschenke",
+            "highlight_home": false
+          }
+        },
+        "nav_wissen": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Kaffee-Wissen",
+            "link": "shopify://blogs/allgemeines-kaffeewissen",
+            "highlight_home": false
+          }
+        },
+        "nav_uber": {
+          "type": "nav_item",
+          "settings": {
+            "label": "Über Uns",
+            "link": "shopify://pages/uber-uns",
+            "highlight_home": false
+          }
+        }
+      },
+      "block_order": [
+        "nav_kaffee",
+        "nav_equipment",
+        "nav_abo",
+        "nav_finder",
+        "nav_geschenke",
+        "nav_wissen",
+        "nav_uber"
+      ],
+      "settings": {
+        "sticky_header": true,
+        "use_simple_logo": false,
+        "brand_title": "DIE BARISTA",
+        "brand_subtitle": "ROASTERY",
+        "menu_title": "Hauptnavigation",
+        "show_account": true,
+        "show_search": true,
+        "show_cta": true,
+        "cta_label": "ABO STARTEN",
+        "cta_url": "shopify://collections/kaffeeabo",
+        "show_bar_border": false,
+        "bar_fill": "#fdfaf7",
+        "bar_opacity": 100,
+        "bar_border_color": "#e8e0d6",
+        "bar_border_opacity": 40,
+        "text_color": "#000000",
+        "accent_color": "#e23528",
+        "cta_background": "#e23528",
+        "cta_text_color": "#ffffff"
+      }
+    },
     "home_hero": {
       "type": "landing-hero-handwerk",
       "settings": {
@@ -193,6 +284,7 @@
     }
   },
   "order": [
+    "home_nav",
     "home_hero",
     "home_trust",
     "home_roasts",

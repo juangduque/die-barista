@@ -547,7 +547,17 @@
 		<a class="skip-to-content-link button visually-hidden" href="#MainContent">
 			{{ 'accessibility.skip_to_text' | t }}
 		</a>
-		{% sections 'header-group' %}
+		{%- liquid
+			assign barista_landing_header = false
+			if template.name == 'index'
+				assign barista_landing_header = true
+			elsif template.name == 'page' and template.suffix == 'landing-handwerk'
+				assign barista_landing_header = true
+			endif
+		-%}
+		{%- unless barista_landing_header -%}
+			{% sections 'header-group' %}
+		{%- endunless -%}
 		{% sections 'overlay-group' %}
 		{% if settings.show_breadcrumbs %}
 			{% render 'breadcrumbs' %}
