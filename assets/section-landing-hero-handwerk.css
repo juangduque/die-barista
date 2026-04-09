@@ -88,28 +88,22 @@
   pointer-events: none;
 }
 
-/* Portrait — Figma ~858px frame */
+/* Portrait — Figma Hero Section: 858×858 frame (node 9:8) */
 .landing-hw-hero__visual-portrait {
   position: relative;
   z-index: 2;
-  width: min(100%, 22rem);
+  width: min(100%, 858px);
+  aspect-ratio: 1 / 1;
   margin: 0 auto;
-  aspect-ratio: 1;
   align-self: flex-end;
-}
-
-@media screen and (min-width: 640px) {
-  .landing-hw-hero__visual-portrait {
-    width: min(100%, 36rem);
-  }
+  flex-shrink: 0;
 }
 
 @media screen and (min-width: 990px) {
   .landing-hw-hero__visual-portrait {
-    width: min(53.625rem, 90vw);
+    width: 858px;
     max-width: 100%;
     margin: 0;
-    flex-shrink: 0;
   }
 }
 

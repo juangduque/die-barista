@@ -94,6 +94,8 @@
     "home_hero": {
       "type": "landing-hero-handwerk",
       "settings": {
+        "use_theme_image_fallbacks": true,
+        "image_saturation_overlay": false,
         "status_text": "Wir rösten jede drei Tage",
         "eyebrow_text": "Direkt aus Hameln",
         "heading_line_1": "Handwerk",

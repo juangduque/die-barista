@@ -16,32 +16,69 @@
 >
   <div class="landing-hw-hero__inner">
     <div class="landing-hw-hero__visual">
-      {%- if section.settings.image_background != blank -%}
+      {%- liquid
+        assign hero_bg = section.settings.image_background
+        assign hero_fg = section.settings.image_foreground
+        assign use_bg_fallback = false
+        assign use_fg_fallback = false
+        if hero_bg == blank and section.settings.use_theme_image_fallbacks
+          assign use_bg_fallback = true
+        endif
+        if hero_fg == blank and section.settings.use_theme_image_fallbacks
+          assign use_fg_fallback = true
+        endif
+      -%}
+      {%- if hero_bg != blank -%}
         <div class="landing-hw-hero__visual-bg" aria-hidden="true">
           {{
-            section.settings.image_background
+            hero_bg
             | image_url: width: 2400
             | image_tag:
-              loading: 'lazy',
+              loading: 'eager',
               sizes: '(min-width: 990px) 50vw, 100vw',
               widths: '375, 750, 1100, 1500, 2400'
           }}
+        </div>
+      {%- elsif use_bg_fallback -%}
+        <div class="landing-hw-hero__visual-bg" aria-hidden="true">
+          <img
+            src="{{ 'landing-hero-handwerk-bg.jpg' | asset_url }}"
+            alt=""
+            width="512"
+            height="512"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            sizes="(min-width: 990px) 50vw, 100vw"
+          >
         </div>
       {%- endif -%}
       <div class="landing-hw-hero__visual-gradient" aria-hidden="true"></div>
       {%- if section.settings.image_saturation_overlay -%}
         <div class="landing-hw-hero__visual-sat" aria-hidden="true"></div>
       {%- endif -%}
-      {%- if section.settings.image_foreground != blank -%}
+      {%- if hero_fg != blank -%}
         <div class="landing-hw-hero__visual-portrait">
           {{
-            section.settings.image_foreground
-            | image_url: width: 1200
+            hero_fg
+            | image_url: width: 1716
             | image_tag:
-              loading: 'lazy',
-              sizes: '(min-width: 990px) 32rem, 80vw',
-              widths: '400, 600, 800, 1200'
+              loading: 'eager',
+              sizes: '(min-width: 990px) 858px, min(100vw, 858px)',
+              widths: '400, 600, 858, 1200, 1716'
           }}
+        </div>
+      {%- elsif use_fg_fallback -%}
+        <div class="landing-hw-hero__visual-portrait">
+          <img
+            src="{{ 'landing-hero-handwerk-portrait.jpg' | asset_url }}"
+            alt=""
+            width="858"
+            height="858"
+            loading="eager"
+            decoding="async"
+            sizes="(min-width: 990px) 858px, min(100vw, 858px)"
+          >
         </div>
       {%- endif -%}
     </div>
@@ -142,9 +179,17 @@
     },
     {
       "type": "checkbox",
+      "id": "use_theme_image_fallbacks",
+      "label": "Use bundled hero photos when uploads are empty",
+      "default": true,
+      "info": "Shows landing-hero-handwerk-bg.jpg and landing-hero-handwerk-portrait.jpg from Assets until you pick images in the theme editor (or in settings_data)."
+    },
+    {
+      "type": "checkbox",
       "id": "image_saturation_overlay",
-      "label": "Saturation blend overlay",
-      "default": true
+      "label": "Saturation blend overlay (desaturates left column)",
+      "default": false,
+      "info": "Figma used a white + mix-blend-mode layer for a muted look. Turn on only if you want that effect."
     },
     {
       "type": "header",
