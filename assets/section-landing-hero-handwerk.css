@@ -226,6 +226,7 @@
   font-weight: 900;
   font-size: clamp(2.75rem, 11vw, 5.5rem);
   max-width: 100%;
+  color: #fff;
 }
 
 @media screen and (min-width: 990px) {
