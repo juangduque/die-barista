@@ -163,12 +163,128 @@
         "title_color": "#000000",
         "subtext_color": "#5c4a3e"
       }
+    },
+    "home_roasts": {
+      "type": "landing-roast-grid",
+      "settings": {
+        "eyebrow": "CURATED SELECTION",
+        "heading": "DIE RÖSTUNGEN",
+        "view_all_label": "ALLE ANSEHEN",
+        "view_all_link": "shopify://collections/kaffee",
+        "badge_label": "CEMIL'S PICK",
+        "section_background": "#ffffff",
+        "card_frame_color": "#fff1e7",
+        "heading_color": "#000000",
+        "view_all_text_color": "#7b5d4d",
+        "panel_title_color": "#efdfd3",
+        "panel_muted": "rgba(239, 223, 211, 0.6)",
+        "accent_color": "#e23528",
+        "tone_red": "#e23528",
+        "tone_beige": "#efdfd3",
+        "tone_green": "#759769",
+        "tone_green_inset": "#5f8a5c"
+      },
+      "blocks": {
+        "roast_1": {
+          "type": "roast_static",
+          "settings": {
+            "title": "DER ITALIENER",
+            "subtitle": "Dunkle Röstung · Schoko-Note",
+            "price": "14,90 €",
+            "link": "shopify://collections/kaffee",
+            "preset_image": "italiener",
+            "tone": "red",
+            "inset_mode": "none",
+            "show_pick_badge": true,
+            "large_square_media": false
+          }
+        },
+        "roast_2": {
+          "type": "roast_static",
+          "settings": {
+            "title": "DIE CREMA",
+            "subtitle": "Mittlere Röstung - Nüssig",
+            "price": "14,90 €",
+            "link": "shopify://collections/kaffee",
+            "preset_image": "crema",
+            "tone": "beige",
+            "inset_mode": "none",
+            "show_pick_badge": false,
+            "large_square_media": false
+          }
+        },
+        "roast_3": {
+          "type": "roast_static",
+          "settings": {
+            "title": "Manifesto",
+            "subtitle": "Helle Röstung - Fruchtig",
+            "price": "14,90 €",
+            "link": "shopify://collections/kaffee",
+            "preset_image": "manifesto",
+            "tone": "green",
+            "inset_mode": "none",
+            "show_pick_badge": false,
+            "large_square_media": false
+          }
+        },
+        "roast_4": {
+          "type": "roast_static",
+          "settings": {
+            "title": "DER ITALIENER",
+            "subtitle": "Dunkle Röstung · Schoko-Note",
+            "price": "14,90 €",
+            "link": "shopify://collections/kaffee",
+            "preset_image": "italiener",
+            "tone": "red",
+            "inset_mode": "none",
+            "show_pick_badge": false,
+            "large_square_media": false
+          }
+        },
+        "roast_5": {
+          "type": "roast_static",
+          "settings": {
+            "title": "Kiez Crema",
+            "subtitle": "Mittlere Röstung - Nüssig",
+            "price": "14,90 €",
+            "link": "shopify://collections/kaffee",
+            "preset_image": "kiez",
+            "tone": "beige",
+            "inset_mode": "light",
+            "show_pick_badge": false,
+            "large_square_media": false
+          }
+        },
+        "roast_6": {
+          "type": "roast_static",
+          "settings": {
+            "title": "Nicaragua San Jose",
+            "subtitle": "Helle Röstung - Fruchtig",
+            "price": "14,90 €",
+            "link": "shopify://collections/kaffee",
+            "preset_image": "nicaragua",
+            "tone": "green",
+            "inset_mode": "none",
+            "show_pick_badge": false,
+            "large_square_media": true
+          }
+        }
+      },
+      "block_order": [
+        "roast_1",
+        "roast_2",
+        "roast_3",
+        "roast_4",
+        "roast_5",
+        "roast_6"
+      ]
     }
   },
   "order": [
     "home_nav",
     "main",
     "home_hero",
-    "home_trust"
+    "home_trust",
+    "home_roasts"
   ]
 }

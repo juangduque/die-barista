@@ -1,0 +1,658 @@
+{{ 'section-landing-roast-grid.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #landing-roast-grid-{{ section.id }} {
+    --lr-accent: {{ section.settings.accent_color }};
+    --lr-page-bg: {{ section.settings.section_background }};
+    --lr-heading-ink: {{ section.settings.heading_color }};
+    --lr-card-frame: {{ section.settings.card_frame_color }};
+    --lr-view-all-text: {{ section.settings.view_all_text_color }};
+    --lr-panel-title: {{ section.settings.panel_title_color }};
+    --lr-panel-muted: {% if section.settings.panel_muted != blank %}{{ section.settings.panel_muted | strip }}{% else %}rgba(239, 223, 211, 0.6){% endif %};
+  }
+  #landing-roast-grid-{{ section.id }} .landing-roast-grid__media--red {
+    background: {{ section.settings.tone_red }};
+  }
+  #landing-roast-grid-{{ section.id }} .landing-roast-grid__media--beige {
+    background: {{ section.settings.tone_beige }};
+  }
+  #landing-roast-grid-{{ section.id }} .landing-roast-grid__media--green {
+    background: {{ section.settings.tone_green }};
+  }
+  #landing-roast-grid-{{ section.id }} .landing-roast-grid__media--inset-dark .landing-roast-grid__media-inset {
+    background: {{ section.settings.tone_green_inset }};
+  }
+{% endstyle %}
+
+<section
+  id="landing-roast-grid-{{ section.id }}"
+  class="landing-roast-grid"
+  aria-labelledby="landing-roast-grid-h-{{ section.id }}"
+>
+  <div class="landing-roast-grid__inner">
+    <header class="landing-roast-grid__head">
+      <div class="landing-roast-grid__head-text">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="landing-roast-grid__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="landing-roast-grid__title" id="landing-roast-grid-h-{{ section.id }}">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.view_all_label != blank -%}
+        <div class="landing-roast-grid__view-all-wrap">
+          {%- if section.settings.view_all_link != blank -%}
+            <a class="landing-roast-grid__view-all" href="{{ section.settings.view_all_link }}">
+              {{ section.settings.view_all_label | escape }}
+            </a>
+          {%- else -%}
+            <span class="landing-roast-grid__view-all">{{ section.settings.view_all_label | escape }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="landing-roast-grid__grid" role="list">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'roast_static' -%}
+            {%- liquid
+              assign media_class = 'landing-roast-grid__media--beige'
+              if block.settings.tone == 'red'
+                assign media_class = 'landing-roast-grid__media--red'
+              elsif block.settings.tone == 'green'
+                assign media_class = 'landing-roast-grid__media--green'
+              endif
+              assign inset_mod = block.settings.inset_mode
+              if inset_mod == 'light'
+                assign media_class = media_class | append: ' landing-roast-grid__media--inset-light'
+              elsif inset_mod == 'dark'
+                assign media_class = media_class | append: ' landing-roast-grid__media--inset-dark'
+              endif
+              if block.settings.large_square_media
+                assign media_class = media_class | append: ' landing-roast-grid__media--large-square'
+              endif
+              assign static_href = block.settings.link
+              if static_href == blank
+                assign static_href = '#'
+              endif
+              assign static_asset = 'landing-roast-italiener.png'
+              case block.settings.preset_image
+                when 'crema'
+                  assign static_asset = 'landing-roast-crema.png'
+                when 'manifesto'
+                  assign static_asset = 'landing-roast-manifesto.png'
+                when 'kiez'
+                  assign static_asset = 'landing-roast-kiez-crema.jpg'
+                when 'nicaragua'
+                  assign static_asset = 'landing-roast-nicaragua.png'
+              endcase
+              assign static_img_alt = block.settings.title | default: 'Product'
+            -%}
+            <li class="landing-roast-grid__item" {{ block.shopify_attributes }}>
+              <article class="landing-roast-grid__card">
+                <a
+                  class="landing-roast-grid__media {{ media_class }}"
+                  href="{{ static_href }}"
+                  aria-label="{{ block.settings.title | escape }}"
+                >
+                  {%- if block.settings.show_pick_badge -%}
+                    <span class="landing-roast-grid__badge">{{ section.settings.badge_label | escape }}</span>
+                  {%- endif -%}
+                  <div class="landing-roast-grid__media-inner">
+                    {%- if inset_mod != 'none' -%}
+                      <div class="landing-roast-grid__media-inset">
+                        {%- if block.settings.image != blank -%}
+                          {{
+                            block.settings.image
+                            | image_url: width: 800
+                            | image_tag:
+                              loading: 'lazy',
+                              widths: '200, 400, 600, 800',
+                              sizes: '(min-width: 750px) 30vw, 90vw',
+                              alt: static_img_alt
+                          }}
+                        {%- else -%}
+                          <img
+                            src="{{ static_asset | asset_url }}"
+                            alt="{{ static_img_alt | escape }}"
+                            width="360"
+                            height="520"
+                            loading="lazy"
+                          >
+                        {%- endif -%}
+                      </div>
+                    {%- elsif block.settings.image != blank -%}
+                      {{
+                        block.settings.image
+                        | image_url: width: 800
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '200, 400, 600, 800',
+                          sizes: '(min-width: 750px) 30vw, 90vw',
+                          alt: static_img_alt
+                      }}
+                    {%- else -%}
+                      <img
+                        src="{{ static_asset | asset_url }}"
+                        alt="{{ static_img_alt | escape }}"
+                        width="360"
+                        height="520"
+                        loading="lazy"
+                      >
+                    {%- endif -%}
+                  </div>
+                </a>
+
+                <div class="landing-roast-grid__footer">
+                  <a class="landing-roast-grid__product-link" href="{{ static_href }}">
+                    <h3 class="landing-roast-grid__card-title">{{ block.settings.title | escape }}</h3>
+                    {%- if block.settings.subtitle != blank -%}
+                      <p class="landing-roast-grid__card-sub">{{ block.settings.subtitle | escape }}</p>
+                    {%- endif -%}
+                  </a>
+
+                  <div class="landing-roast-grid__row">
+                    <span class="landing-roast-grid__price">{{ block.settings.price | escape }}</span>
+                    <div class="landing-roast-grid__cart">
+                      <a
+                        href="{{ static_href }}"
+                        class="landing-roast-grid__cart-btn landing-roast-grid__cart-btn--link"
+                        aria-label="{{ block.settings.title | escape }}"
+                      >
+                        <span class="landing-roast-grid__cart-icon-wrap" aria-hidden="true">
+                          {% render 'icon-cart' %}
+                          <span class="landing-roast-grid__cart-plus">+</span>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </li>
+          {%- elsif block.type == 'roast_product' -%}
+            {%- assign card_product = block.settings.product -%}
+            <li class="landing-roast-grid__item" {{ block.shopify_attributes }}>
+              {%- if card_product != blank -%}
+                {%- liquid
+                  assign variant = card_product.selected_or_first_available_variant
+                  assign media_class = 'landing-roast-grid__media--beige'
+                  if block.settings.tone == 'red'
+                    assign media_class = 'landing-roast-grid__media--red'
+                  elsif block.settings.tone == 'green'
+                    assign media_class = 'landing-roast-grid__media--green'
+                  endif
+                  assign inset_mod = block.settings.inset_mode
+                  if inset_mod == 'light'
+                    assign media_class = media_class | append: ' landing-roast-grid__media--inset-light'
+                  elsif inset_mod == 'dark'
+                    assign media_class = media_class | append: ' landing-roast-grid__media--inset-dark'
+                  endif
+                  if block.settings.large_square_media
+                    assign media_class = media_class | append: ' landing-roast-grid__media--large-square'
+                  endif
+                  assign can_direct_add = false
+                  if card_product.variants.size == 1 and variant.available
+                    assign can_direct_add = true
+                  endif
+                  assign feat_alt = ''
+                  if card_product.featured_media
+                    assign feat_alt = card_product.featured_media.alt | default: card_product.title
+                  endif
+                -%}
+                <article class="landing-roast-grid__card">
+                  <a
+                    class="landing-roast-grid__media {{ media_class }}"
+                    href="{{ card_product.url }}"
+                    aria-label="{{ card_product.title | escape }}"
+                  >
+                    {%- if block.settings.show_pick_badge -%}
+                      <span class="landing-roast-grid__badge">{{ section.settings.badge_label | escape }}</span>
+                    {%- endif -%}
+                    <div class="landing-roast-grid__media-inner">
+                      {%- if inset_mod != 'none' -%}
+                        <div class="landing-roast-grid__media-inset">
+                          {%- if card_product.featured_media -%}
+                            {{
+                              card_product.featured_media
+                              | image_url: width: 800
+                              | image_tag:
+                                loading: 'lazy',
+                                widths: '200, 400, 600, 800',
+                                sizes: '(min-width: 750px) 30vw, 90vw',
+                                alt: feat_alt
+                            }}
+                          {%- endif -%}
+                        </div>
+                      {%- elsif card_product.featured_media -%}
+                        {{
+                          card_product.featured_media
+                          | image_url: width: 800
+                          | image_tag:
+                            loading: 'lazy',
+                            widths: '200, 400, 600, 800',
+                            sizes: '(min-width: 750px) 30vw, 90vw',
+                            alt: feat_alt
+                        }}
+                      {%- endif -%}
+                    </div>
+                  </a>
+
+                  <div class="landing-roast-grid__footer">
+                    <a class="landing-roast-grid__product-link" href="{{ card_product.url }}">
+                      <h3 class="landing-roast-grid__card-title">{{ card_product.title | escape }}</h3>
+                      {%- if block.settings.subtitle != blank -%}
+                        <p class="landing-roast-grid__card-sub">{{ block.settings.subtitle | escape }}</p>
+                      {%- endif -%}
+                    </a>
+
+                    <div class="landing-roast-grid__row">
+                      <span class="landing-roast-grid__price">{{ variant.price | money }}</span>
+                      <div class="landing-roast-grid__cart">
+                        {%- if can_direct_add -%}
+                          {%- assign roast_form_id = 'RoastGrid-'
+                            | append: section.id
+                            | append: '-'
+                            | append: block.id
+                          -%}
+                          <product-form data-hide-errors="true">
+                            {%- form 'product',
+                              card_product,
+                              id: roast_form_id,
+                              class: 'form',
+                              novalidate: 'novalidate',
+                              data-type: 'add-to-cart-form'
+                            -%}
+                              <input type="hidden" name="id" value="{{ variant.id }}" disabled>
+                              <button
+                                type="submit"
+                                name="add"
+                                class="landing-roast-grid__cart-btn"
+                                aria-label="{{ 'products.product.add_to_cart' | t }}"
+                                {% unless variant.available %}
+                                  disabled
+                                {% endunless %}
+                              >
+                                <span class="landing-roast-grid__cart-icon-wrap" aria-hidden="true">
+                                  {% render 'icon-cart' %}
+                                  <span class="landing-roast-grid__cart-plus">+</span>
+                                </span>
+                                <span class="loading-overlay__spinner hidden">
+                                  <svg
+                                    aria-hidden="true"
+                                    focusable="false"
+                                    class="spinner"
+                                    viewBox="0 0 66 66"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <circle
+                                      class="path"
+                                      fill="none"
+                                      stroke-width="6"
+                                      cx="33"
+                                      cy="33"
+                                      r="30"
+                                    ></circle>
+                                  </svg>
+                                </span>
+                              </button>
+                            {%- endform -%}
+                          </product-form>
+                        {%- else -%}
+                          <a
+                            href="{{ card_product.url }}"
+                            class="landing-roast-grid__cart-btn landing-roast-grid__cart-btn--link"
+                            aria-label="{{ 'products.product.choose_product_options' | t: product_name: card_product.title | escape }}"
+                          >
+                            <span class="landing-roast-grid__cart-icon-wrap" aria-hidden="true">
+                              {% render 'icon-cart' %}
+                              <span class="landing-roast-grid__cart-plus">+</span>
+                            </span>
+                          </a>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              {%- else -%}
+                <div class="landing-roast-grid__placeholder">Product wählen</div>
+              {%- endif -%}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- else -%}
+      <div class="landing-roast-grid__placeholder">
+        Add static or product blocks (up to 6) in the theme editor.
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing roast grid",
+  "tag": "section",
+  "class": "landing-roast-grid-section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "CURATED SELECTION"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "DIE RÖSTUNGEN"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "ALLE ANSEHEN"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "Pick badge text",
+      "default": "CEMIL'S PICK"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Page background",
+      "default": "#ffffff",
+      "info": "Figma 9:62 section canvas"
+    },
+    {
+      "type": "color",
+      "id": "card_frame_color",
+      "label": "Card outer frame",
+      "default": "#fff1e7",
+      "info": "Figma 9:62 card surround"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Main heading",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "view_all_text_color",
+      "label": "View all link text",
+      "default": "#7b5d4d",
+      "info": "Figma 9:69 link label"
+    },
+    {
+      "type": "color",
+      "id": "panel_title_color",
+      "label": "Product title and price (on black)",
+      "default": "#efdfd3"
+    },
+    {
+      "type": "text",
+      "id": "panel_muted",
+      "label": "Subtitle on black (CSS color)",
+      "default": "rgba(239, 223, 211, 0.6)",
+      "info": "Any valid CSS color"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (eyebrow, cart, link rule)",
+      "default": "#e23528"
+    },
+    {
+      "type": "color",
+      "id": "tone_red",
+      "label": "Red tile",
+      "default": "#e23528"
+    },
+    {
+      "type": "color",
+      "id": "tone_beige",
+      "label": "Beige tile",
+      "default": "#efdfd3"
+    },
+    {
+      "type": "color",
+      "id": "tone_green",
+      "label": "Green tile",
+      "default": "#759769"
+    },
+    {
+      "type": "color",
+      "id": "tone_green_inset",
+      "label": "Green inset square",
+      "default": "#5f8a5c"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "roast_static",
+      "name": "Static card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "DER ITALIENER"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Dunkle Röstung · Schoko-Note"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price (display)",
+          "default": "14,90 €"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Product page or collection (cart icon uses same URL for now)"
+        },
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image",
+          "info": "Optional — overrides preset artwork below"
+        },
+        {
+          "type": "select",
+          "id": "preset_image",
+          "label": "Preset artwork (Figma 9:71 exports)",
+          "options": [
+            { "value": "italiener", "label": "Der Italienener (bag)" },
+            { "value": "crema", "label": "Die Crema (bag)" },
+            { "value": "manifesto", "label": "Manifesto (bag)" },
+            { "value": "kiez", "label": "Kiez Crema (bottle)" },
+            { "value": "nicaragua", "label": "Nicaragua label" }
+          ],
+          "default": "italiener"
+        },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Image area color",
+          "options": [
+            { "value": "red", "label": "Red" },
+            { "value": "beige", "label": "Beige" },
+            { "value": "green", "label": "Green" }
+          ],
+          "default": "beige"
+        },
+        {
+          "type": "select",
+          "id": "inset_mode",
+          "label": "Inset image frame",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "light", "label": "Light square (bottle style)" },
+            { "value": "dark", "label": "Dark square (label style)" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_pick_badge",
+          "label": "Show pick badge",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "large_square_media",
+          "label": "Large square image (260×260)",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "roast_product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "select",
+          "id": "tone",
+          "label": "Image area color",
+          "options": [
+            { "value": "red", "label": "Red" },
+            { "value": "beige", "label": "Beige" },
+            { "value": "green", "label": "Green" }
+          ],
+          "default": "beige"
+        },
+        {
+          "type": "select",
+          "id": "inset_mode",
+          "label": "Inset image frame",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "light", "label": "Light square (bottle style)" },
+            { "value": "dark", "label": "Dark square (label style)" }
+          ],
+          "default": "none"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_pick_badge",
+          "label": "Show pick badge",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "large_square_media",
+          "label": "Large square product image (260×260 style)",
+          "default": false,
+          "info": "Figma 9:150 Nicaragua card"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "info": "Figma uses title case with · or -",
+          "default": "Mittlere Röstung · Nüssig"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing roast grid",
+      "blocks": [
+        {
+          "type": "roast_static",
+          "settings": {
+            "title": "DER ITALIENER",
+            "subtitle": "Dunkle Röstung · Schoko-Note",
+            "price": "14,90 €",
+            "preset_image": "italiener",
+            "tone": "red",
+            "show_pick_badge": true
+          }
+        },
+        {
+          "type": "roast_static",
+          "settings": {
+            "title": "DIE CREMA",
+            "subtitle": "Mittlere Röstung - Nüssig",
+            "price": "14,90 €",
+            "preset_image": "crema",
+            "tone": "beige"
+          }
+        },
+        {
+          "type": "roast_static",
+          "settings": {
+            "title": "Manifesto",
+            "subtitle": "Helle Röstung - Fruchtig",
+            "price": "14,90 €",
+            "preset_image": "manifesto",
+            "tone": "green"
+          }
+        },
+        {
+          "type": "roast_static",
+          "settings": {
+            "title": "DER ITALIENER",
+            "subtitle": "Dunkle Röstung · Schoko-Note",
+            "price": "14,90 €",
+            "preset_image": "italiener",
+            "tone": "red"
+          }
+        },
+        {
+          "type": "roast_static",
+          "settings": {
+            "title": "Kiez Crema",
+            "subtitle": "Mittlere Röstung - Nüssig",
+            "price": "14,90 €",
+            "preset_image": "kiez",
+            "tone": "beige",
+            "inset_mode": "light"
+          }
+        },
+        {
+          "type": "roast_static",
+          "settings": {
+            "title": "Nicaragua San Jose",
+            "subtitle": "Helle Röstung - Fruchtig",
+            "price": "14,90 €",
+            "preset_image": "nicaragua",
+            "tone": "green",
+            "large_square_media": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
