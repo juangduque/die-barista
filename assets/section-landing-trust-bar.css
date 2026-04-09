@@ -1,18 +1,19 @@
-/* Landing trust bar — warm strip (PNG / Figma reference) + optional stacked + dividers */
+/* Landing trust bar — Figma kItgXjQzTCQ3nTb4PrD6ZW node 9:31 (Trust Bar) + optional stacked + dividers */
 .landing-hw-trust {
-  --landing-hw-trust-display: 'Barlow Condensed', 'Barlow', sans-serif;
+  --landing-hw-trust-display: 'Barlow', 'Barlow Condensed', sans-serif;
   --landing-hw-trust-body: 'Source Sans 3', 'DM Sans', sans-serif;
-  background: var(--landing-hw-trust-surface, #f2e3d5);
-  padding: clamp(1.35rem, 2.8vw, 2.1rem) 0;
-  border-top: none;
-  border-bottom: none;
+  background: var(--landing-hw-trust-surface, #efdfd3);
+  padding: clamp(1.75rem, 5vw, 2.5625rem) clamp(1rem, 4vw, 1.5rem);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
 }
 
 .landing-hw-trust__inner {
   width: 100%;
-  max-width: none;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 clamp(1.25rem, 4vw, 3rem);
+  padding: 0;
   display: flex;
   justify-content: center;
 }
@@ -22,10 +23,9 @@
   margin: 0;
   padding: 0;
   width: 100%;
-  max-width: min(1200px, 100%);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
+  gap: 32px;
   align-items: center;
   justify-items: center;
 }
@@ -49,16 +49,18 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 0.65rem;
+  gap: 12px;
+  min-height: 44px;
   max-width: 100%;
   min-width: 0;
 }
 
-/* Rating column: stars above label */
+/* Rating column: stars above label (Figma 9:33–9:46) */
 .landing-hw-trust__item--stars .landing-hw-trust__item-inner {
   flex-direction: column;
   align-items: center;
-  gap: 0.45rem;
+  gap: 4px;
+  min-height: 0;
 }
 
 .landing-hw-trust__item--stars .landing-hw-trust__icon-box {
@@ -102,6 +104,21 @@
   flex-shrink: 0;
 }
 
+.landing-hw-trust__preset-svg--location {
+  width: 16px;
+  height: 20px;
+}
+
+.landing-hw-trust__preset-svg--layers {
+  width: 18px;
+  height: 19px;
+}
+
+.landing-hw-trust__preset-svg--truck {
+  width: 22px;
+  height: 16px;
+}
+
 .landing-hw-trust__icon-img {
   width: 24px;
   height: 24px;
@@ -118,18 +135,24 @@
 
 .landing-hw-trust__stars {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
+  padding-bottom: 2px;
 }
 
 .landing-hw-trust__star {
   flex-shrink: 0;
   display: block;
+  color: var(--landing-hw-trust-title, #000000);
+}
+
+.landing-hw-trust__star--filled {
+  color: var(--landing-hw-trust-title, #000000);
 }
 
 .landing-hw-trust__star--outline {
-  color: var(--landing-hw-trust-title, #000);
+  color: var(--landing-hw-trust-title, #000000);
 }
 
 .landing-hw-trust__text {
@@ -144,12 +167,12 @@
 
 .landing-hw-trust__title {
   font-family: var(--landing-hw-trust-display);
-  font-weight: 800;
-  font-size: clamp(0.8125rem, 1.15vw, 0.9375rem);
+  font-weight: 700;
+  font-size: 14px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--landing-hw-trust-title, #000);
-  line-height: 1.15;
+  letter-spacing: 1.4px;
+  color: var(--landing-hw-trust-title, #000000);
+  line-height: 20px;
   margin: 0;
 }
 
@@ -164,7 +187,7 @@
 
 /* Stacked (icon above) */
 .landing-hw-trust--stacked {
-  padding: clamp(2rem, 4vw, 3rem) 0;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1rem, 4vw, 1.5rem);
 }
 
 .landing-hw-trust--stacked .landing-hw-trust__inner {
@@ -173,7 +196,7 @@
 
 .landing-hw-trust--stacked .landing-hw-trust__grid {
   max-width: 860px;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  gap: clamp(1.5rem, 3vw, 2rem);
 }
 
 .landing-hw-trust--stacked .landing-hw-trust__item {
@@ -227,7 +250,7 @@
 @media screen and (max-width: 1023px) {
   .landing-hw-trust:not(.landing-hw-trust--stacked) .landing-hw-trust__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 1.1rem;
+    gap: 24px 20px;
   }
 
   .landing-hw-trust:not(.landing-hw-trust--no-rules):not(.landing-hw-trust--stacked)

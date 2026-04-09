@@ -150,8 +150,8 @@
         "layout": "inline",
         "show_icon_tile": false,
         "show_vertical_rules": false,
-        "background_color": "#f2e3d5",
-        "accent_icon_color": "#d14f3f",
+        "background_color": "#efdfd3",
+        "accent_icon_color": "#e23528",
         "icon_tile_color": "#fbebdf",
         "title_color": "#000000",
         "subtext_color": "#5c4a3e"
