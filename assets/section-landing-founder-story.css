@@ -1,0 +1,378 @@
+/* Landing founder story — matched to design reference (Figma 9:165 + screenshots) */
+.landing-founder-story {
+  --lf-bg: #f9f1e8;
+  --lf-ink: #00090b;
+  --lf-accent: #e23528;
+  --lf-quote-surface: #7d966d;
+  --lf-pillar-num: #c9a08c;
+  --lf-quote-outline: transparent;
+  background: var(--lf-bg);
+}
+
+.landing-founder-story__inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 6rem 1.5rem;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 750px) {
+  .landing-founder-story__inner {
+    padding: 6rem 3rem;
+  }
+}
+
+/* Top-align columns: eyebrow lines up with top of white frame (not vertically centered) */
+.landing-founder-story__grid {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 3rem;
+  width: 100%;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-founder-story__grid {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 5rem;
+  }
+
+  .landing-founder-story__col--media,
+  .landing-founder-story__col--content {
+    flex: 1 1 0;
+    min-width: 0;
+    align-self: flex-start;
+  }
+}
+
+/* Reserve space for quote overlapping below the photo */
+.landing-founder-story__col--media {
+  position: relative;
+  padding-bottom: 3rem;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-founder-story__col--media {
+    padding-bottom: 9rem;
+  }
+}
+
+/* Thick white “Polaroid” frame (design reference) */
+.landing-founder-story__frame {
+  position: relative;
+  width: 100%;
+  overflow: clip;
+  background: #fff;
+  min-height: 22rem;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-founder-story__frame {
+    height: 46rem;
+    min-height: 46rem;
+  }
+}
+
+.landing-founder-story__matte {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: 20rem;
+  padding: 1.125rem;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 989px) {
+  .landing-founder-story__matte {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .landing-founder-story__matte {
+    height: 100%;
+    min-height: 0;
+  }
+}
+
+.landing-founder-story__photo {
+  position: relative;
+  width: 100%;
+  min-height: 16rem;
+}
+
+@media screen and (max-width: 989px) {
+  .landing-founder-story__photo {
+    aspect-ratio: 912 / 1162;
+    min-height: 14rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .landing-founder-story__photo {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+}
+
+.landing-founder-story__photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.landing-founder-story__sat {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #fff;
+  mix-blend-mode: saturation;
+  pointer-events: none;
+}
+
+/* Quote: solid sage, shadow; optional outline from theme. Anchored ~center of photo, bridges into gutter */
+.landing-founder-story__quote {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 20rem;
+  margin: -1.5rem auto 0;
+  border: 2px solid var(--lf-quote-outline);
+  padding: 0;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.landing-founder-story__quote-bg {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: var(--lf-quote-surface);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.12),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.landing-founder-story__quote-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.03125rem;
+  padding: 34px 35px 34px 34px;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-founder-story__quote {
+    position: absolute;
+    left: 50%;
+    right: auto;
+    bottom: -2rem;
+    margin: 0;
+    margin-left: -2.25rem;
+    max-width: 21rem;
+  }
+}
+
+.landing-founder-story__quote-text {
+  margin: 0;
+  max-width: 16.5rem;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.625rem;
+  color: #000;
+}
+
+.landing-founder-story__quote-text p {
+  margin: 0;
+}
+
+.landing-founder-story__quote-by {
+  margin: 0;
+  align-self: flex-end;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 500;
+  font-size: 0.625rem;
+  line-height: 0.9375rem;
+  letter-spacing: 0.0625rem;
+  text-transform: uppercase;
+  color: #221a13;
+  white-space: nowrap;
+}
+
+.landing-founder-story__col--content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  min-height: 0;
+}
+
+.landing-founder-story__eyebrow {
+  margin: 0;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  color: var(--lf-accent);
+}
+
+.landing-founder-story__title {
+  margin: 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  line-height: 0.9;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--lf-ink);
+}
+
+@media screen and (min-width: 990px) {
+  .landing-founder-story__title {
+    font-size: 4.5rem;
+    line-height: 4.05rem;
+  }
+}
+
+.landing-founder-story__title-line {
+  display: block;
+}
+
+.landing-founder-story__body-wrap {
+  width: 100%;
+  max-width: 36rem;
+  padding-top: 0.538125rem;
+  box-sizing: border-box;
+}
+
+.landing-founder-story__body {
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.75rem;
+  color: var(--lf-ink);
+}
+
+.landing-founder-story__body p {
+  margin: 0 0 1.5rem;
+}
+
+.landing-founder-story__body p:last-child {
+  margin-bottom: 0;
+}
+
+.landing-founder-story__pillars {
+  list-style: none;
+  margin: 0;
+  padding: 1.5375rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.landing-founder-story__pillar {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+/* Salmon / peach numbers (design), not faded brand red */
+.landing-founder-story__pillar-num {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 2.075rem;
+  height: 2.5rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  color: var(--lf-pillar-num);
+}
+
+.landing-founder-story__pillar-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.landing-founder-story__pillar-title {
+  margin: 0;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+  text-transform: uppercase;
+  color: var(--lf-ink);
+}
+
+.landing-founder-story__pillar-desc {
+  margin: 0;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--lf-ink);
+  opacity: 0.7;
+}
+
+.landing-founder-story__cta-wrap {
+  width: 100%;
+  max-width: 22rem;
+  padding-top: 0.25rem;
+}
+
+.landing-founder-story__cta {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: max-content;
+  max-width: 100%;
+  text-decoration: none;
+  color: var(--lf-ink);
+  transition: opacity 0.2s ease;
+}
+
+.landing-founder-story__cta:hover {
+  opacity: 0.85;
+}
+
+.landing-founder-story__cta-label {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+  text-transform: uppercase;
+}
+
+.landing-founder-story__cta-rule {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 0.5rem;
+  background: rgba(0, 9, 11, 0.45);
+}
+
+.landing-founder-story__cta:hover .landing-founder-story__cta-rule {
+  background: var(--lf-accent);
+}
+
+.landing-founder-story__cta[aria-disabled='true'] {
+  opacity: 0.45;
+  pointer-events: none;
+}

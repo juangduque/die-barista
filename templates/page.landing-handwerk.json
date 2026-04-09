@@ -280,6 +280,58 @@
         "roast_5",
         "roast_6"
       ]
+    },
+    "home_founder": {
+      "type": "landing-founder-story",
+      "settings": {
+        "use_theme_image_fallbacks": true,
+        "image_saturation_overlay": false,
+        "quote": "<p>„Kaffee ist nicht nur ein Getränk, es ist eine Blaupause für den perfekten Moment.“</p>",
+        "quote_attribution": "— Cemil, Gründer",
+        "eyebrow": "Die Story",
+        "heading_line_1": "Mehr als nur",
+        "heading_line_2": "Bohnen.",
+        "body": "<p>Seit 2018 röste ich in Hameln. Was als Leidenschaft in der Garage begann, ist heute eine Mission: Den ehrlichsten Kaffee der Region zu produzieren.</p><p>Jede Röstung wird von mir persönlich überwacht. Ohne industrielle Automatik, nur mit Nase, Augen und Erfahrung.</p>",
+        "cta_label": "Lies die ganze story →",
+        "cta_link": "shopify://pages/uber-uns",
+        "section_background": "#f9f1e8",
+        "text_color": "#00090b",
+        "accent_color": "#e23528",
+        "quote_background": "#7d966d",
+        "quote_outline_color": "rgba(226, 53, 40, 0)",
+        "pillar_number_color": "#c9a08c"
+      },
+      "blocks": {
+        "founder_p1": {
+          "type": "pillar",
+          "settings": {
+            "number": "01",
+            "title": "Ursprung",
+            "text": "Direkter Handel mit Farmen, die wir beim Namen kennen."
+          }
+        },
+        "founder_p2": {
+          "type": "pillar",
+          "settings": {
+            "number": "02",
+            "title": "Röstung",
+            "text": "Schonendes Trommelröstverfahren für maximale Aromaentfaltung."
+          }
+        },
+        "founder_p3": {
+          "type": "pillar",
+          "settings": {
+            "number": "03",
+            "title": "Charakter",
+            "text": "Kaffee mit Ecken und Kanten. Nichts für den Massengeschmack."
+          }
+        }
+      },
+      "block_order": [
+        "founder_p1",
+        "founder_p2",
+        "founder_p3"
+      ]
     }
   },
   "order": [
@@ -287,6 +339,7 @@
     "main",
     "home_hero",
     "home_trust",
-    "home_roasts"
+    "home_roasts",
+    "home_founder"
   ]
 }

@@ -1,0 +1,327 @@
+{{ 'section-landing-founder-story.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #landing-founder-{{ section.id }} {
+    --lf-bg: {{ section.settings.section_background | default: '#f9f1e8' }};
+    --lf-ink: {{ section.settings.text_color | default: '#00090b' }};
+    --lf-accent: {{ section.settings.accent_color | default: '#e23528' }};
+    --lf-quote-surface: {{ section.settings.quote_background | default: '#7d966d' }};
+    --lf-pillar-num: {{ section.settings.pillar_number_color | default: '#c9a08c' }};
+    --lf-quote-outline: {{ section.settings.quote_outline_color | default: 'transparent' }};
+  }
+{% endstyle %}
+
+<section
+  id="landing-founder-{{ section.id }}"
+  class="landing-founder-story"
+  aria-label="{{ section.settings.eyebrow | escape }}"
+>
+  <div class="landing-founder-story__inner">
+    <div class="landing-founder-story__grid">
+      <div class="landing-founder-story__col landing-founder-story__col--media">
+        {%- liquid
+          assign founder_img = section.settings.image
+          assign use_img_fallback = false
+          if founder_img == blank and section.settings.use_theme_image_fallbacks
+            assign use_img_fallback = true
+          endif
+        -%}
+        <div class="landing-founder-story__frame">
+          <div class="landing-founder-story__matte">
+            {%- if founder_img != blank -%}
+              <div class="landing-founder-story__photo">
+                {{
+                  founder_img
+                  | image_url: width: 1600
+                  | image_tag:
+                    loading: 'lazy',
+                    sizes: '(min-width: 990px) 50vw, 100vw',
+                    widths: '400, 600, 800, 1100, 1400, 1600'
+                }}
+              </div>
+            {%- elsif use_img_fallback -%}
+              <div class="landing-founder-story__photo">
+                <img
+                  src="{{ 'landing-founder-story-photo.png' | asset_url }}"
+                  alt=""
+                  width="912"
+                  height="1162"
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(min-width: 990px) 50vw, 100vw"
+                >
+              </div>
+            {%- endif -%}
+            {%- if section.settings.image_saturation_overlay -%}
+              {%- if founder_img != blank or use_img_fallback -%}
+                <div class="landing-founder-story__sat" aria-hidden="true"></div>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if section.settings.quote != blank or section.settings.quote_attribution != blank -%}
+          <aside class="landing-founder-story__quote">
+            <div class="landing-founder-story__quote-bg" aria-hidden="true"></div>
+            <div class="landing-founder-story__quote-inner">
+              {%- if section.settings.quote != blank -%}
+                <div class="landing-founder-story__quote-text rte">{{ section.settings.quote }}</div>
+              {%- endif -%}
+              {%- if section.settings.quote_attribution != blank -%}
+                <p class="landing-founder-story__quote-by">{{ section.settings.quote_attribution | escape }}</p>
+              {%- endif -%}
+            </div>
+          </aside>
+        {%- endif -%}
+      </div>
+
+      <div class="landing-founder-story__col landing-founder-story__col--content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="landing-founder-story__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading_line_1 != blank or section.settings.heading_line_2 != blank -%}
+          <h2 class="landing-founder-story__title">
+            {%- if section.settings.heading_line_1 != blank -%}
+              <span class="landing-founder-story__title-line">{{ section.settings.heading_line_1 | escape }}</span>
+            {%- endif -%}
+            {%- if section.settings.heading_line_2 != blank -%}
+              <span class="landing-founder-story__title-line">{{ section.settings.heading_line_2 | escape }}</span>
+            {%- endif -%}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.body != blank -%}
+          <div class="landing-founder-story__body-wrap">
+            <div class="landing-founder-story__body rte">{{ section.settings.body }}</div>
+          </div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ul class="landing-founder-story__pillars" role="list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'pillar' -%}
+                <li
+                  class="landing-founder-story__pillar"
+                  role="listitem"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.number != blank -%}
+                    <span class="landing-founder-story__pillar-num" aria-hidden="true">{{ block.settings.number | escape }}</span>
+                  {%- endif -%}
+                  <div class="landing-founder-story__pillar-body">
+                    {%- if block.settings.title != blank -%}
+                      <h3 class="landing-founder-story__pillar-title">{{ block.settings.title | escape }}</h3>
+                    {%- endif -%}
+                    {%- if block.settings.text != blank -%}
+                      <p class="landing-founder-story__pillar-desc">{{ block.settings.text | escape }}</p>
+                    {%- endif -%}
+                  </div>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.cta_label != blank -%}
+          <div class="landing-founder-story__cta-wrap">
+            <a
+              class="landing-founder-story__cta"
+              {% if section.settings.cta_link != blank %}
+                href="{{ section.settings.cta_link }}"
+              {% else %}
+                aria-disabled="true"
+              {% endif %}
+            >
+              <span class="landing-founder-story__cta-label">{{ section.settings.cta_label | escape }}</span>
+              <span class="landing-founder-story__cta-rule" aria-hidden="true"></span>
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing founder story",
+  "tag": "section",
+  "class": "landing-founder-story-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Founder photo"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_theme_image_fallbacks",
+      "label": "Use bundled photo when upload is empty",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "image_saturation_overlay",
+      "label": "Desaturate photo (Figma blend)",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Quote card"
+    },
+    {
+      "type": "richtext",
+      "id": "quote",
+      "label": "Quote",
+      "default": "<p>„Kaffee ist nicht nur ein Getränk, es ist eine Blaupause für den perfekten Moment.“</p>"
+    },
+    {
+      "type": "text",
+      "id": "quote_attribution",
+      "label": "Attribution",
+      "default": "— Cemil, Gründer"
+    },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Die Story"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "Mehr als nur"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "Bohnen."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Seit 2018 röste ich in Hameln. Was als Leidenschaft in der Garage begann, ist heute eine Mission: Den ehrlichsten Kaffee der Region zu produzieren.</p><p>Jede Röstung wird von mir persönlich überwacht. Ohne industrielle Automatik, nur mit Nase, Augen und Erfahrung.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Link label",
+      "default": "Lies die ganze story →"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background",
+      "default": "#f9f1e8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#00090b"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (eyebrow)",
+      "default": "#e23528"
+    },
+    {
+      "type": "color",
+      "id": "quote_background",
+      "label": "Quote card fill",
+      "default": "#7d966d"
+    },
+    {
+      "type": "color",
+      "id": "quote_outline_color",
+      "label": "Quote card outline (optional)",
+      "default": "rgba(226, 53, 40, 0)"
+    },
+    {
+      "type": "color",
+      "id": "pillar_number_color",
+      "label": "Pillar numbers (salmon / peach)",
+      "default": "#c9a08c"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Ursprung"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Direkter Handel mit Farmen, die wir beim Namen kennen."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing founder story",
+      "blocks": [
+        {
+          "type": "pillar",
+          "settings": {
+            "number": "01",
+            "title": "Ursprung",
+            "text": "Direkter Handel mit Farmen, die wir beim Namen kennen."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "number": "02",
+            "title": "Röstung",
+            "text": "Schonendes Trommelröstverfahren für maximale Aromaentfaltung."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "number": "03",
+            "title": "Charakter",
+            "text": "Kaffee mit Ecken und Kanten. Nichts für den Massengeschmack."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
