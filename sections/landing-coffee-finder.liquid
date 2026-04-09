@@ -1,0 +1,235 @@
+{{ 'section-landing-coffee-finder.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #landing-coffee-finder-{{ section.id }} {
+    --lcf-surface: {{ section.settings.surface_color }};
+    --lcf-cream: {{ section.settings.cream_color }};
+    --lcf-ink: {{ section.settings.ink_color }};
+  }
+{% endstyle %}
+
+<section
+  id="landing-coffee-finder-{{ section.id }}"
+  class="landing-coffee-finder"
+  aria-label="{{ section.settings.heading_line_1 | default: 'Coffee Finder' | escape }}"
+>
+  <div class="landing-coffee-finder__inner">
+    <div class="landing-coffee-finder__row">
+      <div class="landing-coffee-finder__intro">
+        {%- if section.settings.heading_line_1 != blank
+          or section.settings.heading_line_2 != blank
+          or section.settings.heading_line_3 != blank
+        -%}
+          <h2 class="landing-coffee-finder__title">
+            {%- if section.settings.heading_line_1 != blank -%}
+              <span class="landing-coffee-finder__title-line">{{ section.settings.heading_line_1 | escape }}</span>
+            {%- endif -%}
+            {%- if section.settings.heading_line_2 != blank -%}
+              <span class="landing-coffee-finder__title-line">{{ section.settings.heading_line_2 | escape }}</span>
+            {%- endif -%}
+            {%- if section.settings.heading_line_3 != blank -%}
+              <span class="landing-coffee-finder__title-line">{{ section.settings.heading_line_3 | escape }}</span>
+            {%- endif -%}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.lede != blank -%}
+          <div class="landing-coffee-finder__lede rte">{{ section.settings.lede }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.cta_label != blank -%}
+          <a
+            class="landing-coffee-finder__btn"
+            {% if section.settings.cta_url != blank %}
+              href="{{ section.settings.cta_url }}"
+            {% else %}
+              aria-disabled="true"
+            {% endif %}
+          >
+            {{ section.settings.cta_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="landing-coffee-finder__cards">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'teaser_card' -%}
+              {%- assign card_preset = forloop.index | at_most: 3 -%}
+              <div
+                class="landing-coffee-finder__card landing-coffee-finder__card--preset-{{ card_preset }}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="landing-coffee-finder__card-icon" aria-hidden="true">
+                  {%- if block.settings.icon != blank -%}
+                    {{
+                      block.settings.icon
+                      | image_url: width: 120
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '32, 64, 96, 120'
+                    }}
+                  {%- else -%}
+                    {%- assign fallback_icon = 'landing-coffee-finder-icon-' | append: card_preset | append: '.svg' -%}
+                    {%- if card_preset == 3 -%}
+                      <img
+                        src="{{ fallback_icon | asset_url }}"
+                        alt=""
+                        width="34"
+                        height="55"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                    {%- else -%}
+                      <img
+                        src="{{ fallback_icon | asset_url }}"
+                        alt=""
+                        width="36"
+                        height="36"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.title != blank -%}
+                  <h3 class="landing-coffee-finder__card-title">{{ block.settings.title | escape }}</h3>
+                {%- endif -%}
+                {%- if block.settings.subtitle != blank -%}
+                  <p class="landing-coffee-finder__card-sub">{{ block.settings.subtitle | escape }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing Coffee Finder",
+  "tag": "section",
+  "class": "landing-coffee-finder-section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "Welcher"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "Kaffee passt zu"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_3",
+      "label": "Heading line 3",
+      "default": "dir?"
+    },
+    {
+      "type": "richtext",
+      "id": "lede",
+      "label": "Intro text",
+      "default": "<p>Beantworte 3 kurze Fragen und Cemil zeigt dir deine ideale Röstung.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Finder starten"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link",
+      "info": "Link to the Coffee Finder tool."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "surface_color",
+      "label": "Section background",
+      "default": "#e23528"
+    },
+    {
+      "type": "color",
+      "id": "cream_color",
+      "label": "Cream (text & cards)",
+      "default": "#efdfd3"
+    },
+    {
+      "type": "color",
+      "id": "ink_color",
+      "label": "Black (button & card text)",
+      "default": "#00090b"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "teaser_card",
+      "name": "Teaser card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (optional SVG/PNG)",
+          "info": "Uses theme default icons when empty."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Zubereitung"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Wie brühst du?"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing Coffee Finder",
+      "blocks": [
+        {
+          "type": "teaser_card",
+          "settings": {
+            "title": "Zubereitung",
+            "subtitle": "Wie brühst du?"
+          }
+        },
+        {
+          "type": "teaser_card",
+          "settings": {
+            "title": "Geschmack",
+            "subtitle": "Süß oder Fruchtig?"
+          }
+        },
+        {
+          "type": "teaser_card",
+          "settings": {
+            "title": "Dein Ritual",
+            "subtitle": "Wachwerden oder Genuss?"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -332,6 +332,48 @@
         "founder_p2",
         "founder_p3"
       ]
+    },
+    "home_finder": {
+      "type": "landing-coffee-finder",
+      "settings": {
+        "heading_line_1": "Welcher",
+        "heading_line_2": "Kaffee passt zu",
+        "heading_line_3": "dir?",
+        "lede": "<p>Beantworte 3 kurze Fragen und Cemil zeigt dir deine ideale Röstung.</p>",
+        "cta_label": "Finder starten",
+        "cta_url": "https://shop.diebarista.com/tools/perfect-product-finder/coffeefinder#/questions/1",
+        "surface_color": "#e23528",
+        "cream_color": "#efdfd3",
+        "ink_color": "#00090b"
+      },
+      "blocks": {
+        "finder_1": {
+          "type": "teaser_card",
+          "settings": {
+            "title": "Zubereitung",
+            "subtitle": "Wie brühst du?"
+          }
+        },
+        "finder_2": {
+          "type": "teaser_card",
+          "settings": {
+            "title": "Geschmack",
+            "subtitle": "Süß oder Fruchtig?"
+          }
+        },
+        "finder_3": {
+          "type": "teaser_card",
+          "settings": {
+            "title": "Dein Ritual",
+            "subtitle": "Wachwerden oder Genuss?"
+          }
+        }
+      },
+      "block_order": [
+        "finder_1",
+        "finder_2",
+        "finder_3"
+      ]
     }
   },
   "order": [
@@ -340,6 +382,7 @@
     "home_hero",
     "home_trust",
     "home_roasts",
-    "home_founder"
+    "home_founder",
+    "home_finder"
   ]
 }

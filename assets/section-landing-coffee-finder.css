@@ -1,0 +1,199 @@
+/* Landing Coffee Finder — Figma node 9:423 */
+.landing-coffee-finder {
+  --lcf-surface: #e23528;
+  --lcf-cream: #efdfd3;
+  --lcf-ink: #00090b;
+  background: var(--lcf-surface);
+  color: var(--lcf-cream);
+}
+
+.landing-coffee-finder__inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 5.9559375rem 1.5rem 6rem;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 750px) {
+  .landing-coffee-finder__inner {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.landing-coffee-finder__row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2.5rem;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-coffee-finder__row {
+    flex-direction: row;
+    align-items: center;
+    gap: 4rem;
+  }
+}
+
+/* Left — Figma w ~467px, gap 32px */
+.landing-coffee-finder__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  flex: 0 1 auto;
+  max-width: 29.2rem;
+}
+
+.landing-coffee-finder__title {
+  margin: 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 0.9;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--lcf-cream);
+}
+
+@media screen and (min-width: 990px) {
+  .landing-coffee-finder__title {
+    font-size: 4.5rem;
+    line-height: 4.05rem;
+  }
+}
+
+.landing-coffee-finder__title-line {
+  display: block;
+}
+
+.landing-coffee-finder__lede {
+  margin: 0;
+  padding-bottom: 1rem;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: var(--lcf-cream);
+  opacity: 0.9;
+}
+
+.landing-coffee-finder__lede p {
+  margin: 0 0 0.25rem;
+}
+
+.landing-coffee-finder__lede p:last-child {
+  margin-bottom: 0;
+}
+
+/* Figma Button: #00090b, px 40 py 20, 20px uppercase tracking 1.8px */
+.landing-coffee-finder__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 2.5rem;
+  background: var(--lcf-ink);
+  color: var(--lcf-cream);
+  text-decoration: none;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.1125rem;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 0;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.landing-coffee-finder__btn:hover {
+  opacity: 0.92;
+  color: var(--lcf-cream);
+}
+
+.landing-coffee-finder__btn[aria-disabled='true'] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Right — 3 cols, gap 24px, ~180px row */
+.landing-coffee-finder__cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  max-width: 43.8rem;
+}
+
+@media screen and (min-width: 640px) {
+  .landing-coffee-finder__cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.landing-coffee-finder__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  background: var(--lcf-cream);
+  color: var(--lcf-ink);
+  box-sizing: border-box;
+  min-height: 11.25rem;
+}
+
+.landing-coffee-finder__card-icon {
+  flex-shrink: 0;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-coffee-finder__card-icon img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+.landing-coffee-finder__card--preset-1 .landing-coffee-finder__card-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.landing-coffee-finder__card--preset-2 .landing-coffee-finder__card-icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.landing-coffee-finder__card--preset-3 .landing-coffee-finder__card-icon {
+  width: 2.125rem;
+  height: 3.4375rem;
+}
+
+.landing-coffee-finder__card-title {
+  margin: 0 0 0.5rem;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 900;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.0875rem;
+  text-transform: uppercase;
+  color: var(--lcf-ink);
+}
+
+.landing-coffee-finder__card-sub {
+  margin: 0;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  text-transform: uppercase;
+  color: var(--lcf-ink);
+  opacity: 0.6;
+}
