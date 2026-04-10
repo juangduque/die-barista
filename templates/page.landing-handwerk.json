@@ -471,6 +471,29 @@
         "comm_3",
         "comm_4"
       ]
+    },
+    "home_newsletter": {
+      "type": "landing-newsletter",
+      "settings": {
+        "heading_line_1": "Kaffee-Wissen.",
+        "heading_line_2": "Direkt",
+        "heading_line_3": "Von Cemil.",
+        "lede": "<p>Erhalte exklusive Tipps zur Zubereitung, Einblicke in unsere Röst-Protokolle und erfahre als Erster von neuen Limited Editions.</p>",
+        "email_label": "Deine E-Mail-Adresse",
+        "email_placeholder": "Deine E-Mail-Adresse",
+        "submit_label": "Abonnieren",
+        "success_message": "Danke — du bist dabei.",
+        "use_theme_image_fallbacks": true,
+        "portrait_saturation": true,
+        "quote": "<p>„Kein Spam, versprochen. Nur echte Leidenschaft für Genießer des schwarzen Goldes.“</p>",
+        "quote_attribution": "— Cemil",
+        "surface_color": "#efdfd3",
+        "heading_color": "#000000",
+        "muted_text_color": "#7b5d4d",
+        "placeholder_color": "#6b7280",
+        "button_background": "#000000",
+        "avatar_ring_color": "#e23528"
+      }
     }
   },
   "order": [
@@ -482,6 +505,7 @@
     "home_founder",
     "home_finder",
     "home_abo",
-    "home_community"
+    "home_community",
+    "home_newsletter"
   ]
 }

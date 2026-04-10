@@ -1,0 +1,284 @@
+{{ 'section-landing-newsletter.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #landing-newsletter-{{ section.id }} {
+    --ln-surface: {{ section.settings.surface_color }};
+    --ln-ink: {{ section.settings.heading_color }};
+    --ln-muted: {{ section.settings.muted_text_color }};
+    --ln-placeholder: {{ section.settings.placeholder_color }};
+    --ln-btn: {{ section.settings.button_background }};
+    --ln-ring: {{ section.settings.avatar_ring_color }};
+  }
+{% endstyle %}
+
+{%- assign nl_form_id = 'landing-newsletter-form-' | append: section.id -%}
+
+<section
+  id="landing-newsletter-{{ section.id }}"
+  class="landing-newsletter"
+  aria-label="{{ section.settings.heading_line_1 | default: 'Newsletter' | escape }}"
+>
+  <div class="landing-newsletter__inner">
+    <div class="landing-newsletter__row">
+      <div class="landing-newsletter__col landing-newsletter__col--copy">
+        {%- if section.settings.heading_line_1 != blank
+          or section.settings.heading_line_2 != blank
+          or section.settings.heading_line_3 != blank
+        -%}
+          <h2 class="landing-newsletter__title">
+            {%- if section.settings.heading_line_1 != blank -%}
+              <span class="landing-newsletter__title-line">{{ section.settings.heading_line_1 | escape }}</span>
+            {%- endif -%}
+            {%- if section.settings.heading_line_2 != blank -%}
+              <span class="landing-newsletter__title-line">{{ section.settings.heading_line_2 | escape }}</span>
+            {%- endif -%}
+            {%- if section.settings.heading_line_3 != blank -%}
+              <span class="landing-newsletter__title-line">{{ section.settings.heading_line_3 | escape }}</span>
+            {%- endif -%}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.lede != blank -%}
+          <div class="landing-newsletter__lede rte">{{ section.settings.lede }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="landing-newsletter__col landing-newsletter__col--form">
+        <div class="landing-newsletter__stack">
+          {% form 'customer', id: nl_form_id, class: 'landing-newsletter__form' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+
+            {%- if form.posted_successfully? -%}
+              <p class="landing-newsletter__success" role="status">
+                {{ section.settings.success_message | escape }}
+              </p>
+            {%- else -%}
+              {%- if form.errors -%}
+                <div class="landing-newsletter__errors">
+                  {{ form.errors | default_errors }}
+                </div>
+              {%- endif -%}
+
+              <div class="landing-newsletter__form-row">
+                <div class="landing-newsletter__field">
+                  <label class="landing-newsletter__visually-hidden" for="{{ nl_form_id }}-email">
+                    {{ section.settings.email_label | escape }}
+                  </label>
+                  <input
+                    id="{{ nl_form_id }}-email"
+                    type="email"
+                    name="contact[email]"
+                    class="landing-newsletter__input"
+                    value="{{ form.email }}"
+                    placeholder="{{ section.settings.email_placeholder | escape }}"
+                    autocomplete="email"
+                    required
+                  >
+                </div>
+                <button type="submit" class="landing-newsletter__submit">
+                  {{ section.settings.submit_label | escape }}
+                </button>
+              </div>
+            {%- endif -%}
+          {% endform %}
+
+          {%- liquid
+            assign nl_face = section.settings.portrait
+            assign nl_use_fb = false
+            if nl_face == blank and section.settings.use_theme_image_fallbacks
+              assign nl_use_fb = true
+            endif
+            assign nl_show_face = false
+            if nl_face != blank or nl_use_fb
+              assign nl_show_face = true
+            endif
+          -%}
+          {%- if section.settings.quote != blank or section.settings.quote_attribution != blank or nl_show_face -%}
+            <div class="landing-newsletter__quote-row">
+              {%- if nl_show_face -%}
+                <div class="landing-newsletter__avatar-wrap">
+                  <div class="landing-newsletter__avatar-inner">
+                    {%- if nl_face != blank -%}
+                      {{
+                        nl_face
+                        | image_url: width: 320
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '160, 212, 320'
+                      }}
+                    {%- else -%}
+                      <img
+                        src="{{ 'landing-newsletter-cemil.png' | asset_url }}"
+                        alt=""
+                        width="212"
+                        height="270"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                    {%- endif -%}
+                    {%- if section.settings.portrait_saturation -%}
+                      <div class="landing-newsletter__avatar-sat" aria-hidden="true"></div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              {%- endif -%}
+              <div class="landing-newsletter__quote-body">
+                {%- if section.settings.quote != blank -%}
+                  <div class="landing-newsletter__quote-text rte">{{ section.settings.quote }}</div>
+                {%- endif -%}
+                {%- if section.settings.quote_attribution != blank -%}
+                  <p class="landing-newsletter__quote-by">{{ section.settings.quote_attribution | escape }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing newsletter",
+  "tag": "section",
+  "class": "landing-newsletter-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "Kaffee-Wissen."
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "Direkt"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_3",
+      "label": "Heading line 3",
+      "default": "Von Cemil."
+    },
+    {
+      "type": "richtext",
+      "id": "lede",
+      "label": "Intro",
+      "default": "<p>Erhalte exklusive Tipps zur Zubereitung, Einblicke in unsere Röst-Protokolle und erfahre als Erster von neuen Limited Editions.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email label (accessibility)",
+      "default": "Deine E-Mail-Adresse"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Deine E-Mail-Adresse",
+      "info": "Shown in uppercase via CSS to match the design."
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button",
+      "default": "Abonnieren"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Danke — du bist dabei."
+    },
+    {
+      "type": "header",
+      "content": "Quote"
+    },
+    {
+      "type": "image_picker",
+      "id": "portrait",
+      "label": "Portrait (round)"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_theme_image_fallbacks",
+      "label": "Use bundled portrait when upload is empty",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "portrait_saturation",
+      "label": "Desaturate portrait (Figma blend)",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "quote",
+      "label": "Quote",
+      "default": "<p>„Kein Spam, versprochen. Nur echte Leidenschaft für Genießer des schwarzen Goldes.“</p>"
+    },
+    {
+      "type": "text",
+      "id": "quote_attribution",
+      "label": "Attribution",
+      "default": "— Cemil"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "surface_color",
+      "label": "Background",
+      "default": "#efdfd3"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text",
+      "default": "#7b5d4d"
+    },
+    {
+      "type": "color",
+      "id": "placeholder_color",
+      "label": "Input placeholder",
+      "default": "#6b7280"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "avatar_ring_color",
+      "label": "Portrait ring",
+      "default": "#e23528"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing newsletter"
+    }
+  ]
+}
+{% endschema %}
