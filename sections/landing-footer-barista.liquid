@@ -7,7 +7,7 @@
     --lf-text: {{ section.settings.text_color }};
     --lf-tagline-opacity: {{ section.settings.tagline_opacity | times: 1.0 | divided_by: 100 }};
     --lf-copyright-opacity: {{ section.settings.copyright_opacity | times: 1.0 | divided_by: 100 }};
-    --lf-payment-opacity: {{ section.settings.payment_icons_opacity | times: 1.0 | divided_by: 100 }};
+    --lf-payment-opacity: {{ section.settings.payment_icons_opacity | default: 50 | times: 1.0 | divided_by: 100 }};
   }
 {% endstyle %}
 
@@ -186,40 +186,41 @@
         <p class="landing-footer-barista__copyright">{{ section.settings.copyright | escape }}</p>
       {%- endif -%}
 
-      {%- if section.settings.show_payment_icons -%}
-        <div class="landing-footer-barista__payments" aria-hidden="true">
-          <span class="landing-footer-barista__pay-icon">
-            <img
-              class="landing-footer-barista__pay-img"
-              src="{{ 'landing-footer-pay-1.svg' | asset_url }}"
-              width="28"
-              height="20"
-              alt=""
-              loading="lazy"
-            >
-          </span>
-          <span class="landing-footer-barista__pay-icon">
-            <img
-              class="landing-footer-barista__pay-img"
-              src="{{ 'landing-footer-pay-2.svg' | asset_url }}"
-              width="26"
-              height="20"
-              alt=""
-              loading="lazy"
-            >
-          </span>
-          <span class="landing-footer-barista__pay-icon">
-            <img
-              class="landing-footer-barista__pay-img"
-              src="{{ 'landing-footer-pay-3.svg' | asset_url }}"
-              width="24"
-              height="22"
-              alt=""
-              loading="lazy"
-            >
-          </span>
-        </div>
-      {%- endif -%}
+      <div class="landing-footer-barista__payments">
+        <span class="landing-footer-barista__pay-icon">
+          <img
+            class="landing-footer-barista__pay-img"
+            src="{{ 'landing-footer-pay-1.svg' | asset_url }}"
+            width="28"
+            height="20"
+            alt=""
+            loading="eager"
+            decoding="async"
+          >
+        </span>
+        <span class="landing-footer-barista__pay-icon">
+          <img
+            class="landing-footer-barista__pay-img"
+            src="{{ 'landing-footer-pay-2.svg' | asset_url }}"
+            width="26"
+            height="20"
+            alt=""
+            loading="eager"
+            decoding="async"
+          >
+        </span>
+        <span class="landing-footer-barista__pay-icon">
+          <img
+            class="landing-footer-barista__pay-img"
+            src="{{ 'landing-footer-pay-3.svg' | asset_url }}"
+            width="24"
+            height="22"
+            alt=""
+            loading="eager"
+            decoding="async"
+          >
+        </span>
+      </div>
     </div>
   </div>
 </footer>
@@ -349,12 +350,6 @@
       "unit": "%",
       "label": "Copyright Deckkraft",
       "default": 40
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "Zahlungs-Icons anzeigen",
-      "default": true
     },
     {
       "type": "range",

@@ -7,7 +7,7 @@
     --lf-accent: {{ section.settings.accent_color | default: '#e23528' }};
     --lf-quote-surface: {{ section.settings.quote_background | default: '#7d966d' }};
     --lf-pillar-num: {{ section.settings.pillar_number_color | default: '#c9a08c' }};
-    --lf-quote-outline: {{ section.settings.quote_outline_color | default: 'transparent' }};
+    --lf-quote-outline: {{ section.settings.quote_outline_color | default: '#e23528' }};
   }
 {% endstyle %}
 
@@ -62,15 +62,12 @@
 
         {%- if section.settings.quote != blank or section.settings.quote_attribution != blank -%}
           <aside class="landing-founder-story__quote">
-            <div class="landing-founder-story__quote-bg" aria-hidden="true"></div>
-            <div class="landing-founder-story__quote-inner">
-              {%- if section.settings.quote != blank -%}
-                <div class="landing-founder-story__quote-text rte">{{ section.settings.quote }}</div>
-              {%- endif -%}
-              {%- if section.settings.quote_attribution != blank -%}
-                <p class="landing-founder-story__quote-by">{{ section.settings.quote_attribution | escape }}</p>
-              {%- endif -%}
-            </div>
+            {%- if section.settings.quote != blank -%}
+              <div class="landing-founder-story__quote-text rte">{{ section.settings.quote }}</div>
+            {%- endif -%}
+            {%- if section.settings.quote_attribution != blank -%}
+              <p class="landing-founder-story__quote-by">{{ section.settings.quote_attribution | escape }}</p>
+            {%- endif -%}
           </aside>
         {%- endif -%}
       </div>
@@ -251,13 +248,13 @@
       "type": "color",
       "id": "quote_background",
       "label": "Quote card fill",
-      "default": "#7d966d"
+      "default": "#759769"
     },
     {
       "type": "color",
       "id": "quote_outline_color",
-      "label": "Quote card outline (optional)",
-      "default": "rgba(226, 53, 40, 0)"
+      "label": "Quote card outline",
+      "default": "#e23528"
     },
     {
       "type": "color",

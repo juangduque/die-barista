@@ -9,6 +9,7 @@
   --ln-btn: #000000;
   --ln-ring: #e23528;
   background: var(--ln-surface);
+  height: 300px;
 }
 
 .landing-newsletter__inner {

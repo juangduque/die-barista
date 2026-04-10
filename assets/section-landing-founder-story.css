@@ -3,9 +3,9 @@
   --lf-bg: #f9f1e8;
   --lf-ink: #00090b;
   --lf-accent: #e23528;
-  --lf-quote-surface: #7d966d;
+  --lf-quote-surface: #759769;
   --lf-pillar-num: #c9a08c;
-  --lf-quote-outline: transparent;
+  --lf-quote-outline: #e23528;
   background: var(--lf-bg);
 }
 
@@ -143,39 +143,24 @@
   pointer-events: none;
 }
 
-/* Quote: solid sage, shadow; optional outline from theme. Anchored ~center of photo, bridges into gutter */
+/* Quote card — Figma 9:170 (sage fill, red border, shadow, New Frank) */
 .landing-founder-story__quote {
   position: relative;
   z-index: 2;
-  width: 100%;
-  max-width: 264px;
-  margin: -1.5rem auto 0;
-  border: 2px solid var(--lf-quote-outline);
-  padding: 0;
-  box-sizing: border-box;
-  background: transparent;
-}
-
-.landing-founder-story__quote-bg {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  background: var(--lf-quote-surface);
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.12),
-    0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  pointer-events: none;
-}
-
-.landing-founder-story__quote-inner {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 1.03125rem;
-  width: 225px;
-  padding: 34px 35px 34px 34px;
+  align-items: flex-start;
+  gap: 1.03125rem; /* 16.5px */
+  width: 100%;
+  max-width: 20rem; /* ~320px incl. padding; matches Figma content + inset */
+  margin: -1.5rem auto 0;
+  padding: 2.125rem 2.2rem 2.125rem 2.125rem; /* 34px; right ~35px */
+  box-sizing: border-box;
+  background: var(--lf-quote-surface);
+  border: 2px solid var(--lf-quote-outline);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
 @media screen and (min-width: 990px) {
@@ -183,35 +168,56 @@
     position: absolute;
     left: 50%;
     right: auto;
-    bottom: -2rem;
+    top: 376px;
+    bottom: auto;
     margin: 0;
     margin-left: -2.25rem;
-    max-width: 264px;
+    width: 212px;
+    max-width: 212px;
+    height: 150px;
+    box-sizing: border-box;
   }
 }
 
-.landing-founder-story__quote-text {
+/* Kill global .rte spacing/typography inside the quote card */
+.landing-founder-story__quote-text.rte {
   margin: 0;
-  max-width: 16.5rem;
-  font-family: new-frank;
+  max-width: 15.6875rem; /* ~251px text block in Figma */
+}
+
+.landing-founder-story__quote-text.rte * {
+  line-height: inherit;
+}
+
+.landing-founder-story__quote-text {
+  font-family: new-frank, sans-serif;
   font-weight: 600;
   font-size: 1rem;
-  line-height: 1.625rem;
+  line-height: 1.625rem; /* 26px */
   color: #000;
 }
 
-.landing-founder-story__quote-text p {
+.landing-founder-story__quote-text.rte p {
   margin: 0;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.625;
+}
+
+.landing-founder-story__quote-text.rte p + p {
+  margin-top: 0;
 }
 
 .landing-founder-story__quote-by {
   margin: 0;
-  align-self: flex-end;
-  font-family: 'Source Sans 3', sans-serif;
+  margin-top: 15px;
+  align-self: flex-start;
+  font-family: new-frank, sans-serif;
   font-weight: 500;
-  font-size: 0.625rem;
-  line-height: 0.9375rem;
-  letter-spacing: 0.0625rem;
+  font-size: 10px;
+  line-height: 0.9375rem; /* 15px */
+  letter-spacing: 0.0625rem; /* 1px */
   text-transform: uppercase;
   color: #221a13;
   white-space: nowrap;

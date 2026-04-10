@@ -618,7 +618,6 @@
         "legal_heading": "Rechtliches",
         "copyright": "© 2024 DIE BARISTA ROASTERY. BUILT WITH PASSION IN HAMELN.",
         "copyright_opacity": 40,
-        "show_payment_icons": true,
         "payment_icons_opacity": 85,
         "background_color": "#000000",
         "accent_color": "#e23528",

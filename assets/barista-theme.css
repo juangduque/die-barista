@@ -141,3 +141,8 @@
 }
 .db-cart-toast.show { transform: translateY(0); opacity: 1; }
 .db-cart-toast .icon { color: var(--db-red); }
+
+li {
+  font-family: 'Social Gothic', sans-serif;
+  font-weight: 300;
+}

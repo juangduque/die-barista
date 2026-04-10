@@ -548,14 +548,14 @@
 			{{ 'accessibility.skip_to_text' | t }}
 		</a>
 		{%- liquid
-			assign barista_landing_header = false
+			assign barista_landing_shell = false
 			if template.name == 'index'
-				assign barista_landing_header = true
+				assign barista_landing_shell = true
 			elsif template.name == 'page' and template.suffix == 'landing-handwerk'
-				assign barista_landing_header = true
+				assign barista_landing_shell = true
 			endif
 		-%}
-		{%- unless barista_landing_header -%}
+		{%- unless barista_landing_shell -%}
 			{% sections 'header-group' %}
 		{%- endunless -%}
 		{% sections 'overlay-group' %}
@@ -570,7 +570,9 @@
 		>
 			{{ content_for_layout }}
 		</main>
-		{% sections 'footer-group' %}
+		{%- unless barista_landing_shell -%}
+			{% sections 'footer-group' %}
+		{%- endunless -%}
 
 		{% if settings.show_back_to_top %}
 			{% render 'scroll-top' %}
