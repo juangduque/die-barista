@@ -1,0 +1,182 @@
+/* Landing Community Grid — Figma node 9:241 */
+.landing-community {
+  --lc-page: #fdfaf7;
+  --lc-heading: #000000;
+  --lc-sub: #7b5d4d;
+  --lc-btn: #759769;
+  --lc-tone-cream: #efdfd3;
+  --lc-tone-brown: #7b5d4d;
+  --lc-tone-red: #e23528;
+  --lc-tone-green: #759769;
+  background: var(--lc-page);
+}
+
+.landing-community__inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 6rem 1.5rem 5rem;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 750px) {
+  .landing-community__inner {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.landing-community__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.landing-community__title {
+  margin: 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--lc-heading);
+}
+
+@media screen and (min-width: 990px) {
+  .landing-community__title {
+    font-size: 4rem;
+    line-height: 4rem;
+  }
+}
+
+.landing-community__sub {
+  margin: 0;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.4875rem;
+  color: var(--lc-sub);
+  max-width: 40rem;
+}
+
+.landing-community__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 550px) {
+  .landing-community__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .landing-community__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.landing-community__cell {
+  position: relative;
+  overflow: hidden;
+  min-height: 17.75rem;
+  background: var(--lc-tone-cream);
+}
+
+.landing-community__cell--cream {
+  background: var(--lc-tone-cream);
+}
+
+.landing-community__cell--brown {
+  background: var(--lc-tone-brown);
+}
+
+.landing-community__cell--red {
+  background: var(--lc-tone-red);
+}
+
+.landing-community__cell--green {
+  background: var(--lc-tone-green);
+}
+
+.landing-community__cell-media {
+  position: absolute;
+  inset: 0;
+}
+
+.landing-community__cell-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.landing-community__cell-sat {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #fff;
+  mix-blend-mode: saturation;
+  pointer-events: none;
+}
+
+.landing-community__cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.landing-community__cta {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.25rem 2.5rem;
+  background: var(--lc-btn);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 2px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  letter-spacing: 0.175rem;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.landing-community__cta:hover {
+  opacity: 0.92;
+  color: #fff;
+}
+
+.landing-community__cta-icon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-community__cta-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Uploaded icons are often dark — force white on the green button */
+.landing-community__cta-icon--dark img {
+  filter: brightness(0) invert(1);
+}
+
+.landing-community__cta[aria-disabled='true'] {
+  opacity: 0.45;
+  pointer-events: none;
+}

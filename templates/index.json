@@ -414,6 +414,56 @@
         "abo_b2",
         "abo_b3"
       ]
+    },
+    "home_community": {
+      "type": "landing-community-grid",
+      "settings": {
+        "heading": "#DieBarista Momente",
+        "subtext": "Teile deine Kaffee-Routine mit unserer Community in Hameln.",
+        "cta_label": "Folge mir auf Instagram",
+        "cta_url": "https://www.instagram.com/die_barista/",
+        "use_theme_image_fallbacks": true,
+        "page_background": "#fdfaf7",
+        "heading_color": "#000000",
+        "subtext_color": "#7b5d4d",
+        "button_background": "#759769"
+      },
+      "blocks": {
+        "comm_1": {
+          "type": "moment",
+          "settings": {
+            "tone": "cream",
+            "desaturate": true
+          }
+        },
+        "comm_2": {
+          "type": "moment",
+          "settings": {
+            "tone": "brown",
+            "desaturate": true
+          }
+        },
+        "comm_3": {
+          "type": "moment",
+          "settings": {
+            "tone": "red",
+            "desaturate": true
+          }
+        },
+        "comm_4": {
+          "type": "moment",
+          "settings": {
+            "tone": "green",
+            "desaturate": true
+          }
+        }
+      },
+      "block_order": [
+        "comm_1",
+        "comm_2",
+        "comm_3",
+        "comm_4"
+      ]
     }
   },
   "order": [
@@ -423,6 +473,7 @@
     "home_roasts",
     "home_founder",
     "home_finder",
-    "home_abo"
+    "home_abo",
+    "home_community"
   ]
 }
