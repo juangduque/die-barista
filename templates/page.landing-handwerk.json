@@ -374,6 +374,53 @@
         "finder_2",
         "finder_3"
       ]
+    },
+    "home_abo": {
+      "type": "landing-kaffee-abo",
+      "settings": {
+        "use_theme_image_fallbacks": true,
+        "heading_line_1": "Nie wieder",
+        "heading_line_accent": "Ohne Kaffee",
+        "heading_period": ".",
+        "body": "<p>Mit unserem Kaffee-Abo erhältst du deine Lieblingsbohnen automatisch nach Hause geliefert. Frisch geröstet, pünktlich und absolut flexibel.</p>",
+        "cta_label": "Jetzt abonnieren",
+        "cta_url": "shopify://collections/kaffeeabo",
+        "page_background": "#fdfaf7",
+        "frame_color": "#ffffff",
+        "panel_background": "#f0eee8",
+        "accent_color": "#759769",
+        "headline_color": "#1b1c18",
+        "body_color": "#59413d",
+        "list_text_color": "#1b1c18"
+      },
+      "blocks": {
+        "abo_b1": {
+          "type": "benefit",
+          "settings": {
+            "number": "01",
+            "text": "10% Dauerhafter Preisvorteil"
+          }
+        },
+        "abo_b2": {
+          "type": "benefit",
+          "settings": {
+            "number": "02",
+            "text": "Lieferintervall frei wählbar"
+          }
+        },
+        "abo_b3": {
+          "type": "benefit",
+          "settings": {
+            "number": "03",
+            "text": "Jederzeit kündbar oder pausierbar"
+          }
+        }
+      },
+      "block_order": [
+        "abo_b1",
+        "abo_b2",
+        "abo_b3"
+      ]
     }
   },
   "order": [
@@ -383,6 +430,7 @@
     "home_trust",
     "home_roasts",
     "home_founder",
-    "home_finder"
+    "home_finder",
+    "home_abo"
   ]
 }

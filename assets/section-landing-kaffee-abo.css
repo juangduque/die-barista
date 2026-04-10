@@ -1,0 +1,219 @@
+/* Landing Kaffee-Abo — Figma node 9:210 / 9:213 + white outer frame */
+.landing-kaffee-abo {
+  --lk-page: #fdfaf7;
+  --lk-frame: #ffffff;
+  --lk-panel: #f0eee8;
+  --lk-accent: #759769;
+  --lk-headline: #1b1c18;
+  --lk-body: #59413d;
+  --lk-list: #1b1c18;
+  background: var(--lk-page);
+}
+
+.landing-kaffee-abo__shell {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 750px) {
+  .landing-kaffee-abo__shell {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+/* Thick white frame around the beige panel (design reference / screenshot) */
+.landing-kaffee-abo__frame {
+  background: var(--lk-frame);
+  padding: clamp(0.875rem, 2.5vw, 1.375rem);
+  box-sizing: border-box;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+}
+
+/* Inner panel: beige + 8px sage left bar — Figma 9:213 */
+.landing-kaffee-abo__panel {
+  background: var(--lk-panel);
+  border-left: 8px solid var(--lk-accent);
+  box-sizing: border-box;
+}
+
+.landing-kaffee-abo__panel-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2.5rem;
+  padding: 3rem 1.5rem 3rem 1.75rem;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-kaffee-abo__panel-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: 6rem 6rem 6rem 6.5rem;
+  }
+}
+
+.landing-kaffee-abo__copy {
+  flex: 0 1 auto;
+  max-width: 36rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+/* Heading — 64px / 60px lh; black + accent + period */
+.landing-kaffee-abo__title {
+  margin: 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  line-height: 0.94;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--lk-headline);
+  font-variant-ligatures: none;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-kaffee-abo__title {
+    font-size: 4rem;
+    line-height: 3.75rem;
+  }
+}
+
+.landing-kaffee-abo__title-line {
+  display: block;
+}
+
+.landing-kaffee-abo__title-accent {
+  color: var(--lk-accent);
+}
+
+.landing-kaffee-abo__title-dot {
+  font-weight: 600;
+  font-size: 0.94em;
+  color: var(--lk-accent);
+}
+
+.landing-kaffee-abo__body {
+  margin: 0;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 2.03125rem;
+  color: var(--lk-body);
+  max-width: 36rem;
+}
+
+.landing-kaffee-abo__body p {
+  margin: 0 0 0.35rem;
+}
+
+.landing-kaffee-abo__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* List — py 24px total via gap; items gap 24px, row gap 16px */
+.landing-kaffee-abo__list {
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.landing-kaffee-abo__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.landing-kaffee-abo__item-num {
+  flex-shrink: 0;
+  width: 3rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+  line-height: 3rem;
+  color: var(--lk-accent);
+  text-align: left;
+}
+
+.landing-kaffee-abo__item-text {
+  margin: 0;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: var(--lk-list);
+}
+
+/* Button — Figma 9:237 */
+.landing-kaffee-abo__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.375rem;
+  padding: 0 2.5rem;
+  background: var(--lk-accent);
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.125rem;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.landing-kaffee-abo__btn:hover {
+  opacity: 0.94;
+  color: #fff;
+}
+
+.landing-kaffee-abo__btn[aria-disabled='true'] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Visual — square, composite art */
+.landing-kaffee-abo__media {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: 36rem;
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  align-self: center;
+}
+
+@media screen and (min-width: 990px) {
+  .landing-kaffee-abo__media {
+    max-width: none;
+    margin: 0;
+    align-self: center;
+  }
+}
+
+.landing-kaffee-abo__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}

@@ -1,0 +1,272 @@
+{{ 'section-landing-kaffee-abo.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #landing-kaffee-abo-{{ section.id }} {
+    --lk-page: {{ section.settings.page_background }};
+    --lk-frame: {{ section.settings.frame_color }};
+    --lk-panel: {{ section.settings.panel_background }};
+    --lk-accent: {{ section.settings.accent_color }};
+    --lk-headline: {{ section.settings.headline_color }};
+    --lk-body: {{ section.settings.body_color }};
+    --lk-list: {{ section.settings.list_text_color }};
+  }
+{% endstyle %}
+
+<section
+  id="landing-kaffee-abo-{{ section.id }}"
+  class="landing-kaffee-abo"
+  aria-label="{{ section.settings.heading_line_1 | default: 'Kaffee-Abo' | escape }}"
+>
+  <div class="landing-kaffee-abo__shell">
+    <div class="landing-kaffee-abo__frame">
+      <div class="landing-kaffee-abo__panel">
+        <div class="landing-kaffee-abo__panel-inner">
+          <div class="landing-kaffee-abo__copy">
+            {%- if section.settings.heading_line_1 != blank
+              or section.settings.heading_line_accent != blank
+            -%}
+              <h2 class="landing-kaffee-abo__title">
+                {%- if section.settings.heading_line_1 != blank -%}
+                  <span class="landing-kaffee-abo__title-line">{{ section.settings.heading_line_1 | escape }}</span>
+                {%- endif -%}
+                {%- if section.settings.heading_line_accent != blank -%}
+                  <span class="landing-kaffee-abo__title-line">
+                    <span class="landing-kaffee-abo__title-accent">{{ section.settings.heading_line_accent | escape }}</span>
+                    {%- if section.settings.heading_period != blank -%}
+                      <span class="landing-kaffee-abo__title-dot">{{ section.settings.heading_period | escape }}</span>
+                    {%- endif -%}
+                  </span>
+                {%- endif -%}
+              </h2>
+            {%- endif -%}
+
+            {%- if section.settings.body != blank -%}
+              <div class="landing-kaffee-abo__body rte">{{ section.settings.body }}</div>
+            {%- endif -%}
+
+            {%- if section.blocks.size > 0 -%}
+              <ul class="landing-kaffee-abo__list" role="list">
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'benefit' -%}
+                    <li class="landing-kaffee-abo__item" role="listitem" {{ block.shopify_attributes }}>
+                      {%- if block.settings.number != blank -%}
+                        <span class="landing-kaffee-abo__item-num" aria-hidden="true">{{ block.settings.number | escape }}</span>
+                      {%- endif -%}
+                      {%- if block.settings.text != blank -%}
+                        <p class="landing-kaffee-abo__item-text">{{ block.settings.text | escape }}</p>
+                      {%- endif -%}
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            {%- if section.settings.cta_label != blank -%}
+              <a
+                class="landing-kaffee-abo__btn"
+                {% if section.settings.cta_url != blank %}
+                  href="{{ section.settings.cta_url }}"
+                {% else %}
+                  aria-disabled="true"
+                {% endif %}
+              >
+                {{ section.settings.cta_label | escape }}
+              </a>
+            {%- endif -%}
+          </div>
+
+          {%- liquid
+            assign abo_img = section.settings.image
+            assign use_abo_fallback = false
+            if abo_img == blank and section.settings.use_theme_image_fallbacks
+              assign use_abo_fallback = true
+            endif
+          -%}
+          {%- if abo_img != blank or use_abo_fallback -%}
+            <div class="landing-kaffee-abo__media">
+              {%- if abo_img != blank -%}
+                {{
+                  abo_img
+                  | image_url: width: 1600
+                  | image_tag:
+                    loading: 'lazy',
+                    sizes: '(min-width: 990px) 45vw, 100vw',
+                    widths: '400, 600, 800, 1100, 1400, 1600'
+                }}
+              {%- else -%}
+                <img
+                  src="{{ 'landing-kaffee-abo-visual.png' | asset_url }}"
+                  alt=""
+                  width="2000"
+                  height="2000"
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(min-width: 990px) 45vw, 100vw"
+                >
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Landing Kaffee-Abo",
+  "tag": "section",
+  "class": "landing-kaffee-abo-section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Right visual (square)"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_theme_image_fallbacks",
+      "label": "Use bundled artwork when upload is empty",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1 (dark)",
+      "default": "Nie wieder"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_accent",
+      "label": "Heading line 2 (accent)",
+      "default": "Ohne Kaffee"
+    },
+    {
+      "type": "text",
+      "id": "heading_period",
+      "label": "After accent line",
+      "default": "."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Mit unserem Kaffee-Abo erhältst du deine Lieblingsbohnen automatisch nach Hause geliefert. Frisch geröstet, pünktlich und absolut flexibel.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Jetzt abonnieren"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "page_background",
+      "label": "Outside page background",
+      "default": "#fdfaf7"
+    },
+    {
+      "type": "color",
+      "id": "frame_color",
+      "label": "White frame",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "panel_background",
+      "label": "Inner panel",
+      "default": "#f0eee8"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (bar, numbers, button)",
+      "default": "#759769"
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline (dark part)",
+      "default": "#1b1c18"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text",
+      "default": "#59413d"
+    },
+    {
+      "type": "color",
+      "id": "list_text_color",
+      "label": "Benefit text",
+      "default": "#1b1c18"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "10% Dauerhafter Preisvorteil"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing Kaffee-Abo",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "number": "01",
+            "text": "10% Dauerhafter Preisvorteil"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "number": "02",
+            "text": "Lieferintervall frei wählbar"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "number": "03",
+            "text": "Jederzeit kündbar oder pausierbar"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
