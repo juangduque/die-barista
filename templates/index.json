@@ -487,6 +487,143 @@
         "button_background": "#000000",
         "avatar_ring_color": "#e23528"
       }
+    },
+    "home_footer": {
+      "type": "landing-footer-barista",
+      "blocks": {
+        "ff_shop_1": {
+          "type": "link",
+          "settings": {
+            "column": "shop",
+            "label": "Alle Röstungen",
+            "url": "shopify://collections/kaffee"
+          }
+        },
+        "ff_shop_2": {
+          "type": "link",
+          "settings": {
+            "column": "shop",
+            "label": "Kaffee-Abo",
+            "url": "shopify://collections/kaffeeabo"
+          }
+        },
+        "ff_shop_3": {
+          "type": "link",
+          "settings": {
+            "column": "shop",
+            "label": "Equipment",
+            "url": "shopify://collections/equipment"
+          }
+        },
+        "ff_shop_4": {
+          "type": "link",
+          "settings": {
+            "column": "shop",
+            "label": "Gutscheine",
+            "url": "shopify://collections/geschenke"
+          }
+        },
+        "ff_bar_1": {
+          "type": "link",
+          "settings": {
+            "column": "barista",
+            "label": "B2B & Gastronomie",
+            "url": "shopify://pages/b2b"
+          }
+        },
+        "ff_bar_2": {
+          "type": "link",
+          "settings": {
+            "column": "barista",
+            "label": "Über Cemil",
+            "url": "shopify://pages/uber-uns"
+          }
+        },
+        "ff_bar_3": {
+          "type": "link",
+          "settings": {
+            "column": "barista",
+            "label": "Unsere Werte",
+            "url": "shopify://pages/unsere-werte"
+          }
+        },
+        "ff_bar_4": {
+          "type": "link",
+          "settings": {
+            "column": "barista",
+            "label": "Kontakt",
+            "url": "shopify://pages/contact"
+          }
+        },
+        "ff_leg_1": {
+          "type": "link",
+          "settings": {
+            "column": "legal",
+            "label": "Impressum",
+            "url": "shopify://policies/legal-notice"
+          }
+        },
+        "ff_leg_2": {
+          "type": "link",
+          "settings": {
+            "column": "legal",
+            "label": "Datenschutz",
+            "url": "shopify://policies/privacy-policy"
+          }
+        },
+        "ff_leg_3": {
+          "type": "link",
+          "settings": {
+            "column": "legal",
+            "label": "AGB",
+            "url": "shopify://policies/terms-of-service"
+          }
+        },
+        "ff_leg_4": {
+          "type": "link",
+          "settings": {
+            "column": "legal",
+            "label": "Widerruf",
+            "url": "shopify://policies/refund-policy"
+          }
+        }
+      },
+      "block_order": [
+        "ff_shop_1",
+        "ff_shop_2",
+        "ff_shop_3",
+        "ff_shop_4",
+        "ff_bar_1",
+        "ff_bar_2",
+        "ff_bar_3",
+        "ff_bar_4",
+        "ff_leg_1",
+        "ff_leg_2",
+        "ff_leg_3",
+        "ff_leg_4"
+      ],
+      "settings": {
+        "menu_label": "Fußzeile",
+        "invert_logo_on_dark": true,
+        "tagline_line_1": "\"EVERY BEAN HAS A BLUEPRINT\" - CEMIL.",
+        "tagline_line_2": "Rösterei & Atelier",
+        "tagline_line_3": "Hameln, Deutschland",
+        "tagline_opacity": 40,
+        "social_globe_url": "https://shop.diebarista.com/",
+        "social_globe_label": "Website",
+        "social_instagram_url": "https://www.instagram.com/diebarista/",
+        "social_instagram_label": "Instagram",
+        "shop_heading": "Shop",
+        "barista_heading": "Die Barista",
+        "legal_heading": "Rechtliches",
+        "copyright": "© 2024 DIE BARISTA ROASTERY. BUILT WITH PASSION IN HAMELN.",
+        "copyright_opacity": 40,
+        "show_payment_icons": true,
+        "payment_icons_opacity": 85,
+        "background_color": "#000000",
+        "accent_color": "#e23528",
+        "text_color": "#efdfd3"
+      }
     }
   },
   "order": [
@@ -498,6 +635,7 @@
     "home_finder",
     "home_abo",
     "home_community",
-    "home_newsletter"
+    "home_newsletter",
+    "home_footer"
   ]
 }

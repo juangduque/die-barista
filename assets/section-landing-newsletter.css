@@ -73,11 +73,13 @@
 
 .landing-newsletter__title-line {
   display: block;
+  font-family: 'Social Gothic', sans-serif;
+  font-weight: 700;
 }
 
 .landing-newsletter__lede {
   margin: 0;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: 'New Frank', sans-serif;
   font-weight: 500;
   font-size: 0.8125rem;
   line-height: 1.4875rem;
@@ -294,11 +296,11 @@
 }
 
 .landing-newsletter__quote-by {
-  margin: 0.25rem 0 0;
+  margin: 0.35rem 0 0;
   font-family: 'Source Sans 3', sans-serif;
-  font-weight: 500;
-  font-size: 0.9375rem;
-  line-height: 1.015625rem;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.75rem;
   color: var(--ln-muted);
 }
 

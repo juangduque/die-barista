@@ -1,0 +1,527 @@
+{{ 'section-landing-footer-barista.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #landing-footer-barista-{{ section.id }} {
+    --lf-bg: {{ section.settings.background_color }};
+    --lf-accent: {{ section.settings.accent_color }};
+    --lf-text: {{ section.settings.text_color }};
+    --lf-tagline-opacity: {{ section.settings.tagline_opacity | times: 1.0 | divided_by: 100 }};
+    --lf-copyright-opacity: {{ section.settings.copyright_opacity | times: 1.0 | divided_by: 100 }};
+    --lf-payment-opacity: {{ section.settings.payment_icons_opacity | times: 1.0 | divided_by: 100 }};
+  }
+{% endstyle %}
+
+<footer
+  id="landing-footer-barista-{{ section.id }}"
+  class="landing-footer-barista"
+  aria-label="{{ section.settings.menu_label | default: 'Fußzeile' | escape }}"
+>
+  <div class="landing-footer-barista__inner">
+    <div class="landing-footer-barista__grid">
+      <div class="landing-footer-barista__brand">
+        <a
+          class="landing-footer-barista__logo-link"
+          href="{{ section.settings.logo_link | default: routes.root_url }}"
+        >
+          {%- assign lf_invert_logo = true -%}
+          {%- if section.settings.invert_logo_on_dark == false -%}
+            {%- assign lf_invert_logo = false -%}
+          {%- endif -%}
+          {%- if section.settings.logo != blank -%}
+            {%- if lf_invert_logo -%}
+              {{
+                section.settings.logo
+                | image_url: width: 560
+                | image_tag:
+                  class: 'landing-footer-barista__logo landing-footer-barista__logo--invert',
+                  widths: '140, 280, 420',
+                  sizes: '(min-width: 990px) 160px, 132px',
+                  loading: 'lazy',
+                  alt: shop.name
+              }}
+            {%- else -%}
+              {{
+                section.settings.logo
+                | image_url: width: 560
+                | image_tag:
+                  class: 'landing-footer-barista__logo',
+                  widths: '140, 280, 420',
+                  sizes: '(min-width: 990px) 160px, 132px',
+                  loading: 'lazy',
+                  alt: shop.name
+              }}
+            {%- endif -%}
+          {%- elsif lf_invert_logo -%}
+            <img
+              class="landing-footer-barista__logo landing-footer-barista__logo--invert"
+              src="{{ 'landing-footer-logo.png' | asset_url }}"
+              width="200"
+              height="141"
+              loading="lazy"
+              alt="{{ shop.name | escape }}"
+            >
+          {%- else -%}
+            <img
+              class="landing-footer-barista__logo"
+              src="{{ 'landing-footer-logo.png' | asset_url }}"
+              width="200"
+              height="141"
+              loading="lazy"
+              alt="{{ shop.name | escape }}"
+            >
+          {%- endif -%}
+        </a>
+
+        {%- if section.settings.tagline_line_1 != blank
+          or section.settings.tagline_line_2 != blank
+          or section.settings.tagline_line_3 != blank
+        -%}
+          <div class="landing-footer-barista__tagline">
+            {%- if section.settings.tagline_line_1 != blank -%}
+              <p class="landing-footer-barista__tagline-line">{{ section.settings.tagline_line_1 | escape }}</p>
+            {%- endif -%}
+            {%- if section.settings.tagline_line_2 != blank -%}
+              <p class="landing-footer-barista__tagline-line">{{ section.settings.tagline_line_2 | escape }}</p>
+            {%- endif -%}
+            {%- if section.settings.tagline_line_3 != blank -%}
+              <p class="landing-footer-barista__tagline-line">{{ section.settings.tagline_line_3 | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.social_globe_url != blank or section.settings.social_instagram_url != blank -%}
+          <div class="landing-footer-barista__social">
+            {%- if section.settings.social_globe_url != blank -%}
+              <a
+                class="landing-footer-barista__social-btn"
+                href="{{ section.settings.social_globe_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="{{ section.settings.social_globe_label | escape }}"
+              >
+                <span class="landing-footer-barista__social-icon" aria-hidden="true">
+                  <img
+                    class="landing-footer-barista__social-img"
+                    src="{{ 'landing-footer-social-1.svg' | asset_url }}"
+                    width="18"
+                    height="18"
+                    alt=""
+                    loading="lazy"
+                  >
+                </span>
+              </a>
+            {%- endif -%}
+            {%- if section.settings.social_instagram_url != blank -%}
+              <a
+                class="landing-footer-barista__social-btn"
+                href="{{ section.settings.social_instagram_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="{{ section.settings.social_instagram_label | escape }}"
+              >
+                <span class="landing-footer-barista__social-icon" aria-hidden="true">
+                  <img
+                    class="landing-footer-barista__social-img"
+                    src="{{ 'landing-footer-social-2.svg' | asset_url }}"
+                    width="18"
+                    height="18"
+                    alt=""
+                    loading="lazy"
+                  >
+                </span>
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="landing-footer-barista__col">
+        <h3 class="landing-footer-barista__col-heading">{{ section.settings.shop_heading | escape }}</h3>
+        <ul class="landing-footer-barista__links" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'link' and block.settings.column == 'shop' and block.settings.label != blank -%}
+              <li {{ block.shopify_attributes }}>
+                <a class="landing-footer-barista__link" href="{{ block.settings.url }}">
+                  {{ block.settings.label | escape }}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="landing-footer-barista__col">
+        <h3 class="landing-footer-barista__col-heading">{{ section.settings.barista_heading | escape }}</h3>
+        <ul class="landing-footer-barista__links" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'link' and block.settings.column == 'barista' and block.settings.label != blank -%}
+              <li {{ block.shopify_attributes }}>
+                <a class="landing-footer-barista__link landing-footer-barista__link--barista" href="{{ block.settings.url }}">
+                  {{ block.settings.label | escape }}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="landing-footer-barista__col">
+        <h3 class="landing-footer-barista__col-heading">{{ section.settings.legal_heading | escape }}</h3>
+        <ul class="landing-footer-barista__links" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'link' and block.settings.column == 'legal' and block.settings.label != blank -%}
+              <li {{ block.shopify_attributes }}>
+                <a class="landing-footer-barista__link landing-footer-barista__link--legal" href="{{ block.settings.url }}">
+                  {{ block.settings.label | escape }}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+
+    <div class="landing-footer-barista__bottom">
+      {%- if section.settings.copyright != blank -%}
+        <p class="landing-footer-barista__copyright">{{ section.settings.copyright | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.show_payment_icons -%}
+        <div class="landing-footer-barista__payments" aria-hidden="true">
+          <span class="landing-footer-barista__pay-icon">
+            <img
+              class="landing-footer-barista__pay-img"
+              src="{{ 'landing-footer-pay-1.svg' | asset_url }}"
+              width="28"
+              height="20"
+              alt=""
+              loading="lazy"
+            >
+          </span>
+          <span class="landing-footer-barista__pay-icon">
+            <img
+              class="landing-footer-barista__pay-img"
+              src="{{ 'landing-footer-pay-2.svg' | asset_url }}"
+              width="26"
+              height="20"
+              alt=""
+              loading="lazy"
+            >
+          </span>
+          <span class="landing-footer-barista__pay-icon">
+            <img
+              class="landing-footer-barista__pay-img"
+              src="{{ 'landing-footer-pay-3.svg' | asset_url }}"
+              width="24"
+              height="22"
+              alt=""
+              loading="lazy"
+            >
+          </span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Landing footer (Barista)",
+  "tag": "section",
+  "class": "section-landing-footer-barista",
+  "settings": [
+    {
+      "type": "text",
+      "id": "menu_label",
+      "label": "ARIA label (Fußzeile)",
+      "default": "Fußzeile"
+    },
+    {
+      "type": "header",
+      "content": "Marke"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Leer lassen, um das Standard-Rösterei-Logo zu verwenden."
+    },
+    {
+      "type": "checkbox",
+      "id": "invert_logo_on_dark",
+      "label": "Logo für dunklen Hintergrund aufhellen",
+      "default": true,
+      "info": "Empfohlen für schwarze Logos auf weißem Grund. Aus, wenn das Logo bereits hell ist."
+    },
+    {
+      "type": "url",
+      "id": "logo_link",
+      "label": "Logo-Link"
+    },
+    {
+      "type": "text",
+      "id": "tagline_line_1",
+      "label": "Tagline Zeile 1",
+      "default": "\"EVERY BEAN HAS A BLUEPRINT\" - CEMIL."
+    },
+    {
+      "type": "text",
+      "id": "tagline_line_2",
+      "label": "Tagline Zeile 2",
+      "default": "Rösterei & Atelier"
+    },
+    {
+      "type": "text",
+      "id": "tagline_line_3",
+      "label": "Tagline Zeile 3",
+      "default": "Hameln, Deutschland"
+    },
+    {
+      "type": "range",
+      "id": "tagline_opacity",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Tagline Deckkraft",
+      "default": 40
+    },
+    {
+      "type": "url",
+      "id": "social_globe_url",
+      "label": "Website (Globus-Link)"
+    },
+    {
+      "type": "text",
+      "id": "social_globe_label",
+      "label": "Globus — Barrierefreiheit",
+      "default": "Website"
+    },
+    {
+      "type": "url",
+      "id": "social_instagram_url",
+      "label": "Instagram"
+    },
+    {
+      "type": "text",
+      "id": "social_instagram_label",
+      "label": "Instagram — Barrierefreiheit",
+      "default": "Instagram"
+    },
+    {
+      "type": "header",
+      "content": "Spaltenüberschriften"
+    },
+    {
+      "type": "text",
+      "id": "shop_heading",
+      "label": "Shop",
+      "default": "Shop"
+    },
+    {
+      "type": "text",
+      "id": "barista_heading",
+      "label": "Die Barista",
+      "default": "Die Barista"
+    },
+    {
+      "type": "text",
+      "id": "legal_heading",
+      "label": "Rechtliches",
+      "default": "Rechtliches"
+    },
+    {
+      "type": "header",
+      "content": "Unten"
+    },
+    {
+      "type": "textarea",
+      "id": "copyright",
+      "label": "Copyright",
+      "default": "© 2024 DIE BARISTA ROASTERY. BUILT WITH PASSION IN HAMELN."
+    },
+    {
+      "type": "range",
+      "id": "copyright_opacity",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Copyright Deckkraft",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Zahlungs-Icons anzeigen",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "payment_icons_opacity",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Zahlungs-Icons Deckkraft",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Farben"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Hintergrund",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Akzent (Überschriften)",
+      "default": "#e23528"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text / Links",
+      "default": "#efdfd3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Spalte",
+          "default": "shop",
+          "options": [
+            { "value": "shop", "label": "Shop" },
+            { "value": "barista", "label": "Die Barista" },
+            { "value": "legal", "label": "Rechtliches" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Text",
+          "default": "Link"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 24,
+  "presets": [
+    {
+      "name": "Landing footer (Barista)",
+      "blocks": [
+        {
+          "type": "link",
+          "settings": {
+            "column": "shop",
+            "label": "Alle Röstungen",
+            "url": "shopify://collections/kaffee"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "shop",
+            "label": "Kaffee-Abo",
+            "url": "shopify://collections/kaffeeabo"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "shop",
+            "label": "Equipment",
+            "url": "shopify://collections/equipment"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "shop",
+            "label": "Gutscheine",
+            "url": "shopify://collections/geschenke"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "barista",
+            "label": "B2B & Gastronomie",
+            "url": "shopify://pages/b2b"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "barista",
+            "label": "Über Cemil",
+            "url": "shopify://pages/uber-uns"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "barista",
+            "label": "Unsere Werte",
+            "url": "shopify://pages/unsere-werte"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "barista",
+            "label": "Kontakt",
+            "url": "shopify://pages/contact"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "legal",
+            "label": "Impressum",
+            "url": "shopify://policies/legal-notice"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "legal",
+            "label": "Datenschutz",
+            "url": "shopify://policies/privacy-policy"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "legal",
+            "label": "AGB",
+            "url": "shopify://policies/terms-of-service"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "column": "legal",
+            "label": "Widerruf",
+            "url": "shopify://policies/refund-policy"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

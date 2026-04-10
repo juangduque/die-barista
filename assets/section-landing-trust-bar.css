@@ -1,6 +1,6 @@
 /* Landing trust bar — Figma kItgXjQzTCQ3nTb4PrD6ZW node 9:31 (Trust Bar) + optional stacked + dividers */
 .landing-hw-trust {
-  --landing-hw-trust-display: 'Barlow', 'Barlow Condensed', sans-serif;
+  --landing-hw-trust-display: 'Social Gothic', sans-serif;
   --landing-hw-trust-body: 'Source Sans 3', 'DM Sans', sans-serif;
   background: var(--landing-hw-trust-surface, #efdfd3);
   padding: clamp(1.75rem, 5vw, 2.5625rem) clamp(1rem, 4vw, 1.5rem);
@@ -167,7 +167,7 @@
 
 .landing-hw-trust__title {
   font-family: var(--landing-hw-trust-display);
-  font-weight: 700;
+  font-weight: 500;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1.4px;

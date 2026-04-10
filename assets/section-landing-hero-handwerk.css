@@ -209,7 +209,7 @@
   box-sizing: border-box;
 }
 
-/* Social Gothic → Barlow Condensed Black; Figma 88px / 86.4px lh, tracking -3.84px */
+/* Heading lines: Social Gothic semibold; h1 fallback sizing — Figma 88px / 86.4px lh, tracking -3.84px */
 .landing-hw-hero__heading {
   margin: 0;
   padding: 0.35rem 0.5rem 0.5rem;
@@ -234,10 +234,13 @@
 
 .landing-hw-hero__heading-line {
   display: block;
+  font-family: 'Social Gothic', sans-serif;
+  font-weight: 600;
 }
 
 .landing-hw-hero__heading-accent {
   color: var(--landing-hw-hero-accent);
+  margin-top: 30px;
 }
 
 /* Body — ~15px / 26px, New Frank → Source Sans 3 medium */

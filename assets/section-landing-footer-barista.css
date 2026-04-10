@@ -1,0 +1,243 @@
+/* Landing footer — Figma node 9:281 / 9:282 */
+.landing-footer-barista {
+  --lf-bg: #000000;
+  --lf-accent: #e23528;
+  --lf-text: #efdfd3;
+  --lf-font-size: 15px;
+  --lf-line-tight: 15px;
+  --lf-line-body: 20px;
+  --lf-tagline-opacity: 0.4;
+  --lf-copyright-opacity: 0.4;
+  --lf-payment-opacity: 0.85;
+  background: var(--lf-bg);
+  color: var(--lf-text);
+  font-size: var(--lf-font-size);
+}
+
+.landing-footer-barista__inner {
+  box-sizing: border-box;
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 6rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+}
+
+@media screen and (min-width: 750px) {
+  .landing-footer-barista__inner {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.landing-footer-barista__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media screen and (min-width: 750px) {
+  .landing-footer-barista__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .landing-footer-barista__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+.landing-footer-barista__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.landing-footer-barista__logo-link {
+  display: inline-flex;
+  line-height: 0;
+  text-decoration: none;
+}
+
+/* ~160px wide on desktop — readable “ROASTERY” line; scales down on small screens */
+.landing-footer-barista__logo {
+  width: clamp(7.5rem, 18vw, 10rem);
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  display: block;
+}
+
+/* Black-on-white logo asset reads correctly on black footer */
+.landing-footer-barista__logo--invert {
+  filter: brightness(0) invert(1);
+}
+
+.landing-footer-barista__tagline {
+  margin: 0;
+  padding-top: 0.125rem;
+  opacity: var(--lf-tagline-opacity);
+}
+
+.landing-footer-barista__tagline-line {
+  margin: 0;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: var(--lf-line-body);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--lf-text);
+}
+
+.landing-footer-barista__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.landing-footer-barista__social-btn {
+  box-sizing: border-box;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.landing-footer-barista__social-btn:hover,
+.landing-footer-barista__social-btn:focus-visible {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.landing-footer-barista__social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.landing-footer-barista__social-img {
+  display: block;
+  width: 1.125rem;
+  height: 1.125rem;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+}
+
+.landing-footer-barista__col-heading {
+  margin: 0 0 1.5rem;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: var(--lf-font-size);
+  line-height: var(--lf-line-tight);
+  letter-spacing: 0.1875rem;
+  text-transform: uppercase;
+  color: var(--lf-accent);
+}
+
+.landing-footer-barista__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.landing-footer-barista__link {
+  font-family: 'Source Sans 3', 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: var(--lf-font-size);
+  line-height: var(--lf-line-body);
+  color: var(--lf-text);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.landing-footer-barista__link:hover,
+.landing-footer-barista__link:focus-visible {
+  color: #ffffff;
+  opacity: 1;
+}
+
+.landing-footer-barista__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding-top: 3.0625rem;
+  border-top: none;
+}
+
+@media screen and (min-width: 750px) {
+  .landing-footer-barista__bottom {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+}
+
+.landing-footer-barista__copyright {
+  margin: 0;
+  max-width: 42rem;
+  font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: var(--lf-font-size);
+  line-height: var(--lf-line-body);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lf-text);
+  opacity: var(--lf-copyright-opacity);
+}
+
+/* No mix-blend here — it hid the payment marks on many browsers */
+.landing-footer-barista__payments {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  margin-left: auto;
+  flex-wrap: nowrap;
+  opacity: var(--lf-payment-opacity);
+}
+
+.landing-footer-barista__pay-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.landing-footer-barista__pay-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 1.25rem;
+  max-width: 2.25rem;
+  object-fit: contain;
+}
+
+@media screen and (min-width: 750px) {
+  .landing-footer-barista__pay-img {
+    max-height: 1.375rem;
+    max-width: 2.5rem;
+  }
+}

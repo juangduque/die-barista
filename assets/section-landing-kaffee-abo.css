@@ -90,9 +90,13 @@
 
 .landing-kaffee-abo__title-line {
   display: block;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-family: 'Social Gothic', sans-serif;
 }
 
 .landing-kaffee-abo__title-accent {
+  font-family: social-gothic;
   color: var(--lk-accent);
 }
 

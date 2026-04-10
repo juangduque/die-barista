@@ -189,7 +189,7 @@
   object-fit: contain;
 }
 
-/* Social Gothic → Barlow Bold; 14 / 20, tracking 0.7px, all caps black */
+/* Social Gothic; 14 / 20, tracking 0.7px, all caps */
 .landing-hw-nav__list {
   display: flex;
   flex-wrap: wrap;
@@ -209,7 +209,7 @@
 }
 
 .landing-hw-nav__link {
-  font-family: 'Barlow', sans-serif;
+  font-family: 'Social Gothic', sans-serif;
   font-weight: 700;
   font-size: 14px;
   line-height: 20px;
