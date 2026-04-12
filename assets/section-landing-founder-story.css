@@ -22,7 +22,7 @@
   }
 }
 
-/* Top-align columns: eyebrow lines up with top of white frame (not vertically centered) */
+/* Top-align columns: eyebrow lines up with top of media (not vertically centered) */
 .landing-founder-story__grid {
   display: flex;
   flex-direction: column;
@@ -65,19 +65,17 @@
   }
 }
 
-/* Thick white “Polaroid” frame (design reference) */
+/* Photo wrapper — no white mat; sits on section background */
 .landing-founder-story__frame {
   position: relative;
   width: 100%;
   overflow: clip;
-  background: #fff;
-  min-height: 22rem;
+  background: transparent;
 }
 
 @media screen and (min-width: 990px) {
   .landing-founder-story__frame {
-    height: 46rem;
-    min-height: 46rem;
+    height: auto;
   }
 }
 
@@ -86,7 +84,6 @@
   isolation: isolate;
   display: flex;
   flex-direction: column;
-  min-height: 20rem;
   padding: 0;
   box-sizing: border-box;
 }
@@ -99,7 +96,7 @@
 
 @media screen and (min-width: 990px) {
   .landing-founder-story__matte {
-    height: 100%;
+    height: auto;
     min-height: 0;
   }
 }
@@ -107,19 +104,18 @@
 .landing-founder-story__photo {
   position: relative;
   width: 100%;
-  min-height: 16rem;
+  aspect-ratio: 912 / 1162;
 }
 
 @media screen and (max-width: 989px) {
   .landing-founder-story__photo {
-    aspect-ratio: 912 / 1162;
     min-height: 14rem;
   }
 }
 
 @media screen and (min-width: 990px) {
   .landing-founder-story__photo {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     min-height: 0;
   }
 }

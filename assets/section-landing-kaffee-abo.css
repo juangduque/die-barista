@@ -1,13 +1,16 @@
-/* Landing Kaffee-Abo — Figma node 9:210 / 9:213 + white outer frame */
+/* Landing Kaffee-Abo — Figma node 9:210 / 9:213 */
 .landing-kaffee-abo {
   --lk-page: #fdfaf7;
-  --lk-frame: #ffffff;
   --lk-panel: #f0eee8;
   --lk-accent: #759769;
   --lk-headline: #1b1c18;
   --lk-body: #59413d;
   --lk-list: #1b1c18;
   background: var(--lk-page);
+  box-sizing: border-box;
+  padding-top: 30px;
+  padding-bottom: 0;
+  height: 560px;
 }
 
 .landing-kaffee-abo__shell {
@@ -25,12 +28,12 @@
   }
 }
 
-/* Thick white frame around the beige panel (design reference / screenshot) */
+/* Wrapper only — no outer “white square”; panel sits flush on page background */
 .landing-kaffee-abo__frame {
-  background: var(--lk-frame);
-  padding: clamp(0.875rem, 2.5vw, 1.375rem);
+  background: transparent;
+  padding: 0;
   box-sizing: border-box;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: none;
 }
 
 /* Inner panel: beige + 8px sage left bar — Figma 9:213 */
@@ -45,6 +48,7 @@
   flex-direction: column;
   align-items: stretch;
   gap: 2.5rem;
+  margin-top: 0;
   padding: 3rem 1.5rem 3rem 1.75rem;
 }
 
