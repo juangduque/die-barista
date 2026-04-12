@@ -9,7 +9,8 @@
   --ln-btn: #000000;
   --ln-ring: #e23528;
   background: var(--ln-surface);
-  height: 300px;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .landing-newsletter__inner {
@@ -17,6 +18,7 @@
   margin: 0 auto;
   padding: 5.9559375rem 1.5rem 6rem;
   box-sizing: border-box;
+  min-width: 0;
 }
 
 @media screen and (min-width: 750px) {
@@ -36,7 +38,7 @@
 @media screen and (min-width: 990px) {
   .landing-newsletter__row {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     gap: 4rem;
   }
 
@@ -99,6 +101,7 @@
 .landing-newsletter__col--form {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   padding-bottom: 1rem;
 }
 
@@ -218,6 +221,9 @@
   flex-direction: row;
   align-items: flex-start;
   gap: 1rem;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 @media screen and (min-width: 640px) {
@@ -286,6 +292,8 @@
   line-height: 1.25rem;
   letter-spacing: 0.0625rem;
   color: var(--ln-muted);
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
 }
 
 .landing-newsletter__quote-text p {
