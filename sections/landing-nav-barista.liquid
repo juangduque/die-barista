@@ -43,7 +43,7 @@
 
 <header
   id="landing-hw-nav-{{ section.id }}"
-  class="landing-hw-nav{% if section.settings.sticky_header %} landing-hw-nav--sticky{% endif %}"
+  class="landing-hw-nav{% if section.settings.sticky_header %} landing-hw-nav--sticky{% endif %}{% if has_drawer_nav %} landing-hw-nav--with-drawer{% endif %}"
 >
   <div class="landing-hw-nav__inner">
     <div class="landing-hw-nav__cluster landing-hw-nav__cluster--left">
