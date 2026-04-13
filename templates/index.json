@@ -93,6 +93,34 @@
     },
     "home_hero": {
       "type": "landing-hero-handwerk",
+      "blocks": {
+        "home_hero_s1": {
+          "type": "slide",
+          "settings": {
+            "slide_background_bundled": "landing-hero-handwerk-bg.jpg",
+            "slide_portrait_bundled": "landing-hero-handwerk-portrait.jpg"
+          }
+        },
+        "home_hero_s2": {
+          "type": "slide",
+          "settings": {
+            "slide_background_bundled": "landing-community-3.png",
+            "slide_portrait_bundled": "landing-community-4.jpg"
+          }
+        },
+        "home_hero_s3": {
+          "type": "slide",
+          "settings": {
+            "slide_background_bundled": "landing-community-2.jpg",
+            "slide_portrait_bundled": "landing-community-1.png"
+          }
+        }
+      },
+      "block_order": [
+        "home_hero_s1",
+        "home_hero_s2",
+        "home_hero_s3"
+      ],
       "settings": {
         "use_theme_image_fallbacks": true,
         "image_saturation_overlay": false,

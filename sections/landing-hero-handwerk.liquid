@@ -1,4 +1,5 @@
 {{ 'section-landing-hero-handwerk.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-landing-hero-handwerk.js' | asset_url }}" defer="defer"></script>
 
 {% style %}
   #landing-hw-hero-{{ section.id }} {
@@ -27,58 +28,86 @@
         if hero_fg == blank and section.settings.use_theme_image_fallbacks
           assign use_fg_fallback = true
         endif
+
+        assign slide_from_blocks_count = 0
+        for block in section.blocks
+          if block.type == 'slide'
+            assign bbg = block.settings.image_background
+            assign bfg = block.settings.image_foreground
+            assign bba = block.settings.slide_background_bundled
+            assign bfa = block.settings.slide_portrait_bundled
+            if bbg != blank or bfg != blank or bba != blank or bfa != blank
+              assign slide_from_blocks_count = slide_from_blocks_count | plus: 1
+            endif
+          endif
+        endfor
+
+        assign legacy_has_visual = false
+        if hero_bg != blank or hero_fg != blank or use_bg_fallback or use_fg_fallback
+          assign legacy_has_visual = true
+        endif
       -%}
-      {%- if hero_bg != blank -%}
-        <div class="landing-hw-hero__visual-bg" aria-hidden="true">
-          {{
-            hero_bg
-            | image_url: width: 2400
-            | image_tag:
-              loading: 'eager',
-              sizes: '(min-width: 990px) 50vw, 100vw',
-              widths: '375, 750, 1100, 1500, 2400'
-          }}
+      {%- if slide_from_blocks_count > 0 -%}
+        <div
+          class="landing-hw-hero__carousel"
+          data-landing-hw-hero-carousel
+          data-autoplay="{% if section.settings.carousel_autoplay == false %}false{% else %}true{% endif %}"
+          data-interval-ms="{{ section.settings.carousel_interval_seconds | default: 5 | times: 1000 }}"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="{{ section.settings.carousel_aria_label | default: 'Hero images' | escape }}"
+        >
+          {%- assign slide_is_first = true -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'slide' -%}
+              {%- assign slide_bg = block.settings.image_background -%}
+              {%- assign slide_fg = block.settings.image_foreground -%}
+              {%- assign bg_asset = block.settings.slide_background_bundled -%}
+              {%- assign fg_asset = block.settings.slide_portrait_bundled -%}
+              {%- if slide_bg != blank or slide_fg != blank or bg_asset != blank or fg_asset != blank -%}
+                {%- if slide_is_first -%}
+                  {%- assign slide_loading = 'eager' -%}
+                  {%- assign slide_fetch = 'high' -%}
+                {%- else -%}
+                  {%- assign slide_loading = 'lazy' -%}
+                  {%- assign slide_fetch = '' -%}
+                {%- endif -%}
+                {%- render 'landing-hw-hero-slide',
+                  slide_bg: slide_bg,
+                  slide_fg: slide_fg,
+                  bg_asset: bg_asset,
+                  fg_asset: fg_asset,
+                  use_bg_fallback: false,
+                  use_fg_fallback: false,
+                  is_active: slide_is_first,
+                  slide_loading: slide_loading,
+                  fetch_priority: slide_fetch,
+                  block: block
+                -%}
+                {%- assign slide_is_first = false -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
         </div>
-      {%- elsif use_bg_fallback -%}
-        <div class="landing-hw-hero__visual-bg" aria-hidden="true">
-          <img
-            src="{{ 'landing-hero-handwerk-bg.jpg' | asset_url }}"
-            alt=""
-            width="512"
-            height="512"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            sizes="(min-width: 990px) 50vw, 100vw"
-          >
-        </div>
-      {%- endif -%}
-      <div class="landing-hw-hero__visual-gradient" aria-hidden="true"></div>
-      {%- if section.settings.image_saturation_overlay -%}
-        <div class="landing-hw-hero__visual-sat" aria-hidden="true"></div>
-      {%- endif -%}
-      {%- if hero_fg != blank -%}
-        <div class="landing-hw-hero__visual-portrait">
-          {{
-            hero_fg
-            | image_url: width: 1716
-            | image_tag:
-              loading: 'eager',
-              sizes: '(min-width: 990px) 858px, min(100vw, 858px)',
-              widths: '400, 600, 858, 1200, 1716'
-          }}
-        </div>
-      {%- elsif use_fg_fallback -%}
-        <div class="landing-hw-hero__visual-portrait">
-          <img
-            src="{{ 'landing-hero-handwerk-portrait.jpg' | asset_url }}"
-            alt=""
-            width="858"
-            height="858"
-            loading="eager"
-            decoding="async"
-            sizes="(min-width: 990px) 858px, min(100vw, 858px)"
-          >
+      {%- elsif legacy_has_visual -%}
+        <div
+          class="landing-hw-hero__carousel landing-hw-hero__carousel--single"
+          data-landing-hw-hero-carousel
+          data-autoplay="{% if section.settings.carousel_autoplay == false %}false{% else %}true{% endif %}"
+          data-interval-ms="{{ section.settings.carousel_interval_seconds | default: 5 | times: 1000 }}"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="{{ section.settings.carousel_aria_label | default: 'Hero images' | escape }}"
+        >
+          {%- render 'landing-hw-hero-slide',
+            slide_bg: hero_bg,
+            slide_fg: hero_fg,
+            use_bg_fallback: use_bg_fallback,
+            use_fg_fallback: use_fg_fallback,
+            is_active: true,
+            slide_loading: 'eager',
+            fetch_priority: 'high'
+          -%}
         </div>
       {%- endif -%}
     </div>
@@ -165,7 +194,38 @@
   "settings": [
     {
       "type": "header",
-      "content": "Images"
+      "content": "Hero carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "carousel_autoplay",
+      "label": "Autoplay slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "carousel_interval_seconds",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "label": "Time on each slide",
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "carousel_aria_label",
+      "label": "Carousel accessibility label",
+      "default": "Hero images",
+      "info": "Announced to screen reader users."
+    },
+    {
+      "type": "header",
+      "content": "Fallback images (no slides)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add Hero slides below for a carousel. When at least one slide has an image, those slides are used and the pickers here are ignored. If there are no slides with images, these settings apply."
     },
     {
       "type": "image_picker",
@@ -297,6 +357,55 @@
       "info": "Any valid CSS color."
     }
   ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Hero slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_background",
+          "label": "Background image (left)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_foreground",
+          "label": "Portrait image"
+        },
+        {
+          "type": "select",
+          "id": "slide_background_bundled",
+          "label": "Bundled background (if empty)",
+          "options": [
+            { "value": "", "label": "None" },
+            { "value": "landing-hero-handwerk-bg.jpg", "label": "Original Handwerk background" },
+            { "value": "landing-community-1.png", "label": "Community 1" },
+            { "value": "landing-community-2.jpg", "label": "Community 2" },
+            { "value": "landing-community-3.png", "label": "Community 3" },
+            { "value": "landing-community-4.jpg", "label": "Community 4" }
+          ],
+          "default": "",
+          "info": "Theme assets used when Background image is not set (Handwerk defaults or Community grid photos)."
+        },
+        {
+          "type": "select",
+          "id": "slide_portrait_bundled",
+          "label": "Bundled portrait (if empty)",
+          "options": [
+            { "value": "", "label": "None" },
+            { "value": "landing-hero-handwerk-portrait.jpg", "label": "Original Handwerk portrait" },
+            { "value": "landing-community-1.png", "label": "Community 1" },
+            { "value": "landing-community-2.jpg", "label": "Community 2" },
+            { "value": "landing-community-3.png", "label": "Community 3" },
+            { "value": "landing-community-4.jpg", "label": "Community 4" }
+          ],
+          "default": "",
+          "info": "Theme assets used when Portrait image is not set (Handwerk defaults or Community grid photos)."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
   "presets": [
     {
       "name": "Landing HW Hero"

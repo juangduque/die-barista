@@ -84,7 +84,7 @@
   margin: 0;
   font-family: 'New Frank', sans-serif;
   font-weight: 500;
-  font-size: 0.8125rem;
+  font-size: 12px;
   line-height: 1.4875rem;
   color: var(--ln-muted);
   max-width: 36rem;
@@ -298,6 +298,7 @@
 
 .landing-newsletter__quote-text p {
   margin: 0 0 0.25rem;
+  font-size: 12px;
 }
 
 .landing-newsletter__quote-text p:last-child {

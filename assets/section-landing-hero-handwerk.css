@@ -13,7 +13,8 @@
   min-height: min(100vh, 54.375rem);
   background: var(--landing-hw-hero-bg);
   color: #fff;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 @media screen and (min-width: 990px) {
@@ -29,6 +30,51 @@
   min-height: 22rem;
   order: 1;
   isolation: isolate;
+  width: 100%;
+  min-width: 0;
+}
+
+.landing-hw-hero__carousel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Mobile: carousel must contribute height to the grid row (absolute carousel collapsed the row). */
+@media screen and (max-width: 989px) {
+  .landing-hw-hero__visual {
+    min-height: 0;
+  }
+
+  .landing-hw-hero__carousel {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.landing-hw-hero__carousel-slide {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.85s ease;
+  pointer-events: none;
+}
+
+.landing-hw-hero__carousel-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hw-hero__carousel-slide {
+    transition: none;
+  }
 }
 
 @media screen and (min-width: 990px) {
@@ -38,6 +84,19 @@
     align-items: flex-end;
     justify-content: center;
     min-height: 0;
+  }
+
+  .landing-hw-hero__carousel {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: unset;
+    width: auto;
+  }
+
+  .landing-hw-hero__carousel-slide {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
   }
 }
 
@@ -123,6 +182,7 @@
   justify-content: center;
   gap: 0;
   order: 2;
+  min-width: 0;
 }
 
 @media screen and (min-width: 750px) {

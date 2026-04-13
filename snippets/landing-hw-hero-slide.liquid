@@ -1,0 +1,128 @@
+{%- comment -%}
+  One hero visual slide (background + portrait). Used by landing-hero-handwerk carousel.
+  @param {object} slide_bg - background image or nil
+  @param {object} slide_fg - portrait image or nil
+  @param {boolean} use_bg_fallback
+  @param {boolean} use_fg_fallback
+  @param {boolean} is_active
+  @param {string} slide_loading - eager | lazy
+  @param {string} fetch_priority - pass 'high' for first slide LCP
+  @param {string} bg_asset - optional theme asset filename (e.g. landing-community-1.png)
+  @param {string} fg_asset - optional theme asset filename for portrait
+  @param {object} block - optional, for theme editor attributes
+{%- endcomment -%}
+<div
+  class="landing-hw-hero__carousel-slide{% if is_active %} is-active{% endif %}"
+  aria-hidden="{% if is_active %}false{% else %}true{% endif %}"
+  {% if block %}{{ block.shopify_attributes }}{% endif %}
+>
+  {%- if slide_bg != blank -%}
+    <div class="landing-hw-hero__visual-bg" aria-hidden="true">
+      {%- if fetch_priority == 'high' -%}
+        {{
+          slide_bg
+          | image_url: width: 2400
+          | image_tag:
+            loading: slide_loading,
+            sizes: '(min-width: 990px) 50vw, 100vw',
+            widths: '375, 750, 1100, 1500, 2400',
+            fetchpriority: 'high'
+        }}
+      {%- else -%}
+        {{
+          slide_bg
+          | image_url: width: 2400
+          | image_tag:
+            loading: slide_loading,
+            sizes: '(min-width: 990px) 50vw, 100vw',
+            widths: '375, 750, 1100, 1500, 2400'
+        }}
+      {%- endif -%}
+    </div>
+  {%- elsif bg_asset != blank -%}
+    <div class="landing-hw-hero__visual-bg" aria-hidden="true">
+      <img
+        src="{{ bg_asset | asset_url }}"
+        alt=""
+        width="1200"
+        height="1200"
+        loading="{{ slide_loading }}"
+        {% if fetch_priority == 'high' %}
+          fetchpriority="high"
+        {% endif %}
+        decoding="async"
+        sizes="(min-width: 990px) 50vw, 100vw"
+      >
+    </div>
+  {%- elsif use_bg_fallback -%}
+    <div class="landing-hw-hero__visual-bg" aria-hidden="true">
+      <img
+        src="{{ 'landing-hero-handwerk-bg.jpg' | asset_url }}"
+        alt=""
+        width="512"
+        height="512"
+        loading="{{ slide_loading }}"
+        {% if fetch_priority == 'high' %}
+          fetchpriority="high"
+        {% endif %}
+        decoding="async"
+        sizes="(min-width: 990px) 50vw, 100vw"
+      >
+    </div>
+  {%- endif -%}
+  <div class="landing-hw-hero__visual-gradient" aria-hidden="true"></div>
+  {%- if section.settings.image_saturation_overlay -%}
+    <div class="landing-hw-hero__visual-sat" aria-hidden="true"></div>
+  {%- endif -%}
+  {%- if slide_fg != blank -%}
+    <div class="landing-hw-hero__visual-portrait">
+      {%- if fetch_priority == 'high' -%}
+        {{
+          slide_fg
+          | image_url: width: 1716
+          | image_tag:
+            loading: slide_loading,
+            sizes: '(min-width: 990px) 858px, min(100vw, 858px)',
+            widths: '400, 600, 858, 1200, 1716',
+            fetchpriority: 'high'
+        }}
+      {%- else -%}
+        {{
+          slide_fg
+          | image_url: width: 1716
+          | image_tag:
+            loading: slide_loading,
+            sizes: '(min-width: 990px) 858px, min(100vw, 858px)',
+            widths: '400, 600, 858, 1200, 1716'
+        }}
+      {%- endif -%}
+    </div>
+  {%- elsif fg_asset != blank -%}
+    <div class="landing-hw-hero__visual-portrait">
+      <img
+        src="{{ fg_asset | asset_url }}"
+        alt=""
+        width="858"
+        height="858"
+        loading="{{ slide_loading }}"
+        {% if fetch_priority == 'high' %}
+          fetchpriority="high"
+        {% endif %}
+        decoding="async"
+        sizes="(min-width: 990px) 858px, min(100vw, 858px)"
+      >
+    </div>
+  {%- elsif use_fg_fallback -%}
+    <div class="landing-hw-hero__visual-portrait">
+      <img
+        src="{{ 'landing-hero-handwerk-portrait.jpg' | asset_url }}"
+        alt=""
+        width="858"
+        height="858"
+        loading="{{ slide_loading }}"
+        decoding="async"
+        sizes="(min-width: 990px) 858px, min(100vw, 858px)"
+      >
+    </div>
+  {%- endif -%}
+</div>
