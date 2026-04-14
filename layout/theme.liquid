@@ -549,10 +549,14 @@
 		</a>
 		{%- liquid
 			assign barista_landing_shell = false
+			assign barista_hide_default_footer = false
 			if template.name == 'index'
 				assign barista_landing_shell = true
 			elsif template.name == 'page' and template.suffix == 'landing-handwerk'
 				assign barista_landing_shell = true
+			endif
+			if template.name == 'product'
+				assign barista_hide_default_footer = true
 			endif
 		-%}
 		{%- unless barista_landing_shell -%}
@@ -570,7 +574,7 @@
 		>
 			{{ content_for_layout }}
 		</main>
-		{%- unless barista_landing_shell -%}
+		{%- unless barista_landing_shell or barista_hide_default_footer -%}
 			{% sections 'footer-group' %}
 		{%- endunless -%}
 
