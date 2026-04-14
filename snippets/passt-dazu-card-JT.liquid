@@ -49,7 +49,7 @@
               {{ cp.featured_media | image_url: width: 300 }} 300w,
               {{ cp.featured_media | image_url: width: 600 }} 600w
             "
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1099px) 50vw, 25vw"
             alt="{{ cp.featured_media.alt | default: cp.title | escape }}"
             width="{{ cp.featured_media.width }}"
             height="{{ cp.featured_media.height }}"
@@ -69,12 +69,14 @@
     </a>
 
     <div class="passt-card__body">
-      <a href="{{ cp.url }}" class="passt-card__title-link">
-        <h3 class="passt-card__title">{{ cp.title | escape }}</h3>
-      </a>
-      {%- unless subtitle == blank -%}
-        <p class="passt-card__subtitle">{{ subtitle | escape }}</p>
-      {%- endunless -%}
+      <div class="passt-card__meta">
+        <a href="{{ cp.url }}" class="passt-card__title-link">
+          <h3 class="passt-card__title">{{ cp.title | escape }}</h3>
+        </a>
+        {%- unless subtitle == blank -%}
+          <p class="passt-card__subtitle">{{ subtitle | escape }}</p>
+        {%- endunless -%}
+      </div>
 
       <div class="passt-card__bottom">
         <span class="passt-card__price">{{ cp_variant.price | money }}</span>
@@ -127,6 +129,8 @@
   background: var(--db-soapstone);
   border-radius: var(--db-radius);
   overflow: hidden;
+  box-sizing: border-box;
+  padding-bottom: 0;
 }
 
 .passt-card__image-link {
@@ -183,44 +187,60 @@
 
 .passt-card__badge {
   position: absolute;
-  top: 0.625rem;
-  left: 0.625rem;
+  top: 10px;
+  left: 10px;
   z-index: 2;
   background: var(--db-black);
   color: var(--db-crema);
   font-family: var(--db-font-display);
-  font-size: 0.65rem;
+  font-size: 10.4px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  line-height: 1.6;
-  padding: 0.2rem 0.625rem;
+  letter-spacing: 1.04px;
+  line-height: 16.64px;
+  padding: 3px 10px;
   border-radius: var(--db-radius);
   pointer-events: none;
 }
 
-.passt-card__body {
-  padding: 1.25rem 1.25rem 1.2rem;
+.passt-card__meta {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.25rem;
+  gap: 3px;
+  width: 100%;
   flex: 1;
-  min-height: 7.5rem;
+  min-height: 0;
+}
+
+.passt-card__body {
+  padding: 1.1rem 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-height: 0;
   box-sizing: border-box;
 }
 
 .passt-card__title-link {
   text-decoration: none;
   width: 100%;
+  min-width: 0;
+}
+
+.passt-card__title-link:focus-visible {
+  outline: 2px solid var(--db-black);
+  outline-offset: 2px;
+  border-radius: 1px;
 }
 
 .passt-card__title {
   font-family: var(--db-font-display);
   font-weight: 500;
-  font-size: 1.25rem;
+  font-size: 1.0625rem;
   text-transform: uppercase;
-  line-height: 1.34;
+  line-height: 1.28;
   color: var(--db-black);
   margin: 0;
   transition: opacity 0.2s;
@@ -232,13 +252,14 @@
 
 .passt-card__subtitle {
   font-family: var(--db-font-body);
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  line-height: 1.6;
+  letter-spacing: 0.6px;
+  line-height: 19.2px;
   color: var(--db-opium);
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .passt-card__bottom {
@@ -248,14 +269,15 @@
   gap: 0.75rem;
   width: 100%;
   margin-top: auto;
-  padding-top: 0.35rem;
+  padding-top: 5px;
+  flex-shrink: 0;
 }
 
 .passt-card__price {
   font-family: var(--db-font-body);
   font-weight: 500;
-  font-size: 1.1rem;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 28.16px;
   color: var(--db-black);
 }
 
@@ -282,9 +304,87 @@
   opacity: 0.82;
 }
 
+.passt-card__atc-btn:focus-visible {
+  outline: 2px solid var(--db-black);
+  outline-offset: 2px;
+}
+
 .passt-card__atc-btn:disabled {
   background: var(--db-opium);
   cursor: not-allowed;
   opacity: 0.55;
+}
+
+/* Two-up layout (641–1099px) */
+@media (min-width: 641px) {
+  .passt-card__body {
+    padding: 1.125rem 1.125rem 1.1rem;
+  }
+
+  .passt-card__title {
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+
+  .passt-card__price {
+    font-size: 1.0625rem;
+  }
+}
+
+/* Four-up frame — Figma 18:422–469 (body h 126.2, meta gaps, pb 19.19 on card) */
+@media (min-width: 1100px) {
+  .passt-card__article {
+    padding-bottom: 19.19px;
+  }
+
+  .passt-card__body {
+    min-height: 126.2px;
+    padding: 20px 20px 0;
+  }
+
+  .passt-card__title-link {
+    overflow: hidden;
+  }
+
+  .passt-card__title {
+    font-size: 20px;
+    line-height: 26.88px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .passt-card__price {
+    font-size: 17.6px;
+    line-height: 28.16px;
+  }
+}
+
+/* Phones: larger tap target */
+@media (max-width: 640px) {
+  .passt-card__atc-btn {
+    width: 44px;
+    height: 44px;
+    box-sizing: border-box;
+  }
+
+  .passt-card__atc-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .passt-card__atc-btn {
+    width: 44px;
+    height: 44px;
+    box-sizing: border-box;
+  }
+
+  .passt-card__atc-btn svg {
+    width: 14px;
+    height: 14px;
+  }
 }
 </style>

@@ -1,17 +1,41 @@
 {% comment %}
   Passt Dazu — Cross-Sells
-  Figma kItgXjQzTCQ3nTb4PrD6ZW node 18:414 — Serenade surface, 28px header↔grid, 4× grid gap 20px, Soapstone cards.
-  Data: custom.cross_sells (list.product_reference) → section cross_sell_products fallback.
+  Figma kItgXjQzTCQ3nTb4PrD6ZW node 18:414 — Serenade surface, 28px header↔grid @1100px+, 4×20px grid @1100px+, 2-col 641–1099, 1-col under 641px, Soapstone cards.
+  Data: custom.cross_sells → section product_list → optional fallback_collection → first product collection → collections['all'].
+  Current product is never shown twice (skipped in the loop).
 {% endcomment %}
 
 {%- liquid
-  assign cross_sell_products = product.metafields.custom.cross_sells.value
-  if cross_sell_products == blank
-    assign cross_sell_products = section.settings.cross_sell_products
+  assign passt_products = product.metafields.custom.cross_sells.value
+  if passt_products == blank
+    assign passt_products = section.settings.cross_sell_products
   endif
-  assign header_title = section.settings.header_title | default: 'Passt Dazu'
+  if passt_products == blank
+    if section.settings.fallback_collection != blank
+      assign passt_products = section.settings.fallback_collection.products
+    elsif product.collections.size > 0
+      assign passt_products = product.collections.first.products
+    else
+      assign passt_all_coll = collections['all']
+      if passt_all_coll != blank and passt_all_coll.products_count > 0
+        assign passt_products = passt_all_coll.products
+      endif
+    endif
+  endif
+  assign header_title = section.settings.header_title | default: 'Passt dazu'
   assign cta_label     = section.settings.cta_label     | default: 'Alle Röstungen'
   assign cta_url       = section.settings.cta_url       | default: '/collections/all'
+  assign passt_eligible = 0
+  if passt_products != blank
+    for cross_product in passt_products
+      if cross_product.id != product.id
+        assign passt_eligible = passt_eligible | plus: 1
+        if passt_eligible >= 4
+          break
+        endif
+      endif
+    endfor
+  endif
 -%}
 
 <section
@@ -36,15 +60,23 @@
       {%- endunless -%}
     </div>
 
-    {%- if cross_sell_products != blank -%}
+    {%- if passt_eligible > 0 -%}
       <ul class="passt-grid" role="list" aria-label="Empfohlene Produkte">
-        {%- for cross_product in cross_sell_products limit: 4 -%}
+        {%- assign passt_rendered = 0 -%}
+        {%- for cross_product in passt_products -%}
+          {%- if cross_product.id == product.id -%}
+            {%- continue -%}
+          {%- endif -%}
           {%- render 'passt-dazu-card-JT', cross_product: cross_product -%}
+          {%- assign passt_rendered = passt_rendered | plus: 1 -%}
+          {%- if passt_rendered >= 4 -%}
+            {%- break -%}
+          {%- endif -%}
         {%- endfor -%}
       </ul>
     {%- else -%}
       <p class="passt-empty">
-        Produkte im Theme-Editor oder über das Metafeld <code>custom.cross_sells</code> (list.product_reference) hinzufügen.
+        Keine weiteren Produkte gefunden. Wähle unter „Empfohlene Produkte“ bis zu vier Artikel, lege <code>custom.cross_sells</code> (list.product_reference) an, oder weise eine Fallback-Kollektion zu.
       </p>
     {%- endif -%}
 
@@ -67,49 +99,52 @@
 
 .passt-section {
   background: var(--db-serenade);
-  padding: 4rem clamp(1.25rem, 10vw, 25.625rem);
+  padding: 2.5rem 1rem;
   box-sizing: border-box;
 }
 
 .passt-inner {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 3rem;
+  padding: 0 0.75rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 20px;
 }
 
 .passt-header {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 1rem 1.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 0.75rem;
 }
 
 .passt-header__title {
   font-family: var(--db-font-display);
   font-weight: 500;
-  font-size: clamp(1.5rem, 3.2vw, 2.25rem);
+  font-size: clamp(1.625rem, 4.2vw, 2.25rem);
   text-transform: uppercase;
-  letter-spacing: 0.055em;
-  line-height: 0.76;
+  letter-spacing: 2px;
+  line-height: 1.08;
   color: var(--db-black);
   margin: 0;
+  max-width: 100%;
+  white-space: normal;
 }
 
 .passt-header__link {
   font-family: var(--db-font-body);
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  line-height: 1.6;
+  letter-spacing: 1.2px;
+  line-height: 19.2px;
   color: var(--db-red);
   text-decoration: none;
-  white-space: nowrap;
+  white-space: normal;
   transition: opacity 0.2s;
 }
 
@@ -117,62 +152,107 @@
   opacity: 0.75;
 }
 
+.passt-header__link:focus-visible {
+  outline: 2px solid var(--db-red);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
 .passt-grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: 1fr;
+  gap: 14px;
   width: 100%;
+  align-items: stretch;
 }
 
 .passt-empty {
   font-family: var(--db-font-body);
   font-size: 0.875rem;
+  line-height: 1.55;
   color: var(--db-opium);
-  padding: 2rem;
+  padding: 1.5rem 1.25rem;
   background: var(--db-soapstone);
   border-radius: var(--db-radius);
   margin: 0;
 }
 
-@media (max-width: 1024px) {
+.passt-empty code {
+  font-size: 0.8125em;
+  word-break: break-word;
+}
+
+/* Small tablet+: row header, 2-column grid (Figma 18:414) */
+@media (min-width: 641px) {
   .passt-section {
     padding: 3rem 1.5rem;
   }
 
   .passt-inner {
     padding: 0 1.5rem;
+    gap: 28px;
+  }
+
+  .passt-header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem 1.5rem;
+  }
+
+  .passt-header__title {
+    white-space: nowrap;
+  }
+
+  .passt-header__link {
+    white-space: nowrap;
   }
 
   .passt-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
 }
 
-@media (max-width: 640px) {
+/* Desktop content width: four cards + 20px gutters match 1100 frame */
+@media (min-width: 1100px) {
   .passt-section {
-    padding: 2.5rem 1rem;
+    padding: 64px clamp(1.25rem, 10vw, 25.625rem);
   }
 
   .passt-inner {
-    padding: 0 0.75rem;
-    gap: 1.25rem;
+    padding: 0 3rem;
+    gap: 28px;
   }
 
-  .passt-header {
-    flex-direction: column;
-    align-items: flex-start;
+  .passt-header__title {
+    font-size: 36px;
+    letter-spacing: 2px;
+    line-height: calc(27.36 / 36);
   }
 
   .passt-header__link {
-    white-space: normal;
+    letter-spacing: 1.2px;
   }
 
   .passt-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Narrow phones */
+@media (max-width: 400px) {
+  .passt-inner {
+    padding: 0 0.5rem;
+  }
+
+  .passt-header__title {
+    letter-spacing: 1.5px;
   }
 }
 </style>
@@ -191,7 +271,7 @@
       "type": "text",
       "id": "header_title",
       "label": "Überschrift",
-      "default": "Passt Dazu"
+      "default": "Passt dazu"
     },
     {
       "type": "text",
@@ -211,20 +291,26 @@
     },
     {
       "type": "paragraph",
-      "content": "Produkte aus Metafeld custom.cross_sells (list.product_reference). Fallback: Liste unten."
+      "content": "Reihenfolge: Metafeld custom.cross_sells (list.product_reference) → Produktliste unten → Fallback-Kollektion → sonst erste Kollektion dieses Produkts → sonst Kollektion „all“."
     },
     {
       "type": "product_list",
       "id": "cross_sell_products",
       "label": "Empfohlene Produkte (Fallback)",
       "limit": 4
+    },
+    {
+      "type": "collection",
+      "id": "fallback_collection",
+      "label": "Fallback-Kollektion (optional)",
+      "info": "Nur wenn Metafeld und Produktliste leer sind: bis zu vier andere Produkte aus dieser Kollektion."
     }
   ],
   "presets": [
     {
       "name": "Passt Dazu — Cross-Sells",
       "settings": {
-        "header_title": "Passt Dazu",
+        "header_title": "Passt dazu",
         "cta_label": "Alle Röstungen"
       }
     }

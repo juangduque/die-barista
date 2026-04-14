@@ -165,7 +165,7 @@
       "type": "section-08-passt-dazu-JT",
       "name": "Passt Dazu — Cross-Sells",
       "settings": {
-        "header_title": "Passt Dazu",
+        "header_title": "Passt dazu",
         "cta_label": "Alle Röstungen",
         "cta_url": "/collections/all",
         "cross_sell_products": []
@@ -222,14 +222,14 @@
       "settings": {
         "bg_color": "#759769",
         "text_color": "#efdfd3",
-        "headline": "Kaffee-Wissen. Direkt von Cemil.",
-        "subtext": "Erhalte Röst-Tipps, Zubereitungsrezepte und exklusive Angebote — direkt in dein Postfach. Kein Spam, nur Kaffee.",
+        "headline": "Kaffee-Wissen.\nDirekt von Cemil.",
+        "subtext": "Erhalte Röst-Tipps, Zubereitungsrezepte und exklusive\nAngebote — direkt in dein Postfach. Kein Spam, nur Kaffee.",
         "use_klaviyo": false,
         "klaviyo_form_id": "",
         "placeholder": "Deine E-Mail-Adresse",
         "btn_label": "Abonnieren",
         "success_msg": "Danke! Du bist dabei.",
-        "quote_text": "Kein Spam, versprochen. Nur echte Leidenschaft für Genießer des schwarzen Goldes.",
+        "quote_text": "\"Kein Spam, versprochen. Nur echte Leidenschaft für Genießer des schwarzen Goldes.\"",
         "quote_author": "— Cemil"
       }
     }

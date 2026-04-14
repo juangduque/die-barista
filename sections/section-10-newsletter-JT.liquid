@@ -1,17 +1,13 @@
 {% comment %}
   ============================================================
   DIE BARISTA ROASTERY — SECTION 10: NEWSLETTER
-  File: sections/section-10-newsletter.liquid
+  Figma kItgXjQzTCQ3nTb4PrD6ZW node 18:470
 
-  Design: Full-width green (#759769) section, 45/55 split
-  - Left: headline + body text in crema/white
-  - Right: email form (input + button) + Cemil avatar + quote
-  - Native Shopify contact form (NOT customer form — correct for newsletter)
-    contact[tags] = newsletter pushes to Shopify contacts
-  - Optional: Klaviyo embed override (you have Klaviyo installed)
-  - Success state replaces form row
-  - Avatar: 80×80 circle with 2px red border (Figma-accurate)
-  - Input: 2px solid black border (consistent with "no 1px borders" rule)
+  - BG #759769, outer py 64px / horizontal clamp to 410px (same as Passt dazu)
+  - Inner max 1100px, px 48; left: headline 44.8px / lh 50 / tracking 1.2px, gap 25px → subtext 16px / lh 25.6 / opacity 0.7 / max 440px
+  - Form: input rgba(255,255,255,0.08), 2px #00090b, radius 2px, placeholder Social Gothic 12px / 0.96px / black; button #E23528, New Frank 13.6px / 0.68px, py 16.5 px 28, min row ~50px
+  - Trust: avatar 106px circle, 2px red border; quote #7B5D4D 15px / lh 20 / tracking 1px (Figma)
+  - Native contact form contact[tags]=newsletter; optional Klaviyo
 
   IMPORTANT — Klaviyo integration:
     Native Shopify contact form stores in Shopify Contacts only.
@@ -22,12 +18,15 @@
   ============================================================
 {% endcomment %}
 
+{%- capture nl_default_headline %}Kaffee-Wissen.
+Direkt von Cemil.{%- endcapture -%}
 {%- liquid
   assign use_klaviyo     = section.settings.use_klaviyo
   assign klaviyo_form_id = section.settings.klaviyo_form_id
+  assign nl_form_dom_id  = 'newsletter-form-' | append: section.id
   assign bg_color        = section.settings.bg_color    | default: '#759769'
   assign text_color      = section.settings.text_color  | default: '#EFDFD3'
-  assign headline        = section.settings.headline    | default: 'Kaffee-Wissen. Direkt von Cemil.'
+  assign headline        = section.settings.headline | default: nl_default_headline | strip
   assign subtext         = section.settings.subtext
   assign placeholder     = section.settings.placeholder | default: 'Deine E-Mail-Adresse'
   assign btn_label       = section.settings.btn_label   | default: 'Abonnieren'
@@ -47,7 +46,7 @@
 
     <!-- ═══ LEFT: EDITORIAL TEXT ═══ -->
     <div class="nl-left">
-      <h2 class="nl-headline">{{- headline -}}</h2>
+      <h2 class="nl-headline">{{ headline | newline_to_br }}</h2>
       {%- unless subtext == blank -%}
         <p class="nl-subtext">{{- subtext -}}</p>
       {%- endunless -%}
@@ -70,7 +69,7 @@
         <!-- Uses contact form (NOT customer form) — correct for newsletter capture -->
         <!-- contact[tags]: newsletter — appears in Shopify Contacts as tagged subscriber -->
         {%- form 'contact',
-            id: 'newsletter-form-' | append: section.id,
+            id: nl_form_dom_id,
             class: 'nl-form-wrapper'
         -%}
 
@@ -132,22 +131,22 @@
       {%- unless quote_text == blank -%}
       <div class="nl-trust">
 
+        {%- assign avatar_src = 'landing-newsletter-cemil-18-483.png' | asset_url -%}
         {%- if avatar_image != blank -%}
-          <img
-            src="{{ avatar_image | image_url: width: 160 }}"
-            alt="{{ quote_author | default: 'Cemil' | escape }}"
-            width="80"
-            height="80"
-            loading="lazy"
-            class="nl-trust__avatar"
-          >
-        {%- else -%}
-          <div class="nl-trust__avatar nl-trust__avatar--placeholder" aria-hidden="true"></div>
+          {%- assign avatar_src = avatar_image | image_url: width: 320 -%}
         {%- endif -%}
+        <img
+          src="{{ avatar_src }}"
+          alt="{{ quote_author | default: 'Cemil' | escape }}"
+          width="106"
+          height="106"
+          loading="lazy"
+          class="nl-trust__avatar{% if avatar_image == blank %} nl-trust__avatar--default{% endif %}"
+        >
 
         <figure class="nl-trust__quote-block">
           <blockquote class="nl-trust__quote">
-            <p>{{- quote_text | escape -}}</p>
+            <p>{{- quote_text | escape | newline_to_br -}}</p>
           </blockquote>
           <figcaption class="nl-trust__author">
             <cite>{{- quote_author | escape -}}</cite>
@@ -166,19 +165,21 @@
 <style>
 /* ── DESIGN TOKENS ── */
 #newsletter-{{ section.id }} {
-  --db-red:       #E23528;
-  --db-black:     #00090B;
-  --db-crema:     #EFDFD3;
-  --db-green:     #759769;
-  --db-radius:    2px;
+  --db-red:         #e23528;
+  --db-black:       #00090b;
+  --db-crema:       #efdfd3;
+  --db-green:       #759769;
+  --db-quote:       #7b5d4d;
+  --db-radius:      2px;
   --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
   --db-font-body:    'New Frank', 'DM Sans', sans-serif;
 }
 
-/* ── SECTION ── */
+/* ── SECTION (Figma 18:470: py 64, horizontal max 410) ── */
 .nl-section {
   background: var(--nl-bg, #759769);
-  padding: clamp(3rem, 5vw, 4.5rem) 0;
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.25rem, 10vw, 25.625rem);
+  box-sizing: border-box;
 }
 
 .nl-inner {
@@ -186,108 +187,135 @@
   margin: 0 auto;
   padding: 0 3rem;
   display: grid;
-  /* 45/55 split — matches Figma, not 50/50 */
-  grid-template-columns: 45fr 55fr;
-  gap: clamp(3rem, 4vw, 5rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 4vw, 4.125rem);
+  align-items: start;
+  box-sizing: border-box;
 }
 
-/* ── LEFT: EDITORIAL TEXT ── */
+/* ── LEFT: headline + sub (gap 25px) ── */
 .nl-left {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 25px;
 }
 
 .nl-headline {
   font-family: var(--db-font-display);
-  font-weight: 900;
-  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 4vw, 44.8px);
   text-transform: uppercase;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
-  color: var(--nl-text, #EFDFD3);
+  letter-spacing: 1.2px;
+  line-height: 1.15;
+  color: var(--nl-text, #efdfd3);
   margin: 0;
+  max-width: 100%;
+}
+
+@media (min-width: 901px) {
+  .nl-headline {
+    line-height: 50px;
+  }
 }
 
 .nl-subtext {
   font-family: var(--db-font-body);
-  font-size: 0.95rem;
-  line-height: 1.65;
-  /* Crema at 80% opacity — NOT a red tint, matches Figma */
-  color: rgba(239, 223, 211, 0.8);
-  max-width: 420px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 25.6px;
+  color: var(--nl-text, #efdfd3);
+  opacity: 0.7;
+  max-width: 440px;
   margin: 0;
 }
 
-/* ── RIGHT: FORM + QUOTE ── */
+/* ── RIGHT: form + trust ── */
 .nl-right {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 25px;
 }
 
-/* ── FORM ROW ── */
 .nl-form-wrapper {
   width: 100%;
 }
 
 .nl-form-row {
   display: flex;
-  gap: 0;  /* input and button flush against each other */
+  align-items: stretch;
   width: 100%;
+  min-height: 50px;
 }
 
-/* Email input */
 .nl-input {
   flex: 1;
   min-width: 0;
-  padding: 0.875rem 1rem;
-  background: transparent;
-  /* 2px border — consistent with design system "no 1px borders" rule */
+  min-height: 50px;
+  box-sizing: border-box;
+  padding: 18px 18px 16px;
+  background: rgba(255, 255, 255, 0.08);
   border: 2px solid var(--db-black);
-  border-right: none;  /* merged with button */
-  border-radius: 0;    /* sharp corners */
+  border-right: none;
+  border-radius: var(--db-radius) 0 0 var(--db-radius);
   font-family: var(--db-font-body);
-  font-size: 0.88rem;
+  font-weight: 500;
+  font-size: 16px;
   color: var(--db-black);
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
 }
 
 .nl-input::placeholder {
-  color: rgba(0, 9, 11, 0.45);
+  color: #000000;
+  font-family: var(--db-font-display);
+  font-weight: 400;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.78rem;
+  letter-spacing: 0.96px;
+  line-height: normal;
 }
 
 .nl-input:focus {
   border-color: var(--db-black);
-  background: rgba(255,255,255, 0.08);
+  background: rgba(255, 255, 255, 0.12);
 }
 
-/* Subscribe button */
+.nl-input:focus-visible {
+  outline: 2px solid var(--db-crema);
+  outline-offset: 2px;
+  z-index: 1;
+}
+
 .nl-btn {
   flex-shrink: 0;
-  padding: 0.875rem 1.5rem;
+  min-height: 50px;
+  box-sizing: border-box;
+  padding: 16.5px 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: var(--db-red);
   color: #ffffff;
   border: none;
-  border-radius: 0;    /* sharp corners — matches input */
-  font-family: var(--db-font-display);
-  font-weight: 900;
-  font-size: 0.82rem;
+  border-radius: 0 var(--db-radius) var(--db-radius) 0;
+  font-family: var(--db-font-body);
+  font-weight: 500;
+  font-size: 13.6px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.68px;
+  line-height: normal;
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.2s;
-  line-height: 1;
 }
 
 .nl-btn:hover {
   background: #c9291e;
+}
+
+.nl-btn:focus-visible {
+  outline: 2px solid var(--db-crema);
+  outline-offset: 2px;
 }
 
 /* ── SUCCESS STATE ── */
@@ -298,9 +326,10 @@
   padding: 0.875rem 1rem;
   background: rgba(239, 223, 211, 0.15);
   border: 2px solid rgba(239, 223, 211, 0.4);
-  color: var(--nl-text, #EFDFD3);
+  border-radius: var(--db-radius);
+  color: var(--nl-text, #efdfd3);
   font-family: var(--db-font-display);
-  font-weight: 900;
+  font-weight: 500;
   font-size: 0.88rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -320,75 +349,89 @@
 .nl-klaviyo-embed .klaviyo-form input[type="email"] {
   border: 2px solid var(--db-black) !important;
   border-right: none !important;
-  border-radius: 0 !important;
+  border-radius: var(--db-radius) 0 0 var(--db-radius) !important;
   font-family: var(--db-font-body) !important;
-  background: transparent !important;
+  background: rgba(255, 255, 255, 0.08) !important;
 }
 
 .nl-klaviyo-embed .klaviyo-form button[type="submit"] {
   background: var(--db-red) !important;
-  border-radius: 0 !important;
-  font-family: var(--db-font-display) !important;
+  border-radius: 0 var(--db-radius) var(--db-radius) 0 !important;
+  font-family: var(--db-font-body) !important;
+  font-weight: 500 !important;
+  font-size: 13.6px !important;
+  letter-spacing: 0.68px !important;
+  text-transform: uppercase !important;
 }
 
-/* ── CEMIL TRUST BLOCK ── */
+/* ── CEMIL TRUST (Figma: 106px ring, quote #7B5D4D) ── */
 .nl-trust {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1.25rem;
-  padding-top: 0.5rem;
 }
 
-/* Avatar: 80×80 circle + 2px red border (Figma-accurate) */
 .nl-trust__avatar {
-  width: 80px;
-  height: 80px;
+  width: 106px;
+  height: 106px;
+  box-sizing: border-box;
   border-radius: 50%;
+  background-color: rgba(131, 124, 124, 1);
+  color: rgba(24, 24, 24, 1);
   object-fit: cover;
   object-position: center top;
-  border: 2px solid var(--db-red);
+  border: 2px solid rgba(255, 17, 0, 1);
   flex-shrink: 0;
   display: block;
 }
 
-.nl-trust__avatar--placeholder {
-  background: rgba(239, 223, 211, 0.2);
+.nl-trust__avatar--default {
+  filter: saturate(0);
+  object-fit: contain;
+  object-position: center;
 }
 
-/* Quote block */
 .nl-trust__quote-block {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
+  min-width: 0;
+  max-width: 307px;
 }
 
 .nl-trust__quote {
   margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
 }
 
 .nl-trust__quote p {
   font-family: var(--db-font-body);
-  font-size: 0.88rem;
-  line-height: 1.6;
-  /* Crema at 75% — warm, readable on green, matches Figma */
-  color: rgba(239, 223, 211, 0.75);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  color: var(--db-quote);
   margin: 0;
   font-style: normal;
 }
 
-/* Author attribution */
 .nl-trust__author {
   display: block;
+  margin: 0;
 }
 
 .nl-trust__author cite {
   font-family: var(--db-font-body);
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--nl-text, #EFDFD3);
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 16.25px;
+  color: var(--db-quote);
   font-style: normal;
-  letter-spacing: 0.02em;
 }
 
 /* ── ACCESSIBILITY ── */
@@ -420,14 +463,13 @@
 
 @media (max-width: 520px) {
   .nl-section {
-    padding: clamp(2rem, 5vw, 3rem) 0;
+    padding: clamp(2rem, 5vw, 3rem) 1.25rem;
   }
 
   .nl-inner {
-    padding: 0 1.25rem;
+    padding: 0;
   }
 
-  /* Stack button below input on very narrow screens */
   .nl-form-row {
     flex-direction: column;
     gap: 0;
@@ -436,16 +478,24 @@
   .nl-input {
     border: 2px solid var(--db-black);
     border-bottom: none;
+    border-radius: var(--db-radius) var(--db-radius) 0 0;
+    border-right: 2px solid var(--db-black);
   }
 
   .nl-btn {
     width: 100%;
-    padding: 1rem;
+    min-height: 48px;
+    padding: 1rem 1.25rem;
+    border-radius: 0 0 var(--db-radius) var(--db-radius);
+  }
+
+  .nl-trust {
+    align-items: flex-start;
   }
 
   .nl-trust__avatar {
-    width: 64px;
-    height: 64px;
+    width: 88px;
+    height: 88px;
   }
 }
 </style>
@@ -479,10 +529,11 @@
       "content": "Linke Spalte"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "headline",
       "label": "Überschrift",
-      "default": "Kaffee-Wissen. Direkt von Cemil."
+      "default": "Kaffee-Wissen.\nDirekt von Cemil.",
+      "info": "Zeilenumbruch für zweizeilige Social-Gothic-Überschrift (Figma 18:470)."
     },
     {
       "type": "textarea",
@@ -534,7 +585,7 @@
       "type": "image_picker",
       "id": "avatar_image",
       "label": "Cemil Foto",
-      "info": "Quadratisch, min. 160×160px. Wird als Kreis angezeigt."
+      "info": "Quadratisch, min. ca. 300×300px. Wird als Kreis 106px (Figma 18:470) angezeigt. Ohne Bild: Standardfoto aus dem Theme."
     },
     {
       "type": "textarea",
@@ -555,7 +606,7 @@
       "settings": {
         "bg_color": "#759769",
         "text_color": "#EFDFD3",
-        "headline": "Kaffee-Wissen. Direkt von Cemil.",
+        "headline": "Kaffee-Wissen.\nDirekt von Cemil.",
         "subtext": "Erhalte Röst-Tipps, Zubereitungsrezepte und exklusive Angebote — direkt in dein Postfach. Kein Spam, nur Kaffee.",
         "placeholder": "Deine E-Mail-Adresse",
         "btn_label": "Abonnieren",
