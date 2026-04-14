@@ -286,18 +286,18 @@
       "settings": {
         "section_label": "Steckbrief",
         "section_headline": "Die Fakten",
-        "herkunft_value": "",
+        "herkunft_value": "Brasilien · Indien",
         "herkunft_sub": "",
-        "varietaet_value": "",
+        "varietaet_value": "80% Arabica · 20% Robusta",
         "varietaet_sub": "",
-        "anbauhoe_value": "",
+        "anbauhoe_value": "1.200 – 1.600 M",
         "anbauhoe_sub": "",
-        "verarbeitung_value": "",
-        "verarbeitung_sub": "",
-        "roastprofil_value": "",
-        "roastprofil_sub": "",
-        "geschmack_value": "",
-        "geschmack_sub": ""
+        "verarbeitung_value": "Washed",
+        "verarbeitung_sub": "Traditionell gewaschen und sonnengetrocknet",
+        "roastprofil_value": "Dunkel",
+        "roastprofil_sub": "Langzeit-Trommelröstung für minimale Säure",
+        "geschmack_value": "Erdig · Schokoladig",
+        "geschmack_sub": "Temperamentvoll mit langem, warmem Finish"
       }
     },
     "die-story": {

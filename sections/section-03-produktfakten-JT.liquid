@@ -1,14 +1,11 @@
 {% comment %}
   ============================================================
   DIE BARISTA ROASTERY — SECTION 03: PRODUKTFAKTEN
-  File: sections/section-03-produktfakten.liquid
-
-  Design: Contained grid on warm surface background
-  - STECKBRIEF label + DIE FAKTEN headline (left-aligned)
-  - 3×2 fact grid inside surface-container panel
-  - Social Gothic for values, New Frank for subtexts
-  - Tonal stacking — NO borders, NO shadows
-  - Metafield-first, Theme Customizer as override
+  Figma kItgXjQzTCQ3nTb4PrD6ZW node 18:193
+  — Page: #FFF1E7 · Grid gap: #FFF1E7 · Cells: #FFF8F5 · 3px gutter
+  — Header: Steckbrief New Frank 14 #E23528 · Die Fakten Social Gothic 34 #00090B · gap 48px to grid
+  — Cells: label Social Gothic Bold 10.4 #906F6A · value New Frank Medium 20 / lh 32 #00090B · sub New Frank 14.4 #755848
+  — Metafield-first, Theme Customizer as override
 
   Metafields (namespace: coffee_attributes):
     .herkunft_value      → e.g. "Brasilien · Indien"
@@ -51,18 +48,18 @@
 
 <section
   class="fakten-section"
-  id="produktfakten"
+  id="produktfakten-{{ section.id }}"
   data-section-id="{{ section.id }}"
   aria-label="Produktfakten"
 >
   <div class="fakten-inner">
 
-    <!-- ── HEADER ── -->
+    <!-- ── HEADER (Figma 18:195–200) ── -->
     <header class="fakten-header">
       {%- unless section_label == blank -%}
-        <p class="fakten-label">{{- section_label -}}</p>
+        <p class="fakten-label">{{ section_label | escape }}</p>
       {%- endunless -%}
-      <h2 class="fakten-headline">{{- section_headline -}}</h2>
+      <h2 class="fakten-headline">{{ section_headline | escape }}</h2>
     </header>
 
     <!-- ── FACT GRID ── -->
@@ -72,9 +69,9 @@
       {%- unless herkunft_val == blank -%}
       <div class="fakten-card" role="listitem">
         <span class="fakten-card__label">Herkunft</span>
-        <strong class="fakten-card__value">{{- herkunft_val -}}</strong>
+        <strong class="fakten-card__value">{{ herkunft_val | escape }}</strong>
         {%- unless herkunft_sub == blank -%}
-          <p class="fakten-card__sub">{{- herkunft_sub -}}</p>
+          <p class="fakten-card__sub">{{ herkunft_sub | escape }}</p>
         {%- endunless -%}
       </div>
       {%- endunless -%}
@@ -83,9 +80,9 @@
       {%- unless varietaet_val == blank -%}
       <div class="fakten-card" role="listitem">
         <span class="fakten-card__label">Varietät</span>
-        <strong class="fakten-card__value">{{- varietaet_val -}}</strong>
+        <strong class="fakten-card__value">{{ varietaet_val | escape }}</strong>
         {%- unless varietaet_sub == blank -%}
-          <p class="fakten-card__sub">{{- varietaet_sub -}}</p>
+          <p class="fakten-card__sub">{{ varietaet_sub | escape }}</p>
         {%- endunless -%}
       </div>
       {%- endunless -%}
@@ -94,9 +91,9 @@
       {%- unless anbauhoe_val == blank -%}
       <div class="fakten-card" role="listitem">
         <span class="fakten-card__label">Anbauhöhe</span>
-        <strong class="fakten-card__value">{{- anbauhoe_val -}}</strong>
+        <strong class="fakten-card__value">{{ anbauhoe_val | escape }}</strong>
         {%- unless anbauhoe_sub == blank -%}
-          <p class="fakten-card__sub">{{- anbauhoe_sub -}}</p>
+          <p class="fakten-card__sub">{{ anbauhoe_sub | escape }}</p>
         {%- endunless -%}
       </div>
       {%- endunless -%}
@@ -105,9 +102,9 @@
       {%- unless verarbeitung_val == blank -%}
       <div class="fakten-card" role="listitem">
         <span class="fakten-card__label">Verarbeitung</span>
-        <strong class="fakten-card__value">{{- verarbeitung_val -}}</strong>
+        <strong class="fakten-card__value">{{ verarbeitung_val | escape }}</strong>
         {%- unless verarbeitung_sub == blank -%}
-          <p class="fakten-card__sub">{{- verarbeitung_sub -}}</p>
+          <p class="fakten-card__sub">{{ verarbeitung_sub | escape }}</p>
         {%- endunless -%}
       </div>
       {%- endunless -%}
@@ -116,9 +113,9 @@
       {%- unless roastprofil_val == blank -%}
       <div class="fakten-card" role="listitem">
         <span class="fakten-card__label">Röstprofil</span>
-        <strong class="fakten-card__value">{{- roastprofil_val -}}</strong>
+        <strong class="fakten-card__value">{{ roastprofil_val | escape }}</strong>
         {%- unless roastprofil_sub == blank -%}
-          <p class="fakten-card__sub">{{- roastprofil_sub -}}</p>
+          <p class="fakten-card__sub">{{ roastprofil_sub | escape }}</p>
         {%- endunless -%}
       </div>
       {%- endunless -%}
@@ -127,9 +124,9 @@
       {%- unless geschmack_val == blank -%}
       <div class="fakten-card" role="listitem">
         <span class="fakten-card__label">Geschmack</span>
-        <strong class="fakten-card__value">{{- geschmack_val -}}</strong>
+        <strong class="fakten-card__value">{{ geschmack_val | escape }}</strong>
         {%- unless geschmack_sub == blank -%}
-          <p class="fakten-card__sub">{{- geschmack_sub -}}</p>
+          <p class="fakten-card__sub">{{ geschmack_sub | escape }}</p>
         {%- endunless -%}
       </div>
       {%- endunless -%}
@@ -141,143 +138,152 @@
 
 
 <style>
-/* ── DESIGN TOKENS ── */
-#produktfakten {
-  --db-red:    #E23528;
-  --db-black:  #00090B;
-  --db-crema:  #EFDFD3;
-  --db-mud:    #7B5D4D;
-  --db-surface:      #fff8f5;
-  --db-surface-low:  #fff1e7;
-  --db-surface-mid:  #fbebdf;
-  --db-surface-high: #f5e5d9;
-  --db-outline:      #906f6a;
-  --db-radius: 2px;
+/* ── DESIGN TOKENS (Figma 18:193) ── */
+.fakten-section {
+  --db-red:         #e23528;
+  --db-black:       #00090b;
+  --db-serenade:    #fff1e7;
+  --db-soapstone:   #fff8f5;
+  --db-opium:       #906f6a;
+  --db-roman:       #755848;
   --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
   --db-font-body:    'New Frank', 'DM Sans', sans-serif;
 }
 
-/* ── SECTION WRAPPER ── */
+/* ── SECTION — Serenade bg, generous vertical padding ── */
 .fakten-section {
-  background: var(--db-surface);
-  padding: 5rem 0 4rem;
+  background: var(--db-serenade);
+  padding: 4rem clamp(1.25rem, 10vw, 25.625rem);
+  box-sizing: border-box;
 }
 
 .fakten-inner {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 3rem;
+  box-sizing: border-box;
 }
 
-/* ── HEADER ── */
+/* ── HEADER — 8px label↔headline; 48px to grid ── */
 .fakten-header {
-  margin-bottom: 2.5rem;
-}
-
-.fakten-label {
-  font-family: var(--db-font-body);
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--db-red);
-  line-height: 1;
-  margin-bottom: 0.4rem;
-}
-
-.fakten-headline {
-  font-family: var(--db-font-display);
-  font-weight: 900;
-  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
-  color: var(--db-black);
-}
-
-/* ── FACT GRID ── */
-/* 
-  One large container panel — tonal stacking, NOT individual bordered cards.
-  The 3px gap between cards creates visual separation via the surface color bleeding through.
-  This matches the Figma exactly: panel sits on --db-surface, gap reveals the background.
-*/
-.fakten-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3px;       /* gap IS the "border" — reveals surface background */
-  background: var(--db-surface); /* gap color = section background, not a card color */
-}
-
-/* ── FACT CARD ── */
-.fakten-card {
-  background: var(--db-surface-low);
-  padding: 1.75rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  /* NO border, NO shadow — tonal stacking only */
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
 }
 
-/* ── CARD LABEL ── */
-.fakten-card__label {
+/* Steckbrief: New Frank Medium 14 / #E23528 / +1.44px */
+.fakten-label {
   font-family: var(--db-font-body);
-  font-size: 0.62rem;
-  font-weight: 700;
+  font-size: 0.875rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--db-outline);
-  line-height: 1;
-}
-
-/* ── CARD VALUE ── */
-/* Social Gothic — same treatment as product title */
-.fakten-card__value {
-  font-family: var(--db-font-display);
-  font-weight: 900;
-  font-size: clamp(1rem, 1.6vw, 1.25rem);
-  text-transform: uppercase;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-  color: var(--db-black);
-  display: block;
-}
-
-/* ── CARD SUBTEXT ── */
-/* New Frank — descriptive, secondary information */
-.fakten-card__sub {
-  font-family: var(--db-font-body);
-  font-size: 0.82rem;
-  line-height: 1.55;
-  color: var(--db-mud);
-  max-height: 2.8em;         /* max 2 lines as per design spec */
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  letter-spacing: 0.103em;
+  color: var(--db-red);
+  line-height: 1.0285714286;
   margin: 0;
 }
 
-/* ── RESPONSIVE ── */
+/* Die Fakten: Social Gothic Medium 34 / #00090B / −0.576px */
+.fakten-headline {
+  font-family: var(--db-font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 3.2vw, 2.125rem);
+  text-transform: uppercase;
+  letter-spacing: -0.017em;
+  line-height: 0.804;
+  color: var(--db-black);
+  margin: 0;
+}
 
-/* Tablet: 2 columns */
+/* ── GRID — 3×2, 3px gutter shows Serenade ── */
+.fakten-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+  background: var(--db-serenade);
+  width: 100%;
+}
+
+/* ── CELL — Soapstone, Figma padding ~27px 28px ── */
+.fakten-card {
+  background: var(--db-soapstone);
+  padding: 1.6875rem 1.75rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+/* Label: Social Gothic Bold 10.4 / Opium / +1.56px */
+.fakten-card__label {
+  font-family: var(--db-font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--db-opium);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Value: New Frank Medium 20 / lh 32 (Figma), uppercase */
+.fakten-card__value {
+  font-family: var(--db-font-body);
+  font-weight: 500;
+  font-size: clamp(1rem, 1.25vw, 1.25rem);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1.6;
+  color: var(--db-black);
+  display: block;
+  margin: 0;
+}
+
+/* Sub: New Frank Medium 14.4 / lh 21.6 / Roman Coffee */
+.fakten-card__sub {
+  font-family: var(--db-font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--db-roman);
+  margin: 0.5rem 0 0;
+  max-width: 100%;
+}
+
+/* Tablet */
 @media (max-width: 900px) {
+  .fakten-section {
+    padding: 3rem 1.5rem;
+  }
+
   .fakten-inner {
-    padding: 0 2rem;
+    padding: 0 1.5rem;
+  }
+
+  .fakten-header {
+    margin-bottom: 2.25rem;
   }
 
   .fakten-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* Mobile: 1 column */
+/* Mobile */
 @media (max-width: 540px) {
   .fakten-section {
-    padding: 3.5rem 0 3rem;
+    padding: 2.5rem 1rem;
   }
 
   .fakten-inner {
-    padding: 0 1.25rem;
+    padding: 0 0.75rem;
+  }
+
+  .fakten-headline {
+    line-height: 1.05;
   }
 
   .fakten-header {
@@ -286,20 +292,11 @@
 
   .fakten-grid {
     grid-template-columns: 1fr;
-    gap: 2px;
+    gap: 3px;
   }
 
   .fakten-card {
-    padding: 1.25rem 1rem;
-  }
-
-  .fakten-card__value {
-    font-size: 1.05rem;
-  }
-
-  .fakten-card__sub {
-    -webkit-line-clamp: 3; /* allow 3 lines on narrow mobile */
-    max-height: 4.2em;
+    padding: 1.375rem 1.25rem 1.5rem;
   }
 }
 </style>
