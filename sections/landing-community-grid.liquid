@@ -26,54 +26,72 @@
       </header>
     {%- endif -%}
 
+    {%- assign lc_has_app_feed = false -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        {%- assign lc_has_app_feed = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
     {%- if section.blocks.size > 0 -%}
-      <div class="landing-community__grid">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'moment' -%}
-            <div
-              class="landing-community__cell landing-community__cell--{{ block.settings.tone | default: 'cream' }}"
-              {{ block.shopify_attributes }}
-            >
-              <div class="landing-community__cell-media">
-                {%- if block.settings.image != blank -%}
-                  {{
-                    block.settings.image
-                    | image_url: width: 1200
-                    | image_tag:
-                      loading: 'lazy',
-                      sizes: '(min-width: 990px) 25vw, (min-width: 550px) 50vw, 100vw',
-                      widths: '375, 550, 750, 1000, 1200'
-                  }}
-                {%- elsif section.settings.use_theme_image_fallbacks -%}
-                  {%- liquid
-                    case forloop.index
-                      when 1
-                        assign fb_asset = 'landing-community-1.png'
-                      when 2
-                        assign fb_asset = 'landing-community-2.jpg'
-                      when 3
-                        assign fb_asset = 'landing-community-3.png'
-                      else
-                        assign fb_asset = 'landing-community-4.jpg'
-                    endcase
-                  -%}
-                  <img
-                    src="{{ fb_asset | asset_url }}"
-                    alt=""
-                    width="800"
-                    height="800"
-                    loading="lazy"
-                    decoding="async"
-                    sizes="(min-width: 990px) 25vw, (min-width: 550px) 50vw, 100vw"
-                  >
-                {%- endif -%}
-                {%- if block.settings.desaturate -%}
-                  <div class="landing-community__cell-sat" aria-hidden="true"></div>
-                {%- endif -%}
+      <div class="landing-community__grid{% if lc_has_app_feed %} landing-community__grid--app{% endif %}">
+        {%- if lc_has_app_feed -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == '@app' -%}
+              <div class="landing-community__app-feed-block" {{ block.shopify_attributes }}>
+                {% render block %}
               </div>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'moment' -%}
+              <div
+                class="landing-community__cell landing-community__cell--{{ block.settings.tone | default: 'cream' }}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="landing-community__cell-media">
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 1200
+                      | image_tag:
+                        loading: 'lazy',
+                        sizes: '(min-width: 990px) 25vw, (min-width: 550px) 50vw, 100vw',
+                        widths: '375, 550, 750, 1000, 1200'
+                    }}
+                  {%- elsif section.settings.use_theme_image_fallbacks -%}
+                    {%- liquid
+                      case forloop.index
+                        when 1
+                          assign fb_asset = 'landing-community-1.png'
+                        when 2
+                          assign fb_asset = 'landing-community-2.jpg'
+                        when 3
+                          assign fb_asset = 'landing-community-3.png'
+                        else
+                          assign fb_asset = 'landing-community-4.jpg'
+                      endcase
+                    -%}
+                    <img
+                      src="{{ fb_asset | asset_url }}"
+                      alt=""
+                      width="800"
+                      height="800"
+                      loading="lazy"
+                      decoding="async"
+                      sizes="(min-width: 990px) 25vw, (min-width: 550px) 50vw, 100vw"
+                    >
+                  {%- endif -%}
+                  {%- if block.settings.desaturate -%}
+                    <div class="landing-community__cell-sat" aria-hidden="true"></div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
       </div>
     {%- endif -%}
 
@@ -203,6 +221,9 @@
     }
   ],
   "blocks": [
+    {
+      "type": "@app"
+    },
     {
       "type": "moment",
       "name": "Photo",
