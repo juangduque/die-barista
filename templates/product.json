@@ -266,126 +266,7 @@
         "padding_bottom": "no-indent"
       }
     },
-    "cemils-empfehlung": {
-      "type": "section-02-cemils-empfehlung-JT",
-      "settings": {
-        "video_url": "",
-        "image_alt": "Cemil — Gründer & Röstmeister der Die Barista Roastery",
-        "label_text": "Cemils Empfehlung",
-        "headline": "Cemils Empfehlung",
-        "quote": "Dieser Kaffee ist wie ein Kurzurlaub in Neapel. Dunkel geröstet, kräftig im Körper, mit einem Finish das an Zartbitterschokolade erinnert. Am liebsten trinke ich ihn als doppelten Espresso — puro, ohne alles.",
-        "person_name": "Cemil — Gründer & Röstmeister",
-        "person_title": "Die Barista Roastery, Hammeln",
-        "bg_color": "#759769",
-        "text_color": "#efdfd3",
-        "media_side": "left"
-      }
-    },
-    "produktfakten": {
-      "type": "section-03-produktfakten-JT",
-      "settings": {
-        "section_label": "Steckbrief",
-        "section_headline": "Die Fakten",
-        "herkunft_value": "Brasilien · Indien",
-        "herkunft_sub": "",
-        "varietaet_value": "80% Arabica · 20% Robusta",
-        "varietaet_sub": "",
-        "anbauhoe_value": "1.200 – 1.600 M",
-        "anbauhoe_sub": "",
-        "verarbeitung_value": "Washed",
-        "verarbeitung_sub": "Traditionell gewaschen und sonnengetrocknet",
-        "roastprofil_value": "Dunkel",
-        "roastprofil_sub": "Langzeit-Trommelröstung für minimale Säure",
-        "geschmack_value": "Erdig · Schokoladig",
-        "geschmack_sub": "Temperamentvoll mit langem, warmem Finish"
-      }
-    },
-    "die-story": {
-      "type": "section-04-die-story-JT",
-      "settings": {
-        "kicker": "Die Story",
-        "headline": "Temperamentvolle Italienische Lebensart",
-        "paragraph_1": "Seit 2018 röstet Die Barista in Hamburg. Was als Leidenschaft für den Garage begann, ist heute eine Mission: Den ehrlichsten Kaffee der Region zu produzieren.",
-        "paragraph_2": "Jede Röstung erzählt eine Geschichte — von der Kooperative in Brasilien bis zur Trommel in Hamburg-Wandsbek. Direkt gehandelt, persönlich ausgewählt.",
-        "ursprung": "Brasilien, Indien",
-        "roestung": "Dunkle Trommelröstung für maximale Süße",
-        "charakter": "Vollmundig mit Noten von Kakao und Haselnuss",
-        "varietaet": "60% Arabica, 40% Robusta"
-      }
-    },
-    "brew-guide": {
-      "type": "section-05-brew-guide-JT",
-      "settings": {
-        "brew_headline": "So schmeckt er am besten.",
-        "brew_subline": "Unsere Zubereitungsempfehlungen für jede Methode — damit jede Tasse perfekt wird.",
-        "show_sieb": true,
-        "show_voll": true,
-        "show_moka": true,
-        "show_french": true,
-        "show_filter": true,
-        "sieb_menge": "18",
-        "sieb_mahlgrad": "Fein",
-        "sieb_wasser": "40",
-        "sieb_temperatur": "93",
-        "sieb_dauer": "25",
-        "voll_menge": "14",
-        "voll_mahlgrad": "Mittel",
-        "voll_wasser": "200",
-        "voll_temperatur": "93",
-        "voll_dauer": "30",
-        "moka_menge": "15",
-        "moka_mahlgrad": "Mittel-fein",
-        "moka_wasser": "200",
-        "moka_temperatur": "95",
-        "moka_dauer": "4",
-        "french_menge": "30",
-        "french_mahlgrad": "Grob",
-        "french_wasser": "500",
-        "french_temperatur": "96",
-        "french_dauer": "4",
-        "filter_menge": "15",
-        "filter_mahlgrad": "Mittel",
-        "filter_wasser": "250",
-        "filter_temperatur": "94",
-        "filter_dauer": "3"
-      }
-    },
-    "mid-cta": {
-      "type": "section-06-mid-cta-JT",
-      "settings": {
-        "headline": "Überzeugt?"
-      }
-    },
-    "passt-dazu": {
-      "type": "section-08-passt-dazu-JT",
-      "settings": {
-        "header_title": "Passt Dazu",
-        "cta_label": "Alle Röstungen",
-        "cta_url": "/collections/all",
-        "cross_sell_products": []
-      }
-    },
-    "trust-bar": {
-      "type": "section-09-trust-bar-JT",
-      "settings": {}
-    },
-    "newsletter": {
-      "type": "section-10-newsletter-JT",
-      "settings": {
-        "bg_color": "#759769",
-        "text_color": "#efdfd3",
-        "headline": "Kaffee-Wissen. Direkt von Cemil.",
-        "subtext": "Erhalte Röst-Tipps, Zubereitungsrezepte und exklusive Angebote — direkt in dein Postfach. Kein Spam, nur Kaffee.",
-        "use_klaviyo": false,
-        "klaviyo_form_id": "",
-        "placeholder": "Deine E-Mail-Adresse",
-        "btn_label": "Abonnieren",
-        "success_msg": "Danke! Du bist dabei.",
-        "quote_text": "Kein Spam, versprochen. Nur echte Leidenschaft für Genießer des schwarzen Goldes.",
-        "quote_author": "— Cemil"
-      }
-    },
-    "section_01_hero_buyblock_jt_7YxEgR": {
+    "hero-buyblock": {
       "type": "section-01-hero-buyblock-JT",
       "name": "Hero & Buy Block",
       "settings": {
@@ -400,7 +281,7 @@
         "color_wechselnd": "#759769"
       }
     },
-    "section_02_cemils_empfehlung_jt_GiYYLG": {
+    "cemils-empfehlung": {
       "type": "section-02-cemils-empfehlung-JT",
       "name": "Cemils Empfehlung",
       "settings": {
@@ -416,7 +297,7 @@
         "media_side": "left"
       }
     },
-    "section_03_produktfakten_jt_WzJTDT": {
+    "produktfakten": {
       "type": "section-03-produktfakten-JT",
       "name": "Produktfakten",
       "settings": {
@@ -436,7 +317,7 @@
         "geschmack_sub": "Temperamentvoll mit langem, warmem Finish"
       }
     },
-    "section_04_die_story_jt_NkhHP3": {
+    "die-story": {
       "type": "section-04-die-story-JT",
       "name": "Die Story — Herkunft",
       "settings": {
@@ -450,7 +331,7 @@
         "varietaet": "60% Arabica, 40% Robusta"
       }
     },
-    "section_05_brew_guide_jt_JaedKq": {
+    "brew-guide": {
       "type": "section-05-brew-guide-JT",
       "name": "Brew Guide",
       "settings": {
@@ -488,7 +369,7 @@
         "filter_dauer": "3"
       }
     },
-    "section_06_mid_cta_jt_XVyMb7": {
+    "mid-cta": {
       "type": "section-06-mid-cta-JT",
       "name": "Mid Page CTA",
       "settings": {
@@ -537,17 +418,17 @@
         "reviews_jt_michael"
       ]
     },
-    "section_08_passt_dazu_jt_xfRGYh": {
+    "passt-dazu": {
       "type": "section-08-passt-dazu-JT",
       "name": "Passt Dazu — Cross-Sells",
       "settings": {
         "header_title": "Passt Dazu",
         "cta_label": "Alle Röstungen",
-        "cta_url": "",
+        "cta_url": "/collections/all",
         "cross_sell_products": []
       }
     },
-    "section_09_trust_bar_jt_FVyKrT": {
+    "trust-bar": {
       "type": "section-09-trust-bar-JT",
       "blocks": {
         "usp_item_weXmfT": {
@@ -592,7 +473,7 @@
       "name": "Trust Bar",
       "settings": {}
     },
-    "section_10_newsletter_jt_34VDg9": {
+    "newsletter": {
       "type": "section-10-newsletter-JT",
       "name": "Newsletter",
       "settings": {
@@ -612,6 +493,7 @@
   },
   "order": [
     "main",
+    "hero-buyblock",
     "cemils-empfehlung",
     "produktfakten",
     "die-story",
@@ -620,15 +502,6 @@
     "reviews",
     "passt-dazu",
     "trust-bar",
-    "newsletter",
-    "section_01_hero_buyblock_jt_7YxEgR",
-    "section_02_cemils_empfehlung_jt_GiYYLG",
-    "section_03_produktfakten_jt_WzJTDT",
-    "section_04_die_story_jt_NkhHP3",
-    "section_05_brew_guide_jt_JaedKq",
-    "section_06_mid_cta_jt_XVyMb7",
-    "section_08_passt_dazu_jt_xfRGYh",
-    "section_09_trust_bar_jt_FVyKrT",
-    "section_10_newsletter_jt_34VDg9"
+    "newsletter"
   ]
 }

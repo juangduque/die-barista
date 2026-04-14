@@ -1,40 +1,17 @@
 {% comment %}
-  ============================================================
-  DIE BARISTA ROASTERY — SECTION 08: PASST DAZU (CROSS-SELLS)
-  File: sections/section-08-passt-dazu-JT.liquid
-
-  Design: 4-column product grid, surface background, tonal cards
-  - Header: "PASST DAZU" left + "ALLE RÖSTUNGEN →" right
-  - Cards: image with badge, warm beige text area, square black ATC button
-  - Data: product.metafields.custom.cross_sells.value (list.product_reference)
-  - Fallback: Theme Customizer product_list setting
-  - Mobile: native CSS snap-scroll horizontal
-  - Quick-add: proper Shopify form per card, no AJAX
-
-  Metafield setup in Shopify Admin:
-    Namespace: custom
-    Key: cross_sells
-    Type: list.product_reference
-    → Returns array of product objects via .value
-  ============================================================
+  Passt Dazu — Cross-Sells
+  Figma kItgXjQzTCQ3nTb4PrD6ZW node 18:414 — Serenade surface, 28px header↔grid, 4× grid gap 20px, Soapstone cards.
+  Data: custom.cross_sells (list.product_reference) → section cross_sell_products fallback.
 {% endcomment %}
 
 {%- liquid
-  comment
-    Resolve cross-sell products:
-    1. Try metafield list.product_reference (.value returns product objects directly)
-    2. Fall back to Theme Customizer product_list setting
-  endcomment
-
   assign cross_sell_products = product.metafields.custom.cross_sells.value
-
   if cross_sell_products == blank
     assign cross_sell_products = section.settings.cross_sell_products
   endif
-
-  assign header_title    = section.settings.header_title    | default: 'Passt Dazu'
-  assign cta_label       = section.settings.cta_label       | default: 'Alle Röstungen'
-  assign cta_url         = section.settings.cta_url         | default: '/collections/all'
+  assign header_title = section.settings.header_title | default: 'Passt Dazu'
+  assign cta_label     = section.settings.cta_label     | default: 'Alle Röstungen'
+  assign cta_url       = section.settings.cta_url       | default: '/collections/all'
 -%}
 
 <section
@@ -45,100 +22,91 @@
 >
   <div class="passt-inner">
 
-    <!-- ── SECTION HEADER ── -->
     <div class="passt-header">
       <h2 class="passt-header__title" id="passt-heading-{{ section.id }}">
-        {{- header_title -}}
+        {{ header_title | escape }}
       </h2>
       {%- unless cta_url == blank -%}
         <a
           href="{{ cta_url }}"
           class="passt-header__link"
-          aria-label="{{ cta_label }} — alle Produkte anzeigen"
         >
-          {{- cta_label -}} →
+          {{ cta_label | escape }} →
         </a>
       {%- endunless -%}
     </div>
 
-    <!-- ── PRODUCT GRID ── -->
     {%- if cross_sell_products != blank -%}
-      <ul
-        class="passt-grid"
-        role="list"
-        aria-label="Empfohlene Produkte"
-      >
+      <ul class="passt-grid" role="list" aria-label="Empfohlene Produkte">
         {%- for cross_product in cross_sell_products limit: 4 -%}
           {%- render 'passt-dazu-card-JT', cross_product: cross_product -%}
         {%- endfor -%}
       </ul>
-
     {%- else -%}
-      {%- comment -%} Editor placeholder when no products are set {%- endcomment -%}
       <p class="passt-empty">
-        Produkte im Theme Customizer oder über das Metafeld <code>custom.cross_sells</code> hinzufügen.
+        Produkte im Theme-Editor oder über das Metafeld <code>custom.cross_sells</code> (list.product_reference) hinzufügen.
       </p>
     {%- endif -%}
 
-  </div><!-- /passt-inner -->
+  </div>
 </section>
 
-
 <style>
-/* ── DESIGN TOKENS ── */
-#passt-dazu-{{ section.id }} {
-  --db-red:    #E23528;
-  --db-black:  #00090B;
-  --db-crema:  #EFDFD3;
-  --db-mud:    #7B5D4D;
-  --db-surface:      #fff8f5;
-  --db-surface-low:  #fff1e7;
-  --db-surface-mid:  #fbebdf;
-  --db-surface-high: #f5e5d9;
-  --db-outline:      #906f6a;
-  --db-radius: 2px;
+.passt-section {
+  --db-red:         #e23528;
+  --db-black:       #00090b;
+  --db-crema:       #efdfd3;
+  --db-opium:       #906f6a;
+  --db-serenade:    #fff1e7;
+  --db-soapstone:   #fff8f5;
+  --db-warm:        #f5e5d9;
+  --db-radius:      2px;
   --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
   --db-font-body:    'New Frank', 'DM Sans', sans-serif;
 }
 
-/* ── SECTION ── */
 .passt-section {
-  background: var(--db-surface);
-  padding: 5rem 0;
+  background: var(--db-serenade);
+  padding: 4rem clamp(1.25rem, 10vw, 25.625rem);
+  box-sizing: border-box;
 }
 
 .passt-inner {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 3rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
 }
 
-/* ── HEADER ── */
 .passt-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 2rem;
-  gap: 1rem;
+  align-items: flex-end;
+  gap: 1rem 1.5rem;
 }
 
 .passt-header__title {
   font-family: var(--db-font-display);
-  font-weight: 900;
-  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 3.2vw, 2.25rem);
   text-transform: uppercase;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
+  letter-spacing: 0.055em;
+  line-height: 0.76;
   color: var(--db-black);
   margin: 0;
 }
 
 .passt-header__link {
   font-family: var(--db-font-body);
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
   color: var(--db-red);
   text-decoration: none;
   white-space: nowrap;
@@ -149,75 +117,65 @@
   opacity: 0.75;
 }
 
-/* ── GRID ── */
 .passt-grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  width: 100%;
 }
 
-/* ── EMPTY STATE ── */
 .passt-empty {
   font-family: var(--db-font-body);
-  font-size: 0.85rem;
-  color: var(--db-outline);
+  font-size: 0.875rem;
+  color: var(--db-opium);
   padding: 2rem;
-  background: var(--db-surface-low);
+  background: var(--db-soapstone);
   border-radius: var(--db-radius);
+  margin: 0;
 }
 
-/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .passt-section {
+    padding: 3rem 1.5rem;
+  }
 
-/* Tablet: 2 columns */
-@media (max-width: 1023px) {
   .passt-inner {
-    padding: 0 2rem;
+    padding: 0 1.5rem;
   }
 
   .passt-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* Mobile: horizontal snap-scroll */
 @media (max-width: 640px) {
   .passt-section {
-    padding: 3.5rem 0;
+    padding: 2.5rem 1rem;
   }
 
   .passt-inner {
-    padding: 0;  /* remove inner padding so cards bleed to edge */
+    padding: 0 0.75rem;
+    gap: 1.25rem;
   }
 
   .passt-header {
-    padding: 0 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .passt-header__link {
+    white-space: normal;
   }
 
   .passt-grid {
-    /* Horizontal snap scroll — no vertical stacking fatigue */
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 80vw;  /* shows hint of next card */
-    grid-template-columns: unset;
-    gap: 0.75rem;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scroll-padding-left: 1.25rem;
-    padding: 0 1.25rem 1rem;  /* breathing room + bottom for scroll indicator feel */
-    scrollbar-width: none;
-  }
-
-  .passt-grid::-webkit-scrollbar {
-    display: none;
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }
 </style>
-
 
 {% schema %}
 {
@@ -253,14 +211,13 @@
     },
     {
       "type": "paragraph",
-      "content": "⚡ Produkte werden automatisch aus dem Metafeld custom.cross_sells geladen (list.product_reference). Untenstehende Auswahl ist der Fallback."
+      "content": "Produkte aus Metafeld custom.cross_sells (list.product_reference). Fallback: Liste unten."
     },
     {
       "type": "product_list",
       "id": "cross_sell_products",
       "label": "Empfohlene Produkte (Fallback)",
-      "limit": 4,
-      "info": "Wird ignoriert wenn das Metafeld custom.cross_sells gesetzt ist."
+      "limit": 4
     }
   ],
   "presets": [
