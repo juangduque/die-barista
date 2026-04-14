@@ -294,6 +294,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  display: none;
 }
 
 /* Coffee branch — top-left corner per Figma node 9:421, rotated 28.41deg */
