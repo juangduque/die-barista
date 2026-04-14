@@ -1,42 +1,24 @@
 {% comment %}
-  ============================================================
-  DIE BARISTA ROASTERY — SECTION 04: DIE STORY
-  File: sections/section-04-die-story.liquid
-
-  Design: 45/55 asymmetric split — image collage left, story right
-  - Main landscape/tall image + inset farmer portrait (overlapping)
-  - Cutout border trick: inset border = section surface color
-  - Social Gothic headline, New Frank body
-  - Mini-table (dl) for 4 key facts at bottom
-  - Metafield-first under coffee_attributes namespace (consistent)
-
-  Metafields (namespace: coffee_attributes):
-    .story_main_image      → image metafield (main landscape/plant photo)
-    .story_inset_image     → image metafield (farmer/origin portrait)
-    .story_headline        → e.g. "Temperamentvolle Italienische Lebensart"
-    .story_paragraph_1     → first body paragraph
-    .story_paragraph_2     → second body paragraph (optional)
-    .story_ursprung        → e.g. "Brasilien, Indien"
-    .story_roestung        → e.g. "Dunkle Trommelröstung für maximale Süße"
-    .story_charakter       → e.g. "Vollmundig mit Noten von Kakao und Haselnuss"
-    .story_varietaet       → e.g. "60% Arabica, 40% Robusta"
-  ============================================================
+  DIE BARISTA — Die Story (Produkt)
+  Figma kItgXjQzTCQ3nTb4PrD6ZW node 18:372 — Soapstone page, 1.10fr : 1fr grid, 48px gap, inset 6px cutout.
+  Defaults: assets/die-story-hero.jpg + die-story-inset.jpg (Figma exports).
+  Metafields: coffee_attributes.story_*
 {% endcomment %}
 
 {%- liquid
   assign mf = product.metafields.coffee_attributes
 
-  # Images — metafield image type or fallback to section settings
   assign main_image   = mf.story_main_image.value   | default: section.settings.main_image
   assign inset_image  = mf.story_inset_image.value  | default: section.settings.inset_image
 
-  # Text content
+  assign default_story_hero  = 'die-story-hero.jpg'
+  assign default_story_inset = 'die-story-inset.jpg'
+
   assign kicker       = section.settings.kicker       | default: 'Die Story'
   assign headline     = mf.story_headline             | default: section.settings.headline
   assign paragraph_1  = mf.story_paragraph_1          | default: section.settings.paragraph_1
   assign paragraph_2  = mf.story_paragraph_2          | default: section.settings.paragraph_2
 
-  # Mini-table — all from coffee_attributes for namespace consistency
   assign ursprung     = mf.story_ursprung    | default: section.settings.ursprung
   assign roestung     = mf.story_roestung    | default: section.settings.roestung
   assign charakter    = mf.story_charakter   | default: section.settings.charakter
@@ -45,16 +27,14 @@
 
 <section
   class="story-section"
-  id="die-story"
+  id="die-story-{{ section.id }}"
   data-section-id="{{ section.id }}"
   aria-label="Die Story — Herkunft und Handwerk"
 >
   <div class="story-inner">
 
-    <!-- ═══ LEFT: IMAGE COLLAGE ═══ -->
+    <!-- ═══ COL 1: images (left desktop, first stacked mobile) ═══ -->
     <figure class="story-collage" aria-label="Herkunftsbilder">
-
-      <!-- Main image -->
       <div class="story-collage__main">
         {%- if main_image != blank -%}
           <img
@@ -64,313 +44,288 @@
               {{ main_image | image_url: width: 800  }} 800w,
               {{ main_image | image_url: width: 1000 }} 1000w
             "
-            sizes="(max-width: 768px) 100vw, 45vw"
+            sizes="(max-width: 900px) 100vw, 42vw"
             alt="{{ main_image.alt | default: 'Kaffeeherkunft' | escape }}"
             width="{{ main_image.width }}"
             height="{{ main_image.height }}"
             loading="lazy"
+            decoding="async"
             class="story-collage__main-img"
           >
         {%- else -%}
-          <div class="story-collage__placeholder story-collage__placeholder--main" aria-hidden="true">
-            <span>Herkunftsfoto</span>
-          </div>
-        {%- endif -%}
-      </div>
-
-      <!-- Inset image — overlaps bottom-right of main image -->
-      <!-- Cutout effect: border color = section surface (#fff8f5), NOT a design border -->
-      <div class="story-collage__inset" aria-hidden="false">
-        {%- if inset_image != blank -%}
           <img
-            src="{{ inset_image | image_url: width: 500 }}"
-            srcset="
-              {{ inset_image | image_url: width: 300 }} 300w,
-              {{ inset_image | image_url: width: 500 }} 500w
-            "
-            sizes="(max-width: 768px) 40vw, 20vw"
-            alt="{{ inset_image.alt | default: 'Kaffeebauer' | escape }}"
-            width="{{ inset_image.width }}"
-            height="{{ inset_image.height }}"
+            src="{{ default_story_hero | asset_url }}"
+            alt=""
+            width="500"
+            height="500"
             loading="lazy"
-            class="story-collage__inset-img"
+            decoding="async"
+            class="story-collage__main-img"
           >
-        {%- else -%}
-          <div class="story-collage__placeholder story-collage__placeholder--inset" aria-hidden="true">
-            <span>Farmerfoto</span>
-          </div>
         {%- endif -%}
       </div>
 
-      <figcaption class="visually-hidden">Herkunftsbilder: Kaffeeplantage und Farmerin</figcaption>
+      <div class="story-collage__inset">
+        <div class="story-collage__inset-crop">
+          {%- if inset_image != blank -%}
+            <img
+              src="{{ inset_image | image_url: width: 500 }}"
+              srcset="
+                {{ inset_image | image_url: width: 300 }} 300w,
+                {{ inset_image | image_url: width: 500 }} 500w
+              "
+              sizes="(max-width: 900px) 42vw, 28vw"
+              alt="{{ inset_image.alt | default: 'Kaffeebauerin' | escape }}"
+              width="{{ inset_image.width }}"
+              height="{{ inset_image.height }}"
+              loading="lazy"
+              decoding="async"
+              class="story-collage__inset-img"
+            >
+          {%- else -%}
+            <img
+              src="{{ default_story_inset | asset_url }}"
+              alt=""
+              width="500"
+              height="500"
+              loading="lazy"
+              decoding="async"
+              class="story-collage__inset-img"
+            >
+          {%- endif -%}
+        </div>
+      </div>
 
+      <figcaption class="visually-hidden">Herkunftsbilder: Kaffeeplantage und Ernte</figcaption>
     </figure>
 
-    <!-- ═══ RIGHT: STORY TEXT ═══ -->
+    <!-- ═══ COL 2: copy ═══ -->
     <div class="story-content">
-
-      <!-- Kicker -->
       {%- unless kicker == blank -%}
-        <p class="story-kicker">{{- kicker -}}</p>
+        <p class="story-kicker">{{ kicker | escape }}</p>
       {%- endunless -%}
 
-      <!-- Headline -->
       {%- unless headline == blank -%}
-        <h2 class="story-headline">{{- headline -}}</h2>
+        <h2 class="story-headline">{{ headline | escape }}</h2>
       {%- endunless -%}
 
-      <!-- Body paragraphs -->
       <div class="story-body">
         {%- unless paragraph_1 == blank -%}
-          <p>{{- paragraph_1 -}}</p>
+          <p>{{ paragraph_1 | escape }}</p>
         {%- endunless -%}
         {%- unless paragraph_2 == blank -%}
-          <p>{{- paragraph_2 -}}</p>
+          <p>{{ paragraph_2 | escape }}</p>
         {%- endunless -%}
       </div>
 
-      <!-- Mini-table: 4 key facts -->
       {%- unless ursprung == blank and roestung == blank and charakter == blank and varietaet == blank -%}
-      <dl class="story-facts">
-
-        {%- unless ursprung == blank -%}
-        <div class="story-facts__row">
-          <dt class="story-facts__label">Ursprung</dt>
-          <dd class="story-facts__value">{{- ursprung -}}</dd>
-        </div>
-        {%- endunless -%}
-
-        {%- unless roestung == blank -%}
-        <div class="story-facts__row">
-          <dt class="story-facts__label">Röstung</dt>
-          <dd class="story-facts__value">{{- roestung -}}</dd>
-        </div>
-        {%- endunless -%}
-
-        {%- unless charakter == blank -%}
-        <div class="story-facts__row">
-          <dt class="story-facts__label">Charakter</dt>
-          <dd class="story-facts__value">{{- charakter -}}</dd>
-        </div>
-        {%- endunless -%}
-
-        {%- unless varietaet == blank -%}
-        <div class="story-facts__row">
-          <dt class="story-facts__label">Varietät</dt>
-          <dd class="story-facts__value">{{- varietaet -}}</dd>
-        </div>
-        {%- endunless -%}
-
-      </dl>
+        <dl class="story-facts">
+          {%- unless ursprung == blank -%}
+            <div class="story-facts__row">
+              <dt class="story-facts__label">Ursprung</dt>
+              <dd class="story-facts__value">{{ ursprung | escape }}</dd>
+            </div>
+          {%- endunless -%}
+          {%- unless roestung == blank -%}
+            <div class="story-facts__row">
+              <dt class="story-facts__label">Röstung</dt>
+              <dd class="story-facts__value">{{ roestung | escape }}</dd>
+            </div>
+          {%- endunless -%}
+          {%- unless charakter == blank -%}
+            <div class="story-facts__row">
+              <dt class="story-facts__label">Charakter</dt>
+              <dd class="story-facts__value">{{ charakter | escape }}</dd>
+            </div>
+          {%- endunless -%}
+          {%- unless varietaet == blank -%}
+            <div class="story-facts__row">
+              <dt class="story-facts__label">Varietät</dt>
+              <dd class="story-facts__value">{{ varietaet | escape }}</dd>
+            </div>
+          {%- endunless -%}
+        </dl>
       {%- endunless -%}
+    </div>
 
-    </div><!-- /story-content -->
-
-  </div><!-- /story-inner -->
+  </div>
 </section>
 
-
 <style>
-/* ── DESIGN TOKENS ── */
-#die-story {
-  --db-red:    #E23528;
-  --db-black:  #00090B;
-  --db-crema:  #EFDFD3;
-  --db-mud:    #7B5D4D;
-  --db-surface:      #fff8f5;   /* section background AND inset border color */
-  --db-surface-low:  #fff1e7;
-  --db-surface-high: #f5e5d9;
-  --db-outline:      #906f6a;
-  --db-radius: 2px;
+/* Figma 18:372 tokens */
+.story-section {
+  --db-red:         #e23528;
+  --db-black:       #00090b;
+  --db-soapstone:   #fff8f5;
+  --db-opium:       #906f6a;
+  --db-roman:       #755848;
+  --db-radius:      2px;
+  --db-inset-border: 6px;
   --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
   --db-font-body:    'New Frank', 'DM Sans', sans-serif;
-
-  /* Inset image overlap positioning — derived from Figma screenshot */
-  --inset-overlap-bottom: -15%;   /* how far inset drops below main image bottom */
-  --inset-width: 55%;             /* inset width relative to main image */
-  --inset-right: -8%;             /* inset right offset, pulls it slightly outside */
-  --inset-border: 8px;            /* cutout border = surface color, creates separation */
 }
 
-/* ── SECTION ── */
 .story-section {
-  background: var(--db-surface);
-  padding: 5rem 0;
+  background: var(--db-soapstone);
+  padding: 5rem clamp(1.25rem, 10vw, 25.625rem);
+  box-sizing: border-box;
 }
 
 .story-inner {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 3rem;
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: 45fr 55fr;  /* asymmetric — more room for headline */
-  gap: clamp(2.5rem, 4vw, 4rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: start;
 }
 
-/* ── IMAGE COLLAGE ── */
+/* ── collage ── */
 .story-collage {
   position: relative;
   margin: 0;
-  /* Bottom padding creates space for the inset overflow */
-  padding-bottom: calc(var(--inset-overlap-bottom) * -1 + 2rem);
+  width: 100%;
+  padding-bottom: 3.5rem;
 }
 
-/* Main image container */
 .story-collage__main {
   position: relative;
   width: 100%;
   border-radius: var(--db-radius);
   overflow: hidden;
-  /* No shadow, no border — tonal stacking only */
+  background: #e8dfd6;
 }
 
+/* Figma frame ~500.75 / 625.94 */
 .story-collage__main-img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 500.75 / 625.94;
   object-fit: cover;
   object-position: center;
   display: block;
-  aspect-ratio: 4 / 5;  /* tall portrait — matches Figma */
+  border-radius: var(--db-radius);
 }
 
-/* Inset image — absolutely positioned over bottom-right of main */
 .story-collage__inset {
   position: absolute;
-  bottom: var(--inset-overlap-bottom);
-  right: var(--inset-right);
-  width: var(--inset-width);
+  width: min(52%, 275px);
+  aspect-ratio: 1;
+  bottom: -2rem;
+  right: -4%;
+  border: var(--db-inset-border) solid var(--db-soapstone);
   border-radius: var(--db-radius);
+  box-sizing: border-box;
+  background: var(--db-soapstone);
   overflow: hidden;
-  /* THE CUTOUT TRICK: border matches exact surface background — zero-shadow separation */
-  outline: var(--inset-border) solid var(--db-surface);
-  /* outline doesn't affect layout, unlike border — keeps positioning math clean */
+  z-index: 1;
 }
 
+.story-collage__inset-crop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 1px;
+}
+
+/* Figma: image ~118% in frame */
 .story-collage__inset-img {
-  width: 100%;
-  aspect-ratio: 4 / 5;  /* similar portrait ratio — matches Figma */
+  position: absolute;
+  width: 118%;
+  height: 118%;
+  left: -9%;
+  top: -3%;
   object-fit: cover;
-  object-position: center top;
-  display: block;
 }
 
-/* Placeholder states */
-.story-collage__placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--db-surface-high);
-  color: var(--db-outline);
-  font-family: var(--db-font-body);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-
-.story-collage__placeholder--main {
-  aspect-ratio: 4 / 5;
-  width: 100%;
-}
-
-.story-collage__placeholder--inset {
-  aspect-ratio: 4 / 5;
-  width: 100%;
-}
-
-/* ── STORY CONTENT ── */
+/* ── typography ── */
 .story-content {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  align-items: flex-start;
+  min-width: 0;
 }
 
-/* Kicker */
 .story-kicker {
   font-family: var(--db-font-body);
-  font-size: 0.68rem;
-  font-weight: 700;
+  font-size: 0.9375rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.096em;
+  line-height: 1.028;
   color: var(--db-red);
-  line-height: 1;
-  margin-bottom: 0.6rem;
+  margin: 0 0 0.75rem;
 }
 
-/* Headline — Social Gothic, large, aggressive */
 .story-headline {
   font-family: var(--db-font-display);
-  font-weight: 900;
-  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 4.2vw, 2.8rem);
   text-transform: uppercase;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
+  letter-spacing: 0.067em;
+  line-height: 1.34;
   color: var(--db-black);
-  margin-bottom: 1.75rem;
+  margin: 0 0 1rem;
+  max-width: 100%;
 }
 
-/* Body text — New Frank, comfortable reading */
 .story-body {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  max-width: 480px;
+  width: 100%;
 }
 
 .story-body p {
   font-family: var(--db-font-body);
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: var(--db-mud);
-  max-width: 480px;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--db-roman);
+  margin: 0;
 }
 
-/* ── MINI-TABLE (DL) ── */
 .story-facts {
   margin: 0;
-  display: grid;
-  /* 
-    Label column: minmax(140px, auto) — wide enough for "CHARAKTER" at letter-spacing 0.14em
-    Value column: 1fr — takes remaining space
-  */
-  grid-template-columns: minmax(140px, auto) 1fr;
-  row-gap: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .story-facts__row {
-  display: contents;  /* lets dt and dd participate in the parent grid */
-}
-
-/* Row separator — between rows only, not below last */
-.story-facts__row + .story-facts__row > .story-facts__label,
-.story-facts__row + .story-facts__row > .story-facts__value {
-  border-top: 1px solid var(--db-surface-high);
-  padding-top: 0.75rem;
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  column-gap: 0.875rem;
+  align-items: baseline;
 }
 
 .story-facts__label {
-  font-family: var(--db-font-body);
-  font-size: 0.62rem;
+  font-family: var(--db-font-display);
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--db-outline);
-  padding: 0 1rem 0.75rem 0;
-  align-self: start;
+  letter-spacing: 0.15em;
+  line-height: 1.6;
+  color: var(--db-opium);
   margin: 0;
 }
 
 .story-facts__value {
   font-family: var(--db-font-body);
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 500;
+  line-height: 1.59;
   color: var(--db-black);
-  line-height: 1.45;
-  padding-bottom: 0.75rem;
   margin: 0;
 }
 
-/* ── ACCESSIBILITY ── */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -383,61 +338,81 @@
   border: 0;
 }
 
-/* ── RESPONSIVE ── */
-
-/* Tablet: tighten up, keep 2 cols */
+/* ── columnar: stack under 900px (images first) ── */
 @media (max-width: 900px) {
-  .story-inner {
-    padding: 0 2rem;
-    gap: 2.5rem;
-    grid-template-columns: 1fr 1fr;  /* equal at tablet, still side by side */
-  }
-
-  .story-headline {
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-  }
-}
-
-/* Mobile: single column stack */
-@media (max-width: 640px) {
   .story-section {
-    padding: 3.5rem 0;
+    padding: 3rem 1.5rem;
   }
 
   .story-inner {
     grid-template-columns: 1fr;
-    padding: 0 1.25rem;
-    gap: 2rem;
+    gap: 2.25rem;
+    padding: 0 1.5rem;
   }
 
-  /* Collage fills full width on mobile, less inset overlap */
   .story-collage {
-    --inset-overlap-bottom: -10%;
-    --inset-width: 50%;
-    --inset-right: -4%;
-    --inset-border: 6px;
-    padding-bottom: 5rem;  /* reserve space for inset overflow */
+    max-width: 34rem;
+    margin-inline: auto;
+    padding-bottom: 3rem;
   }
 
-  .story-collage__main-img {
-    aspect-ratio: 3 / 2;  /* wider crop on mobile — shows more of the plantation */
+  .story-collage__inset {
+    width: min(48%, 220px);
+    bottom: -1.5rem;
+    right: -2%;
+    border-width: 5px;
   }
 
   .story-content {
-    padding-top: 0;
+    max-width: 34rem;
+    margin-inline: auto;
   }
 
-  .story-body p {
+  .story-body,
+  .story-facts {
     max-width: 100%;
   }
 
-  /* Mini-table: tighter on narrow screens */
-  .story-facts {
-    grid-template-columns: minmax(110px, auto) 1fr;
+  .story-headline {
+    letter-spacing: 0.05em;
+  }
+}
+
+@media (max-width: 540px) {
+  .story-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .story-inner {
+    padding: 0 0.75rem;
+    gap: 1.75rem;
+  }
+
+  .story-collage {
+    padding-bottom: 2.5rem;
+  }
+
+  .story-collage__main-img {
+    aspect-ratio: 1 / 1.15;
+  }
+
+  .story-collage__inset {
+    width: min(46%, 200px);
+    bottom: -1.25rem;
+    border-width: 4px;
+  }
+
+  .story-facts__row {
+    grid-template-columns: 88px minmax(0, 1fr);
+    column-gap: 0.5rem;
+    gap: 0.25rem 0.5rem;
+  }
+
+  .story-facts__value {
+    font-size: 0.875rem;
   }
 }
 </style>
-
 
 {% schema %}
 {
@@ -447,7 +422,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "⚡ Bilder, Headline und Fakten werden automatisch aus Produkt-Metafields geladen (coffee_attributes.story_*). Untenstehende Felder sind Fallbacks."
+      "content": "Bilder, Headline und Fakten: coffee_attributes.story_* (Metafields). Leer = Fallback unten bzw. Theme-Bilder die-story-hero.jpg / die-story-inset.jpg."
     },
     {
       "type": "header",
@@ -457,15 +432,13 @@
       "type": "text",
       "id": "kicker",
       "label": "Kicker-Label",
-      "default": "Die Story",
-      "info": "Immer rot dargestellt. Leer lassen zum Ausblenden."
+      "default": "Die Story"
     },
     {
       "type": "text",
       "id": "headline",
       "label": "Überschrift (Fallback)",
-      "default": "Temperamentvolle Italienische Lebensart",
-      "info": "Wird überschrieben durch coffee_attributes.story_headline Metafield"
+      "default": "Temperamentvolle Italienische Lebensart"
     },
     {
       "type": "header",
@@ -474,14 +447,14 @@
     {
       "type": "image_picker",
       "id": "main_image",
-      "label": "Hauptbild (Plantage / Herkunft)",
-      "info": "Hochformat 4:5 empfohlen. Wird überschrieben durch coffee_attributes.story_main_image"
+      "label": "Hauptbild (Plantage)",
+      "info": "Ohne Bild: die-story-hero.jpg. Metafield: coffee_attributes.story_main_image"
     },
     {
       "type": "image_picker",
       "id": "inset_image",
-      "label": "Inset-Bild (Farmerin / Person)",
-      "info": "Hochformat 4:5 empfohlen. Wird überschrieben durch coffee_attributes.story_inset_image"
+      "label": "Inset (Ernte / Person)",
+      "info": "Ohne Bild: die-story-inset.jpg. Metafield: coffee_attributes.story_inset_image"
     },
     {
       "type": "header",
