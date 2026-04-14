@@ -83,26 +83,50 @@
           -%}
           {%- if abo_img != blank or use_abo_fallback -%}
             <div class="landing-kaffee-abo__media">
-              {%- if abo_img != blank -%}
-                {{
-                  abo_img
-                  | image_url: width: 1600
-                  | image_tag:
-                    loading: 'lazy',
-                    sizes: '(min-width: 990px) 45vw, 100vw',
-                    widths: '400, 600, 800, 1100, 1400, 1600'
-                }}
-              {%- else -%}
+              <div class="landing-kaffee-abo__media-visual">
+                {%- if abo_img != blank -%}
+                  {{
+                    abo_img
+                    | image_url: width: 1600
+                    | image_tag:
+                      class: 'landing-kaffee-abo__media-img',
+                      loading: 'lazy',
+                      sizes: '(min-width: 990px) 45vw, 100vw',
+                      widths: '400, 600, 800, 1100, 1400, 1600'
+                  }}
+                {%- else -%}
+                  <img
+                    class="landing-kaffee-abo__media-img"
+                    src="{{ 'landing-kaffee-abo-visual.png' | asset_url }}"
+                    alt=""
+                    width="2000"
+                    height="2000"
+                    loading="lazy"
+                    decoding="async"
+                    sizes="(min-width: 990px) 45vw, 100vw"
+                  >
+                {%- endif -%}
+              </div>
+              <div class="landing-kaffee-abo__media-decor" aria-hidden="true">
                 <img
-                  src="{{ 'landing-kaffee-abo-visual.png' | asset_url }}"
+                  class="landing-kaffee-abo__media-icon landing-kaffee-abo__media-icon--branch"
+                  src="{{ 'coffee-icon-abo-section.png' | asset_url }}"
                   alt=""
-                  width="2000"
-                  height="2000"
+                  width="320"
+                  height="320"
                   loading="lazy"
                   decoding="async"
-                  sizes="(min-width: 990px) 45vw, 100vw"
                 >
-              {%- endif -%}
+                <img
+                  class="landing-kaffee-abo__media-icon landing-kaffee-abo__media-icon--juggler"
+                  src="{{ 'cemil-jugler-abo-section.png' | asset_url }}"
+                  alt=""
+                  width="320"
+                  height="320"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </div>
             </div>
           {%- endif -%}
         </div>
