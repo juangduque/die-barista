@@ -10,15 +10,15 @@
 }
 
 .landing-founder-story__inner {
-  max-width: 80rem;
+  max-width: 92rem;
   margin: 0 auto;
-  padding: 6rem 1.5rem;
+  padding: 3.25rem 1.25rem;
   box-sizing: border-box;
 }
 
 @media screen and (min-width: 750px) {
   .landing-founder-story__inner {
-    padding: 6rem 3rem;
+    padding: 3.5rem 1.75rem;
   }
 }
 
@@ -27,7 +27,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 3rem;
+  gap: 2rem;
   width: 100%;
 }
 
@@ -35,7 +35,7 @@
   .landing-founder-story__grid {
     flex-direction: row;
     align-items: flex-start;
-    gap: 5rem;
+    gap: 3rem;
   }
 
   .landing-founder-story__col--media,
@@ -46,23 +46,33 @@
   }
 
   .landing-founder-story__col--content {
-    flex: 0 0 341px;
-    width: 341px;
-    height: 515px;
+    flex: 0 0 26.5rem;
+    width: 26.5rem;
+    min-height: 36rem;
     box-sizing: border-box;
   }
 }
 
-/* Reserve space for quote overlapping below the photo */
+/* Media column: quote is positioned inside .media-visual (same AR as design photo) */
 .landing-founder-story__col--media {
   position: relative;
-  padding-bottom: 3rem;
+  padding-bottom: 0;
 }
 
-@media screen and (min-width: 990px) {
-  .landing-founder-story__col--media {
-    padding-bottom: 9rem;
-  }
+/* Aspect-ratio box matches design frame (912×1162) so quote % positions track the image */
+.landing-founder-story__media-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 912 / 1162;
+  /* Room when the card sits low and extends past the image box */
+  margin-bottom: clamp(2rem, 12vw, 6.5rem);
+}
+
+.landing-founder-story__media-visual .landing-founder-story__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* Photo wrapper — no white mat; sits on section background */
@@ -71,12 +81,6 @@
   width: 100%;
   overflow: clip;
   background: transparent;
-}
-
-@media screen and (min-width: 990px) {
-  .landing-founder-story__frame {
-    height: auto;
-  }
 }
 
 .landing-founder-story__matte {
@@ -92,13 +96,19 @@
   .landing-founder-story__matte {
     display: block;
   }
+
+  .landing-founder-story__media-visual .landing-founder-story__matte {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
 }
 
-@media screen and (min-width: 990px) {
-  .landing-founder-story__matte {
-    height: auto;
-    min-height: 0;
-  }
+.landing-founder-story__media-visual .landing-founder-story__matte {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .landing-founder-story__photo {
@@ -109,7 +119,14 @@
 
 @media screen and (max-width: 989px) {
   .landing-founder-story__photo {
-    min-height: 14rem;
+    min-height: 17.5rem;
+  }
+
+  .landing-founder-story__media-visual .landing-founder-story__photo {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    aspect-ratio: unset;
   }
 }
 
@@ -117,6 +134,13 @@
   .landing-founder-story__photo {
     flex: 0 0 auto;
     min-height: 0;
+  }
+
+  .landing-founder-story__media-visual .landing-founder-story__photo {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    aspect-ratio: unset;
   }
 }
 
@@ -139,19 +163,28 @@
   pointer-events: none;
 }
 
-/* Quote card — Figma 9:170 (sage fill, red border, shadow, New Frank) */
+/* Quote card — position as fractions of design frame (912×1162) so it tracks .media-visual at any width.
+   min/max keep the card inside the frame when the box is short (avoids px-like “671px top” drifting onto the copy below). */
 .landing-founder-story__quote {
-  position: relative;
+  position: absolute;
   z-index: 2;
+  left: auto;
+  top: auto;
+  margin: 0;
+  right: -3rem;
+  bottom: -2rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.03125rem; /* 16.5px */
-  width: 100%;
-  max-width: 20rem; /* ~320px incl. padding; matches Figma content + inset */
-  margin: -1.5rem auto 0;
-  padding: 2.125rem 2.2rem 2.125rem 2.125rem; /* 34px; right ~35px */
+  justify-content: center;
+  gap: 0.125rem;
+  width: min(15.625rem, calc(100% - 0.75rem));
+  max-width: 15.625rem;
+  min-height: 0;
+  height: 140px;
+  padding: 0.5rem 0.75rem 0.5625rem;
   box-sizing: border-box;
+  overflow: hidden;
   background: var(--lf-quote-surface);
   border: 2px solid var(--lf-quote-outline);
   box-shadow:
@@ -159,26 +192,17 @@
     0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
-@media screen and (min-width: 990px) {
+/* On very narrow screens, bring quote inside viewport to prevent horizontal scroll */
+@media screen and (max-width: 549px) {
   .landing-founder-story__quote {
-    position: absolute;
-    left: 50%;
-    right: auto;
-    top: 376px;
-    bottom: auto;
-    margin: 0;
-    margin-left: -2.25rem;
-    width: 212px;
-    max-width: 212px;
-    height: 150px;
-    box-sizing: border-box;
+    right: 0.5rem;
   }
 }
 
 /* Kill global .rte spacing/typography inside the quote card */
 .landing-founder-story__quote-text.rte {
   margin: 0;
-  max-width: 15.6875rem; /* ~251px text block in Figma */
+  max-width: 100%;
 }
 
 .landing-founder-story__quote-text.rte * {
@@ -188,8 +212,8 @@
 .landing-founder-story__quote-text {
   font-family: new-frank, sans-serif;
   font-weight: 600;
-  font-size: 1rem;
-  line-height: 1.625rem; /* 26px */
+  font-size: 1.0625rem;
+  line-height: 1.6875rem;
   color: #000;
 }
 
@@ -198,7 +222,8 @@
   font-family: inherit;
   font-weight: 600;
   font-size: 12px;
-  line-height: 1.625;
+  line-height: 1.45;
+  max-width: 100%;
 }
 
 .landing-founder-story__quote-text.rte p + p {
@@ -207,13 +232,13 @@
 
 .landing-founder-story__quote-by {
   margin: 0;
-  margin-top: 15px;
+  margin-top: 0.25rem;
   align-self: flex-start;
   font-family: new-frank, sans-serif;
   font-weight: 500;
   font-size: 10px;
-  line-height: 0.9375rem; /* 15px */
-  letter-spacing: 0.0625rem; /* 1px */
+  line-height: 1rem;
+  letter-spacing: 0.0625rem;
   text-transform: uppercase;
   color: #221a13;
   white-space: nowrap;
@@ -223,7 +248,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.5rem;
+  gap: 1.25rem;
   min-height: 0;
 }
 
@@ -231,9 +256,9 @@
   margin: 0;
   font-family: 'Social Gothic', sans-serif;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1.5rem;
-  letter-spacing: 0.3rem;
+  letter-spacing: 0.28rem;
   text-transform: uppercase;
   color: var(--lf-accent);
 }
@@ -242,7 +267,7 @@
   margin: 0;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
-  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-size: clamp(2.75rem, 7.5vw, 5.25rem);
   line-height: 0.9;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -251,8 +276,8 @@
 
 @media screen and (min-width: 990px) {
   .landing-founder-story__title {
-    font-size: 4.5rem;
-    line-height: 4.05rem;
+    font-size: 5.25rem;
+    line-height: 4.65rem;
   }
 }
 
@@ -262,21 +287,21 @@
 
 .landing-founder-story__body-wrap {
   width: 100%;
-  max-width: 36rem;
-  padding-top: 0.538125rem;
+  max-width: 40rem;
+  padding-top: 0.35rem;
   box-sizing: border-box;
 }
 
 .landing-founder-story__body {
   font-family: 'Source Sans 3', sans-serif;
   font-weight: 500;
-  font-size: 1rem;
-  line-height: 1.75rem;
+  font-size: 1.125rem;
+  line-height: 1.8125rem;
   color: var(--lf-ink);
 }
 
 .landing-founder-story__body p {
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.25rem;
 }
 
 .landing-founder-story__body p:last-child {
@@ -286,16 +311,16 @@
 .landing-founder-story__pillars {
   list-style: none;
   margin: 0;
-  padding: 1.5375rem 0 0;
+  padding: 1.25rem 0 0;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.625rem;
   width: 100%;
 }
 
 .landing-founder-story__pillar {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.25rem;
   align-items: flex-start;
 }
 
@@ -305,12 +330,12 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  min-width: 2.075rem;
-  height: 2.5rem;
+  min-width: 2.35rem;
+  height: 2.75rem;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 900;
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+  font-size: 2.625rem;
+  line-height: 2.75rem;
   color: var(--lf-pillar-num);
 }
 
@@ -326,8 +351,8 @@
   margin: 0;
   font-family: 'Social Gothic', sans-serif;
   font-weight: 700;
-  font-size: 24px;
-  line-height: 1.75rem;
+  font-size: 1.75rem;
+  line-height: 2rem;
   text-transform: uppercase;
   color: var(--lf-ink);
 }
@@ -336,16 +361,16 @@
   margin: 0;
   font-family: 'Source Sans 3', sans-serif;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.4375rem;
   color: var(--lf-ink);
   opacity: 0.7;
 }
 
 .landing-founder-story__cta-wrap {
   width: 100%;
-  max-width: 22rem;
-  padding-top: 0.25rem;
+  max-width: 24rem;
+  padding-top: 0.15rem;
 }
 
 .landing-founder-story__cta {
@@ -366,8 +391,8 @@
 .landing-founder-story__cta-label {
   font-family: 'Barlow', sans-serif;
   font-weight: 700;
-  font-size: 1.5rem;
-  line-height: 1.75rem;
+  font-size: 1.6875rem;
+  line-height: 1.9375rem;
   text-transform: uppercase;
 }
 

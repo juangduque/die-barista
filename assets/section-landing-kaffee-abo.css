@@ -296,7 +296,7 @@
   pointer-events: none;
 }
 
-/* Coffee branch — top-left, overlaps photo corner into panel background */
+/* Coffee branch — top-left corner per Figma node 9:421, rotated 28.41deg */
 .landing-kaffee-abo__media-icon {
   position: absolute;
   height: auto;
@@ -305,24 +305,30 @@
 }
 
 .landing-kaffee-abo__media-icon--branch {
-  left: 267px;
-  top: 220px;
-  width: 252px;
+  left: -127px;
+  top: 156px;
+  width: 243.521px;
+  max-width: 330px;
+  transform: matrix(0.996255, 0.0864602, -0.0864602, 0.996255, 0, 0) rotate(-6deg);
+  transform-origin: center center;
 }
 
-/* Cemil juggler */
+/* Cemil juggler — top-left corner per Figma node 9:422, rotated 4.96deg */
 .landing-kaffee-abo__media-icon--juggler {
-  left: 188px;
-  top: 158px;
-  width: min(52%, 12.5rem);
-  max-width: 200px;
+  left: 204px;
+  top: 0;
+  width: 190px;
+  max-width: 234px;
+  transform: matrix(0.996255, 0.0864602, -0.0864602, 0.996255, 0, 0) rotate(-8deg);
+  transform-origin: center center;
 }
 
 @media screen and (min-width: 750px) {
+  .landing-kaffee-abo__media-icon--branch {
+    max-width: 330px;
+  }
+  
   .landing-kaffee-abo__media-icon--juggler {
-    left: 188px;
-    top: 158px;
-    width: min(54%, 13.5rem);
-    max-width: 216px;
+    max-width: 234px;
   }
 }

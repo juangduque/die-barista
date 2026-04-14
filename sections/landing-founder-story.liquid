@@ -26,50 +26,52 @@
             assign use_img_fallback = true
           endif
         -%}
-        <div class="landing-founder-story__frame">
-          <div class="landing-founder-story__matte">
-            {%- if founder_img != blank -%}
-              <div class="landing-founder-story__photo">
-                {{
-                  founder_img
-                  | image_url: width: 1600
-                  | image_tag:
-                    loading: 'lazy',
-                    sizes: '(min-width: 990px) 50vw, 100vw',
-                    widths: '400, 600, 800, 1100, 1400, 1600'
-                }}
-              </div>
-            {%- elsif use_img_fallback -%}
-              <div class="landing-founder-story__photo">
-                <img
-                  src="{{ 'landing-founder-story-photo.png' | asset_url }}"
-                  alt=""
-                  width="912"
-                  height="1162"
-                  loading="lazy"
-                  decoding="async"
-                  sizes="(min-width: 990px) 50vw, 100vw"
-                >
-              </div>
-            {%- endif -%}
-            {%- if section.settings.image_saturation_overlay -%}
-              {%- if founder_img != blank or use_img_fallback -%}
-                <div class="landing-founder-story__sat" aria-hidden="true"></div>
+        <div class="landing-founder-story__media-visual">
+          <div class="landing-founder-story__frame">
+            <div class="landing-founder-story__matte">
+              {%- if founder_img != blank -%}
+                <div class="landing-founder-story__photo">
+                  {{
+                    founder_img
+                    | image_url: width: 2000
+                    | image_tag:
+                      loading: 'lazy',
+                      sizes: '(min-width: 990px) 58vw, 100vw',
+                      widths: '400, 600, 800, 1100, 1400, 1600, 2000'
+                  }}
+                </div>
+              {%- elsif use_img_fallback -%}
+                <div class="landing-founder-story__photo">
+                  <img
+                    src="{{ 'landing-founder-story-photo.png' | asset_url }}"
+                    alt=""
+                    width="912"
+                    height="1162"
+                    loading="lazy"
+                    decoding="async"
+                    sizes="(min-width: 990px) 58vw, 100vw"
+                  >
+                </div>
               {%- endif -%}
-            {%- endif -%}
+              {%- if section.settings.image_saturation_overlay -%}
+                {%- if founder_img != blank or use_img_fallback -%}
+                  <div class="landing-founder-story__sat" aria-hidden="true"></div>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
           </div>
-        </div>
 
-        {%- if section.settings.quote != blank or section.settings.quote_attribution != blank -%}
-          <aside class="landing-founder-story__quote">
-            {%- if section.settings.quote != blank -%}
-              <div class="landing-founder-story__quote-text rte">{{ section.settings.quote }}</div>
-            {%- endif -%}
-            {%- if section.settings.quote_attribution != blank -%}
-              <p class="landing-founder-story__quote-by">{{ section.settings.quote_attribution | escape }}</p>
-            {%- endif -%}
-          </aside>
-        {%- endif -%}
+          {%- if section.settings.quote != blank or section.settings.quote_attribution != blank -%}
+            <aside class="landing-founder-story__quote">
+              {%- if section.settings.quote != blank -%}
+                <div class="landing-founder-story__quote-text rte">{{ section.settings.quote }}</div>
+              {%- endif -%}
+              {%- if section.settings.quote_attribution != blank -%}
+                <p class="landing-founder-story__quote-by">{{ section.settings.quote_attribution | escape }}</p>
+              {%- endif -%}
+            </aside>
+          {%- endif -%}
+        </div>
       </div>
 
       <div class="landing-founder-story__col landing-founder-story__col--content">
