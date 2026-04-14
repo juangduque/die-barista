@@ -1,48 +1,358 @@
+{% comment %}
+  Produkt — Reviews (Figma kItgXjQzTCQ3nTb4PrD6ZW node 18:290)
+  Soapstone page, Serenade cards, 3px gutter. Blocks: review.
+{% endcomment %}
 
+{%- liquid
+  assign score_text   = section.settings.aggregate_score | default: '4.8'
+  assign review_count  = section.settings.review_count    | default: '127'
+  assign count_label   = section.settings.count_label     | default: 'Basierend auf [count] Bewertungen'
+  assign count_label   = count_label | replace: '[count]', review_count
+-%}
 
-<script>
-(function() {
-  'use strict';
+<section
+  class="reviews-section"
+  id="reviews-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  aria-label="Bewertungen"
+>
+  <div class="reviews-inner">
 
-  /* Inject stars into each .reviews-card__stars and .reviews-aggregate__stars */
-  var sectionEl = document.getElementById('reviews-{{ section.id }}');
-  if (!sectionEl) return;
+    <header
+      class="reviews-aggregate"
+      aria-label="Durchschnitt {{ score_text }} von 5 Sternen. {{ count_label | escape }}"
+    >
+      <p class="reviews-aggregate__score">{{ score_text | escape }}</p>
+      <div class="reviews-aggregate__meta">
+        <p class="reviews-aggregate__stars" aria-hidden="true">
+          <span class="reviews-stars reviews-stars--hero">★★★★★</span>
+        </p>
+        <p class="reviews-aggregate__count">{{ count_label | escape }}</p>
+      </div>
+    </header>
 
-  /* Star SVG strings */
-  var starFull  = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1l1.854 3.756 4.146.603-3 2.924.708 4.127L8 10.25l-3.708 1.16.708-4.127-3-2.924 4.146-.603L8 1z" fill="#E23528"/></svg>';
-  var starHalf  = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="hg" x1="0" x2="100%" y1="0" y2="0"><stop offset="50%" stop-color="#E23528"/><stop offset="50%" stop-color="transparent"/></linearGradient></defs><path d="M8 1l1.854 3.756 4.146.603-3 2.924.708 4.127L8 10.25l-3.708 1.16.708-4.127-3-2.924 4.146-.603L8 1z" fill="url(#hg)" stroke="#E23528" stroke-width="1"/></svg>';
-  var starEmpty = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1l1.854 3.756 4.146.603-3 2.924.708 4.127L8 10.25l-3.708 1.16.708-4.127-3-2.924 4.146-.603L8 1z" stroke="#E23528" stroke-width="1" fill="none"/></svg>';
+    {%- if section.blocks.size > 0 -%}
+      <div class="reviews-grid" role="list">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'review' -%}
+              {%- liquid
+                assign star_n = block.settings.stars | default: 5
+                assign quote   = block.settings.quote
+                assign author  = block.settings.author
+                assign meta    = block.settings.meta
+              -%}
+              {%- capture star_string -%}
+                {%- for i in (1..5) -%}
+                  {%- if i <= star_n -%}★{%- else -%}☆{%- endif -%}
+                {%- endfor -%}
+              {%- endcapture -%}
+              <article
+                class="reviews-card"
+                role="listitem"
+                {{ block.shopify_attributes }}
+              >
+                <div class="reviews-card__inner">
+                  <p class="reviews-card__stars" aria-hidden="true">{{ star_string }}</p>
+                  {%- unless quote == blank -%}
+                    <p class="reviews-card__quote">{{ quote | escape }}</p>
+                  {%- endunless -%}
+                  {%- unless author == blank -%}
+                    <p class="reviews-card__author">{{ author | escape }}</p>
+                  {%- endunless -%}
+                  {%- unless meta == blank -%}
+                    <p class="reviews-card__meta">{{ meta | escape }}</p>
+                  {%- endunless -%}
+                </div>
+              </article>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
 
-  function renderStars(container, ratingOutOfTen) {
-    if (!container) return;
-    var html = '';
-    for (var i = 1; i <= 5; i++) {
-      var threshold = i * 2; /* full star needs rating >= 2i */
-      if (ratingOutOfTen >= threshold) {
-        html += starFull;
-      } else if (ratingOutOfTen >= threshold - 1) {
-        html += starHalf;
-      } else {
-        html += starEmpty;
-      }
+  </div>
+</section>
+
+<style>
+.reviews-section {
+  --db-red:       #e23528;
+  --db-black:     #00090b;
+  --db-opium:     #906f6a;
+  --db-roman:     #755848;
+  --db-serenade:  #fff1e7;
+  --db-soapstone: #fff8f5;
+  --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
+  --db-font-body:    'New Frank', 'DM Sans', sans-serif;
+}
+
+.reviews-section {
+  background: var(--db-soapstone);
+  padding: 4rem clamp(1.25rem, 10vw, 25.625rem);
+  box-sizing: border-box;
+}
+
+.reviews-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* ── aggregate (Figma 18:292) ── */
+.reviews-aggregate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.reviews-aggregate__score {
+  font-family: var(--db-font-body);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  line-height: 1;
+  color: var(--db-black);
+  margin: 0;
+}
+
+.reviews-aggregate__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  min-width: 0;
+}
+
+.reviews-stars--hero {
+  font-family: var(--db-font-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  letter-spacing: 0.125rem;
+  color: var(--db-red);
+  line-height: 1.6;
+}
+
+.reviews-aggregate__count {
+  font-family: var(--db-font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 1.61;
+  color: var(--db-opium);
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ── card grid: 3 cols, 3px gutter (18:300) ── */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+  background: var(--db-soapstone);
+  width: 100%;
+}
+
+.reviews-card {
+  background: var(--db-serenade);
+  margin: 0;
+  min-height: 14.25rem;
+  box-sizing: border-box;
+}
+
+.reviews-card__inner {
+  padding: 1.75rem;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.reviews-card__stars {
+  font-family: var(--db-font-display);
+  font-weight: 400;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--db-red);
+  letter-spacing: 0.06em;
+  margin: 0 0 0.25rem;
+}
+
+.reviews-card__quote {
+  font-family: var(--db-font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  line-height: 1.61;
+  color: var(--db-roman);
+  margin: 0 0 auto;
+  max-width: 100%;
+}
+
+.reviews-card__author {
+  font-family: var(--db-font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--db-black);
+  margin: 0.6rem 0 0;
+}
+
+.reviews-card__meta {
+  font-family: var(--db-font-body);
+  font-weight: 500;
+  font-size: 0.65rem;
+  line-height: 1.6;
+  color: var(--db-opium);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .reviews-section {
+    padding: 3rem 1.5rem;
+  }
+
+  .reviews-inner {
+    padding: 0 1.5rem;
+    gap: 2.25rem;
+  }
+
+  .reviews-aggregate {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .reviews-aggregate__count {
+    white-space: normal;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reviews-card {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 540px) {
+  .reviews-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .reviews-inner {
+    padding: 0 0.75rem;
+    gap: 1.75rem;
+  }
+
+  .reviews-card__inner {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "tag": "section",
+  "class": "barista-section-reviews",
+  "max_blocks": 9,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Gesamtbewertung"
+    },
+    {
+      "type": "text",
+      "id": "aggregate_score",
+      "label": "Angezeigte Note",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Anzahl Bewertungen",
+      "default": "127"
+    },
+    {
+      "type": "text",
+      "id": "count_label",
+      "label": "Text unter den Sternen",
+      "default": "Basierend auf [count] Bewertungen",
+      "info": "[count] wird durch die Anzahl ersetzt."
     }
-    container.innerHTML = html;
-  }
-
-  /* Render stars for each review card */
-  var cards = sectionEl.querySelectorAll('.reviews-card');
-  cards.forEach(function(card, index) {
-    var starsEl = card.querySelector('.reviews-card__stars');
-    /* Rating data passed via data attribute on the card */
-    var rating  = parseInt(card.dataset.rating || '10', 10);
-    renderStars(starsEl, rating);
-  });
-
-  /* Aggregate stars (manual mode only — Judge.me renders its own) */
-  var aggStars = sectionEl.querySelector('.reviews-aggregate__stars');
-  if (aggStars) {
-    renderStars(aggStars, 9); /* default 4.5 stars for manual mode */
-  }
-
-})();
-</script>
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Sterne",
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Zitat"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Unterzeile",
+          "default": "Verifizierter Kauf · 12.02.2026"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Bester Espresso den ich seit Jahren hatte. Schokoladig, vollmundig, und eine Crema die einfach hält. Läuft perfekt durch meinen Siebträger.",
+            "author": "Thomas K.",
+            "meta": "Verifizierter Kauf · 12.02.2026"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Mein Vollautomat liebt diese Bohnen. Kaum Säure, super aromatisch, und der Preis für die Qualität ist wirklich fair. Hab jetzt ein Abo.",
+            "author": "Sarah M.",
+            "meta": "Verifizierter Kauf · 28.01.2026"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": 4,
+            "quote": "Sehr guter Kaffee, dunkel aber nicht bitter. Einziger Abzug: Verpackung könnte nachhaltiger sein. Geschmack ist aber top — Schokolade pur!",
+            "author": "Michael W.",
+            "meta": "Verifizierter Kauf · 15.01.2026"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

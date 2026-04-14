@@ -497,7 +497,45 @@
     },
     "reviews": {
       "type": "section-07-reviews-JT",
-      "settings": {}
+      "settings": {
+        "aggregate_score": "4.8",
+        "review_count": "127",
+        "count_label": "Basierend auf [count] Bewertungen"
+      },
+      "blocks": {
+        "reviews_jt_thomas": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Bester Espresso den ich seit Jahren hatte. Schokoladig, vollmundig, und eine Crema die einfach hält. Läuft perfekt durch meinen Siebträger.",
+            "author": "Thomas K.",
+            "meta": "Verifizierter Kauf · 12.02.2026"
+          }
+        },
+        "reviews_jt_sarah": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "quote": "Mein Vollautomat liebt diese Bohnen. Kaum Säure, super aromatisch, und der Preis für die Qualität ist wirklich fair. Hab jetzt ein Abo.",
+            "author": "Sarah M.",
+            "meta": "Verifizierter Kauf · 28.01.2026"
+          }
+        },
+        "reviews_jt_michael": {
+          "type": "review",
+          "settings": {
+            "stars": 4,
+            "quote": "Sehr guter Kaffee, dunkel aber nicht bitter. Einziger Abzug: Verpackung könnte nachhaltiger sein. Geschmack ist aber top — Schokolade pur!",
+            "author": "Michael W.",
+            "meta": "Verifizierter Kauf · 15.01.2026"
+          }
+        }
+      },
+      "block_order": [
+        "reviews_jt_thomas",
+        "reviews_jt_sarah",
+        "reviews_jt_michael"
+      ]
     },
     "section_08_passt_dazu_jt_xfRGYh": {
       "type": "section-08-passt-dazu-JT",
@@ -579,6 +617,7 @@
     "die-story",
     "brew-guide",
     "mid-cta",
+    "reviews",
     "passt-dazu",
     "trust-bar",
     "newsletter",
@@ -588,7 +627,6 @@
     "section_04_die_story_jt_NkhHP3",
     "section_05_brew_guide_jt_JaedKq",
     "section_06_mid_cta_jt_XVyMb7",
-    "reviews",
     "section_08_passt_dazu_jt_xfRGYh",
     "section_09_trust_bar_jt_FVyKrT",
     "section_10_newsletter_jt_34VDg9"
