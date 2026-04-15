@@ -38,14 +38,18 @@
     product.metafields.coffee_attributes.strength_level → integer 0–6
     product.metafields.barista.tasting_notes            → comma-separated string e.g. "Schokolade, Nuss, Karamell"
     product.metafields.barista.category_label           → string e.g. "Espresso · Ganze Bohne"
-    product.metafields.barista.short_desc               → string (1–2 sentences)
+    product.metafields.barista.short_desc               → rich text / multi-line short copy
+    product.metafields.barista.headline                 → optional shop headline (e.g. BRAZIL SANTOS - ESPRESSO); falls back to product.title
   endcomment
   assign roast_level    = product.metafields.coffee_attributes.roasting_level.value | default: 4
   assign acidity        = product.metafields.coffee_attributes.acid_level.value | default: 3
   assign strength       = product.metafields.coffee_attributes.strength_level.value | default: 2
   assign tasting_notes  = product.metafields.barista.tasting_notes | default: ''
   assign category_label = product.metafields.barista.category_label | default: 'Espresso · Ganze Bohne'
-  assign short_desc     = product.metafields.barista.short_desc | default: product.description | truncate: 160
+  assign hero_headline = product.title
+  if product.metafields.barista.headline != blank
+    assign hero_headline = product.metafields.barista.headline.value
+  endif
 
   # Scale 0–6 → percentage (divide by 6, not 5)
   assign roast_pct    = roast_level | times: 100 | divided_by: 6
@@ -188,11 +192,17 @@
       {{- category_label -}}
     </p>
 
-    <!-- Product title -->
-    <h1 class="barista-title">{{ product.title }}</h1>
+    <!-- Product title (metafield barista.headline overrides admin title when set) -->
+    <h1 class="barista-title">{{ hero_headline }}</h1>
 
-    <!-- Short description -->
-    <p class="barista-desc">{{ short_desc }}</p>
+    <!-- Short description — avoid duplicate titles leaking from RTE (extra h1/h2) -->
+    <div class="barista-desc rte">
+      {%- if product.metafields.barista.short_desc != blank -%}
+        {{ product.metafields.barista.short_desc | metafield_tag }}
+      {%- elsif product.description != blank -%}
+        {{ product.description }}
+      {%- endif -%}
+    </div>
 
     <!-- Tasting Notes Tags -->
     {%- unless tasting_notes == '' -%}
@@ -422,7 +432,7 @@
      ═══════════════════════════════════════════════ -->
 <div class="barista-sticky-atc" id="barista-sticky-atc" role="region" aria-label="Schnellkauf" hidden>
   <div class="barista-sticky-atc__info">
-    <span class="barista-sticky-atc__title">{{ product.title }}</span>
+    <span class="barista-sticky-atc__title">{{ hero_headline }}</span>
     <span class="barista-sticky-atc__meta" id="stickyMeta">250 g · Ganze Bohne</span>
   </div>
   <div class="barista-sticky-atc__right">
@@ -593,6 +603,15 @@
   color: #755848;
   max-width: 26.25rem;
   margin: 0 0 1.75rem;
+}
+
+/* Drop duplicate titles often pasted as first block in product copy / RTE */
+.barista-buyblock .barista-desc > :is(h1, h2):first-child {
+  display: none;
+}
+
+.barista-buyblock h1.barista-title ~ h1 {
+  display: none;
 }
 
 /* Tasting notes */

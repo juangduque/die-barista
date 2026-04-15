@@ -306,7 +306,7 @@
 }
 
 .landing-kaffee-abo__media-icon--branch {
-  left: -127px;
+  left: -104px;
   top: 156px;
   width: 243.521px;
   max-width: 330px;
@@ -317,7 +317,7 @@
 /* Cemil juggler — top-left corner per Figma node 9:422, rotated 4.96deg */
 .landing-kaffee-abo__media-icon--juggler {
   left: 204px;
-  top: 0;
+  top: 156px;
   width: 190px;
   max-width: 234px;
   transform: matrix(0.996255, 0.0864602, -0.0864602, 0.996255, 0, 0) rotate(-8deg);

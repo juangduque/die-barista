@@ -5,9 +5,12 @@
 {%- liquid
   assign cp = cross_product
   assign cp_variant = cp.selected_or_first_available_variant
-  assign badge_label = cp.metafields.coffee_attributes.badge_label
+  assign ca = cp.metafields.coffee_attributes
+  assign badge_label = ''
+  if ca.badge_label != blank
+    assign badge_label = ca.badge_label.value | default: ca.badge_label
+  endif
   if badge_label == blank
-    assign badge_label = ''
     assign badge_tags = 'espresso,single origin,single-origin,ganze bohne,ganze-bohne,kaffee,filter,crema'
     assign badge_tags_arr = badge_tags | split: ','
     for tag in cp.tags
@@ -23,8 +26,14 @@
       endif
     endfor
   endif
-  assign subtitle_roast = cp.metafields.coffee_attributes.roastprofil_value
-  assign subtitle_taste = cp.metafields.coffee_attributes.geschmack_value
+  assign subtitle_roast = ''
+  assign subtitle_taste = ''
+  if ca.roastprofil_value != blank
+    assign subtitle_roast = ca.roastprofil_value.value | default: ca.roastprofil_value
+  endif
+  if ca.geschmack_value != blank
+    assign subtitle_taste = ca.geschmack_value.value | default: ca.geschmack_value
+  endif
   if subtitle_roast != blank and subtitle_taste != blank
     assign subtitle = subtitle_roast | append: ' · ' | append: subtitle_taste
   elsif subtitle_roast != blank
@@ -192,9 +201,10 @@
   z-index: 2;
   background: var(--db-black);
   color: var(--db-crema);
-  font-family: var(--db-font-display);
+  font-family: social-gothic, 'Social Gothic', 'Barlow Condensed', sans-serif;
   font-size: 10.4px;
   font-weight: 700;
+  font-style: normal;
   text-transform: uppercase;
   letter-spacing: 1.04px;
   line-height: 16.64px;
@@ -235,9 +245,10 @@
   border-radius: 1px;
 }
 
-.passt-card__title {
-  font-family: var(--db-font-display);
+.passt-card .passt-card__title {
+  font-family: social-gothic, 'Social Gothic', 'Barlow Condensed', sans-serif;
   font-weight: 500;
+  font-style: normal;
   font-size: 1.0625rem;
   text-transform: uppercase;
   line-height: 1.28;
@@ -250,10 +261,11 @@
   opacity: 0.72;
 }
 
-.passt-card__subtitle {
-  font-family: var(--db-font-body);
+.passt-card .passt-card__subtitle {
+  font-family: 'New Frank', 'DM Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
+  font-style: normal;
   text-transform: uppercase;
   letter-spacing: 0.6px;
   line-height: 19.2px;
@@ -273,9 +285,10 @@
   flex-shrink: 0;
 }
 
-.passt-card__price {
-  font-family: var(--db-font-body);
+.passt-card .passt-card__price {
+  font-family: 'New Frank', 'DM Sans', sans-serif;
   font-weight: 500;
+  font-style: normal;
   font-size: 1rem;
   line-height: 28.16px;
   color: var(--db-black);
@@ -321,12 +334,12 @@
     padding: 1.125rem 1.125rem 1.1rem;
   }
 
-  .passt-card__title {
+  .passt-card .passt-card__title {
     font-size: 1.125rem;
     line-height: 1.3;
   }
 
-  .passt-card__price {
+  .passt-card .passt-card__price {
     font-size: 1.0625rem;
   }
 }
@@ -346,7 +359,7 @@
     overflow: hidden;
   }
 
-  .passt-card__title {
+  .passt-card .passt-card__title {
     font-size: 20px;
     line-height: 26.88px;
     white-space: nowrap;
@@ -355,7 +368,7 @@
     max-width: 100%;
   }
 
-  .passt-card__price {
+  .passt-card .passt-card__price {
     font-size: 17.6px;
     line-height: 28.16px;
   }

@@ -99,7 +99,8 @@
 
 .passt-section {
   background: var(--db-serenade);
-  padding: 2.5rem 1rem;
+  /* Figma 18:414 — py 64px section rhythm */
+  padding: 4rem 1rem;
   box-sizing: border-box;
 }
 
@@ -110,7 +111,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
 }
 
 .passt-header {
@@ -122,9 +123,10 @@
   gap: 0.75rem;
 }
 
-.passt-header__title {
-  font-family: var(--db-font-display);
+.passt-section .passt-header__title {
+  font-family: social-gothic, 'Social Gothic', 'Barlow Condensed', sans-serif;
   font-weight: 500;
+  font-style: normal;
   font-size: clamp(1.625rem, 4.2vw, 2.25rem);
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -136,9 +138,10 @@
 }
 
 .passt-header__link {
-  font-family: var(--db-font-body);
+  font-family: 'New Frank', 'DM Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
+  font-style: normal;
   text-transform: uppercase;
   letter-spacing: 1.2px;
   line-height: 19.2px;
@@ -164,7 +167,7 @@
   padding: 0;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+  gap: 20px;
   width: 100%;
   align-items: stretch;
 }
@@ -188,7 +191,7 @@
 /* Small tablet+: row header, 2-column grid (Figma 18:414) */
 @media (min-width: 641px) {
   .passt-section {
-    padding: 3rem 1.5rem;
+    padding: 4rem 1.5rem;
   }
 
   .passt-inner {
@@ -204,7 +207,7 @@
     gap: 1rem 1.5rem;
   }
 
-  .passt-header__title {
+  .passt-section .passt-header__title {
     white-space: nowrap;
   }
 
@@ -214,14 +217,14 @@
 
   .passt-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    gap: 20px;
   }
 }
 
-/* Desktop content width: four cards + 20px gutters match 1100 frame */
+/* Desktop — Figma 18:414: ~410px side inset + 1100 inner @ 48px horizontal */
 @media (min-width: 1100px) {
   .passt-section {
-    padding: 64px clamp(1.25rem, 10vw, 25.625rem);
+    padding: 4rem clamp(1.25rem, 10vw, 25.625rem);
   }
 
   .passt-inner {
@@ -229,7 +232,7 @@
     gap: 28px;
   }
 
-  .passt-header__title {
+  .passt-section .passt-header__title {
     font-size: 36px;
     letter-spacing: 2px;
     line-height: calc(27.36 / 36);
@@ -251,7 +254,7 @@
     padding: 0 0.5rem;
   }
 
-  .passt-header__title {
+  .passt-section .passt-header__title {
     letter-spacing: 1.5px;
   }
 }

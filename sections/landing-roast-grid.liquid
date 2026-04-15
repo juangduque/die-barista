@@ -8,7 +8,7 @@
     --lr-card-frame: {{ section.settings.card_frame_color }};
     --lr-view-all-text: {{ section.settings.view_all_text_color }};
     --lr-panel-title: {{ section.settings.panel_title_color }};
-    --lr-panel-muted: {% if section.settings.panel_muted != blank %}{{ section.settings.panel_muted | strip }}{% else %}rgba(239, 223, 211, 0.6){% endif %};
+    --lr-panel-muted: {% if section.settings.panel_muted != blank %}{{ section.settings.panel_muted | strip }}{% else %}#906f6a{% endif %};
   }
   #landing-roast-grid-{{ section.id }} .landing-roast-grid__media--red {
     background: {{ section.settings.tone_red }};
@@ -381,9 +381,9 @@
     {
       "type": "color",
       "id": "card_frame_color",
-      "label": "Card outer frame",
-      "default": "#fff1e7",
-      "info": "Figma 9:62 card surround"
+      "label": "Card background (Soapstone)",
+      "default": "#fff8f5",
+      "info": "Figma 18:421 card surface"
     },
     {
       "type": "color",
@@ -401,15 +401,16 @@
     {
       "type": "color",
       "id": "panel_title_color",
-      "label": "Product title and price (on black)",
-      "default": "#efdfd3"
+      "label": "Product title and price",
+      "default": "#00090b",
+      "info": "Figma 18:421 — body text on Soapstone"
     },
     {
       "type": "text",
       "id": "panel_muted",
-      "label": "Subtitle on black (CSS color)",
-      "default": "rgba(239, 223, 211, 0.6)",
-      "info": "Any valid CSS color"
+      "label": "Subtitle (CSS color)",
+      "default": "#906f6a",
+      "info": "Muted line under title (New Frank)"
     },
     {
       "type": "color",
@@ -426,8 +427,9 @@
     {
       "type": "color",
       "id": "tone_beige",
-      "label": "Beige tile",
-      "default": "#efdfd3"
+      "label": "Beige / warm image area",
+      "default": "#f5e5d9",
+      "info": "Figma media backdrop behind bag"
     },
     {
       "type": "color",
