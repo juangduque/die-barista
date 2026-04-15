@@ -5,6 +5,8 @@
   Current product is never shown twice (skipped in the loop).
 {% endcomment %}
 
+{{ 'section-landing-roast-grid.css' | asset_url | stylesheet_tag }}
+
 {%- liquid
   assign passt_products = product.metafields.custom.cross_sells.value
   if passt_products == blank
@@ -61,7 +63,7 @@
     </div>
 
     {%- if passt_eligible > 0 -%}
-      <ul class="passt-grid" role="list" aria-label="Empfohlene Produkte">
+      <ul class="landing-roast-grid__grid passt-cross-grid" role="list" aria-label="Empfohlene Produkte">
         {%- assign passt_rendered = 0 -%}
         {%- for cross_product in passt_products -%}
           {%- if cross_product.id == product.id -%}
@@ -95,6 +97,16 @@
   --db-radius:      2px;
   --db-font-display: 'Social Gothic', 'Barlow Condensed', sans-serif;
   --db-font-body:    'New Frank', 'DM Sans', sans-serif;
+  /* landing-roast-product-card / section-landing-roast-grid.css */
+  --lr-accent: #e23528;
+  --lr-card-frame: #fff8f5;
+  --lr-panel-title: #00090b;
+  --lr-panel-muted: #906f6a;
+  --lr-tone-beige: #f5e5d9;
+  --lr-tone-red: #e23528;
+  --lr-tone-green: #759769;
+  --lr-tone-green-inset: #5f8a5c;
+  --lr-crema: #efdfd3;
 }
 
 .passt-section {
@@ -161,15 +173,11 @@
   border-radius: 1px;
 }
 
-.passt-grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr;
+/* Same card layout as landing roast grid; keep 4-up desktop (grid defaults to 3-up in shared CSS). */
+.passt-cross-grid.landing-roast-grid__grid {
   gap: 20px;
-  width: 100%;
-  align-items: stretch;
+  max-width: 100%;
+  margin: 0;
 }
 
 .passt-empty {
@@ -215,10 +223,6 @@
     white-space: nowrap;
   }
 
-  .passt-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-  }
 }
 
 /* Desktop — Figma 18:414: ~410px side inset + 1100 inner @ 48px horizontal */
@@ -242,7 +246,7 @@
     letter-spacing: 1.2px;
   }
 
-  .passt-grid {
+  .passt-cross-grid.landing-roast-grid__grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
   }

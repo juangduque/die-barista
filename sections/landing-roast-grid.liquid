@@ -176,146 +176,17 @@
             {%- assign card_product = block.settings.product -%}
             <li class="landing-roast-grid__item" {{ block.shopify_attributes }}>
               {%- if card_product != blank -%}
-                {%- liquid
-                  assign variant = card_product.selected_or_first_available_variant
-                  assign media_class = 'landing-roast-grid__media--beige'
-                  if block.settings.tone == 'red'
-                    assign media_class = 'landing-roast-grid__media--red'
-                  elsif block.settings.tone == 'green'
-                    assign media_class = 'landing-roast-grid__media--green'
-                  endif
-                  assign inset_mod = block.settings.inset_mode
-                  if inset_mod == 'light'
-                    assign media_class = media_class | append: ' landing-roast-grid__media--inset-light'
-                  elsif inset_mod == 'dark'
-                    assign media_class = media_class | append: ' landing-roast-grid__media--inset-dark'
-                  endif
-                  if block.settings.large_square_media
-                    assign media_class = media_class | append: ' landing-roast-grid__media--large-square'
-                  endif
-                  assign can_direct_add = false
-                  if card_product.variants.size == 1 and variant.available
-                    assign can_direct_add = true
-                  endif
-                  assign feat_alt = ''
-                  if card_product.featured_media
-                    assign feat_alt = card_product.featured_media.alt | default: card_product.title
-                  endif
+                {%- render 'landing-roast-product-card',
+                  card_product: card_product,
+                  section_id: section.id,
+                  form_suffix: block.id,
+                  subtitle: block.settings.subtitle,
+                  show_badge: block.settings.show_pick_badge,
+                  badge_label: section.settings.badge_label,
+                  tone: block.settings.tone,
+                  inset_mode: block.settings.inset_mode,
+                  large_square_media: block.settings.large_square_media
                 -%}
-                <article class="landing-roast-grid__card">
-                  <a
-                    class="landing-roast-grid__media {{ media_class }}"
-                    href="{{ card_product.url }}"
-                    aria-label="{{ card_product.title | escape }}"
-                  >
-                    {%- if block.settings.show_pick_badge -%}
-                      <span class="landing-roast-grid__badge">{{ section.settings.badge_label | escape }}</span>
-                    {%- endif -%}
-                    <div class="landing-roast-grid__media-inner">
-                      {%- if inset_mod != 'none' -%}
-                        <div class="landing-roast-grid__media-inset">
-                          {%- if card_product.featured_media -%}
-                            {{
-                              card_product.featured_media
-                              | image_url: width: 800
-                              | image_tag:
-                                loading: 'lazy',
-                                widths: '200, 400, 600, 800',
-                                sizes: '(min-width: 750px) 30vw, 90vw',
-                                alt: feat_alt
-                            }}
-                          {%- endif -%}
-                        </div>
-                      {%- elsif card_product.featured_media -%}
-                        {{
-                          card_product.featured_media
-                          | image_url: width: 800
-                          | image_tag:
-                            loading: 'lazy',
-                            widths: '200, 400, 600, 800',
-                            sizes: '(min-width: 750px) 30vw, 90vw',
-                            alt: feat_alt
-                        }}
-                      {%- endif -%}
-                    </div>
-                  </a>
-
-                  <div class="landing-roast-grid__footer">
-                    <a class="landing-roast-grid__product-link" href="{{ card_product.url }}">
-                      <h3 class="landing-roast-grid__card-title">{{ card_product.title | escape }}</h3>
-                      {%- if block.settings.subtitle != blank -%}
-                        <p class="landing-roast-grid__card-sub">{{ block.settings.subtitle | escape }}</p>
-                      {%- endif -%}
-                    </a>
-
-                    <div class="landing-roast-grid__row">
-                      <span class="landing-roast-grid__price">{{ variant.price | money }}</span>
-                      <div class="landing-roast-grid__cart">
-                        {%- if can_direct_add -%}
-                          {%- assign roast_form_id = 'RoastGrid-'
-                            | append: section.id
-                            | append: '-'
-                            | append: block.id
-                          -%}
-                          <product-form data-hide-errors="true">
-                            {%- form 'product',
-                              card_product,
-                              id: roast_form_id,
-                              class: 'form',
-                              novalidate: 'novalidate',
-                              data-type: 'add-to-cart-form'
-                            -%}
-                              <input type="hidden" name="id" value="{{ variant.id }}" disabled>
-                              <button
-                                type="submit"
-                                name="add"
-                                class="landing-roast-grid__cart-btn"
-                                aria-label="{{ 'products.product.add_to_cart' | t }}"
-                                {% unless variant.available %}
-                                  disabled
-                                {% endunless %}
-                              >
-                                <span class="landing-roast-grid__cart-icon-wrap" aria-hidden="true">
-                                  {% render 'icon-cart' %}
-                                  <span class="landing-roast-grid__cart-plus">+</span>
-                                </span>
-                                <span class="loading-overlay__spinner hidden">
-                                  <svg
-                                    aria-hidden="true"
-                                    focusable="false"
-                                    class="spinner"
-                                    viewBox="0 0 66 66"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <circle
-                                      class="path"
-                                      fill="none"
-                                      stroke-width="6"
-                                      cx="33"
-                                      cy="33"
-                                      r="30"
-                                    ></circle>
-                                  </svg>
-                                </span>
-                              </button>
-                            {%- endform -%}
-                          </product-form>
-                        {%- else -%}
-                          <a
-                            href="{{ card_product.url }}"
-                            class="landing-roast-grid__cart-btn landing-roast-grid__cart-btn--link"
-                            aria-label="{{ 'products.product.choose_product_options' | t: product_name: card_product.title | escape }}"
-                          >
-                            <span class="landing-roast-grid__cart-icon-wrap" aria-hidden="true">
-                              {% render 'icon-cart' %}
-                              <span class="landing-roast-grid__cart-plus">+</span>
-                            </span>
-                          </a>
-                        {%- endif -%}
-                      </div>
-                    </div>
-                  </div>
-                </article>
               {%- else -%}
                 <div class="landing-roast-grid__placeholder">Product wählen</div>
               {%- endif -%}

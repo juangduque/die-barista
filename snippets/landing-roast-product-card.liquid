@@ -1,0 +1,152 @@
+{% comment %}
+  Shared product tile markup + classes for landing roast grid and Passt Dazu.
+  Accepts:
+  - card_product {Product} (required)
+  - section_id {String} — for unique form ids
+  - form_suffix {String} — unique per card (e.g. block.id or product id)
+  - subtitle {String} — optional line under title
+  - show_badge {Boolean} — if true, render badge row (text from badge_label)
+  - badge_label {String} — badge copy when show_badge
+  - tone {String} — red | beige | green (default beige)
+  - inset_mode {String} — none | light | dark (default none)
+  - large_square_media {Boolean}
+  - image_sizes {String} — optional `sizes` for featured image
+{% endcomment %}
+{%- liquid
+  assign lr_card_product = card_product
+  assign lr_variant = lr_card_product.selected_or_first_available_variant
+  assign lr_media_class = 'landing-roast-grid__media--beige'
+  if tone == 'red'
+    assign lr_media_class = 'landing-roast-grid__media--red'
+  elsif tone == 'green'
+    assign lr_media_class = 'landing-roast-grid__media--green'
+  endif
+  assign lr_inset = inset_mode | default: 'none'
+  if lr_inset == 'light'
+    assign lr_media_class = lr_media_class | append: ' landing-roast-grid__media--inset-light'
+  elsif lr_inset == 'dark'
+    assign lr_media_class = lr_media_class | append: ' landing-roast-grid__media--inset-dark'
+  endif
+  if large_square_media
+    assign lr_media_class = lr_media_class | append: ' landing-roast-grid__media--large-square'
+  endif
+  assign lr_can_direct_add = false
+  if lr_card_product.variants.size == 1 and lr_variant.available
+    assign lr_can_direct_add = true
+  endif
+  assign lr_feat_alt = ''
+  if lr_card_product.featured_media
+    assign lr_feat_alt = lr_card_product.featured_media.alt | default: lr_card_product.title
+  endif
+  assign lr_sizes = image_sizes | default: '(min-width: 750px) 30vw, 90vw'
+  assign lr_roast_form_id = 'RoastCard-' | append: section_id | append: '-' | append: form_suffix
+-%}
+<article class="landing-roast-grid__card">
+  <a
+    class="landing-roast-grid__media {{ lr_media_class }}"
+    href="{{ lr_card_product.url }}"
+    aria-label="{{ lr_card_product.title | escape }}"
+  >
+    {%- if show_badge -%}
+      <span class="landing-roast-grid__badge">{{ badge_label | escape }}</span>
+    {%- endif -%}
+    <div class="landing-roast-grid__media-inner">
+      {%- if lr_inset != 'none' -%}
+        <div class="landing-roast-grid__media-inset">
+          {%- if lr_card_product.featured_media -%}
+            {{
+              lr_card_product.featured_media
+              | image_url: width: 800
+              | image_tag:
+                loading: 'lazy',
+                widths: '200, 400, 600, 800',
+                sizes: lr_sizes,
+                alt: lr_feat_alt
+            }}
+          {%- endif -%}
+        </div>
+      {%- elsif lr_card_product.featured_media -%}
+        {{
+          lr_card_product.featured_media
+          | image_url: width: 800
+          | image_tag:
+            loading: 'lazy',
+            widths: '200, 400, 600, 800',
+            sizes: lr_sizes,
+            alt: lr_feat_alt
+        }}
+      {%- endif -%}
+    </div>
+  </a>
+
+  <div class="landing-roast-grid__footer">
+    <a class="landing-roast-grid__product-link" href="{{ lr_card_product.url }}">
+      <h3 class="landing-roast-grid__card-title">{{ lr_card_product.title | escape }}</h3>
+      {%- if subtitle != blank -%}
+        <p class="landing-roast-grid__card-sub">{{ subtitle | escape }}</p>
+      {%- endif -%}
+    </a>
+
+    <div class="landing-roast-grid__row">
+      <span class="landing-roast-grid__price">{{ lr_variant.price | money }}</span>
+      <div class="landing-roast-grid__cart">
+        {%- if lr_can_direct_add -%}
+          <product-form data-hide-errors="true">
+            {%- form 'product',
+              lr_card_product,
+              id: lr_roast_form_id,
+              class: 'form',
+              novalidate: 'novalidate',
+              data-type: 'add-to-cart-form'
+            -%}
+              <input type="hidden" name="id" value="{{ lr_variant.id }}" disabled>
+              <button
+                type="submit"
+                name="add"
+                class="landing-roast-grid__cart-btn"
+                aria-label="{{ 'products.product.add_to_cart' | t }}"
+                {% unless lr_variant.available %}
+                  disabled
+                {% endunless %}
+              >
+                <span class="landing-roast-grid__cart-icon-wrap" aria-hidden="true">
+                  {% render 'icon-cart' %}
+                  <span class="landing-roast-grid__cart-plus">+</span>
+                </span>
+                <span class="loading-overlay__spinner hidden">
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    class="spinner"
+                    viewBox="0 0 66 66"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      class="path"
+                      fill="none"
+                      stroke-width="6"
+                      cx="33"
+                      cy="33"
+                      r="30"
+                    ></circle>
+                  </svg>
+                </span>
+              </button>
+            {%- endform -%}
+          </product-form>
+        {%- else -%}
+          <a
+            href="{{ lr_card_product.url }}"
+            class="landing-roast-grid__cart-btn landing-roast-grid__cart-btn--link"
+            aria-label="{{ 'products.product.choose_product_options' | t: product_name: lr_card_product.title | escape }}"
+          >
+            <span class="landing-roast-grid__cart-icon-wrap" aria-hidden="true">
+              {% render 'icon-cart' %}
+              <span class="landing-roast-grid__cart-plus">+</span>
+            </span>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</article>
