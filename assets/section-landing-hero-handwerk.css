@@ -5,12 +5,18 @@
   --landing-hw-hero-green: #759769;
   --landing-hw-hero-text-muted: rgba(239, 223, 211, 0.6);
   background: var(--landing-hw-page-bg, #fdfaf7);
+  width: 100%;
+  max-width: none;
 }
 
 .landing-hw-hero__inner {
   display: grid;
   grid-template-columns: 1fr;
+  width: 100%;
+  max-width: none;
+  /* vh then dvh — stabilizes height when mobile chrome shows/hides UI */
   min-height: min(100vh, 54.375rem);
+  min-height: min(100dvh, 54.375rem);
   background: var(--landing-hw-hero-bg);
   color: #fff;
   overflow-x: hidden;
@@ -21,6 +27,7 @@
   .landing-hw-hero__inner {
     grid-template-columns: 1fr 1fr;
     min-height: max(54.375rem, min(100vh, 61rem));
+    min-height: max(54.375rem, min(100dvh, 61rem));
   }
 }
 
@@ -32,15 +39,18 @@
   isolation: isolate;
   width: 100%;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  align-self: stretch;
 }
 
 .landing-hw-hero__carousel {
-  position: absolute;
-  inset: 0;
+  width: 100%;
   z-index: 0;
+  overflow: hidden;
 }
 
-/* Mobile: carousel must contribute height to the grid row (absolute carousel collapsed the row). */
+/* Mobile: in-flow carousel sets row height (square frame). */
 @media screen and (max-width: 989px) {
   .landing-hw-hero__visual {
     min-height: 0;
@@ -49,8 +59,35 @@
   .landing-hw-hero__carousel {
     position: relative;
     inset: auto;
-    width: 100%;
     aspect-ratio: 1 / 1;
+    height: auto;
+  }
+
+  /* Portrait fills the full slide on mobile so the bg doesn't bleed through */
+  .landing-hw-hero__visual-portrait {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: unset;
+    max-height: none;
+    margin: 0;
+    align-self: auto;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .landing-hw-hero__visual {
+    order: 0;
+    display: block;
+    min-height: 0;
+  }
+
+  .landing-hw-hero__carousel {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    min-height: 100%;
   }
 }
 
@@ -58,45 +95,32 @@
   position: absolute;
   inset: 0;
   isolation: isolate;
+  /* Inactive slides are instantly hidden — no cross-fade so two images never show together */
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.85s ease;
+  z-index: 0;
   pointer-events: none;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
 }
 
+/* Only the incoming slide fades in; the outgoing one is cut instantly */
 .landing-hw-hero__carousel-slide.is-active {
   opacity: 1;
   visibility: visible;
-  z-index: 1;
+  z-index: 3;
   pointer-events: none;
+  transition: opacity 0.7s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .landing-hw-hero__carousel-slide {
+  .landing-hw-hero__carousel-slide.is-active {
     transition: none;
-  }
-}
-
-@media screen and (min-width: 990px) {
-  .landing-hw-hero__visual {
-    order: 0;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    min-height: 0;
-  }
-
-  .landing-hw-hero__carousel {
-    position: absolute;
-    inset: 0;
-    aspect-ratio: unset;
-    width: auto;
-  }
-
-  .landing-hw-hero__carousel-slide {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
   }
 }
 
@@ -107,22 +131,22 @@
   z-index: 0;
 }
 
-/* Figma: image ~136% width, pulled left ~18% */
+/* Background fills the frame — zooms only as needed, no empty bars */
 .landing-hw-hero__visual-bg img {
   position: absolute;
-  top: 0;
-  left: -17.97%;
-  width: 135.94%;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  max-width: none;
   object-fit: cover;
-  object-position: center;
+  object-position: center center;
 }
 
-@media screen and (max-width: 989px) {
+/* On desktop the portrait only covers the bottom portion — blur + darken
+   the bg so the exposed area above blends into the dark hero background */
+@media screen and (min-width: 990px) {
   .landing-hw-hero__visual-bg img {
-    left: 0;
-    width: 100%;
+    filter: blur(18px) brightness(0.25);
+    transform: scale(1.06);
   }
 }
 
@@ -147,15 +171,20 @@
   pointer-events: none;
 }
 
-/* Portrait — Figma Hero Section: 858×858 frame (node 9:8) */
+/* Portrait — fills the square frame, centred crop */
 .landing-hw-hero__visual-portrait {
   position: relative;
   z-index: 2;
   width: min(100%, 858px);
+  max-width: 100%;
   aspect-ratio: 1 / 1;
+  max-height: 100%;
   margin: 0 auto;
   align-self: flex-end;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 990px) {
@@ -166,10 +195,15 @@
   }
 }
 
+/* Portrait image fills its square frame completely */
 .landing-hw-hero__visual-portrait img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
+  display: block;
 }
 
 /* Right column — content */
