@@ -130,10 +130,14 @@
           class="brew-tab is-active"
           role="tab"
           id="tab-sieb-{{ section.id }}"
-          aria-controls="panel-sieb-{{ section.id }}"
+          aria-controls="brew-panel-{{ section.id }}"
           aria-selected="true"
           tabindex="0"
-          data-tab="sieb"
+          data-menge="{{ sieb_menge }}"       data-menge-unit="G"
+          data-mahlgrad="{{ sieb_mahlgrad }}"
+          data-wasser="{{ sieb_wasser }}"     data-wasser-unit="ML"
+          data-temp="{{ sieb_temperatur }}"   data-temp-unit="°C"
+          data-dauer="{{ sieb_dauer }}"       data-dauer-unit="SEK"
         >
           <!-- Siebträger SVG icon -->
           <svg class="brew-tab__icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -153,10 +157,14 @@
           class="brew-tab"
           role="tab"
           id="tab-voll-{{ section.id }}"
-          aria-controls="panel-voll-{{ section.id }}"
+          aria-controls="brew-panel-{{ section.id }}"
           aria-selected="false"
           tabindex="-1"
-          data-tab="voll"
+          data-menge="{{ voll_menge }}"       data-menge-unit="G"
+          data-mahlgrad="{{ voll_mahlgrad }}"
+          data-wasser="{{ voll_wasser }}"     data-wasser-unit="ML"
+          data-temp="{{ voll_temperatur }}"   data-temp-unit="°C"
+          data-dauer="{{ voll_dauer }}"       data-dauer-unit="SEK"
         >
           <!-- Vollautomat SVG icon -->
           <svg class="brew-tab__icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -176,10 +184,14 @@
           class="brew-tab"
           role="tab"
           id="tab-moka-{{ section.id }}"
-          aria-controls="panel-moka-{{ section.id }}"
+          aria-controls="brew-panel-{{ section.id }}"
           aria-selected="false"
           tabindex="-1"
-          data-tab="moka"
+          data-menge="{{ moka_menge }}"       data-menge-unit="G"
+          data-mahlgrad="{{ moka_mahlgrad }}"
+          data-wasser="{{ moka_wasser }}"     data-wasser-unit="ML"
+          data-temp="{{ moka_temperatur }}"   data-temp-unit="°C"
+          data-dauer="{{ moka_dauer }}"       data-dauer-unit="MIN"
         >
           <!-- Espressokocher / Moka pot SVG icon -->
           <svg class="brew-tab__icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -199,10 +211,14 @@
           class="brew-tab"
           role="tab"
           id="tab-french-{{ section.id }}"
-          aria-controls="panel-french-{{ section.id }}"
+          aria-controls="brew-panel-{{ section.id }}"
           aria-selected="false"
           tabindex="-1"
-          data-tab="french"
+          data-menge="{{ french_menge }}"       data-menge-unit="G"
+          data-mahlgrad="{{ french_mahlgrad }}"
+          data-wasser="{{ french_wasser }}"     data-wasser-unit="ML"
+          data-temp="{{ french_temperatur }}"   data-temp-unit="°C"
+          data-dauer="{{ french_dauer }}"       data-dauer-unit="MIN"
         >
           <!-- French Press SVG icon -->
           <svg class="brew-tab__icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -221,10 +237,14 @@
           class="brew-tab"
           role="tab"
           id="tab-filter-{{ section.id }}"
-          aria-controls="panel-filter-{{ section.id }}"
+          aria-controls="brew-panel-{{ section.id }}"
           aria-selected="false"
           tabindex="-1"
-          data-tab="filter"
+          data-menge="{{ filter_menge }}"       data-menge-unit="G"
+          data-mahlgrad="{{ filter_mahlgrad }}"
+          data-wasser="{{ filter_wasser }}"     data-wasser-unit="ML"
+          data-temp="{{ filter_temperatur }}"   data-temp-unit="°C"
+          data-dauer="{{ filter_dauer }}"       data-dauer-unit="MIN"
         >
           <!-- Handfilter / Pour-over SVG icon -->
           <svg class="brew-tab__icon" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -239,106 +259,78 @@
 
       </div><!-- /brew-tablist -->
 
-      <!-- ── TAB PANELS ── -->
-
-      <!-- Siebträger Panel -->
-      {%- if show_sieb -%}
+      <!-- ── SINGLE STATS PANEL — values swapped by JS on tab click ── -->
+      {%- liquid
+        assign init_menge      = sieb_menge
+        assign init_menge_unit = 'G'
+        assign init_mahlgrad   = sieb_mahlgrad
+        assign init_wasser     = sieb_wasser
+        assign init_wasser_unit= 'ML'
+        assign init_temp       = sieb_temperatur
+        assign init_temp_unit  = '°C'
+        assign init_dauer      = sieb_dauer
+        assign init_dauer_unit = 'SEK'
+        unless show_sieb
+          assign init_menge      = voll_menge
+          assign init_menge_unit = 'G'
+          assign init_mahlgrad   = voll_mahlgrad
+          assign init_wasser     = voll_wasser
+          assign init_wasser_unit= 'ML'
+          assign init_temp       = voll_temperatur
+          assign init_temp_unit  = '°C'
+          assign init_dauer      = voll_dauer
+          assign init_dauer_unit = 'SEK'
+        endunless
+      -%}
       <div
         class="brew-panel"
         role="tabpanel"
-        id="panel-sieb-{{ section.id }}"
-        aria-labelledby="tab-sieb-{{ section.id }}"
+        id="brew-panel-{{ section.id }}"
         tabindex="0"
       >
-        {%- render 'brew-guide-stats-JT',
-          menge: sieb_menge,       menge_unit: 'G',
-          mahlgrad: sieb_mahlgrad, mahlgrad_unit: '',
-          wasser: sieb_wasser,     wasser_unit: 'ML',
-          temp: sieb_temperatur,   temp_unit: '°C',
-          dauer: sieb_dauer,       dauer_unit: 'SEK'
-        -%}
-      </div>
-      {%- endif -%}
+        <div class="brew-stats" role="list" aria-label="Zubereitungsparameter">
 
-      <!-- Vollautomat Panel -->
-      {%- if show_voll -%}
-      <div
-        class="brew-panel"
-        role="tabpanel"
-        id="panel-voll-{{ section.id }}"
-        aria-labelledby="tab-voll-{{ section.id }}"
-        tabindex="0"
-        hidden
-      >
-        {%- render 'brew-guide-stats-JT',
-          menge: voll_menge,       menge_unit: 'G',
-          mahlgrad: voll_mahlgrad, mahlgrad_unit: '',
-          wasser: voll_wasser,     wasser_unit: 'ML',
-          temp: voll_temperatur,   temp_unit: '°C',
-          dauer: voll_dauer,       dauer_unit: 'SEK'
-        -%}
-      </div>
-      {%- endif -%}
+          <div class="brew-stat" role="listitem">
+            <span class="brew-stat__label">Menge</span>
+            <div class="brew-stat__value-wrap">
+              <span class="brew-stat__value" data-stat="menge">{{- init_menge -}}</span>
+              <span class="brew-stat__unit"  data-stat="menge-unit">{{- init_menge_unit -}}</span>
+            </div>
+          </div>
 
-      <!-- Espressokocher Panel -->
-      {%- if show_moka -%}
-      <div
-        class="brew-panel"
-        role="tabpanel"
-        id="panel-moka-{{ section.id }}"
-        aria-labelledby="tab-moka-{{ section.id }}"
-        tabindex="0"
-        hidden
-      >
-        {%- render 'brew-guide-stats-JT',
-          menge: moka_menge,       menge_unit: 'G',
-          mahlgrad: moka_mahlgrad, mahlgrad_unit: '',
-          wasser: moka_wasser,     wasser_unit: 'ML',
-          temp: moka_temperatur,   temp_unit: '°C',
-          dauer: moka_dauer,       dauer_unit: 'MIN'
-        -%}
-      </div>
-      {%- endif -%}
+          <div class="brew-stat" role="listitem">
+            <span class="brew-stat__label">Mahlgrad</span>
+            <div class="brew-stat__value-wrap">
+              <span class="brew-stat__value" data-stat="mahlgrad">{{- init_mahlgrad -}}</span>
+            </div>
+          </div>
 
-      <!-- French Press Panel -->
-      {%- if show_french -%}
-      <div
-        class="brew-panel"
-        role="tabpanel"
-        id="panel-french-{{ section.id }}"
-        aria-labelledby="tab-french-{{ section.id }}"
-        tabindex="0"
-        hidden
-      >
-        {%- render 'brew-guide-stats-JT',
-          menge: french_menge,       menge_unit: 'G',
-          mahlgrad: french_mahlgrad, mahlgrad_unit: '',
-          wasser: french_wasser,     wasser_unit: 'ML',
-          temp: french_temperatur,   temp_unit: '°C',
-          dauer: french_dauer,       dauer_unit: 'MIN'
-        -%}
-      </div>
-      {%- endif -%}
+          <div class="brew-stat" role="listitem">
+            <span class="brew-stat__label">Wasser</span>
+            <div class="brew-stat__value-wrap">
+              <span class="brew-stat__value" data-stat="wasser">{{- init_wasser -}}</span>
+              <span class="brew-stat__unit"  data-stat="wasser-unit">{{- init_wasser_unit -}}</span>
+            </div>
+          </div>
 
-      <!-- Handfilter Panel -->
-      {%- if show_filter -%}
-      <div
-        class="brew-panel"
-        role="tabpanel"
-        id="panel-filter-{{ section.id }}"
-        aria-labelledby="tab-filter-{{ section.id }}"
-        tabindex="0"
-        hidden
-      >
-        {%- render 'brew-guide-stats-JT',
-          menge: filter_menge,       menge_unit: 'G',
-          mahlgrad: filter_mahlgrad, mahlgrad_unit: '',
-          wasser: filter_wasser,     wasser_unit: 'ML',
-          temp: filter_temperatur,   temp_unit: '°C',
-          dauer: filter_dauer,       dauer_unit: 'MIN'
-        -%}
+          <div class="brew-stat" role="listitem">
+            <span class="brew-stat__label">Temperatur</span>
+            <div class="brew-stat__value-wrap">
+              <span class="brew-stat__value" data-stat="temp">{{- init_temp -}}</span>
+              <span class="brew-stat__unit"  data-stat="temp-unit">{{- init_temp_unit -}}</span>
+            </div>
+          </div>
+
+          <div class="brew-stat" role="listitem">
+            <span class="brew-stat__label">Dauer</span>
+            <div class="brew-stat__value-wrap">
+              <span class="brew-stat__value" data-stat="dauer">{{- init_dauer -}}</span>
+              <span class="brew-stat__unit"  data-stat="dauer-unit">{{- init_dauer_unit -}}</span>
+            </div>
+          </div>
+
+        </div>
       </div>
-      {%- endif -%}
 
     </div><!-- /brew-tabs-wrapper -->
 
@@ -464,9 +456,6 @@
   padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.brew-panel[hidden] {
-  display: none;
-}
 
 /* ── STATS GRID (inside snippet) ── */
 /* 
@@ -658,66 +647,58 @@
     root.setAttribute('data-brew-wired', 'true');
 
     var tablist = root.querySelector('[role="tablist"]');
-    if (!tablist) return;
+    var panel   = root.querySelector('[role="tabpanel"]');
+    if (!tablist || !panel) return;
 
     var tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
-    var panels = Array.from(root.querySelectorAll('[role="tabpanel"]'));
-    if (!tabs.length || !panels.length) return;
+    if (!tabs.length) return;
 
-    function activateTab(tab) {
-      var panelId = tab.getAttribute('aria-controls');
-      var panel = null;
-      if (panelId) {
-        for (var i = 0; i < panels.length; i++) {
-          if (panels[i].id === panelId) {
-            panel = panels[i];
-            break;
-          }
-        }
-      }
+    /* Read a data-* attribute from a button and update a [data-stat] span. */
+    function setStat(key, value) {
+      var el = panel.querySelector('[data-stat="' + key + '"]');
+      if (el) el.textContent = value || '';
+    }
 
+    function showTab(tab) {
+      /* Highlight the clicked tab */
       tabs.forEach(function (t) {
         t.setAttribute('aria-selected', 'false');
         t.setAttribute('tabindex', '-1');
         t.classList.remove('is-active');
       });
-      panels.forEach(function (p) {
-        p.hidden = true;
-      });
       tab.setAttribute('aria-selected', 'true');
       tab.setAttribute('tabindex', '0');
       tab.classList.add('is-active');
-      if (panel) {
-        panel.hidden = false;
-      }
+
+      /* Push this tab's data attributes into the single stats panel */
+      var d = tab.dataset;
+      setStat('menge',       d.menge);
+      setStat('menge-unit',  d.mengeUnit);
+      setStat('mahlgrad',    d.mahlgrad);
+      setStat('wasser',      d.wasser);
+      setStat('wasser-unit', d.wasserUnit);
+      setStat('temp',        d.temp);
+      setStat('temp-unit',   d.tempUnit);
+      setStat('dauer',       d.dauer);
+      setStat('dauer-unit',  d.dauerUnit);
     }
 
-    /* One listener per tab: always activates the correct panel (label text, SVG, padding). */
     tabs.forEach(function (tab) {
-      tab.addEventListener('click', function (e) {
-        e.preventDefault();
-        activateTab(tab);
-      });
+      tab.addEventListener('click', function () { showTab(tab); });
     });
 
     tablist.addEventListener('keydown', function (e) {
-      var currentIndex = tabs.indexOf(document.activeElement);
-      if (currentIndex < 0) return;
-      var nextIndex;
-      if (e.key === 'ArrowRight') {
-        nextIndex = (currentIndex + 1) % tabs.length;
-      } else if (e.key === 'ArrowLeft') {
-        nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-      } else if (e.key === 'Home') {
-        nextIndex = 0;
-      } else if (e.key === 'End') {
-        nextIndex = tabs.length - 1;
-      } else {
-        return;
-      }
+      var idx = tabs.indexOf(document.activeElement);
+      if (idx < 0) return;
+      var next;
+      if      (e.key === 'ArrowRight') next = (idx + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft')  next = (idx - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home')       next = 0;
+      else if (e.key === 'End')        next = tabs.length - 1;
+      else return;
       e.preventDefault();
-      activateTab(tabs[nextIndex]);
-      tabs[nextIndex].focus();
+      showTab(tabs[next]);
+      tabs[next].focus();
     });
   }
 
