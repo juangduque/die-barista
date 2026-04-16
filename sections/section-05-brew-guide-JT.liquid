@@ -126,6 +126,7 @@
 
         {%- if show_sieb -%}
         <button
+          type="button"
           class="brew-tab is-active"
           role="tab"
           id="tab-sieb-{{ section.id }}"
@@ -148,6 +149,7 @@
 
         {%- if show_voll -%}
         <button
+          type="button"
           class="brew-tab"
           role="tab"
           id="tab-voll-{{ section.id }}"
@@ -170,6 +172,7 @@
 
         {%- if show_moka -%}
         <button
+          type="button"
           class="brew-tab"
           role="tab"
           id="tab-moka-{{ section.id }}"
@@ -192,6 +195,7 @@
 
         {%- if show_french -%}
         <button
+          type="button"
           class="brew-tab"
           role="tab"
           id="tab-french-{{ section.id }}"
@@ -213,6 +217,7 @@
 
         {%- if show_filter -%}
         <button
+          type="button"
           class="brew-tab"
           role="tab"
           id="tab-filter-{{ section.id }}"
@@ -387,7 +392,8 @@
 
 .brew-subline {
   font-family: var(--db-font-body);
-  font-size: 0.95rem;
+  font-weight: 600;
+  font-size: 12px;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.75);
   max-width: 520px;
@@ -644,71 +650,92 @@
 
 
 <script>
-(function() {
+(function () {
   'use strict';
 
-  var sectionId = '{{ section.id }}';
-  var tablist   = document.querySelector('#brew-guide-' + sectionId + ' [role="tablist"]');
-  if (!tablist) return;
+  function wireBrewGuideRoot(root) {
+    if (!root || root.getAttribute('data-brew-wired') === 'true') return;
+    root.setAttribute('data-brew-wired', 'true');
 
-  var tabs   = Array.from(tablist.querySelectorAll('[role="tab"]'));
-  var panels = Array.from(
-    document.querySelectorAll('#brew-guide-' + sectionId + ' [role="tabpanel"]')
-  );
+    var tablist = root.querySelector('[role="tablist"]');
+    if (!tablist) return;
 
-  function activateTab(tab) {
-    /* Deactivate all */
-    tabs.forEach(function(t) {
-      t.setAttribute('aria-selected', 'false');
-      t.setAttribute('tabindex', '-1');
-      t.classList.remove('is-active');
-    });
+    var tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+    var panels = Array.from(root.querySelectorAll('[role="tabpanel"]'));
+    if (!tabs.length || !panels.length) return;
 
-    panels.forEach(function(p) {
-      p.hidden = true;
-    });
+    function activateTab(tab) {
+      var panelId = tab.getAttribute('aria-controls');
+      var panel = null;
+      if (panelId) {
+        for (var i = 0; i < panels.length; i++) {
+          if (panels[i].id === panelId) {
+            panel = panels[i];
+            break;
+          }
+        }
+      }
 
-    /* Activate selected */
-    tab.setAttribute('aria-selected', 'true');
-    tab.setAttribute('tabindex', '0');
-    tab.classList.add('is-active');
-
-    var panelId = tab.getAttribute('aria-controls');
-    var panel   = document.getElementById(panelId);
-    if (panel) {
-      panel.hidden = false;
+      tabs.forEach(function (t) {
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('tabindex', '-1');
+        t.classList.remove('is-active');
+      });
+      panels.forEach(function (p) {
+        p.hidden = true;
+      });
+      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('tabindex', '0');
+      tab.classList.add('is-active');
+      if (panel) {
+        panel.hidden = false;
+      }
     }
+
+    /* One listener per tab: always activates the correct panel (label text, SVG, padding). */
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function (e) {
+        e.preventDefault();
+        activateTab(tab);
+      });
+    });
+
+    tablist.addEventListener('keydown', function (e) {
+      var currentIndex = tabs.indexOf(document.activeElement);
+      if (currentIndex < 0) return;
+      var nextIndex;
+      if (e.key === 'ArrowRight') {
+        nextIndex = (currentIndex + 1) % tabs.length;
+      } else if (e.key === 'ArrowLeft') {
+        nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+      } else if (e.key === 'Home') {
+        nextIndex = 0;
+      } else if (e.key === 'End') {
+        nextIndex = tabs.length - 1;
+      } else {
+        return;
+      }
+      e.preventDefault();
+      activateTab(tabs[nextIndex]);
+      tabs[nextIndex].focus();
+    });
   }
 
-  /* Click */
-  tabs.forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      activateTab(tab);
-    });
+  function boot() {
+    document.querySelectorAll('.brew-section[id^="brew-guide-"]').forEach(wireBrewGuideRoot);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+  document.addEventListener('shopify:section:load', function (ev) {
+    var container = ev.target;
+    if (!container || typeof container.querySelectorAll !== 'function') return;
+    container.querySelectorAll('.brew-section[id^="brew-guide-"]').forEach(wireBrewGuideRoot);
   });
-
-  /* Keyboard: arrow left/right to navigate tabs */
-  tablist.addEventListener('keydown', function(e) {
-    var currentIndex = tabs.indexOf(document.activeElement);
-    var nextIndex;
-
-    if (e.key === 'ArrowRight') {
-      nextIndex = (currentIndex + 1) % tabs.length;
-    } else if (e.key === 'ArrowLeft') {
-      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-    } else if (e.key === 'Home') {
-      nextIndex = 0;
-    } else if (e.key === 'End') {
-      nextIndex = tabs.length - 1;
-    } else {
-      return;
-    }
-
-    e.preventDefault();
-    activateTab(tabs[nextIndex]);
-    tabs[nextIndex].focus();
-  });
-
 })();
 </script>
 
