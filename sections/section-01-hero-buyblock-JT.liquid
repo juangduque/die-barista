@@ -204,6 +204,54 @@
       {%- endif -%}
     </div>
 
+    {%- liquid
+      assign hero_badge_count = 0
+      for block in section.blocks
+        if block.type == 'badge' and block.settings.label != blank
+          assign hero_badge_count = hero_badge_count | plus: 1
+        endif
+      endfor
+    -%}
+    {%- if hero_badge_count > 0 -%}
+      <div
+        class="barista-hero-badges"
+        role="list"
+        aria-label="{{ section.settings.badges_aria_label | default: 'Produkt-Hinweise' | escape }}"
+      >
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'badge' -%}
+              {%- if block.settings.label != blank -%}
+                {%- liquid
+                  assign b_style = block.settings.style | default: 'neutral'
+                  if b_style != 'neutral' and b_style != 'outline' and b_style != 'accent' and b_style != 'dark'
+                    assign b_style = 'neutral'
+                  endif
+                -%}
+                {%- if block.settings.link != blank -%}
+                  <a
+                    href="{{ block.settings.link }}"
+                    class="barista-hero-badge barista-hero-badge--{{ b_style }}"
+                    {{ block.shopify_attributes }}
+                    role="listitem"
+                  >
+                    {{- block.settings.label | escape -}}
+                  </a>
+                {%- else -%}
+                  <span
+                    class="barista-hero-badge barista-hero-badge--{{ b_style }}"
+                    {{ block.shopify_attributes }}
+                    role="listitem"
+                  >
+                    {{- block.settings.label | escape -}}
+                  </span>
+                {%- endif -%}
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
     <!-- Tasting Notes Tags -->
     {%- unless tasting_notes == '' -%}
     <div class="barista-tasting-notes" aria-label="Geschmacksrichtungen">
@@ -569,6 +617,9 @@
   max-height: none;
   background: var(--db-surface);
   box-sizing: border-box;
+  /* Enables @container rules for children (e.g. badge row → column when column is narrow) */
+  container-type: inline-size;
+  container-name: barista-buyblock;
 }
 
 /* Category label — Social Gothic DemiBold 12px / tracking 1.44px */
@@ -595,14 +646,18 @@
   margin: 0 0 0.5rem;
 }
 
-/* Short desc — New Frank 16 / 25.6, #755848 */
+/* Short desc — New Frank 14px / lh 1.6, #755848 (1rem = 10px on html root) */
 .barista-desc {
   font-family: var(--db-font-body);
-  font-size: 1rem;
+  font-size: 1.4rem;
   line-height: 1.6;
   color: #755848;
   max-width: 26.25rem;
   margin: 0 0 1.75rem;
+}
+
+.barista-desc.rte p {
+  font-size: 1.4rem;
 }
 
 /* Drop duplicate titles often pasted as first block in product copy / RTE */
@@ -632,6 +687,81 @@
   letter-spacing: 0.06em;
   padding: 0.3rem 0.875rem 0.35rem;
   border-radius: var(--db-radius);
+}
+
+/* ── PROMO BADGES — chip row (reference screenshot: peach pills, black sans type) ── */
+.barista-hero-badges {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 14px;
+  row-gap: 10px;
+  max-width: 26.25rem;
+  margin: 0 0 1.25rem;
+}
+
+/* Stack badges when the buy block column is too narrow for a single row */
+@container barista-buyblock (max-width: 480px) {
+  .barista-hero-badges {
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: flex-start;
+    gap: 10px;
+    row-gap: 10px;
+    max-width: 100%;
+  }
+}
+
+/* Fallback when container queries are not supported (approx. narrow phone) */
+@supports not (container-type: inline-size) {
+  @media (max-width: 480px) {
+    .barista-hero-badges {
+      flex-direction: column;
+      align-items: flex-start;
+      align-self: flex-start;
+      gap: 10px;
+      max-width: 100%;
+    }
+  }
+}
+
+a.barista-hero-badge {
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+
+a.barista-hero-badge:hover {
+  opacity: 0.9;
+}
+
+.barista-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-family: var(--db-font-body);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  color: #000000;
+  background: #f9e9e0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.barista-hero-badge--accent {
+  color: rgba(0, 0, 0, 1);
+}
+
+.barista-hero-badge--dark {
+  background: var(--db-black);
+  color: var(--db-crema);
 }
 
 /* ── FLAVOR SCALES — Figma 18:124 row (gap 28px, 6px bars) ── */
@@ -1422,10 +1552,49 @@
   "name": "Hero & Buy Block",
   "tag": "section",
   "class": "barista-section-hero",
+  "max_blocks": 50,
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Text",
+          "default": "Badge"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Stil",
+          "default": "neutral",
+          "options": [
+            { "value": "neutral", "label": "Neutral (Crema-Fläche)" },
+            { "value": "outline", "label": "Nur Rahmen" },
+            { "value": "accent", "label": "Accent (Rot)" },
+            { "value": "dark", "label": "Schwarz" }
+          ]
+        }
+      ]
+    }
+  ],
   "settings": [
     {
       "type": "header",
       "content": "Produktseite"
+    },
+    {
+      "type": "text",
+      "id": "badges_aria_label",
+      "label": "Badges — Beschriftung für Screenreader",
+      "default": "Produkt-Hinweise",
+      "info": "Wird als aria-label für die Badge-Zeile ausgegeben."
     },
     {
       "type": "text",
@@ -1492,7 +1661,30 @@
   ],
   "presets": [
     {
-      "name": "Hero & Buy Block"
+      "name": "Hero & Buy Block",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "label": "Kleinchargen",
+            "style": "outline"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "label": "Frisch geröstet",
+            "style": "neutral"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "label": "Direkthandel",
+            "style": "accent"
+          }
+        }
+      ]
     }
   ]
 }

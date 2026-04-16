@@ -103,7 +103,39 @@
     "hero-buyblock": {
       "type": "section-01-hero-buyblock-JT",
       "name": "Hero & Buy Block",
+      "blocks": {
+        "hero_badge_kleinchargen": {
+          "type": "badge",
+          "settings": {
+            "label": "Kleinchargen",
+            "link": "",
+            "style": "outline"
+          }
+        },
+        "hero_badge_frisch": {
+          "type": "badge",
+          "settings": {
+            "label": "Frisch geröstet",
+            "link": "",
+            "style": "neutral"
+          }
+        },
+        "hero_badge_direkt": {
+          "type": "badge",
+          "settings": {
+            "label": "Direkthandel",
+            "link": "",
+            "style": "accent"
+          }
+        }
+      },
+      "block_order": [
+        "hero_badge_kleinchargen",
+        "hero_badge_frisch",
+        "hero_badge_direkt"
+      ],
       "settings": {
+        "badges_aria_label": "Produkt-Hinweise",
         "trust_item_1": "Frisch geröstet",
         "trust_item_2": "Versand in 1–3 Tagen",
         "trust_item_3": "Ab 39€ kostenlos",
