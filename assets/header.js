@@ -20,10 +20,12 @@
 
 		const headerOverlay = document.querySelector(".header__overlay");
 		const searchDetails = document.querySelector(".header__search details");
-		headerOverlay.addEventListener("click", () => {
-			searchDetails.removeAttribute("open");
-			document.body.classList.remove("overflow-hidden-search");
-		});
+		if (headerOverlay && searchDetails) {
+			headerOverlay.addEventListener("click", () => {
+				searchDetails.removeAttribute("open");
+				document.body.classList.remove("overflow-hidden-search");
+			});
+		}
 	};
 
 	document.addEventListener("shopify:section:load", header);

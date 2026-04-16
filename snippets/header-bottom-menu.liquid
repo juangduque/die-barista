@@ -1,3 +1,4 @@
+{% unless template.name == 'product' %}
 <div class="header__top color-{{ section.settings.color_scheme }}">
   <div class="header__top-inner container">
     <div class="header__top_left">
@@ -509,7 +510,9 @@
     </div>
   </div>
 </div>
+{% endunless %}
 
+{% unless template.name == 'product' %}
 <div class="header__bottom color-background-1 {% if section.settings.border_bottom %}header__border-bottom{% endif %}">
   <div class="header__bottom-inner container">
     <nav class="header__inline-menu header__inline-menu_bottom">
@@ -590,3 +593,4 @@
     </nav>
   </div>
 </div>
+{% endunless %}
