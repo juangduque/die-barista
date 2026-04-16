@@ -5,6 +5,8 @@
   --lcf-ink: #00090b;
   background: var(--lcf-surface);
   color: var(--lcf-cream);
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .landing-coffee-finder__inner {
